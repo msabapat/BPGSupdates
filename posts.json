@@ -4,6 +4,13 @@
     "title": "Quantitative Strategy Dashboard",
     "summary": "Full performance deck: MR, LV, MOM and Blend C strategies with IS/OOS stats, regime analysis, year-by-year heatmap and correlation matrices.",
     "file": "strategy_deck_2026-06-27.html",
-    "author": "Manis"
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-06-24",
+    "title": "SPY Drawdown / Drawup Heatmap Analysis",
+    "summary": "Calendar heatmap of SPY drawdown and drawup regimes. Shows historical bear and bull periods with magnitude and duration across the full data history.",
+    "file": "spy_dd_heatmap_2026-06-24.html",
+    "author": "Mani Sabapathi"
   }
 ]
