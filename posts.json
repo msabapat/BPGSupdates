@@ -8,9 +8,30 @@
   },
   {
     "date": "2026-06-24",
-    "title": "SPY Drawdown / Drawup Heatmap Analysis",
+    "title": "SPY Drawdown / Drawup Heatmap",
     "summary": "Calendar heatmap of SPY drawdown and drawup regimes. Shows historical bear and bull periods with magnitude and duration across the full data history.",
     "file": "spy_dd_heatmap_2026-06-24.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-06-23",
+    "title": "SPY 3yr Percentile Regime Weights",
+    "summary": "Regime-switching weight analysis using SPY 3-year rolling percentile. Shows optimal LV/MOM/MR/TBill allocations across Bear, Mid and Bull regimes with IS/OOS performance breakdown.",
+    "file": "spy_pct_weights_2026-06-23.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-06-21",
+    "title": "SPY Drawdown Visualization",
+    "summary": "Interactive SPY drawdown chart with regime shading. Companion to the heatmap — shows peak-to-trough drawdown series with Bear/Mid/Bull regime overlays.",
+    "file": "spy_dd_viz_2026-06-21.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-06-21",
+    "title": "Blend Strategy Grid Visualization",
+    "summary": "Performance surface across LV/MOM/MR weight combinations. Grid search of blended strategy returns showing the optimal weight region and sensitivity to allocation changes.",
+    "file": "blend_grid_viz_2026-06-21.html",
     "author": "Mani Sabapathi"
   }
 ]
