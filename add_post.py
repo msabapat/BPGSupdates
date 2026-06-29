@@ -17,7 +17,7 @@ POSTS_JSON = "posts.json"
 
 def main():
     args = sys.argv[1:]
-    author = None
+    author = "Mani Sabapathi"
     if "--author" in args:
         i = args.index("--author")
         author = args[i + 1]
