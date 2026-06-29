@@ -1,6 +1,30 @@
 [
   {
     "date": "2026-06-29",
+    "title": "Bottom-Up Engine — Framework & Moat Taxonomy",
+    "summary": "Framework for identifying durable compounders: moat taxonomy (network, switching cost, cost advantage, intangible), scoring schema, base-rate analysis, and matched-loser discipline. Companion to the top-down quant engine.",
+    "file": "bottom-up/bottom-up-engine-framework_2026-06-29.html",
+    "author": "Arvind Rajan",
+    "category": "bottom-up"
+  },
+  {
+    "date": "2026-06-29",
+    "title": "Meta-Engine Design — Historical Tests",
+    "summary": "Historical backtests supporting the meta-engine design: regime classification sensitivity, strategy performance across regimes, and blended portfolio results across the full 2001–2026 history.",
+    "file": "top-down/meta-engine-historical-tests_2026-06-29.html",
+    "author": "Arvind Rajan",
+    "category": "top-down"
+  },
+  {
+    "date": "2026-06-29",
+    "title": "Meta-Engine Design — Framework",
+    "summary": "5-layer top-down quant engine: universe, regime, strategy selection, sizing, and execution. Strategy library with 4-shelf architecture (quant, discretionary, hybrid, research). Interactive 9-tab explorer.",
+    "file": "top-down/meta-engine-design_2026-06-29.html",
+    "author": "Arvind Rajan",
+    "category": "top-down"
+  },
+  {
+    "date": "2026-06-29",
     "title": "Quantitative Strategy Dashboard",
     "summary": "Updated dashboard with Blend D (5-bucket quintile regime) added alongside Blend C \u2014 new card, regime table, and all charts.",
     "file": "strategy_deck_2026-06-29.html",

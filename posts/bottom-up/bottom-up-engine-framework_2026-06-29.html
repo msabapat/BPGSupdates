@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bottom-Up Engine — BPGS</title>
+<style>
+ :root{--navy:#1F3864;--blue:#2E5FA3;--gray:#6b7280;--ink:#1d1d1f;--line:#dce1e8;--soft:#f5f8fc;--bg:#eef1f5;
+   --green:#1a7f37;--greenbg:#eafaef;--amber:#9a6b16;--amberbg:#fff8ec;--amberbd:#e7c887;--red:#b3261e;--redbg:#fbecec;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Segoe UI,Arial,Helvetica,sans-serif;line-height:1.55;}
+ header{background:var(--navy);color:#fff;padding:20px 26px 0;position:sticky;top:0;z-index:30;}
+ header h1{margin:0;font-size:21px;letter-spacing:-.2px;}
+ header p{margin:4px 0 12px;font-size:12.5px;color:#c7d3e6;}
+ nav{display:flex;gap:2px;flex-wrap:wrap;}
+ nav button{background:transparent;color:#c7d3e6;border:0;border-bottom:3px solid transparent;
+   padding:9px 13px;font-size:13px;cursor:pointer;font-weight:500;white-space:nowrap;}
+ nav button:hover{color:#fff;}
+ nav button.active{color:#fff;border-bottom-color:#fff;}
+ main{max-width:1060px;margin:24px auto 80px;padding:0 24px;}
+ .view{display:none;} .view.active{display:block;animation:fade .2s;}
+ @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;}}
+ h2.vh{color:var(--navy);font-size:21px;margin:2px 0 2px;}
+ .vsub{color:var(--gray);font-size:13.5px;margin:0 0 18px;}
+ h3{color:var(--blue);font-size:15.5px;margin:24px 0 8px;}
+ p{font-size:14px;margin:0 0 11px;}
+ ul,ol{font-size:14px;margin:0 0 12px;padding-left:22px;} li{margin:0 0 6px;}
+ b,strong{color:#101620;}
+ table{border-collapse:collapse;width:100%;margin:12px 0 18px;font-size:12.5px;background:#fff;border-radius:8px;overflow:hidden;}
+ th{background:var(--blue);color:#fff;text-align:left;padding:7px 9px;font-weight:600;vertical-align:top;}
+ td{border:1px solid var(--line);padding:6px 9px;vertical-align:top;}
+ tr:nth-child(even) td{background:var(--soft);}
+ code,.mono{background:#eef1f6;padding:1px 5px;border-radius:4px;font-size:12px;font-family:SFMono-Regular,Menlo,monospace;}
+ pre{background:#10233f;color:#dbe6f7;padding:15px 18px;border-radius:10px;overflow:auto;font-size:12.5px;line-height:1.5;}
+ .callout{background:var(--amberbg);border:1px solid var(--amberbd);border-radius:8px;padding:13px 17px;margin:14px 0;font-size:13.5px;}
+ .callout b{color:var(--amber);}
+ .key{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px;padding:14px 18px;margin:16px 0;}
+ .key b{color:var(--navy);}
+ .pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;color:#fff;}
+ .f{background:var(--red);} .s{background:var(--blue);} .c{background:var(--amber);}
+ .tag{display:inline-block;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:700;border:1px solid;}
+ .up{color:var(--green);border-color:#9bd6ab;background:var(--greenbg);}
+ .dn{color:var(--red);border-color:#e6b3b3;background:var(--redbg);}
+ .mid{color:var(--amber);border-color:var(--amberbd);background:var(--amberbg);}
+ .gloss{border-bottom:1px dotted #7f9bc4;cursor:help;}
+ th .gloss{border-bottom-color:#bcd3ff;color:#fff;}
+ #tip{position:fixed;max-width:300px;background:var(--navy);color:#fff;font-size:12.5px;line-height:1.5;
+   padding:9px 13px;border-radius:8px;box-shadow:0 6px 26px rgba(0,0,0,.3);z-index:90;display:none;pointer-events:none;}
+ #tip b{color:#bcd3ff;}
+ .lede{font-size:15px;color:#2a3340;border-left:3px solid var(--blue);padding-left:14px;margin:0 0 16px;}
+ .conn{color:var(--gray);font-style:italic;}
+ .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;} @media(max-width:720px){.two{grid-template-columns:1fr;}}
+ .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:13px 15px;border-top:4px solid var(--blue);}
+ .card h4{margin:0 0 6px;color:var(--navy);font-size:14.5px;}
+ .scale{font-size:12px;color:var(--gray);}
+ .scale b{font-family:SFMono-Regular,Menlo,monospace;color:var(--ink);}
+</style></head><body>
+<header>
+ <h1>Bottom-Up Engine — Framework &amp; Moat Taxonomy</h1>
+ <p>Picking a handful of companies that compound 10×–1000× after they go public · companion to the macro Regime Meta-Engine · v3 · 2026-06-26</p>
+ <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<div id="tip"></div>
+<script>
+const G = {
+ ROIC:"Return on invested capital — the % a business earns on every dollar it puts to work. High and <b>rising</b> ROIC is the engine of compounding.",
+ TAM:"Total Addressable Market — the total yearly revenue if the company captured 100% of its market. Big TAM ÷ small company = long runway.",
+ Runway:"How many years a company can keep reinvesting at high returns before it saturates its market. Roughly TAM ÷ today's revenue. The make-or-break multibagger filter.",
+ NRR:"Net Revenue Retention — what last year's customers spend this year. Above 100% means they spend <b>more</b> even before new customers are added — a strong lock-in signal.",
+ CAC:"Customer Acquisition Cost — what it costs to win one new customer. <b>Falling</b> CAC as you grow is a network-effect fingerprint.",
+ SSS:"Same-Store Sales — growth from existing locations, stripping out new openings. The cleanest read on a retail/restaurant flywheel.",
+ moat:"The durable, structural reason competitors can't catch up. We call it a <b>Barrier</b>. Eight types are catalogued in the Moats tab.",
+ multiple:"The valuation the market pays (e.g. price-to-earnings). The one term in the equation we don't control — never bet on it re-rating up.",
+ T1:"Type-I error — a <b>false alarm</b>: it looked like a great company but failed. Clusters in bubbles and stories-without-a-moat.",
+ T2:"Type-II error — a <b>missed winner</b>: it was easy to dismiss (boring, foreign, unprofitable, 'expensive') but soared. The dominant error for a multibagger hunter.",
+ reflexivity:"Soros's idea that a story can <b>create</b> the reality it predicts — a company raises cheap money on a narrative and uses it to build real advantages.",
+ counterpos:"Counter-positioning — you do business in a way the incumbent <b>can't copy without wrecking its own model</b> (Netflix vs Blockbuster). Detectable by pure reasoning, day one.",
+ Builder:"The founder/management engine that <b>creates, stacks and renews</b> moats over time. Not a moat itself — the moat-maker. Judged carefully (Guard B).",
+ Barrier:"A structural moat — a wall that exists whether or not management is brilliant. The eight types in the Moats tab.",
+ lift:"How much more common a feature is in winners than in the look-alike losers. A feature with zero lift describes greatness but doesn't <b>predict</b> it.",
+ stack:"Moat stacking — the biggest baggers have 3–4 reinforcing moats (Apple = ecosystem + brand + switching + scale). Stack count is itself a quality signal.",
+ Dir:"Moat <b>direction</b> — is the advantage widening (+), flat (0) or narrowing (−)? The single most decisive column. Losers usually had a moat; it was narrowing.",
+ Detect:"Was the edge actually visible <b>in real time</b>, or only obvious in hindsight? A '−' here means you couldn't have known — a frenzy/T1 setup.",
+ Surv:"Survival / capacity to suffer — can it fund the long wait through drawdowns, via cash or cheap access to capital? Amazon-2001's decisive variable.",
+ Sig:"Signature — customer pull visible before profits: retention, NRR, engagement density, pricing power. The only read on pre-profit companies."
+};
+function gl(k,txt){return `<span class="gloss" data-g="${k}">${txt}</span>`;}
+
+const TABS = [
+ ["overview","1 · Core idea"],
+ ["pantheon","2 · Pantheon"],
+ ["signatures","3 · Signatures"],
+ ["lens","4 · Firm Lens"],
+ ["moats","5–7 · Builder &amp; Moats"],
+ ["scorecard","8 · Scorecard"],
+ ["examples","9 · Scored Examples"],
+ ["using","10–11 · Using It"],
+ ["forward","12–13 · Forward"]
+];
+
+const V = {};
+
+V.overview = `
+<h2 class="vh">The core idea — and the one equation</h2>
+<p class="vsub">What actually makes a 10×–1000× company, in one mechanism.</p>
+<p class="lede">A multibagger reinvests a lot of its cash at a high rate of return, for a very long time, behind a competitive advantage that is <b>getting stronger</b> — bought <b>before</b> the market priced that in, and held through two or three gut-wrenching drawdowns.</p>
+<p>The <b>mechanism is timeless</b>; what it <i>looks like</i> changes by era. This is why Benjamin Graham is the wrong model — "buy cheap" is built to avoid losses and structurally <b>caps</b> upside. The right lineage is Fisher → Munger → late Buffett → Lynch → Sleep → Thiel. And the greatest future companies are often <b>loss-making today</b>, so we must read the <i>signs</i> of advantage before the profits (tab 3).</p>
+<pre> Total stock return (over holding period):
+
+   ≈  [ ROIC × reinvestment rate ]^years   ×   exit multiple
+                                            ÷   entry multiple
+                                            ÷   cumulative dilution
+
+   RUNWAY   =  how many years of high-ROIC reinvestment remain (the make-or-break filter)
+   MOAT     =  the barrier that stops ROIC from being competed away (prerequisite)
+   multiple =  the market's valuation (P/E or EV/EBITDA) — the one term we cannot engineer</pre>
+<div class="callout"><b>Reading the equation:</b> ${gl("ROIC","ROIC")} × reinvestment rate = annual EPS growth. Compounded over <b>n years</b> of ${gl("Runway","runway")}, that is the intrinsic value created. Multiply by how the market re-rates the stock (exit ÷ entry ${gl("multiple","multiple")}), divide by any share count growth (dilution). A ${gl("moat","moat")} is not a factor in the equation — it is the reason ROIC stays high long enough for the compounding to matter.</div>
+<h3>Three rules that fall straight out of the equation</h3>
+<ul>
+<li><b>A moat alone is not enough.</b> The moat protects the <i>return</i>; the bagger comes from return × reinvestment × runway. A fortress in a tiny market is a <b>value trap</b>.</li>
+<li><b>Don't pay for the future twice.</b> Cisco-2000 was a great company and a ruinous stock — the price had already baked in 20 years of growth.</li>
+<li><b>Dilution can eat the gain.</b> Raising money on a story is fine <i>only if</i> it builds the moat faster than it dilutes (Tesla yes, most SPACs no).</li>
+</ul>
+<div class="key"><b>Hand-off to the macro engine.</b> The bottom-up engine picks <i>what</i> could compound; the macro Regime Meta-Engine sets <i>which style</i> the era favors and <i>how much</i> to own (tab 10–11).</div>`;
+
+V.pantheon = `
+<h2 class="vh">The Pantheon — the minds we distilled this from</h2>
+<p class="vsub">Not a reading list — the <b>parts list</b> for the rest of the engine. The right column is the payoff: exactly what each lens contributes, and where it shows up.</p>
+<table><thead><tr><th>Thinker / Operator</th><th>Camp</th><th>Core idea</th><th>Contributes to OUR engine →</th></tr></thead><tbody>
+${[
+["Benjamin Graham","Investor","Buy below value; margin of safety","The <i>anti</i>-pattern — caps upside; what NOT to optimize"],
+["Phil Fisher","Investor","'Scuttlebutt'; judge growth &amp; management","Permission to score <i>qualitative</i> signals (tab 3)"],
+["Buffett / Munger","Investor","Wonderful business + moat + honest owner","The core: moat (tab 5–7) + Builder (tab 5)"],
+["Peter Lynch","Investor","Notice what's working in daily life","Early real-world signal-spotting (tab 3)"],
+["George Soros","Investor","Reflexivity — a story can create reality","'Moat under construction' (tab 5–7)"],
+["Nick Sleep","Investor","'Scale economics shared'","A durable sub-type of scale moat (M3)"],
+["Bessembinder / Phelps / Mayer","Investor","A tiny % of stocks make all the wealth","The mandate: pick a <i>handful</i> and hold"],
+["Cathie Wood / Masa Son","Investor","Back exponential, loss-making disruptors","Forces scoring of pre-profit firms (tab 3)"],
+["Michael Porter","Strategist","Five Forces — is the industry any good?","The 'good pond?' filter (tab 4)"],
+["Clayton Christensen","Strategist","Disruption attacks from below","Score a moat vs a <i>named attacker</i> (tab 5–7)"],
+["W. Brian Arthur","Strategist","Tech markets have increasing returns","Why network/scale moats widen by default"],
+["Carlota Perez","Strategist","Frenzy (most die) → golden age","Life-stage conditioning; when most bets are traps"],
+["Hamilton Helmer","Strategist","7 Powers — the moat catalogue","The backbone of the moat taxonomy (tab 5–7)"],
+["Bruce Henderson","Strategist","Experience curve — cost falls with volume","The scale/cost moat mechanism (M3)"],
+["Theodore Levitt","Strategist","'What business are you really in?'","Guards the Kodak/Blockbuster blind spot"],
+["Jim Collins","Academic","Level-5 leaders; the flywheel","The Builder + self-reinforcing flywheel"],
+["Jeff Bezos","Operator","Day 1; cash-flow per share","Reinvestment flywheel; 'driver excellence' = Builder"],
+["Steve Jobs","Operator","Taste + integration; product as moat","Stacking moats into an ecosystem"],
+["Jensen Huang","Operator","A platform (CUDA) + decade-ahead bets","Ecosystem lock-in; optionality on a new S-curve"],
+["Elon Musk","Operator","Turn narrative into real factories","The reflexive flywheel done right (tab 3)"],
+["Andy Grove","Operator","'Only the paranoid survive'","The sell discipline — spot the moat breaking"],
+["Peter Thiel","Operator","Monopoly; 'competition is for losers'","Category-creation as the ultimate moat"],
+["Dalio / Marks / Minsky","Macro","Big cycles; where are we in the cycle","The hand-off on timing &amp; sizing (tab 10–11)"]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td class="conn">${r[3]}</td></tr>`).join("")}
+</tbody></table>
+<div class="key"><b>The connection in one line.</b> Helmer → moat catalogue · Porter → industry filter · Christensen → attacker-relative scoring · Soros/Musk → 'moat under construction' · Buffett → moat + Builder · Perez/Dalio → life-stage &amp; macro sizing · Grove/Levitt → the sell triggers.</div>`;
+
+V.signatures = `
+<h2 class="vh">Signatures of greatness — the signs <i>before</i> the profits</h2>
+<p class="vsub">A loss-making company has a silent income statement — but greatness leaves fingerprints years earlier. Most are early signs of a moat <b>forming</b>.</p>
+<table><thead><tr><th>Signature</th><th>In plain English</th><th>The moat it foreshadows</th><th>What you can watch</th><th>The look-alike that fools you</th></tr></thead><tbody>
+${[
+["Power before profit","Winning customers/share faster than money","Network or scale moat forming",`Users getting <i>more</i> engaged; customers staying; ${gl("CAC","CAC")} <i>falling</i>`,"A one-sided 'network' that churns (Groupon)"],
+["Reflexive flywheel","Raises cheap money on a story, turns it into hard assets","A moat being built with others' money","Capital raised → real factories/code; hype-vs-reality gap closing","A story that never becomes anything (Nikola, WeWork)"],
+["Talent &amp; capital magnet","Best people and cheapest money flow in","A strong Builder","A-player hires; oversubscribed raises; a founder others bet on","Charisma that raises money but builds nothing"],
+["Category creation","Inventing a market, so it has no real rival","Monopoly / counter-positioning (M6)","No true peer; brand-new customer behavior","A new category with no barrier — instantly copied (Beyond Meat)"]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("")}
+</tbody></table>
+<p>When profits do arrive, they merely <b>confirm</b> what these signatures already said. For pre-profit companies, the signatures are the whole game.</p>`;
+
+V.lens = `
+<h2 class="vh">The Firm Lens — the eight things to examine in any company</h2>
+<p class="vsub">You can't judge a moat in isolation. Some layers are <span class="pill f">FILTER</span> knock-outs (fail = out); others are <span class="pill s">SCORE</span> graded ratings. Knowing which is the difference between a screen and a wish-list.</p>
+<table><thead><tr><th>#</th><th>Layer</th><th>What we ask</th><th>Filter or Score?</th></tr></thead><tbody>
+${[
+["1","Unit economics / returns",`Does each dollar invested earn a high, <i>rising</i> ${gl("ROIC","return")}?`,'<span class="pill s">SCORE</span> (knock out only if negative with no path up)'],
+["2","Runway / TAM",`Is the market <i>vastly</i> bigger than the company today?`,'<span class="pill f">FILTER</span> then <span class="pill s">SCORE</span>'],
+["3","Moat",`What stops a rival catching up — and is it <i>widening</i>?`,'<span class="pill s">SCORE</span> (direction is key)'],
+["4","The Builder",`Owner-operator who reinvests wisely, with skin in the game?`,'<span class="pill s">SCORE</span> (with Guard B)'],
+["5","Industry structure",`Is this even a <i>good business to be in</i>? (Porter)`,'<span class="pill f">FILTER</span> (a bad pond caps everything)'],
+["6","Era / regime fit",`Does the moment in history favor this kind of company?`,'<span class="pill c">CONDITIONS the size</span> (tab 10–11)'],
+["7","Price vs expectations",`Has the market <i>already</i> priced the dream?`,'<span class="pill f">FILTER at extremes</span> (the Cisco gate)'],
+["8","Decay / sell signals",`Is the advantage breaking down?`,'<span class="pill c">SELL trigger</span>, not a buy (tab 9D)']
+].map(r=>`<tr><td><b>${r[0]}</b></td><td><b>${r[1]}</b></td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}
+</tbody></table>
+<h3>What is ${gl("TAM","TAM")}, and why Runway is the make-or-break filter</h3>
+<p><b>TAM = Total Addressable Market</b> — the total yearly revenue if the company captured <b>100%</b> of its market. <b>${gl("Runway","Runway")}</b> ≈ TAM ÷ today's revenue — how many times over it can keep growing. This is the single most important multibagger filter, because the equation (tab 1) needs a market to grow into for 10–20 years.</p>
+<div class="two">
+<div class="card"><h4>✅ Walmart, 1972</h4><p style="font-size:13px">Tiny revenue; gigantic US-retail TAM → enormous runway → a ~1000-bagger over 30+ years.</p></div>
+<div class="card"><h4>✅ Nvidia, 2016</h4><p style="font-size:13px">Gaming TAM was limited; then datacenter/AI TAM exploded — the runway <i>expanded mid-journey</i>. (TAM can grow.)</p></div>
+<div class="card" style="border-top-color:var(--red)"><h4>❌ Great business, small TAM</h4><p style="font-size:13px">A beloved regional chain or niche component maker — real moat, great returns, but little room to grow. A good stock, not a multibagger.</p></div>
+</div>
+<div class="key"><b>So, filter or score?</b> <span class="pill f">Filter</span> first &amp; cheaply: Runway/TAM, industry, price. <span class="pill s">Score</span> the survivors: returns, moat (esp. direction), Builder. <span class="pill c">Condition</span> the size by era. <b>Sell-only:</b> decay signals. → <i>Filter on runway &amp; pond, score on moat-direction × returns × Builder, never pay through the price gate, let the era set the size.</i></div>`;
+
+V.moats = `
+<h2 class="vh">Builder vs Barrier — and the moat catalogue</h2>
+<p class="vsub">Layers 3 &amp; 4 of the Firm Lens are the heart of the engine — and constantly confused. We name them, then catalogue the Barriers.</p>
+<div class="two">
+<div class="card"><h4>${gl("Barrier","Barrier")} — the moat</h4><p style="font-size:13px">A <b>structural</b> reason rivals can't erode the economics — a wall that exists whether or not management is brilliant. Firm-Lens layer 3; catalogued below.</p></div>
+<div class="card" style="border-top-color:var(--green)"><h4>${gl("Builder","The Builder")} — the moat-maker</h4><p style="font-size:13px">The founder/management engine that <b>creates, stacks &amp; renews</b> moats. Amazon's "driver excellence" is the Builder — <i>not</i> a moat. It produced Amazon's barriers (scale + ecosystem).</p></div>
+</div>
+<h3>Why separate them? You analyze, hold &amp; sell each completely differently</h3>
+<table><thead><tr><th></th><th>If the edge is a BARRIER</th><th>If the edge is the BUILDER (no deep moat yet)</th></tr></thead><tbody>
+<tr><td><b>Betting on</b></td><td>The <i>structure</i> persists</td><td>A <i>person/team</i> keeps creating advantage</td></tr>
+<tr><td><b>You examine</b></td><td>Moat direction, who the attacker is, the regime</td><td>Track record, incentives, insider ownership, Guard B</td></tr>
+<tr><td><b>Main risk</b></td><td>The moat quietly narrows (Intel, Nokia)</td><td>Key-person risk; the magic doesn't repeat</td></tr>
+<tr><td><b>Sell trigger</b></td><td>Moat direction flips negative</td><td>Founder exit; allocation drifts; flywheel stops</td></tr>
+<tr><td><b>Position size</b></td><td>Size up as the moat proves durable</td><td>Size smaller; demand the flywheel be <i>converting</i></td></tr>
+</tbody></table>
+<div class="callout"><b>The decisive insight:</b> the best companies have <b>both</b> — a Builder who has <i>already</i> stacked multiple Barriers (Amazon, Apple, Nvidia). A pure-Builder bet with no emerging Barrier is the most fragile thing we can own; a strong Barrier with a weak Builder compounds but won't renew across the next S-curve (Intel).</div>
+<h3>The Moat Taxonomy — eight Barriers + the Builder (and how early we can spot each)</h3>
+<table><thead><tr><th>#</th><th>Moat</th><th>Examples</th><th>What you watch for it</th><th>See it early?</th><th>The trap</th></tr></thead><tbody>
+${[
+["M1","Proprietary IP / Technology","Novo (GLP-1), drug patents, ARM","Patent dates, trial data, a performance lead",["Yes","up"],"A patent with no market behind it"],
+["M1b","Cornered Resource","ASML (sole EUV maker), rare talent/deposits","Being the <i>only</i> supplier of a scarce input",["Yes","up"],"The scarce thing becomes common"],
+["M2","Network Effects",`Meta, Visa, Booking, MercadoLibre`,`Engagement getting denser; ${gl("CAC","CAC")} falling; high retention`,["Yes — but most never tip","mid"],"A thin, one-sided 'network' that churns"],
+["M3","Scale / Cost (incl. 'shared')","Walmart, Costco, Amazon, TSMC",`Lower unit costs as volume grows; ${gl("SSS","SSS")} gains`,["Partly","mid"],"Big, but no real cost advantage"],
+["M4","Switching Costs / Lock-in","Microsoft, Adobe, Oracle, CrowdStrike",`Customers expanding spend; very low churn (${gl("NRR","NRR")}>100%)`,["Yes","up"],"'Sticky' in theory but customers leave"],
+["M5","Brand / Habit","Coca-Cola, Nike, Apple, LVMH, Monster","Charging more than rivals and still selling",["Slow","mid"],"A fad mistaken for a brand (LA Gear)"],
+["M6",gl("counterpos","Counter-positioning"),"Netflix, Costco, Vanguard, Tesla, Amazon","Would copying you wreck the incumbent's own model?",["Earliest of all","up"],"The incumbent actually <i>can</i> respond"],
+["M7","Process (operational excellence)","Toyota (lean), Amazon ops, Domino's","A durable, unclosable gap in quality/cost/speed",["Slow","mid"],"A process rivals can simply copy"],
+["M8","Regulatory / Political","Tesla (credits), SpaceX, defense, utilities","Contracts, subsidies, scarce licenses",["Yes — durability uncertain","mid"],"The subsidy/license <b>reverses</b> (Alibaba)"],
+["B","The Builder (moat-<i>maker</i>)","Bezos, Buffett, Musk, Huang, Arnault","Capital-allocation record, insider ownership",["Partly","mid"],"A promoter who builds nothing"]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td><b>${r[1]}</b></td><td>${r[2]}</td><td>${r[3]}</td><td><span class="tag ${r[4][1]}">${r[4][0]}</span></td><td>${r[5]}</td></tr>`).join("")}
+</tbody></table>
+<div class="key"><b>Early-detection takeaway.</b> Spot early &amp; reliably: <b>M1/M1b</b> (patents, sole-supplier), <b>M4</b> (one retention number), <b>M6</b> (a day-one logic puzzle — most under-used), <b>M8</b> (public contracts*). <b>M2</b> is detectable but dangerous. <b>M3/M5/M7</b> are real but slow — so act on the <b>Builder + counter-positioning</b> before the financials prove it.</div>
+<h3>How the foundation (tabs 1–4) changes the way we read a moat — the "grammar"</h3>
+<ol>
+<li><b>Moat × Runway is the unit, never moat alone</b> — a fortress over a saturated market is a sell.</li>
+<li><b>A moat only counts against a <i>named attacker</i></b> (Christensen) — Kodak's film moat was useless vs digital.</li>
+<li><b>Moat <i>direction</i> depends on the era</b> (Arthur/Perez) — it widens on its own in a tipping market, narrows in a maturing one.</li>
+<li><b>There's a moat <i>above</i> the company — the industry</b> (Porter) — bad pond → capped score.</li>
+<li><b>A moat can be "under construction"</b> (${gl("reflexivity","Soros")}) — financed into being before it shows in the numbers; the test is Guard B.</li>
+<li><b>The tab-3 signatures ARE the moat early-warning system.</b></li>
+<li><b>The same moat means different things at different life stages.</b></li>
+<li><b>Every moat gets an AI-durability tag</b> (tab 12).</li>
+</ol>
+<p class="conn">Net: a moat is read as moat × runway, against a named attacker, with a direction set by the era, a build-state, the signatures as the early sensor, and an AI-durability tag.</p>`;
+
+V.scorecard = `
+<h2 class="vh">The Scorecard — and the two rules that stop us fooling ourselves</h2>
+<p class="vsub">Every example in the next tab is graded on these eight columns. <span class="scale">Scale: <b>++</b> strong · <b>+</b> present · <b>~</b> weak/mixed · <b>−</b> absent.</span> <i>Hover any column name for its meaning.</i></p>
+<table><thead><tr><th>Column</th><th>What it measures</th></tr></thead><tbody>
+${[
+["Moats (n)",`Which moats it has, and how many ${gl("stack","stack")} together (more, reinforcing = more durable)`],
+[gl("Dir","Dir"),"Moat <b>direction</b> — widening +, flat 0, narrowing −. The single most decisive column."],
+[gl("Runway","Run"),"Runway — how much room to grow into its market (TAM)."],
+[gl("Builder","Bldr"),"The Builder — founder/management as moat-makers and capital allocators."],
+[gl("Sig","Sig"),"Signature — customer pull you can see pre-profit (retention, NRR, engagement, pricing)."],
+[gl("Surv","Surv"),"Survival — can it fund the long wait? (cash, or cheap access to capital)."],
+[gl("Detect","Detect"),"Detectability — was the edge visible in real time, or only obvious in hindsight?"],
+["Err",`The mistake it tempts: ${gl("T1","T1")} = false alarm · ${gl("T2","T2")} = missed winner`]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join("")}
+</tbody></table>
+<h3>The two guards — quality control on the scoring</h3>
+<p>Not extra steps — the rules that keep the scorecard honest. <b>They are used directly in the next two tabs</b> (the matched-loser column in tab 9; the findings in tab 10).</p>
+<div class="two">
+<div class="card"><h4>Guard A — "grade the losers too"</h4><p style="font-size:13px">A feature only earns its place if it <i>separated winners from the companies that looked just like them but failed</i>. So every winner is paired with a <b>matched loser</b>, and we keep only the features that differ. A feature's value = its ${gl("lift","lift")}. <i>(This is why "has a moat" turned out near-useless — losers had moats too — while "moat direction" turned out decisive.)</i></p></div>
+<div class="card"><h4>Guard B — don't crown every founder a genius</h4><p style="font-size:13px">The Builder score is the easiest place to fool ourselves. Three checks: (1) use <b>hard facts</b> (insider ownership %, prior allocation record); (2) grade <b>as of the decision date</b> — only what was knowable then; (3) separate the <b>promoter</b> (raises money on a story) from the <b>allocator</b> (turns money into durable moats) — the test that splits Tesla from Nikola.</p></div>
+</div>`;
+
+const rows9A=[
+["Apple","Eco·M5·M4·M3 (4)","+","+","++","++","++","++","T2","<b>Nokia / BlackBerry</b> — ecosystem; moat narrowing"],
+["Amazon","M3·Eco·M2 (3)","++","++","++","++","+","+","T1","<b>eBay</b> — reinvestment / logistics buildout"],
+["Netflix","M6·M3·M2 (3)","+","++","++","++","~","+","T2","<b>Blockbuster</b> — willingness to cannibalize"],
+["Nvidia","Eco·M4·M3 (3)","++","++","++","+","++","~","T2","<b>Intel</b> — software platform + foresight"],
+["Tesla","M5·M6·M2 (3)","+","++","++","++","~","~","T1/T2","<b>Nikola / Fisker</b> — narrative → <i>real</i> product"],
+["Meta","M2·M3 (2)","+","+","++","++","++","+","T2","<b>MySpace / Snap</b> — network density / durability"],
+["Visa / Mastercard","M2·M3 (2)","+","+","+","+","++","++","T2","<b>closed-loop / regional nets</b> — open two-sided scale"],
+["Booking","M2·M3 (2)","+","+","+","+","++","+","T2","<b>Expedia / TripAdvisor</b> — agency-net density + ROIC"],
+["Shopify","Eco·M2 (2)","+","++","+","+","~","+","T1","<b>BigCommerce</b> — developer/app ecosystem scale"],
+["ASML","M1b·M4·M7 (3)","+","+","+","+","++","++","T2","<b>Nikon / Canon</b> — EUV R&amp;D commitment forfeited"],
+["TSMC","M3·M7·M4 (3)","+","+","++","+","++","+","T2","<b>GlobalFoundries / UMC</b> — process-scale flywheel"],
+["Novo Nordisk","M1·M1b (2)","+","++","+","+","++","++","T2","<b>single-asset diabetes</b> — peptide mfg + pipeline"],
+["Moderna / BioNTech","M1·M7 (2)","?","++","+","~","~","−","T1","<b>CureVac</b> — LNP/delivery + mfg partner"],
+["Microsoft (Nadella)","M4·Eco·M3 (3)","+","+","++","++","++","+","T2","<b>Oracle / IBM</b> — cloud reinvention"],
+["Adobe","M4·M5 (2)","+","+","+","++","++","++","T2","<b>Corel / Quark</b> — installed base to convert"],
+["CrowdStrike","M2·M4·M3 (3)","+","++","+","++","~","+","T1","<b>FireEye / Symantec</b> — cloud-native + threat-data net"],
+["MercadoLibre / Sea","M2·M3·Eco (3)","+","++","+","+","~","+","T1","<b>Jumia</b> — payments/logistics + survival capital"],
+["LVMH / Hermès","M5·M1b (2)","+","+","++","++","++","++","T2","<b>diluted houses</b> — brand scarcity discipline"],
+["Costco","M3·M4 (2)","+","+","++","++","++","++","T2","<b>traditional grocers</b> — scale economics <i>shared</i>"],
+["Domino's","M7·M5·M4 (3)","+","+","+","+","+","~","T2","<b>Papa John's</b> — tech/process re-platforming"],
+["Monster Beverage","M5·M3 (2)","+","++","+","++","+","+","T2","<b>Jones Soda / SoBe</b> — distribution lock (Coke)"],
+["Alibaba <i>(capped)</i>","M2·M3·Eco (3)","+→−","+","+","+","++","+","M8-risk","<i>itself</i> — <b>M8 reversed</b> (Ant IPO pulled)"]
+];
+const rows9B=[
+["Walmart","M3·M7 (2)","+","++","++","++","+","+","T2","<b>Kmart / Sears</b> — logistics density + discipline"],
+["Microsoft ('86)","Eco·M2·M4 (3)","++","++","++","++","++","++","T2→T1","<b>Lotus / Novell / Borland</b> — platform + bundling"],
+["Amazon ('97)","M3 (1–2)","+","++","++","+","~","−","T1","<b>Pets.com / Webvan</b> — unit econ + survival"],
+["Cisco ('00)","M4·M3·M2 (3)","+→0","−","+","+","++","SELL","T1@peak","<i>itself</i> — price capitalized 20 yrs of growth"],
+["Intel","M7·M3·M4 (3)","+→−","+","+→~","+","++","decay","T2→decay","<i>itself</i> — moat <b>direction flipped</b>"],
+["Home Depot","M3·M5 (2)","+","++","++","++","+","+","T2","<b>Builders Square / Hechinger</b> — format + scale"],
+["Nike","M5 (1, deep)","+","++","++","++","+","~","T2","<b>LA Gear</b> — durable brand (LA Gear was a fad)"],
+["Starbucks","M5·M3 (2)","+","++","++","++","+","+","T2","<b>Krispy Kreme / Cosi</b> — <i>real</i> unit economics"],
+["McDonald's","M5·M7·M8 (3)","+","++","++","++","++","+","T2","<b>Howard Johnson's</b> — standardized system + RE"],
+["Toyota","M7·M3 (2)","+","++","++","++","++","+","T2","<b>GM / Chrysler</b> — production system (uncopyable)"],
+["Berkshire","B·M1b (float)","+","++","++","++","++","++","T2","<b>conglomerate peers</b> — disciplined allocation"],
+["Ford / GM <i>(survivors)</i>","M3·M5 (2)","+","++","++","~","~","−","T1","<b>~250 dead automakers</b> — scale/capital; unknowable"]
+];
+function scoreRow(r){return `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}</td><td>${r[9]}</td></tr>`;}
+const scoreHead=`<tr><th>Winner</th><th>Moats (n)</th><th>${gl("Dir","Dir")}</th><th>${gl("Runway","Run")}</th><th>${gl("Builder","Bldr")}</th><th>${gl("Sig","Sig")}</th><th>${gl("Surv","Surv")}</th><th>${gl("Detect","Det")}</th><th>Err</th><th>Matched loser — the variable it lacked</th></tr>`;
+
+V.examples = `
+<h2 class="vh">Scored examples — 30+ winners, each next to the look-alike that failed</h2>
+<p class="vsub">Each row is a winner graded on the eight Scorecard columns (hover the headers). The final column — the <b>matched loser</b> and the one thing it lacked — is the heart of the exercise.</p>
+<h3>9A · Last ~20 years (decision window ≥ 2005)</h3>
+<table><thead>${scoreHead}</thead><tbody>${rows9A.map(scoreRow).join("")}</tbody></table>
+<h3>9B · Prior to ~2005</h3>
+<table><thead>${scoreHead}</thead><tbody>${rows9B.map(scoreRow).join("")}</tbody></table>
+<h3>9C · The Type-I gallery — looked great, <i>were</i> the trap</h3>
+<table><thead><tr><th>Pretender</th><th>Era</th><th>Why it fooled people</th><th>What was missing</th></tr></thead><tbody>
+${[
+["Pets.com / Webvan / eToys","'99–'00","'The internet will eat retail' (true!)","Real unit economics; cash to survive"],
+["WeWork","'19","Sold as a tech platform","It was leveraged real estate"],
+["Theranos / Nikola","'15 / '20","Founder story + slick decks","The product didn't exist (promoter, not allocator)"],
+["Peloton / Zoom","'20–'21","COVID hyper-growth","No durable moat once the shock passed"],
+["Beyond Meat","'19","Category-creator story","No barrier — copied instantly"],
+["GoPro / Fitbit","'14–'15","A beloved single product","One product, zero switching cost"],
+["Groupon / Snap","'11 / '17","'Network effects!'","Weak/one-sided network; users churned"],
+["2021 SPAC cohort","'21","Free money + a narrative","Neither a moat nor profits"]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}
+</tbody></table>
+<h3>9D · The decay gallery — when a great company becomes a <i>sell</i></h3>
+<table><thead><tr><th>Company</th><th>The sell signal you could see</th><th>What it teaches</th></tr></thead><tbody>
+${[
+["Cisco ('00)","Price had baked in 20 years of growth","Don't pay for the future twice"],
+["Intel ('10s)","Missed mobile, then AI; manufacturing slipped","Moat direction turned negative"],
+["Nokia / BlackBerry","Ecosystem shrinking vs iPhone","The moat narrowed"],
+["Kodak / Polaroid / Xerox","Owned the future, refused to cannibalize","Denial at the inflection point"],
+["GE","Empire-building, financial engineering","Capital allocation drifted"],
+["Sears / Kmart / Blockbuster","Harvesting cash, not reinvesting","Rising payout = the runway is gone"],
+["Alibaba","The state pulled the Ant IPO","Regulatory moats cut both ways"]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}
+</tbody></table>`;
+
+V.using = `
+<h2 class="vh">From scores to decisions — how we actually use this</h2>
+<p class="vsub">The scoring isn't an end in itself. Reading down the matched-loser columns (Guard A at work), four decisions emerge.</p>
+<div class="key"><b>The big finding first.</b> <i>Having</i> a moat barely separates winners from losers — <b>the losers had moats too.</b> What actually separated them: <b>moat direction</b>, <b>runway</b>, <b>survival</b>, and <b>the Builder</b>. Those four carry the weight.</div>
+<div class="two">
+<div class="card" style="border-top-color:var(--green)"><h4>① BUY when</h4><p style="font-size:13px">It clears the filters (big runway, decent industry, not over-priced) <i>and</i> scores well on the discriminators: <b>moat widening + long runway + can survive + strong Builder + visible signatures</b>. Cheap early reads: ${gl("counterpos","counter-positioning")} (M6) and ${gl("NRR","retention")} (M4).</p></div>
+<div class="card" style="border-top-color:var(--red)"><h4>② AVOID (the ${gl("T1","T1")} traps)</h4><p style="font-size:13px">A story without a moat, especially in a frenzy. This is where the <b>macro engine earns its keep</b>: when it says 'bubble,' raise the bar and shrink size — the false-alarm rate is high.</p></div>
+<div class="card" style="border-top-color:var(--amber)"><h4>③ SELL when</h4><p style="font-size:13px">Any decay signal fires (tab 9D): <b>moat direction flips, runway exhausted, price has priced the dream, or the founder leaves.</b> Selling is its own discipline.</p></div>
+<div class="card"><h4>④ SIZE by</h4><p style="font-size:13px">Macro regime × the company's life stage (below): lean into exponentials in a frenzy <i>but cap the downside</i>; lean into proven compounders in a high-rate golden age.</p></div>
+</div>
+<div class="key"><b>In one sentence:</b> filter on runway &amp; pond, score on moat-direction × Builder × survival, never buy through the price gate, sell when the moat turns, and let the macro engine set the size.</div>
+<h3>11 · How much to own, and when — style × life-stage × macro</h3>
+<p><b>Dial 1 — style:</b> traditional cash-compounders (Buffett-style) vs non-traditional exponentials (Tesla, early Nvidia/Amazon). We want both, in shifting proportions.</p>
+<p><b>Dial 2 — life stage:</b> emergence → frenzy → scaling → golden age → maturity → <b>decay</b>. The <i>same company</i> moves along this line — Apple was near-bankrupt in 1996 and the most valuable company on earth later — so weight tracks the <i>stage</i>, not just the name.</p>
+<pre>position size = (what the macro regime favors) x (where the company is in its life stage)</pre>
+<p class="conn">In a cheap-money frenzy: tilt to exponentials but cap how much you can lose. In a high-rate golden age: tilt to proven compounders and the survivors of the last frenzy. The explicit hand-off to the macro Regime Meta-Engine.</p>`;
+
+V.forward = `
+<h2 class="vh">Where tomorrow's winners come from — and which moats survive AI</h2>
+<p class="vsub">Four hunting grounds, then the AI-durability tag every moat now carries.</p>
+<ol>
+<li><b>Winning the AI race, industry by industry</b> — the enablers (compute, energy, data, tooling) and the AI-native disruptor in each vertical.</li>
+<li><b>Winning the world AI creates</b> — when intelligence is cheap and everywhere, what becomes scarce? Energy &amp; power, robots/embodiment, trust &amp; verification, real-world assets, human-judgment-at-the-top businesses.</li>
+<li><b>Other tech waves and their crossings</b> — biotech/longevity, quantum, fusion, space, tokenization; and the intersections: <b>AI×bio</b> (designed drugs), <b>AI×quantum</b> (materials), <b>AI×robotics</b> (physical labor). The crossings create the classification-defiers.</li>
+<li><b>The classification-defiers</b> — inventing a category with no peer group. Highest upside, hardest to screen → they need the <i>signature</i> read (tab 3), not a comparison.</li>
+</ol>
+<h3>Which moats survive AI?</h3>
+<table><thead><tr><th>Moat</th><th>What AI does to it</th><th>Net</th></tr></thead><tbody>
+${[
+["M1 IP / patent","Legal patents hold; AI speeds rivals' R&amp;D, eroding pure tech-lead",["Mixed","mid"]],
+["M1b Cornered resource","Compute, energy, proprietary data get scarcer &amp; more valuable",["Strengthens","up"]],
+["M2 Network effects","Data-fed networks compound; social/content networks disruptable",["Mixed","mid"]],
+["M3 Scale / cost","Compute scale = a new moat; but software gets cheaper to build",["Mixed","mid"]],
+["M4 Switching costs","Agents could make switching easy; deep data/workflow lock-in resists",["Contested","mid"]],
+["M5 Brand","If agents do the buying, brand may matter less — or more amid AI noise",["Contested","mid"]],
+["M6 Counter-positioning","A reasoning advantage — timeless",["Durable","up"]],
+["M7 Process","AI commoditizes operational excellence",["Erodes (biggest risk)","dn"]],
+["M8 Regulatory","Compute controls &amp; AI rules = new moats for incumbents",["Strengthens","up"]],
+["B The Builder","As execution commoditizes, judgment at the top is worth more",["Strengthens","up"]]
+].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td><span class="tag ${r[2][1]}">${r[2][0]}</span></td></tr>`).join("")}
+</tbody></table>
+<h3>13 · What we still need to build (roadmap)</h3>
+<ul>
+<li><b>The real base-rate test (Guard A, full):</b> with Sharadar + <code>master_prices_computed</code>, take every company that shared a profile at a point in time and measure how many became multibaggers — the honest denominator (predict vs describe).</li>
+<li><b>Builder fact-sheet (Guard B):</b> insider-ownership %, prior allocation record, promoter-vs-allocator flag; grade as of the decision date.</li>
+<li><b>Attacker-relative moat scoring:</b> always score a moat against a named disruptor.</li>
+<li><b>The sizing function:</b> turn tab-11 into a real position-size formula wired to the macro engine.</li>
+<li><b>Balance the sample:</b> add non-US, non-tech, pre-1970, and turnaround cases (Apple '85–'97, AMD).</li>
+<li><b>Populate the forward map with real names</b> and score them live.</li>
+</ul>`;
+
+const nav=document.getElementById("nav"), mainEl=document.getElementById("main");
+TABS.forEach(([id,label])=>{
+ const b=document.createElement("button"); b.innerHTML=label; b.dataset.t=id;
+ b.onclick=()=>show(id); nav.appendChild(b);
+ const d=document.createElement("section"); d.className="view"; d.id="v-"+id; d.innerHTML=V[id]; mainEl.appendChild(d);
+});
+function show(id){
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+id));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.t===id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+show("overview");
+const tip=document.getElementById("tip");
+document.addEventListener("mouseover",e=>{const g=e.target.closest(".gloss"); if(g&&G[g.dataset.g]){tip.innerHTML=G[g.dataset.g];tip.style.display="block";}});
+document.addEventListener("mousemove",e=>{if(tip.style.display==="block"){let x=e.clientX+14,y=e.clientY+16; if(x+310>innerWidth)x=e.clientX-310; tip.style.left=x+"px";tip.style.top=y+"px";}});
+document.addEventListener("mouseout",e=>{if(e.target.closest(".gloss"))tip.style.display="none";});
+</script>
+</body></html>
