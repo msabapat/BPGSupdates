@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-06-29",
+    "title": "Quantitative Strategy Dashboard",
+    "summary": "Updated dashboard with Blend D (5-bucket quintile regime) added alongside Blend C \u2014 new card, regime table, and all charts.",
+    "file": "strategy_deck_2026-06-29.html"
+  },
+  {
     "date": "2026-06-27",
     "title": "Quantitative Strategy Dashboard",
     "summary": "Full performance deck: MR, LV, MOM and Blend C strategies with IS/OOS stats, regime analysis, year-by-year heatmap and correlation matrices.",
@@ -23,7 +29,7 @@
   {
     "date": "2026-06-21",
     "title": "SPY Drawdown Visualization",
-    "summary": "Interactive SPY drawdown chart with regime shading. Companion to the heatmap — shows peak-to-trough drawdown series with Bear/Mid/Bull regime overlays.",
+    "summary": "Interactive SPY drawdown chart with regime shading. Companion to the heatmap \u2014 shows peak-to-trough drawdown series with Bear/Mid/Bull regime overlays.",
     "file": "spy_dd_viz_2026-06-21.html",
     "author": "Mani Sabapathi"
   },
