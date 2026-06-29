@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-06-29",
+    "title": "Regime Analysis Dashboard",
+    "summary": "Interactive regime breakdown across 6 market dimensions (SPY drawdown, VIX, trend, momentum, breadth, sector rotation). 3-, 5-, and 10-bucket tabs. IS/OOS toggle. Stats: Ann Ret, Vol, Sharpe, Hit%, Max DD, Worst/Best Month for MR, LV, MOM, and SPY across regimes.",
+    "file": "strategies/regime_dashboard_2026-06-29.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-06-29",
     "title": "LEAPS Greek Attribution \u2014 SPY / IWM / QQQ",
     "summary": "0.08-delta Jan LEAPS, no-roll 6-month hold across three indices: option P&L + T-bill interest on freed capital vs delta-equivalent shares. Tabbed, interactive.",
     "file": "strategies/leaps_tabbed_2026-06-29.html",
