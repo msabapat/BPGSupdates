@@ -4,6 +4,7 @@
     "title": "LEAPS Greek Attribution \u2014 SPY / IWM / QQQ",
     "summary": "0.08-delta Jan LEAPS, no-roll 6-month hold across three indices: option P&L + T-bill interest on freed capital vs delta-equivalent shares. Tabbed, interactive.",
     "file": "strategies/leaps_tabbed_2026-06-29.html",
+    "author": "Mani Sabapathi",
     "category": "strategies"
   },
   {
