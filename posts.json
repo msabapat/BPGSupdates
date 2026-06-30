@@ -24,10 +24,10 @@
     "category": "strategies"
   },
   {
-    "date": "2026-06-29",
+    "date": "2026-06-30",
     "title": "BPGS Blended Strategy Report",
     "summary": "Two-tab interactive report: HML (SPY 3yr percentile) and D/R/N regime blends. M1 Kelly + M4 fixed-vol methods, log-scale equity curves, regime shading on all time charts, monthly regime area chart, tighter tables, full reproducibility config embedded.",
-    "file": "strategies/bpgs_blend_report_2026-06-29.html",
+    "file": "strategies/bpgs_blend_report_2026-06-30.html",
     "author": "Arvind Rajan",
     "category": "strategies"
   },
