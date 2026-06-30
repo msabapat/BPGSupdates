@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-06-30",
+    "title": "Automated Credit Analyst \u2014 Model Feasibility & Framework",
+    "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources.",
+    "file": "research/credit_analyst_feasibility_report_2026-06-30.html",
+    "author": "Mani Sabapathi",
+    "category": "research"
+  },
+  {
     "date": "2026-06-29",
     "title": "LEAPS Greek Attribution \u2014 SPY / IWM / QQQ",
     "summary": "0.08-delta Jan LEAPS, no-roll 6-month hold across three indices: option P&L + T-bill interest on freed capital vs delta-equivalent shares. Tabbed, interactive.",

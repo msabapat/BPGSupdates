@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated Credit Analyst — Model Reference</title>
+<style>
+:root{
+  --bg:#f8f9fa;--panel:#ffffff;--panel2:#f1f3f5;--ink:#1a1f2e;--muted:#6b7280;
+  --line:#e2e6ea;--accent:#1d6fce;--accent2:#5b3db8;
+  --go:#187a36;--maybe:#92600a;--label:#1558b0;--newdata:#5b3db8;--no:#c0392b;
+  --chip:#f1f3f5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;color:var(--ink);
+  font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---- HEADER ---- */
+header{background:#fff;border-bottom:1px solid var(--line);padding:28px 32px 20px;position:sticky;top:0;z-index:200;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+header h1{font-size:22px;letter-spacing:-.3px;font-weight:700;color:var(--ink)}
+header h1 .sub{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:4px}
+
+/* ---- TABS ---- */
+.tab-bar{background:#fff;border-bottom:2px solid var(--line);padding:0 28px;display:flex;gap:0;overflow-x:auto;scrollbar-width:thin;position:sticky;top:69px;z-index:190;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-bar::-webkit-scrollbar{height:3px}
+.tab-bar::-webkit-scrollbar-thumb{background:#d1d5db}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;font:14px/1 inherit;padding:13px 18px;white-space:nowrap;transition:color .15s,border-color .15s;margin-bottom:-2px}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+
+/* ---- LAYOUT ---- */
+.wrap{max-width:1140px;margin:0 auto;padding:28px 28px 80px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+h2{font-size:20px;margin:0 0 6px;letter-spacing:-.2px;color:var(--ink)}
+h3{font-size:15px;color:#374151;margin:28px 0 10px;font-weight:600}
+p{color:#374151;line-height:1.7}
+.intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 22px;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.intro strong{color:var(--ink)}
+
+/* ---- MODEL CARD ---- */
+details.mc{background:#fff;border:1px solid var(--line);border-radius:12px;margin:0 0 12px;overflow:hidden;transition:border-color .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+details.mc[open]{border-color:#bfcbda}
+details.mc summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;user-select:none}
+details.mc summary::-webkit-details-marker{display:none}
+details.mc summary:hover{background:#f7f9fb}
+.mc-left{flex:1;min-width:0}
+.mc-name{font-size:16px;font-weight:700;letter-spacing:-.2px;display:block;line-height:1.3;color:var(--ink)}
+.mc-meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+.mc-tagline{font-size:13.5px;color:#4b5563;margin-top:5px;line-height:1.5}
+.mc-right{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-top:2px}
+.chevron{color:var(--muted);font-size:18px;transition:transform .2s;line-height:1}
+details.mc[open] .chevron{transform:rotate(180deg)}
+
+/* card body */
+.mc-body{padding:0 20px 20px;border-top:1px solid var(--line)}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:760px){.mc-grid{grid-template-columns:1fr}}
+.mc-section{background:#f8f9fa;border:1px solid #e2e6ea;border-radius:8px;padding:13px 15px}
+.mc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.mc-label.what{color:#1558b0}.mc-label.why{color:#187a36}.mc-label.bad{color:#c0392b}.mc-label.data{color:#92600a}
+.mc-section p,.mc-section ul{font-size:13.5px;color:#374151;line-height:1.65}
+.mc-section ul{padding-left:16px}
+.mc-section ul li{margin:4px 0}
+.mc-formula{background:#f1f3f5;border:1px solid #dbe1e8;border-radius:6px;padding:9px 12px;font-family:monospace;font-size:12.5px;color:#1d4ed8;margin:8px 0 4px;overflow-x:auto}
+.mc-note{font-size:12px;color:var(--muted);margin-top:6px;font-style:italic}
+
+/* ---- BADGES ---- */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.2px}
+.b-go{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.b-label{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.b-new{background:#ede9fe;color:#5b21b6;border:1px solid #ddd6fe}
+.b-no{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.b-maybe{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+
+/* ---- OVERVIEW WIDGETS ---- */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+@media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.stat .n{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.stat.go .n{color:#166534}.stat.no .n{color:#991b1b}.stat.maybe .n{color:#92400e}.stat.acc .n{color:#1558b0}
+.callout{border-left:3px solid var(--accent);background:#eff6ff;padding:13px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:14px;color:#1e3a5f}
+.callout.warn{border-color:#d97706;background:#fffbeb;color:#78350f}
+.callout.good{border-color:#16a34a;background:#f0fdf4;color:#14532d}
+.callout.bad{border-color:#dc2626;background:#fef2f2;color:#7f1d1d}
+
+/* ---- TABLES ---- */
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;color:#374151}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px;background:#f8f9fa}
+tr:hover td{background:#f0f4f8}
+
+/* ---- ROADMAP ---- */
+.step{display:flex;gap:14px;margin:14px 0;align-items:flex-start}
+.step .num{flex:0 0 32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;margin-top:2px}
+.step .body{flex:1;font-size:14px;color:#374151;line-height:1.65}
+.step .body strong{color:var(--ink)}
+
+/* ---- MISC ---- */
+code{background:#f1f3f5;border:1px solid #dbe1e8;border-radius:4px;padding:1px 6px;font-size:12.5px;color:#1558b0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.footnote{font-size:12.5px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Automated Credit Analyst — Model Reference
+    <span class="sub">Complete taxonomy · what each model does, why it works, its shortcomings, and feasibility on your data · 2026-06-30</span>
+  </h1>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('overview')" data-tab="overview">Overview</button>
+  <button class="tab-btn" onclick="showTab('accounting')" data-tab="accounting">Accounting</button>
+  <button class="tab-btn" onclick="showTab('structural')" data-tab="structural">Structural</button>
+  <button class="tab-btn" onclick="showTab('intensity')" data-tab="intensity">Intensity</button>
+  <button class="tab-btn" onclick="showTab('ml')" data-tab="ml">Machine Learning</button>
+  <button class="tab-btn" onclick="showTab('ratings')" data-tab="ratings">Ratings</button>
+  <button class="tab-btn" onclick="showTab('lgd')" data-tab="lgd">LGD / Severity</button>
+  <button class="tab-btn" onclick="showTab('macro')" data-tab="macro">Macro & Hybrid</button>
+  <button class="tab-btn" onclick="showTab('disconnects')" data-tab="disconnects">Equity-Bond Disconnect</button>
+  <button class="tab-btn" onclick="showTab('build')" data-tab="build">Data & Build</button>
+</div>
+
+<div class="wrap">
+
+<!-- ==================== OVERVIEW ==================== -->
+<div id="panel-overview" class="tab-panel active">
+<h2>Credit Risk Model Landscape</h2>
+<p style="color:var(--muted);font-size:13px;margin:4px 0 20px">Source: 33-model research manifest + CFA Institute / World Bank framework · mapped to <code>backtester.duckdb</code></p>
+
+<div class="stat-grid">
+  <div class="stat go"><div class="n">17</div><div class="l">models runnable today — published coefficients, data on hand</div></div>
+  <div class="stat maybe"><div class="n">10</div><div class="l">runnable after adding a default-event label (re-fit + all ML)</div></div>
+  <div class="stat no"><div class="n">6</div><div class="l">blocked — core input absent (bond/CDS spreads or recovery cash flows)</div></div>
+  <div class="stat acc"><div class="n">~4,338</div><div class="l">active US common stocks scoreable right now (≈3,600 ex-financials)</div></div>
+</div>
+
+<div class="callout good"><strong>The single highest-leverage move:</strong> assemble a clean default-event label. Published-coefficient models (Altman, Ohlson, Zmijewski, CHS, Bharath-Shumway) ship this week with no new data. Everything in the ML family and all re-fits need labeled default events. You have a usable proxy already: 2,724 delisted "…Q" tickers in the DB.</div>
+<div class="callout warn"><strong>On the equity-return overlay:</strong> the literature is clear and counterintuitive — the robust signal is <em>negative</em> (the "distress anomaly"). High model-PD stocks subsequently <em>under</em>perform. Screen out or short the high-PD tail; don't buy it.</div>
+
+<div class="legend">
+  <span class="badge b-go">RUN NOW</span><span style="font-size:13px;color:var(--muted)">published coefficients, all data on hand</span>
+  <span class="badge b-label" style="margin-left:12px">NEEDS LABEL</span><span style="font-size:13px;color:var(--muted)">data on hand, needs default-event labels to train</span>
+  <span class="badge b-no" style="margin-left:12px">BLOCKED</span><span style="font-size:13px;color:var(--muted)">core input absent from any equity/fundamentals DB</span>
+  <span class="badge b-maybe" style="margin-left:12px">PARTIAL</span><span style="font-size:13px;color:var(--muted)">implementable with limitations or approximations</span>
+</div>
+
+<div class="scroll">
+<table>
+<thead><tr><th>Family</th><th>Named models</th><th>Output</th><th>Best for</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Accounting / Statistical</td><td>Altman Z/Z'/Z'', Ohlson, Zmijewski, Shumway, CHS, generic logit/probit</td><td>Bankruptcy score or calibrated PD</td><td>Private firms, any name with fundamentals</td><td><span class="badge b-go">RUN NOW</span></td></tr>
+<tr><td>Structural / Market</td><td>Merton, Black-Cox, KMV/EDF, Bharath-Shumway naïve-DD, CreditGrades</td><td>Distance-to-default → PD</td><td>Public firms with daily equity prices</td><td><span class="badge b-go">RUN NOW</span></td></tr>
+<tr><td>Reduced-form / Intensity</td><td>Jarrow-Turnbull, Duffie-Singleton, Lando, Duffie-Saita-Wang</td><td>Hazard rate → term-structure PD</td><td>Bond/CDS pricing, multi-horizon PD</td><td><span class="badge b-no">BLOCKED</span> <span class="badge b-maybe">partial workaround</span></td></tr>
+<tr><td>Machine Learning</td><td>XGBoost/LightGBM, Random Forest, stacked ensemble, hybrid, SVM, KNN, neural nets</td><td>Calibrated classification probability</td><td>Large labeled panel, any feature set</td><td><span class="badge b-label">NEEDS LABEL</span></td></tr>
+<tr><td>Ratings / Transition</td><td>Cohort analysis, duration/survival, transition matrices, MPEP</td><td>PD by rating grade, migration probabilities</td><td>Multi-horizon PD, CECL/IFRS 9, rating system</td><td><span class="badge b-label">NEEDS LABEL</span></td></tr>
+<tr><td>LGD / Severity</td><td>Altman-Kishore, Moody's recovery, LossCalc, Frye, workout regression, stochastic LGD</td><td>Loss severity conditional on default</td><td>EL = PD × LGD × EAD, Basel capital</td><td><span class="badge b-no">BLOCKED (to fit)</span> <span class="badge b-go">lookup table now</span></td></tr>
+<tr><td>Macro / Hybrid</td><td>VAR stress model, macro-overlay logit/GBM, sector-conditional models</td><td>Stressed portfolio default rates</td><td>Stress testing, DFAST/CCAR-style scenario analysis</td><td><span class="badge b-label">NEEDS LABEL + FRED</span></td></tr>
+</tbody>
+</table>
+</div>
+</div><!-- /overview -->
+
+
+<!-- ==================== ACCOUNTING ==================== -->
+<div id="panel-accounting" class="tab-panel">
+<div class="intro"><strong>Accounting / statistical models</strong> derive PD from financial statement ratios — the cheapest family to run (no market data needed), works for private firms, and covers every name in Sharadar. The downside: financial statements are filed quarterly at best, so the signal is backward-looking and can miss rapid deterioration. All published-coefficient versions run today; re-estimated versions need labels.</div>
+
+<!-- BEAVER -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Beaver Univariate Ratios</span>
+    <span class="mc-meta">Beaver · 1966</span>
+    <span class="mc-tagline">Single-ratio cutoffs — the ancestor of the field; useful only as a baseline.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Tests 30 individual financial ratios one at a time for their ability to separate failed from non-failed firms using a simple cutoff rule. Each ratio is evaluated by the misclassification rate at its optimal threshold. The best single predictor found: cash flow / total debt. Beaver tracked ratios for up to five years before failure and found systematic deterioration.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Proved for the first time that financial statement data contains extractable predictive information about failure, and that the signal strengthens as you approach default. Cash flow / total debt works because a firm that generates insufficient operating cash flow relative to its debt burden is structurally unsustainable — it must refinance, sell assets, or default.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Not a model — just a ratio-screening study. No probability output.</li>
+    <li>Single-ratio ignores correlations: a firm can have great cash flow but catastrophic leverage simultaneously.</li>
+    <li>Binary cutoff is fragile; no grey zone.</li>
+    <li>Immediately superseded by Altman's MDA framework (1968).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All ratios available in <code>sharadar_fundamentals</code>. Use <code>ncfo</code> (operating CF) / <code>debt</code> as the cash-flow ratio. Only worth including as a sanity-check benchmark in a validation suite — not a production output.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ALTMAN Z -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Altman Z-score</span>
+    <span class="mc-meta">Altman · 1968 · Public manufacturers</span>
+    <span class="mc-tagline">Five-ratio linear discriminant score. Distress zone &lt; 1.81, safe zone &gt; 2.99.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">Z = 1.2·(WC/TA) + 1.4·(RE/TA) + 3.3·(EBIT/TA) + 0.6·(MVE/TL) + 0.999·(Sales/TA)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Multiple discriminant analysis (MDA) finds the linear combination of five ratios that maximally separates bankrupt from non-bankrupt firms in training data. Each ratio covers a distinct failure dimension: liquidity (WC/TA), cumulative profitability (RE/TA — older firms accumulate more), operating efficiency (EBIT/TA), leverage (MVE/TL using market cap), and asset turnover (Sales/TA).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>MDA maximizes the ratio of between-group variance to within-group variance — it finds the single axis in 5-dimensional ratio space along which bankrupt and healthy firms are most separated. The Z-score acts as a sufficient statistic for this axis. The combination of liquidity, profitability, leverage, and efficiency captures the core failure dynamics: firms default when operating losses erode equity, leverage becomes unsustainable, and liquidity dries up simultaneously.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Original sample: 33 bankrupt + 33 matched non-bankrupt manufacturers, 1946–1965. Tiny and 60+ years old.</li>
+    <li>LDA assumes multivariate normality and equal covariance matrices — rarely satisfied by financial ratios.</li>
+    <li>Sales/TA is industry-sensitive: high for retailers, low for capital-intensive firms → biased in cross-industry settings.</li>
+    <li>Grey zone (1.81–2.99) has high misclassification rate; the model gives no guidance there.</li>
+    <li>No probability output — only a score index. Cannot compute EL = PD × LGD.</li>
+    <li>Published coefficients should be re-estimated; multiple studies document significant drift over decades.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All 5 inputs available: <code>workingcapital, retearn, ebit, assets, liabilities, marketcap, revenue</code>. Use <code>marketcap_ffill</code> from <code>sharadar_prices_computed</code> for MVE. <strong>Validated live — produces correct ordering</strong> (AAPL Z=12.3, BBBY Z=−3.3). Best used as Z'' in your cross-industry universe.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ALTMAN Z' Z'' -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Altman Z′ and Z″-scores</span>
+    <span class="mc-meta">Altman · 1983 (Z′) · 1995 (Z″) · Private firms / Non-manufacturers</span>
+    <span class="mc-tagline">Z′ replaces market equity with book equity (for private firms). Z″ removes Sales/TA entirely (for cross-industry use).</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">Z″ = 3.25 + 6.56·(WC/TA) + 3.26·(RE/TA) + 6.72·(EBIT/TA) + 1.05·(BVE/TL)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Z′ makes the original Z-score applicable to private companies by replacing market value of equity (MVE) with book value of equity (BVE) in the leverage ratio, since private firms have no observable market cap. Z″ goes further: it drops the Sales/TA turnover term completely (making it more industry-neutral) and recalibrates. Z″ thresholds: distress &lt; 1.1, safe &gt; 2.6.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Sales/TA systematically varies by industry structure rather than by credit health — a grocery chain has 3× the asset turnover of a steel mill at the same credit quality. Removing it reduces false signals in a pooled cross-industry dataset. The 3.25 constant shifts the score distribution so zones are comparably calibrated to the original. Same MDA rationale otherwise.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Book equity is a worse leverage signal than market equity — backward-looking, doesn't update continuously.</li>
+    <li>Dropping Sales/TA loses real information even if it reduces industry bias.</li>
+    <li>LDA assumptions still apply.</li>
+    <li>Zone thresholds vary across publications — use Z″ only as a relative score, not the absolute zones.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>Z″ is the recommended Altman variant for your universe</strong> (cross-industry, all public common stocks). All inputs available: <code>workingcapital, retearn, ebit, assets, equity, liabilities</code>. Validated live: AAPL Z″=6.62, BBBY Z″=−11.46.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OHLSON -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Ohlson O-score</span>
+    <span class="mc-meta">Ohlson · 1980</span>
+    <span class="mc-tagline">Nine-factor logit — first model to produce a genuine probability output between 0 and 1.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">O = −1.32 − 0.407·SIZE + 6.03·TLTA − 1.43·WCTA + 0.076·CLCA − 1.72·OENEG − 2.37·NITA − 1.83·FUTL + 0.285·INTWO − 0.521·CHIN
+PD = 1 / (1 + e^(−O))</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Nine-variable logit regression on a panel of 105 bankrupt and 2,058 non-bankrupt firms from Compustat, 1970–1976. Variables: SIZE (log total assets deflated by GNP price level), TLTA (leverage), WCTA (liquidity), CLCA (short-term liquidity), OENEG (dummy: liabilities &gt; assets), NITA (ROA), FUTL (cash flow from operations / total liabilities), INTWO (dummy: two consecutive loss years), CHIN (change in net income — earnings momentum).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Logit produces a proper probability via the sigmoid transform — unlike Z-score, you can interpret it as P(default within 1 year). Ohlson used a far larger and more representative sample than Altman (not match-paired). The inclusion of flow variables (FUTL, NITA) alongside stock variables (TLTA, WCTA) and qualitative dummies (OENEG, INTWO) covers multiple dimensions of distress simultaneously, capturing both the level and trend of financial health.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>1980 coefficients are 45 years old; performance degrades substantially vs re-estimated versions.</li>
+    <li>SIZE term needs a GNP/GDP price deflator (FRED series <code>GDPDEF</code>) — one extra data pull.</li>
+    <li>Like Altman, backward-looking; no market-price signal.</li>
+    <li>Logit assumes log-linear relationship between log-odds and each predictor — doesn't capture interactions automatically.</li>
+    <li>OENEG (liabilities &gt; assets) is a very late-stage flag; firms rarely reach this point before other signals fire.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All 9 inputs derivable: SIZE from <code>assets</code> + FRED deflator; <code>liabilities, workingcapital, liabilitiesc, assetsc, netinc, ncfo, retearn</code> all in <code>sharadar_fundamentals</code>. OENEG and INTWO are computed dummies. Pull FRED <code>GDPDEF</code> once for the SIZE deflator.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ZMIJEWSKI -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Zmijewski X-score</span>
+    <span class="mc-meta">Zmijewski · 1984</span>
+    <span class="mc-tagline">Three-variable probit — the most parsimonious full-probability model. Clean, fast, easy to explain.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">X = −4.336 − 4.513·ROA + 5.679·(TotalDebt/TotalAssets) − 0.004·(CurrentAssets/CurrentLiabilities)
+PD = Φ(X)  [normal CDF]</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Probit model distilling credit risk to three ratios: ROA (net income / assets — profitability), leverage (total debt / total assets), and liquidity (current assets / current liabilities). Used a choice-based sampling correction to address the class-imbalance problem (defaults are rare). Output is a probit probability via the standard normal CDF.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>These three variables capture the essential triad of credit risk: <em>can the firm generate earnings to service debt?</em> (ROA), <em>how much debt does it carry?</em> (leverage), <em>can it meet near-term obligations?</em> (liquidity). The choice-based sampling correction addresses a key flaw in earlier models — sampling equal bankrupt/non-bankrupt observations inflates the apparent precision of coefficient estimates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Only 3 variables — real credit risk has more dimensions; important signals (earnings trend, cash flow quality) are omitted.</li>
+    <li>ROA is a point-in-time snapshot; doesn't capture whether profitability is improving or deteriorating.</li>
+    <li>No market-price information whatsoever.</li>
+    <li>Probit vs logit is largely a theoretical distinction; empirically the performance difference is negligible.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All three inputs directly available: <code>roa, de</code> (debt/equity), <code>currentratio</code>. Or compute from primitives: <code>netinc/assets, debt/assets, assetsc/liabilitiesc</code>. <strong>Simplest full-probability model to batch-score your entire universe today.</strong></p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- GENERIC LOGIT -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Re-estimated Generic Logit / Probit Scorecard</span>
+    <span class="mc-meta">Basel IRB standard · modern re-estimation of Ohlson-style model</span>
+    <span class="mc-tagline">Fresh logistic regression on your own data — the most-used bank internal model, and the minimum viable supervised model once you have labels.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>A logistic regression estimated on your actual Sharadar panel with your default labels. Feature set: any combination of accounting ratios, market-price variables (vol, momentum, size), sector dummies, and macro covariates. Coefficients are optimized by maximum likelihood on your universe, avoiding the decay problem of 1968–1984 published coefficients. Output: calibrated 1-year PD that can be converted to a credit rating grade.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Re-estimation on current data with proper variable selection eliminates the fundamental criticism of classic scorecards (dated, small samples). Logit is the most interpretable probabilistic model — each coefficient has a clear log-odds interpretation, confidence intervals are available, and regulatory bodies (Basel IRB) specifically require interpretable PD models with documented variable justification. It handles the full 4,338-name universe efficiently.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Requires default labels — can't run until label pipeline is built.</li>
+    <li>Assumes log-linear relationship between predictors and log-odds; real relationships are often nonlinear (tree models capture this automatically).</li>
+    <li>Sensitive to multicollinearity among financial ratios; need careful feature selection (VIF, LASSO).</li>
+    <li>Requires periodic re-estimation (every 2–3 years) as market conditions shift.</li>
+    <li>Class imbalance (defaults are ~0.5–2% annually) needs handling: class weights or calibrated threshold.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>Build this first after assembling labels.</strong> All features available in <code>sharadar_fundamentals</code> + <code>sharadar_prices_computed</code>. Suggested starting features: TLMTA, NIMTA, vol_90d, mom_12m1m, marketcap_ffill (from CHS), plus Z″, naïve-DD as derived features. Fit on 1995–2015, validate on 2016–2026.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- SHUMWAY -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Shumway Hazard Model</span>
+    <span class="mc-meta">Shumway · 2001</span>
+    <span class="mc-tagline">Discrete-time hazard (panel logit across all firm-years) — fixes the survivorship bias baked into static models.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW*</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Instead of fitting a logit on a single cross-section of firms, fits a logit on <em>all firm-year observations</em> — including years before bankruptcy. The hazard h(t) = P(default in year t | survived to t) is modeled as a logit function of time-varying covariates: 3 accounting ratios (net income/assets, total liabilities/assets, working capital/assets) plus 2 market variables (relative market size, prior-year excess return). Uses published coefficients from the 2001 paper.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Static models (Altman, Ohlson) typically fit on matched cross-sections — one observation per firm (the last available before failure). This implicitly conditions on survival until the estimation window, introducing survivorship bias into coefficient estimates. Using all firm-years exploits the full information in the longitudinal panel. The market variables (size, excess return) capture real-time information that accounting ratios miss between filing dates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Annual frequency — misses within-year deterioration; Chava-Jarrow (monthly) improves this.</li>
+    <li>Conditional independence across firm-years is assumed but violated — serial correlation in credit quality is strong.</li>
+    <li>Published 2001 coefficients need re-estimation for the current era; market microstructure has changed significantly.</li>
+    <li>* RUN NOW with published coefficients as a rough ranking; label-gate for re-estimation.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Perfect fit for your panel. <code>sharadar_fundamentals</code> (ART dimension, joined on datekey) gives the accounting variables. <code>sharadar_prices_computed</code> gives <code>marketcap_rank</code> (relative size) and <code>mom_12m1m</code> (excess return proxy). The Sharadar panel includes delisted firms — critical for avoiding survivorship bias.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- CHS -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Campbell–Hilscher–Szilagyi (CHS)</span>
+    <span class="mc-meta">Campbell, Hilscher, Szilagyi · 2008 · Journal of Finance</span>
+    <span class="mc-tagline">Dynamic logit with 8 market-adjusted predictors — the modern academic standard for public-firm PD.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW*</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">PD = logit(β·NIMTA + β·TLMTA + β·EXRET + β·SIGMA + β·RSIZE + β·CASHMTA + β·MB + β·PRICE)
+where NIMTA = net income / (equity_mkt + liabilities);  TLMTA = liabilities / (equity_mkt + liabilities)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Monthly-updated dynamic logit on 8 predictors: <strong>NIMTA</strong> (net income / market total assets — ROA with market denominator), <strong>TLMTA</strong> (total liabilities / MTA — leverage that responds instantly when equity falls), <strong>EXRET</strong> (excess return over S&amp;P — recent momentum), <strong>SIGMA</strong> (3-month equity volatility — uncertainty), <strong>RSIZE</strong> (log of firm mcap / S&amp;P mcap — size), <strong>CASHMTA</strong> (cash/MTA — liquidity), <strong>MB</strong> (market-to-book), <strong>PRICE</strong> (log price capped at $15 — penny-stock signal). Each predictor is geometrically-weighted over prior months, emphasizing recent observations.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Using market total assets (equity_mkt + liabilities) as the denominator means NIMTA and TLMTA respond <em>immediately</em> when equity price falls — they don't wait for the next quarterly filing. A firm losing half its market cap sees its TLMTA double even before any accounting change. The geometric weighting captures the trend, not just the level. Including SIGMA and PRICE captures tail-risk signals that pure ratio models miss: high volatility and penny-stock status are empirically strong predictors independent of leverage.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Requires live equity prices — no private firms.</li>
+    <li><strong>The distress anomaly:</strong> firms with high CHS-predicted PD earn anomalously <em>low</em> subsequent returns, inconsistent with distress being a compensated risk factor. Do not use high CHS-PD as a buy signal — it has historically lost money.</li>
+    <li>Dynamic logit (not a true survival model) — technically treats each monthly observation as independent, which understates standard errors.</li>
+    <li>Original coefficients estimated on 1963–2003 data; market structure (HFT, passive investing) has changed; re-estimation recommended.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>Best fit of any published model to your database.</strong> All 8 inputs derivable: <code>netinc, liabilities, assets, cashneq, equity</code> from fundamentals; <code>marketcap_ffill, vol_90d, mom_12m1m</code> from <code>sharadar_prices_computed</code>. Run now with published coefficients; re-estimate with labels as phase 2 — this is the highest-priority re-fit.</p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /accounting -->
+
+
+<!-- ==================== STRUCTURAL ==================== -->
+<div id="panel-structural" class="tab-panel">
+<div class="intro"><strong>Structural models</strong> derive PD from equity price dynamics, treating equity as a call option on firm assets. They are forward-looking (update daily with market prices), theoretically coherent (grounded in option pricing), and naturally capture the relationship between leverage and volatility. All require a traded equity price — they don't work for private firms without an additional mapping model.</div>
+
+<!-- MERTON -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Merton Structural Model</span>
+    <span class="mc-meta">Merton · 1974</span>
+    <span class="mc-tagline">Equity as a call option on firm assets. Distance-to-default → PD via the normal CDF. The theoretical foundation of all structural models.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">E = V·N(d₁) − F·e^(−rT)·N(d₂)
+d₁ = [ln(V/F) + (r + σ_V²/2)·T] / (σ_V·√T)
+d₂ = d₁ − σ_V·√T
+PD = N(−d₂) = N(−DD)   where DD = d₂ is distance-to-default</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Models firm value V as a geometric Brownian motion. Equity E is the residual claim — a European call option on V with strike F (face value of debt) and maturity T (debt horizon). Using Black-Scholes-Merton, observe equity price and equity volatility (σ_E) and solve iteratively for the unobservable asset value (V) and asset volatility (σ_V). The distance-to-default DD = d₂ measures how many standard deviations of asset returns separate current assets from the default threshold. PD = N(−DD).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>The equity market is forward-looking — it incorporates expectations about future earnings, asset values, and risks that haven't yet appeared in financial statements. As a firm deteriorates, equity price falls, equity volatility rises, and both forces simultaneously increase leverage and reduce the distance-to-default. The option-pricing framework provides a theoretically grounded conversion from observable equity signals to credit risk, with a direct link between the two through the firm's capital structure.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Default only at debt maturity T — not realistic (firms default at any time due to covenant breaches, cash shortfalls). Black-Cox addresses this.</li>
+    <li>Lognormal asset dynamics → thin tails; real default frequencies exceed N(−DD) predictions (especially for high-DD firms). Hence KMV's empirical mapping.</li>
+    <li>Iterative solve is computationally intensive for 4,000+ names daily; Bharath-Shumway's closed-form gets 90% of the predictive content with zero iteration.</li>
+    <li>Debt structure simplified to face value F; doesn't handle convertibles, covenants, revolvers, or off-balance-sheet liabilities.</li>
+    <li>Sensitive to choice of T (debt maturity, typically set to 1 year for current + 5 years for long-term — arbitrary).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All inputs available: <code>marketcap_ffill</code> (equity value E), <code>vol_90d</code> (σ_E — already annualized), <code>debtc + debtnc</code> (face value of debt F), FRED <code>DGS1</code> (risk-free rate r). Set T = 1 year for short-dated. Practical shortcut: use Bharath-Shumway (next card) for batch scoring — it's validated and gives ~90% of this model's predictive power.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- BLACK-COX -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Black-Cox First-Passage Model</span>
+    <span class="mc-meta">Black & Cox · 1976</span>
+    <span class="mc-tagline">Default the first time assets hit a barrier — more realistic than Merton's single-date default.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Extends Merton by triggering default at the <em>first passage time</em> τ = inf{t : V_t ≤ H_t}, where H_t = H·e^(−γ(T−t)) is an exponentially decaying barrier. This allows default at any point in [0,T], not just at maturity. The survival probability has a closed-form involving the first-passage distribution of a drifted Brownian motion. PD over horizon T is larger than Merton's PD for the same inputs because any path that hits the barrier counts as a default.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Bond covenants and debt agreements allow creditors to declare default — or demand immediate repayment — any time the firm's condition falls below certain thresholds. A firm can run out of cash long before its bonds mature. The first-passage framework captures this economic reality: default is a path-dependent event that can happen anytime assets deteriorate enough, not just on a fixed future date. It's the continuous-time equivalent of a firm becoming technically insolvent.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>The barrier H must be specified — typically a fraction of face value of debt, but this is arbitrary and sensitive.</li>
+    <li>Closed-form solutions require constant (or exponentially decaying) barriers; stochastic barriers require Monte Carlo.</li>
+    <li>More parameterization complexity than Merton with limited incremental PD scoring accuracy in practice.</li>
+    <li>More commonly used in credit derivative pricing than in PD scoring; Merton + empirical mapping (KMV) dominates in practice.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Same inputs as Merton, plus a barrier assumption (H typically = 50–70% of face value of debt). Implementable but low priority for the scoring application. More useful if you ever build a credit spread term structure.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- KMV -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">KMV / Expected Default Frequency (EDF)</span>
+    <span class="mc-meta">Moody's Analytics (KMV) · commercial, ~1990s</span>
+    <span class="mc-tagline">Empirical Merton: maps distance-to-default to observed default frequencies rather than the normal CDF — fixes Merton's fat-tail problem.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Computes distance-to-default DD exactly as Merton, but instead of applying the normal CDF to get PD = N(−DD), maps DD to an empirically-observed default frequency using Moody's proprietary database of millions of firm-years and hundreds of thousands of observed defaults globally. If DD = 2.0, the EDF is the actual fraction of all firms with DD ≈ 2.0 that defaulted within 1 year in the database. KMV's "default point" also differs: set at current liabilities + 0.5 × long-term debt (not face value), a practically calibrated threshold.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>The standard normal CDF N(−DD) systematically understates empirical default frequencies, especially for DD in the 1–3 range where most near-default firms sit — real asset-return distributions have fat tails. The empirical mapping corrects this by grounding predictions in observed reality. KMV's database size (global, multi-decade) gives robust estimates across the full DD range, including thin tail regions where small samples would fail.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>The empirical DD→EDF mapping is entirely proprietary — you can compute DD but cannot apply KMV's specific table without a Moody's Analytics subscription (~$50K+/yr).</li>
+    <li>Global database includes diverse jurisdictions; may not be well-calibrated specifically for US small-cap universe.</li>
+    <li>Inherits all Merton structural limitations (lognormal assets, point-in-time leverage only).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>DD computation inputs all available (same as Merton). <strong>The value-add: once you have default labels, build your own empirical DD→default-rate table.</strong> Bin your 36 years of DD estimates into 0.5-unit buckets; compute observed 1-year default rates per bucket; this is your proprietary EDF mapping — a genuine competitive moat. This is phase C of the roadmap.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- BHARATH-SHUMWAY -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Bharath–Shumway Naïve Distance-to-Default</span>
+    <span class="mc-meta">Bharath & Shumway · 2008</span>
+    <span class="mc-tagline">Closed-form Merton proxy — no iterative solve, ~90% of full Merton's predictive power. Ideal for batch automation. Validated live on your database.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">σ_V ≈ (E/(E+F))·σ_E + (F/(E+F))·(0.05 + 0.25·σ_E)
+DD_naive = [ln((E+F)/F) + (μ − σ_V²/2)] / σ_V
+PD_naive = N(−DD_naive)
+where E = marketcap_ffill,  F = debtc + 0.5·debtnc,  σ_E = vol_90d,  μ = mom_12m1m</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Replaces the Merton iterative solve with closed-form approximations: asset value ≈ E + F (total market value of the firm), and asset volatility ≈ a leverage-weighted blend of equity volatility and an approximated debt volatility (0.05 + 0.25·σ_E). Inserts these into the standard DD formula. Despite the approximation, Bharath and Shumway (2008) demonstrate this captures ~90% of the predictive content of the full Merton model in hazard regressions.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>The dominant signal in Merton DD is the ratio of asset value to debt (the numerator of DD) and asset volatility (the denominator). The precise BSM asset-value extraction via iterative solve adds refinement but not the core signal. The closed-form approximation captures both primary drivers efficiently. The paper's key insight: the <em>functional form</em> of DD matters more than the precise solution for asset value and volatility.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>By construction, slightly less precise than full Merton — the ~10% foregone is real, just not enough to justify the iterative solve in batch processing.</li>
+    <li>PD = N(−DD) still suffers from fat-tail understatement (same as Merton); use for ranking rather than calibrated probability.</li>
+    <li>Uses prior-year stock return as expected asset return μ — very noisy signal.</li>
+    <li><strong>Critical gotcha:</strong> <code>vol_90d</code> in your DB is already annualized (~0.45 for Ford). Do NOT multiply by √252 — this was validated on your live data.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>Validated live. Correct ordering confirmed:</strong> AAPL DD=19.5 (PD≈0%), Hertz DD=0.27 (PD=39.5%), BBBY DD=−1.54 (PD=93.8%). All inputs available: <code>marketcap_ffill, vol_90d, debtc, debtnc, mom_12m1m</code>. This is <strong>the primary structural model for your pipeline</strong> — fast, interpretable, and proven on your data.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- CREDITGRADES -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">CreditGrades Model</span>
+    <span class="mc-meta">RiskMetrics / JPMorgan / Goldman Sachs / Deutsche Bank · 2002</span>
+    <span class="mc-tagline">Structural model with an uncertain default barrier — built to track CDS spreads, not just score PD.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-maybe">PARTIAL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Extends the Black-Cox first-passage model by making the default barrier itself random: L_bar ~ Lognormal(λ, λ²), representing uncertainty about exactly when covenants or cash constraints would force a default event. Produces closed-form credit spread curves as a function of equity price, equity vol, leverage, and the barrier uncertainty parameter λ. Specifically designed by four major banks to match observable CDS spread behavior.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>The deterministic-barrier Merton model produces near-zero spreads for low-leverage firms at short maturities — empirically wrong, since even investment-grade firms trade at non-zero CDS spreads. The uncertain barrier creates a "jump-to-default" component that matches short-dated spread levels. The model was calibrated to match observed CDS spread dynamics across the credit spectrum.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Built as a spread model — requires CDS or bond data to calibrate λ for each name; without that, λ must be assumed.</li>
+    <li>Without spread data, can compute a PD-like output but it won't be market-calibrated.</li>
+    <li>More complex than Bharath-Shumway with limited incremental PD accuracy without the spread inputs.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Equity price, vol (<code>vol_90d</code> or option-implied IV from <code>options_chains</code>), and debt structure all available. Can compute a spread-equivalent PD using published λ priors from the CreditGrades technical document. More useful for names where you have <code>options_chains</code> IV (cleaner forward vol). Low priority without CDS data; Bharath-Shumway dominates for batch PD scoring.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- LELAND -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Leland / Leland-Toft Endogenous Barrier</span>
+    <span class="mc-meta">Leland · 1994 · Leland & Toft · 1996</span>
+    <span class="mc-tagline">Equityholders choose when to default — the barrier is endogenous to optimal capital structure, not set by the modeler.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-maybe">PARTIAL / LOW PRIORITY</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>In Black-Cox, the default barrier H is specified exogenously by the modeler. Leland derives H endogenously: equityholders choose the asset value threshold at which they optimally surrender the firm to debtholders (maximizing equity value), incorporating the tax shield of debt coupon payments and the deadweight costs of bankruptcy. Leland-Toft (1996) extends this to finite-maturity debt. The model simultaneously determines optimal leverage and the default boundary.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Real equityholders behave strategically: they will continue servicing debt as long as equity remains in-the-money (option value), but surrender when assets fall below the point where the firm is worth more dead than alive. The endogenous barrier captures this strategic default decision without an arbitrary threshold assumption. The model also produces testable predictions about optimal capital structure.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Requires calibration of bankruptcy cost fraction α and tax shield parameter — both unobservable.</li>
+    <li>Primarily a capital structure theory model, not a credit scoring tool; empirical PD accuracy is not its strength.</li>
+    <li>Complex numerical solution (Leland-Toft involves integrating over maturity structure).</li>
+    <li>Low incremental accuracy over Merton/Bharath-Shumway for cross-sectional default prediction.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Implementable with equity price, vol, and debt data — plus assumed parameters for α and τ (tax rate). Very low priority for the scoring application; include in a research appendix if you want theoretical completeness but skip for production.</p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /structural -->
+
+
+<!-- ==================== INTENSITY ==================== -->
+<div id="panel-intensity" class="tab-panel">
+<div class="intro"><strong>Reduced-form / intensity models</strong> model default as a Poisson arrival event with a stochastic hazard rate λ(t), rather than modeling firm value. They are calibrated to bond or CDS spreads and are the market standard for pricing credit derivatives. The core problem for your setup: <strong>you have no bond or CDS data</strong>, so the main family is blocked. One exception (Duffie-Saita-Wang) drives hazard from accounting/market covariates instead. One workaround (Damodaran synthetic rating) approximates the output without spread inputs.</div>
+
+<!-- JARROW-TURNBULL -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Jarrow–Turnbull Model</span>
+    <span class="mc-meta">Jarrow & Turnbull · 1995</span>
+    <span class="mc-tagline">The first reduced-form model — discrete Poisson default with recovery as a fraction of an equivalent risk-free bond.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-no">BLOCKED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">P(default before T) = 1 − e^(−λT)   [constant hazard]
+Credit spread s ≈ λ·(1 − δ)   where δ = recovery rate
+Calibrate λ from observed spread: λ = s / (1 − δ)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Models the time-to-default τ as an exponential random variable with hazard rate λ. Default arrives as a Poisson "surprise" — there is no firm-value process to track. Upon default, the bond pays δ × (equivalent risk-free bond price), where δ is the recovery rate. λ is calibrated from observed bond yield spreads. Survival probability over horizon T: P(τ > T) = e^(−λT). The term-structure of PD follows from integrating the hazard over [0,T].</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Default in practice does feel like an exogenous surprise — it's often triggered by a covenant breach, a rating action, or a credit-line pull that causes sudden illiquidity rather than a gradual asset-value decline. The Poisson process captures this "jump-to-default" character efficiently. The model is mathematically tractable — any credit-sensitive instrument can be priced analytically as a modified risk-free bond with a credit-adjusted discount rate. Clean calibration from spread data.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Constant hazard rate is too restrictive — credit risk is time-varying with both firm-specific and macro factors.</li>
+    <li>No economic content: doesn't explain <em>why</em> default occurs, just models <em>when</em>.</li>
+    <li>Recovery = fraction of risk-free bond is one of three competing conventions; less common in practice than Duffie-Singleton's market-value recovery.</li>
+    <li>λ is the risk-neutral hazard rate, not the physical probability — includes a risk premium that must be separated out for real-world PD.</li>
+    <li><strong>BLOCKED: requires bond yield spreads to calibrate λ.</strong></li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>No bond/CDS data in your DB. Use the <strong>Damodaran synthetic-rating workaround</strong> (see below) as the only feasible substitute — it gives an approximate λ from interest coverage without requiring spread data.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- DUFFIE-SINGLETON -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Duffie–Singleton Model</span>
+    <span class="mc-meta">Duffie & Singleton · 1999 · Review of Financial Studies</span>
+    <span class="mc-tagline">Recovery as fraction of market value — bundles default loss into the discount rate. The industry standard for CDS desk pricing.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-no">BLOCKED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">Credit-risky bond price = E^Q[exp(−∫(r_t + λ_t·L_t)dt)]
+where λ_t·L_t = default-adjusted spread  [L = loss rate = 1 − recovery fraction]
+Same PDE as risk-free bond with r replaced by (r + λL)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Extends Jarrow-Turnbull with stochastic hazard rate λ(t) driven by state variables. The key innovation: recovery upon default = (1−L)·V(t^−), a fraction of the bond's market value <em>just before</em> default. This convention allows the credit-risky bond PDE to be written identically to the risk-free bond PDE but with a modified short rate r → r + λL — the "credit-adjusted discount rate." This makes numerical pricing methods for risk-free bonds directly applicable to credit-risky instruments.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>The market-value recovery convention is economically sensible (recovery is proportional to how much the firm is worth at default) and mathematically elegant (it collapses the two-dimensional pricing problem into one dimension). Every major bank's CDS valuation desk uses this framework. The stochastic intensity λ(t) naturally accommodates time-variation — good firms have low λ, deteriorating firms have rising λ.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>λ is risk-neutral — includes credit risk premium mixed with real-world PD. Conversion to physical PD requires specifying the market price of default risk (unobservable).</li>
+    <li>No structural story: doesn't explain why λ varies across firms or over time.</li>
+    <li>Recovery rate L must be separately estimated or assumed; conflates recovery uncertainty with PD.</li>
+    <li><strong>BLOCKED: requires observable CDS or bond spreads to calibrate λ(t).</strong></li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>No CDS/bond spread data in your DB. Conceptually, this is what Damodaran's synthetic spread table approximates — it gives you an implied λ from interest coverage without real-time bond market data. Not a replacement, but useful for understanding the framework.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- DUFFIE-SAITA-WANG -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Duffie–Saita–Wang Model</span>
+    <span class="mc-meta">Duffie, Saita & Wang · 2007</span>
+    <span class="mc-tagline">Intensity model driven by accounting + market covariates — bridges the accounting-based and intensity worlds. Produces a PD term structure without bond data.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Specifies the hazard rate as a function of observable firm-level and macro covariates: λ_i(t) = exp(α + β·X_i(t) + γ·Z(t)), where X_i are firm-specific factors (accounting ratios, market variables similar to CHS) and Z(t) are macro factors (business cycle, credit spreads). Estimated by maximum likelihood on the panel. Produces a <em>term structure</em> of PD for each firm — 1-year, 3-year, 5-year — by integrating the hazard forward under assumed covariate paths.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Unlike Jarrow-Turnbull and Duffie-Singleton, this model doesn't need spread data — the hazard is driven by <em>observable</em> firm and macro variables. It bridges the accounting-based (§1) and intensity (§3) families: you get the theoretical coherence of an intensity framework (term-structure of PD, natural handling of multi-period survival) combined with observable accounting + market inputs. Multi-period PD curves are essential for CECL/IFRS 9 lifetime-loss calculations.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>More complex to estimate than simple logit — requires likelihood maximization over a panel with a hazard specification.</li>
+    <li>Multi-period PD requires forecasting covariates (X_i and Z) into the future — adds scenario-dependence.</li>
+    <li>Effectively a continuous-time version of Shumway/CHS; similar data requirements, similar performance.</li>
+    <li>Requires default labels for estimation.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>This is the one intensity model that works without bond data.</strong> All covariates from <code>sharadar_fundamentals</code> + <code>sharadar_prices_computed</code>. Needs FRED macro covariates (NFCI, HY OAS). Needs default labels. Build after the generic logit re-fit — it's the natural upgrade path when you need multi-horizon PD curves for CECL.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- DAMODARAN WORKAROUND -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Damodaran Synthetic-Rating Workaround</span>
+    <span class="mc-meta">Damodaran (NYU) · free annual update · practitioners</span>
+    <span class="mc-tagline">Interest coverage → synthetic credit rating → default spread → implied PD. No bond data needed. Run today.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">EBIT / Interest Expense = Interest Coverage Ratio
+→ lookup table: coverage → synthetic rating (AAA → CCC → D)
+→ published default spread per rating
+→ PD_implied ≈ 1 − exp(−spread / (1 − avg_recovery))</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Damodaran publishes annual tables (free on his NYU website) mapping interest-coverage-ratio ranges to synthetic credit ratings, and each rating to a default spread. The spread-implied PD follows from the simple reduced-form relationship: spread ≈ λ·(1−recovery). Provides a coarse approximation to what Jarrow-Turnbull or Duffie-Singleton would give you with real bond data, using only the firm's income statement and the interest-coverage field already computed in your database.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Interest coverage (EBIT / interest expense) is one of the strongest single predictors of credit quality and is the primary ratio used by S&amp;P and Moody's in their qualitative rating assessments. The coverage-to-rating mapping has been empirically calibrated over decades of public credit markets. For a quick, transparent spread-equivalent PD that non-quant stakeholders can understand, this is hard to beat.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Very coarse: approximately 10 rating buckets vs a continuous PD — loses all within-bucket discrimination.</li>
+    <li>Tables calibrated primarily to US investment-grade corporates; less reliable for small-caps, highly distressed, or financial-sector names.</li>
+    <li>Static table updated annually — doesn't reflect intra-year spread movements.</li>
+    <li>Interest coverage can be negative or undefined for pre-revenue firms — need a fallback.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><code>interest_coverage</code> already computed in <code>sharadar_prices_computed</code>. Or compute as <code>ebit / intexp</code> from <code>sharadar_fundamentals</code>. Download Damodaran's current table from pages.stern.nyu.edu (free). <strong>Run now — this is your only §3-family output without bond data, and it takes 20 lines of code.</strong></p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /intensity -->
+
+
+<!-- ==================== ML ==================== -->
+<div id="panel-ml" class="tab-panel">
+<div class="intro"><strong>Machine learning models</strong> learn nonlinear relationships between features and default probability directly from labeled data, with no pre-specified functional form. They consistently outperform logit on raw AUC in modern benchmarks but sacrifice interpretability and require a large labeled panel to train reliably. <strong>Every model in this family is gated on having a clean default-event label.</strong></div>
+
+<!-- XGBoost -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Gradient Boosted Trees (XGBoost / LightGBM / CatBoost)</span>
+    <span class="mc-meta">Alanis, Chava & Shah · 2022 benchmark · various implementations</span>
+    <span class="mc-tagline">Sequential ensemble of shallow trees each correcting the previous — the best single model on tabular credit data in modern benchmarks.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Builds an additive ensemble of decision trees: F(x) = Σ f_k(x). Each tree is fit to the negative gradient of the loss function computed on the residuals of all previous trees (gradient descent in function space). Trees are kept shallow (depth 3–6) to avoid overfitting; regularization is applied at both the leaf level (L1/L2) and via learning rate shrinkage. The final output is a log-odds score converted to a probability via Platt scaling or isotonic calibration. Feature importance is available via SHAP values for interpretability.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Decision trees naturally capture nonlinear relationships and interactions — an interaction between leverage and volatility (a highly leveraged, volatile firm is much worse than either alone) is captured by a single tree split, whereas logit would require an explicit interaction term. Gradient boosting systematically reduces bias: each tree patches the regions where previous trees erred. The 2022 Alanis-Chava-Shah benchmark on 2,585 US bankruptcies (1990-2019) found excess returns, idiosyncratic volatility, and relative size are the top-3 features — all in your DB.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Requires a large labeled dataset — small default samples produce unstable, overfit models. Your 2,724 "…Q" labels may be marginal; enrich with UCLA-LoPucki.</li>
+    <li><strong>Out-of-time validation is essential</strong> — cross-validation drastically overestimates real performance on time-series data. Always hold out the last 5+ years.</li>
+    <li>Not inherently probabilistic — raw outputs need calibration to be PDs.</li>
+    <li>Class imbalance (~1% annual default rate): use <code>scale_pos_weight</code> or SMOTE oversampling.</li>
+    <li>Harder to audit for regulators vs logit — SHAP values help but don't fully substitute for coefficient interpretability.</li>
+    <li>Cannot run without labels — unlike Altman/Merton.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All features from the Alanis-Chava-Shah top list available: excess returns (<code>mom_12m1m</code>), idiosyncratic volatility (<code>vol_90d</code>), relative size (<code>marketcap_rank</code>). Augment with Z″, naïve-DD, O-score, and sector indicators as derived features (Barboza hybrid). Suggested pipeline: train on 1995–2015, validate on 2016–2021, evaluate on 2022–2026.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- RANDOM FOREST -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Random Forest</span>
+    <span class="mc-meta">Breiman · 2001 · various credit applications 2017–2026</span>
+    <span class="mc-tagline">Ensemble of independently-trained deep trees with random feature subsets — reduces variance by averaging uncorrelated trees.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Trains B independent decision trees, each on a bootstrap sample of the data (bagging), and at each split considers only a random subset of √p features. Default prediction = majority vote (classification) or average of probability estimates. Unlike gradient boosting, trees are built independently (not sequentially), and each is typically grown to full depth. Feature importance via permutation importance or mean decrease in Gini impurity.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Deep individual trees have high variance (overfit to training data) but low bias. Averaging B uncorrelated trees cancels most of the variance: Var(F̄) ≈ ρσ² + (1-ρ)σ²/B, where ρ is the inter-tree correlation. Random feature subsetting reduces ρ, making trees more independent and the average more stable. RF is particularly robust on datasets with many correlated features (like financial ratios) where feature redundancy hurts individual tree stability.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>RF vs XGBoost winner depends on dataset characteristics — XGBoost generally wins on imbalanced, noisy tabular data of this type; RF may win on smaller, cleaner samples.</li>
+    <li>Random forests are less efficient learners than gradient boosting: need more trees to achieve the same bias reduction.</li>
+    <li>Probability estimates from RF are often poorly calibrated (requires Platt scaling).</li>
+    <li>Slower to predict at inference time than XGBoost for large forests.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Same feature set as XGBoost. Use RF as a robustness check and in the stacking ensemble — it often provides diversity relative to GBM (different error structure) that improves ensemble performance even when RF alone is slightly weaker.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- STACKED ENSEMBLE -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Stacked Ensemble (Model Stacking)</span>
+    <span class="mc-meta">Various · 2024–2026 literature</span>
+    <span class="mc-tagline">Meta-learner combines base model outputs — often beats any individual model by exploiting uncorrelated errors.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Two-level learning: (1) base learners — logit, RF, XGBoost, possibly Merton-DD — each produces a PD score; (2) a meta-learner (typically a small logit or ridge regression) is trained on the out-of-fold predictions of the base learners. The meta-learner learns which base models to trust in which regions of the feature space. Final prediction = meta-learner output on the base model scores.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Each base model makes different types of errors — logit errs on nonlinear regions, RF errs on extrapolation, GBM errs on outliers. A meta-learner can learn to weight the best model contextually. The key requirement is that base models are trained with cross-validation to prevent the meta-learner from seeing in-sample predictions (which would cause leakage). When base models are diverse and their errors are uncorrelated, stacking consistently outperforms any single learner.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>More complex pipeline — requires careful cross-validation to avoid leakage.</li>
+    <li>Gains over the best single model are often modest (0.5–2 AUC points); the complexity cost can outweigh the benefit.</li>
+    <li>Harder to explain to regulators: "our PD is a logit of an XGBoost of a logit" requires careful documentation.</li>
+    <li>If base models are highly correlated (all learn the same thing), stacking adds no value.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Natural architecture for your blend: stack logit (re-estimated) + XGBoost + naïve-DD + Z″ → logistic meta-learner. This exactly implements the Barboza hybrid concept. Build after individual base models are validated. Use this as the production output that feeds your rating system.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ML HYBRID -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">ML + Structural Hybrid (Barboza Method)</span>
+    <span class="mc-meta">Barboza, Kimura & Altman · 2017</span>
+    <span class="mc-tagline">Feed Z-score and Merton-DD outputs as features into a tree model — documented accuracy improvement over either alone.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Uses the outputs of theory-grounded models (Altman Z-score, Merton-style distance-to-default) as input <em>features</em> in a machine-learning classifier (SVM, RF, or gradient boosting in the original paper). The classic model outputs serve as dimensionality-reduced summary statistics that encode domain knowledge into the feature space before the ML model learns the final mapping.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Classical models encode decades of credit theory into compressed signals. The Z-score captures the liquidity/leverage/profitability tradeoff in a single dimension; the DD captures the equity-market-implied default risk. Including these as features gives the ML model a head start — it doesn't need to rediscover these relationships from scratch from raw ratios. The result: ML captures the residual nonlinearities and interactions that the classic models miss, building on their foundation rather than starting from zero.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>If the classic-model features dominate the prediction, you've added ML complexity without much gain vs just using the classic models.</li>
+    <li>Risk of double-counting information already in the raw ratios (Z-score is a function of ratios you'd also include directly).</li>
+    <li>Still requires labels — the ML stage cannot train without them.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p><strong>This is the recommended architecture for your stacked model.</strong> Compute Z″, O-score, naïve-DD, and synthetic-rating-PD as derived features first, then feed them alongside raw financial ratios and market variables into XGBoost. This is a well-documented accuracy improvement and aligns with your "blended" vision.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- SVM / KNN / Neural nets -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">SVM, KNN, and Neural Networks</span>
+    <span class="mc-meta">Various · CFA Institute survey</span>
+    <span class="mc-tagline">Additional ML classifiers used in credit scoring. Generally outclassed by gradient boosting on tabular financial data but useful for specific applications.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p><strong>SVM:</strong> finds the maximum-margin hyperplane separating defaulters from survivors in a high-dimensional feature space. With a kernel (RBF, polynomial), it can capture nonlinear boundaries. <strong>KNN:</strong> classifies a firm as high-risk if its K nearest historical neighbors (in feature space) defaulted. <strong>Neural nets/LSTM:</strong> deep layers learn complex feature interactions; LSTMs process the time-series of quarterly fundamentals sequentially, capturing dynamics across multiple periods.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p><strong>SVM</strong> is competitive on small, clean samples where margin maximization generalizes well. <strong>KNN</strong> is nonparametric and interpretable — "this firm looks like these 5 historical defaults" is a compelling narrative. <strong>Neural nets</strong> excel when inputs are sequential (LSTM captures "deteriorating trend over 8 quarters") or when unstructured data (10-K text embeddings, image of balance sheet) is included — areas where tree models can't exploit temporal structure.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li><strong>SVM:</strong> slow to train at scale; doesn't produce calibrated probabilities without Platt scaling; hyperparameter search is expensive. Outclassed by XGBoost on large tabular data.</li>
+    <li><strong>KNN:</strong> O(n) prediction time; sensitive to feature scaling and irrelevant features; poor performance in high-dimensional spaces without dimensionality reduction.</li>
+    <li><strong>Neural nets:</strong> require large datasets (your default sample may be insufficient); training instability; black box. Only worth attempting with 5,000+ defaults or when adding unstructured inputs.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>All require labels. Add SVM and KNN as validation benchmarks in your model comparison, not as production models. Add LSTM to the research roadmap when/if you add 10-K text features or want to exploit quarterly-series dynamics. For now, gradient boosting dominates all three on this data type.</p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /ml -->
+
+
+<!-- ==================== RATINGS ==================== -->
+<div id="panel-ratings" class="tab-panel">
+<div class="intro"><strong>Ratings-based / transition models</strong> are the missing family from the original 33-model manifest. They convert PD scores into letter-grade buckets and build transition matrices that quantify migration risk and multi-period PD curves. This is the standard methodology at rating agencies (S&amp;P, Moody's) and the basis for CECL/IFRS 9 lifetime-loss calculations. The key distinction — <em>through-the-cycle (TTC)</em> vs <em>point-in-time (PIT)</em> — runs through everything in this tab.</div>
+
+<!-- TTC vs PIT -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Through-the-Cycle (TTC) vs Point-in-Time (PIT)</span>
+    <span class="mc-meta">Design choice — affects every model in the system</span>
+    <span class="mc-tagline">Not a model — a design philosophy that determines whether your PD moves with the credit cycle or stays stable through it. Choose deliberately.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">DESIGN DECISION</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p><strong>Point-in-time (PIT):</strong> PD reflects current conditions — it rises in recessions and falls in expansions. A BBB-rated firm might have PD = 0.3% in 2019 and PD = 2.5% in 2009. CHS, Bharath-Shumway, and any model using current market prices produce PIT estimates. <strong>Through-the-cycle (TTC):</strong> PD reflects average credit quality through a full economic cycle — it is deliberately stable. A firm stays "BB" through both boom and bust unless its fundamental credit profile changes. S&amp;P and Moody's public ratings are designed to be TTC.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p><strong>PIT is better for:</strong> risk monitoring (you want to know if Ford is more likely to default <em>today</em> than six months ago), equity screening, and early-warning signals. <strong>TTC is better for:</strong> credit limit setting (you don't want to cut a client's line every time the VIX spikes), capital allocation, and long-term relationship pricing. The CFA survey explicitly warns that ratings-based approaches are TTC and lag rapid deterioration — both signals are needed, but for different purposes.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li><strong>PIT:</strong> volatile — generates excessive rating migrations in transition matrices, creating large M&A/restructuring costs if used to drive credit limits directly. Noisy for long-term capital allocation.</li>
+    <li><strong>TTC:</strong> lags real deterioration — CFA survey: "ratings-based approaches can miss rapid changes in fundamentals." Notoriously slow to downgrade — both 2008 and 2022 saw major rating actions after market prices had already moved.</li>
+    <li><strong>The hybrid approach:</strong> most sophisticated systems run PIT models for daily monitoring and compute a TTC grade by averaging PIT PD across a trailing full credit cycle (5–7 years).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Your DB (CHS, naïve-DD) produces PIT estimates. To derive TTC grades: bucket long-run average PD (e.g., 5-year average PIT PD) into 10 internal rating grades (1–10 or letter-grade equivalent). Your 36 years of fundamentals give enough history for full-cycle averaging. Build the TTC mapping as a post-processing step once the PIT models are running.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- COHORT ANALYSIS -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Cohort Analysis</span>
+    <span class="mc-meta">S&P / Moody's standard methodology</span>
+    <span class="mc-tagline">Track groups of firms assigned to the same rating grade — observe what fraction default over 1, 3, 5 years. Simple, transparent, regulator-approved.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL + RATING</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>At each reference date t, form a cohort of all firms assigned to each internal rating grade i. Track which firms in grade i default within the next h years (h = 1, 3, 5, 10). Raw default rate = (defaults in cohort) / (cohort size). Average across multiple reference dates → long-run average 1-year, 3-year, 5-year PDs by rating grade. These become your rating-grade PD calibration targets. This is exactly how S&amp;P publishes "historical corporate default rates by rating."</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Simple, transparent, requires no model specification beyond the rating assignment step. Easy to explain to regulators, credit committees, and non-quant stakeholders. Because it's based entirely on historical observations, it's immune to model specification error. The averaging across multiple reference cohorts smooths out any single-year anomaly.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Snapshot approach is statistically inefficient — a firm that defaults in year 3 is removed from the year-1 and year-2 cohorts, wasting partial information. Duration analysis (below) is more efficient.</li>
+    <li>All cohorts weighted equally regardless of when in the credit cycle they formed — a cohort at the 2007 peak is treated identically to a 2009 trough cohort.</li>
+    <li>Requires a prior rating assignment (bucketed PD score) before the cohort can be formed.</li>
+    <li>Low-default grades have very few observed defaults → high estimation error for investment-grade buckets.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Build synthetic rating grades from Z″ or PIT PD output (decile buckets or zone mapping). Then label defaults with "…Q" + LoPucki. The cohort table becomes your calibration target — each synthetic grade should produce the historically-observed default rate. This is the minimum needed for regulatory-grade internal rating.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- DURATION -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Duration Analysis (Survival Analysis)</span>
+    <span class="mc-meta">Cox · 1972 · applied to credit by Shumway 2001, Chava-Jarrow 2004</span>
+    <span class="mc-tagline">Continuous-time survival model using all firm-observations including right-censored survivors — more efficient than cohort analysis.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Models time-to-default T_i for each firm using a hazard function h(t|X_i) = h_0(t)·exp(β·X_i(t)). The Cox proportional hazard model doesn't require specifying the baseline hazard h_0(t) — it's estimated semi-parametrically. Each firm contributes information up to its event time (default) or censoring time (survived to end of sample, merged, etc.). Partial likelihood estimation is efficient and handles right-censoring correctly. Output: hazard rates and survival probabilities for any time horizon, by covariate profile.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Using all firm-quarters (not just a snapshot) maximizes statistical efficiency. Censored observations contribute their full survival history — a firm that survived 20 years without defaulting provides strong evidence that its profile is low-risk, not "missing data." The proportional hazard form lets you estimate relative risk (e.g., "each unit increase in TLMTA multiplies the default rate by e^β") while remaining agnostic about the absolute level of the baseline hazard.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Proportionality assumption: β is assumed constant over time (covariates have the same multiplicative effect on hazard at all durations). Violated if, say, leverage matters more for short-term than long-term default — test with Schoenfeld residuals.</li>
+    <li>Assumes non-informative censoring: firms that merge or delist for non-credit reasons are assumed to have the same default probability as firms that survive. M&amp;A censoring is likely informative (acquirees tend to be healthier).</li>
+    <li>Time-varying covariates require a "counting process" extension (Andersen-Gill formulation).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Your Sharadar panel is ideal — all firm-quarters including delisted firms are retained, giving the full survival history needed. The time axis is <code>datekey</code> (filing date). Event = default ("…Q" suffix + delisting). Censoring = M&amp;A delisting or active as of 2026-06-30. Use <code>lifelines</code> or <code>scikit-survival</code> Python packages.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- TRANSITION MATRICES -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Rating Transition Matrices</span>
+    <span class="mc-meta">S&P, Moody's methodology · CECL / IFRS 9 standard tool</span>
+    <span class="mc-tagline">N×N matrix of rating migration probabilities — converts 1-year PD to a full lifetime PD term structure for any horizon.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL + RATINGS</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>An N×N matrix M where M[i,j] = probability that a firm in rating grade i at time t migrates to grade j by time t+1. The last column (grade D = default) is the 1-year PD by grade. Because default is an absorbing state, M[D,D] = 1. Power the matrix to get multi-year transitions: M^t gives the t-year migration probabilities. Extract the last column of M^t → PD at year t for each starting grade. This produces the lifetime PD curve needed for CECL/IFRS 9.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Captures both default risk AND migration risk (a BBB firm isn't just at risk of defaulting; it's at risk of being downgraded to BB, which increases future borrowing costs and limits access to capital). The matrix approach is the natural way to compute multi-period probabilities consistent with single-period transitions — matrix powers are the mathematical machinery. CECL requires lifetime expected loss, which is the integral of conditional PD at each future period, discounted — transition matrices produce exactly this.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li><strong>Markov assumption:</strong> next rating depends only on current rating, not rating history. Empirically violated — firms recently downgraded have higher downgrade probability than firms that have held the same grade for years ("momentum" or "rating drift" effect).</li>
+    <li><strong>TTC vs PIT:</strong> empirical transition matrices are usually TTC; during recessions, all migrations worsen more than the historical average predicts. Apply macro conditioning for stress scenarios.</li>
+    <li>Estimation error is high for speculative grades and long horizons — low default counts make M^5 or M^10 unreliable without MPEP floors.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Build once you have: (1) synthetic internal rating grades (from PIT PD buckets), (2) default labels, (3) enough rating history (at least 10 years of quarterly ratings for the matrix to be stable). Straightforward empirical frequency table: count transitions between grades annually, divide by cohort sizes. For CECL/IFRS 9, power the matrix and integrate the default column.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- MPEP -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Most Prudent Estimation Principle (MPEP)</span>
+    <span class="mc-meta">Basel III / EBA guidelines</span>
+    <span class="mc-tagline">Statistical floor for low-default portfolios — prevents PD estimates of zero when observed defaults are rare but positive risk clearly exists.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">APPLY FORMULAICALLY</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>When empirical default rates are zero or very low for a rating grade (e.g., no AAA-rated firms defaulted in your sample), the maximum likelihood estimate gives PD = 0. MPEP replaces this with the upper bound of a one-sided confidence interval: PD_MPEP = 1 − (1−α)^(1/n) ≈ α/n for confidence level α and cohort size n. For example: 0 defaults in a cohort of 100 at 90% confidence → PD_MPEP = 1 − (0.10)^(0.01) ≈ 2.3%. Basel III requires this floor for IRB banks.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>A PD estimate of exactly zero is epistemically overconfident — it implies the future can never produce a default in that grade, which contradicts all experience. The MPEP quantifies the statistical uncertainty in the estimate: with a finite sample, zero observed defaults doesn't mean zero probability of default. The one-sided CI gives the highest PD consistent with the observed data at a given confidence level, providing a conservative but statistically justified floor.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Somewhat arbitrary choice of α (typically 90% or 95%) creates systematically inflated PDs for the highest-quality grades.</li>
+    <li>Produces discontinuous PD estimates across grades when cohort sizes vary (larger cohorts → smaller MPEP adjustment).</li>
+    <li>Only relevant for very thin rating buckets with near-zero observed defaults — won't affect speculative-grade estimates materially.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Apply formulaically after computing cohort default rates. No new data needed — pure statistical procedure. Implement as: <code>PD_floor = 1 - (alpha)**(1/n)</code> and take <code>max(observed_rate, PD_floor)</code>. Use α = 0.90 as the Basel-aligned default.</p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /ratings -->
+
+
+<!-- ==================== LGD ==================== -->
+<div id="panel-lgd" class="tab-panel">
+<div class="intro"><strong>LGD / severity models</strong> estimate what fraction of exposure you lose <em>given that a default has occurred</em>. LGD is distinct from PD and should be modeled separately — a great PD model doesn't tell you whether recovery is 20% or 80%. The critical design issue: <strong>you cannot fit LGD models without recovery data</strong> (workout cash flows or post-default prices). You can, however, use published empirical tables as static priors and apply the Frye stochastic framework to adjust for the credit cycle.</div>
+
+<!-- ALTMAN-KISHORE -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Altman–Kishore Recovery Study</span>
+    <span class="mc-meta">Altman & Kishore · 1996</span>
+    <span class="mc-tagline">Empirical recovery rates by seniority class and industry, US corporate bonds 1971–1995. The foundational reference table.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">USE AS STATIC PRIOR</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Tracks prices of defaulted US corporate bonds at or near the default date (30-day post-default market price, often called "market LGD") across all major default events 1971–1995. Tabulates recovery rates by seniority class (senior secured → senior unsecured → senior sub → subordinated → junior sub) and by industry (public utilities, oil/gas, retail, etc.). Finds that both dimensions matter independently and materially.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Priority-of-claims theory predicts the seniority ranking: secured creditors have first claim on collateral, so they recover more in liquidation. Industry matters because asset liquidity varies: utility assets (regulated cash flows, infrastructure) are easier to liquidate than speculative tech assets or intellectual property. The 25-year sample captures multiple credit cycles, including the 1989-90 and 1991 recessions.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Based on bond market LGD (post-default prices), not workout LGD (actual recovered cash flows over the workout period) — may overstate recovery if bonds are initially mispriced post-default.</li>
+    <li>25+ years old; post-2000 data shows different patterns (lower recovery in 2008-09, higher in 2010-19).</li>
+    <li>Not a predictive model — just historical averages. No conditioning on firm-specific factors or macro environment.</li>
+    <li>US corporate bond universe only — may not generalize to bank loans, private credit, or non-US issuers.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Use as a <strong>static LGD prior</strong> in the formula EL = PD × LGD × EAD. Typical values: senior secured ≈ 35% LGD, senior unsecured ≈ 48% LGD, subordinated ≈ 70%+ LGD. Apply sector adjustment from Altman-Kishore industry table using <code>sharadar_tickers.sector</code> mapping. This is your LGD estimate until you license recovery data.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- MOODY'S RECOVERY -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Moody's Recovery Study (Gupton / Gates / Carty)</span>
+    <span class="mc-meta">Gupton, Gates & Carty · 2000</span>
+    <span class="mc-tagline">181 bank loans — senior secured loans recover ~69.5% vs ~52.1% for senior unsecured. First systematic study of loan (not bond) recovery.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">USE AS STATIC PRIOR</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Analyzes 181 bank loans and ~1,000 bonds from Moody's default database, tracking recovery rates at instrument, obligor, and seniority levels. Key findings: (1) Senior secured loans recover ~69.5% (LGD ~30.5%); senior unsecured bonds recover ~52.1% (LGD ~47.9%). (2) Secured creditors resolve faster — shorter workout period reduces carry costs. (3) Recovery dispersion within seniority class is wide — predicting a specific firm's recovery from seniority alone has high error.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Bank loans have collateral and covenant packages that bonds typically lack — they can seize assets more quickly and at higher priority. The loan recovery data filled a critical gap (bond recovery was well-studied; loan recovery wasn't). The seniority-recovery relationship reflects the absolute priority rule in US bankruptcy code: secured claims must be paid in full before unsecured claims receive anything.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Small loan sample (181 loans from ~50 obligors) — statistically noisy, especially for sub-groups.</li>
+    <li>Based on US Chapter 11 bankruptcy — recovery patterns differ in other legal regimes.</li>
+    <li>Recovery rates vary enormously across credit cycles; the 2000 study period (roughly 1987–1999) had above-average recoveries.</li>
+    <li>Wide within-seniority dispersion: the standard deviation of recovery at any seniority class is ±20-25 percentage points — individual predictions are very uncertain.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Use updated Moody's DRD aggregate figures as the prior (Moody's publishes annual "Corporate Default and Recovery Rates" report, which is publicly available in summary form). <strong>Separate LGD by instrument type (loan vs bond) and seniority using debt structure from sharadar_fundamentals.</strong></p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- FRYE STOCHASTIC LGD -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Frye PD-LGD Correlation Model (Stochastic LGD)</span>
+    <span class="mc-meta">Frye · 2000 · Federal Reserve Bank of Chicago</span>
+    <span class="mc-tagline">Recovery falls when default rates rise — both driven by the same systematic economic factor. Critical for stress testing and downturn LGD.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-maybe">PARTIAL — approximate with FRED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-formula">Recovery R = Φ(Φ⁻¹(R_mean) − ρ_R·Z) / (1 − ρ_PD·Z)
+where Z = systematic factor (NFCI or HY OAS), ρ_R = PD-LGD correlation (typically 0.3-0.5)
+Downturn LGD = LGD in stress scenario (Z = −1.96 for 2.5th percentile stress)</div>
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Shows that in a single-factor credit model, both PD and recovery rate R are driven by the same latent systematic factor Z (the state of the economy). When Z is low (recession), defaults rise AND recoveries fall simultaneously. Frye derives a closed-form expression for the joint distribution. The "downturn LGD" required by Basel III is the conditional expected LGD given a stress scenario — e.g., Z at the 2.5th percentile of its distribution.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>In bad economic times, fire sales (Acharya et al.), illiquid secondary markets, and industry-wide distress all worsen simultaneously — so recovery rates collapse precisely when default rates peak. Ignoring this co-movement gives a systematically optimistic expected loss: EL_stressed ≠ PD_stressed × LGD_average; you need PD_stressed × LGD_stressed. The 2008–09 crisis validated this sharply: default rates surged to ~12% while recovery rates on HY bonds fell to ~25–30% vs the long-run ~40%.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Fitting ρ_R precisely requires paired PD and recovery observations — which you don't have. Must use published estimates (ρ ≈ 0.3–0.5 for US corporates).</li>
+    <li>Single-factor model is a simplification; different industries may have different systematic exposures.</li>
+    <li>The static mean R_mean still needs calibration from recovery data or a published study.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Use FRED <code>NFCI</code> or <code>BAMLH0A0HYM2</code> (HY OAS) as Z. Apply the formula with published ρ ≈ 0.4 and R_mean from Altman-Kishore/Moody's tables. Compute downturn LGD as the Frye-adjusted LGD at Z = 1.96 standard-deviation stress — this is the Basel III "downturn LGD" approximation. Sufficient for EL = PD × LGD × EAD in stress scenarios without any new licensed data.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- ACHARYA FIRE SALE -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Acharya–Bharath–Srinivasan: Industry Distress &amp; Fire Sales</span>
+    <span class="mc-meta">Acharya, Bharath & Srinivasan · 2007 · Journal of Finance</span>
+    <span class="mc-tagline">Recovery is materially lower when the defaulting firm's industry is itself in distress — potential asset buyers are also impaired.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-maybe">PARTIAL — sector proxy available</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Documents that recovery rates at default are significantly lower — by 10–20 percentage points — when the defaulting firm's industry is simultaneously experiencing distress (low industry stock returns, high industry default rates). The natural buyers in a bankruptcy auction (industry peers who can optimally deploy the assets) are themselves distressed and unable to bid, leaving only outsiders who value the assets less. This "fire-sale discount" is systematic, not random.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Asset specificity is the core mechanism: steel mills are most valuable to other steelmakers, retail real estate to other retailers, oil rigs to other E&amp;P companies. When the whole sector is distressed simultaneously, the natural buyers can't finance acquisitions — they're managing their own balance sheets. Outside buyers (private equity, distressed funds) demand a large discount for assets they can't optimally operate. The fire-sale discount grows with asset specificity and industry leverage.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Hard to forecast ex ante: you need to predict whether the firm's sector will be distressed <em>at the time of default</em>, which is uncertain at origination.</li>
+    <li>The adjustment is an ex-post observation, not a forward-looking model — converts to a scenario adjustment rather than a precise LGD estimate.</li>
+    <li>Industry asset specificity varies — the fire-sale effect is strong for capital-intensive industries (energy, materials) and weak for asset-light sectors (software, services).</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Proxy industry distress using <code>vol_60d_sector_zscore</code> from <code>sharadar_prices_computed</code> and FRED sector-specific series (WTI for energy, HOUST for homebuilders). Apply a conditional LGD adjustment: LGD_conditional = LGD_base × (1 + α · I[sector_distressed]), where α ≈ 0.15–0.20 from the Acharya regression. A useful scenario overlay on top of the static Altman-Kishore table.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- WORKOUT LGD -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Workout LGD Regression (Fractional Response Model)</span>
+    <span class="mc-meta">Baesens, Roesch & Scheule · practitioner Basel IRB standard</span>
+    <span class="mc-tagline">Discounted workout cash flows as dependent variable — the economically correct LGD definition but requires loan-level data you don't have.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-no">BLOCKED — no recovery data</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>LGD = 1 − (PV of all recoveries from a defaulted exposure) / EAD, where recoveries are discounted at the bank's cost of capital over the full workout period (months to years). The resulting LGD ∈ [0,1] is modeled as a function of collateral type, LTV, seniority, industry, obligor financials, and macro conditions using a fractional response regression (Papke-Wooldridge) or beta regression — both designed for a bounded [0,1] dependent variable without the need for transformations.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Workout LGD is the economically correct definition: it counts every dollar actually recovered (including proceeds from collateral liquidation, debt restructuring, or asset sales) discounted for the time value of money and workout cost. Market LGD (bond price 30 days post-default) is noisier and may mis-estimate recovery when post-default bond prices are distressed. The fractional response model handles the [0,1] support without the problems of truncated regression or log-transform artifacts at the boundaries.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li><strong>BLOCKED: requires loan- or bond-level workout cash flow data — not available in any equity/fundamentals database.</strong></li>
+    <li>Workout periods can span years; cash flows must be tracked through restructuring, litigation, and partial recoveries — operationally intensive.</li>
+    <li>Discount rate choice (cost of capital vs risk-free vs regulatory rate) materially affects estimated LGD.</li>
+    <li>In-sample LGD estimates are not out-of-sample LGD forecasts — models must account for workout cycle timing.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Not implementable without recovery data. Moody's DRD (paid) or S&amp;P CreditPro (paid) are the sources that would unlock this. For now: use the Altman-Kishore seniority table as static LGD, apply Frye adjustment for stress scenarios, and apply the Acharya sector-distress overlay. That's sufficient for EL and stress testing without the full workout model.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- LOSSCALC -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">LossCalc (Moody's Analytics)</span>
+    <span class="mc-meta">Gupton & Stein · 2002 / v2 2005 · Moody's Analytics</span>
+    <span class="mc-tagline">Multivariate LGD prediction on 1,800+ defaulted instruments — instrument + firm + industry + macro factors beat a historical-average recovery benchmark.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-no">BLOCKED — proprietary + recovery data</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Moody's Analytics' flagship LGD model, built on 1,800+ defaulted instruments from 900+ firms. Predictors operate at four levels: instrument (type, seniority, security), obligor (leverage, coverage, industry), industry (distress cycle), and macro (aggregate credit cycle). V2 (2005) adds a dynamic component — LGD tracks the credit cycle in real time. Predicts both immediate LGD (30 days post-default) and ultimate LGD (end of workout). Outperforms historical-average recovery by ~30% reduction in RMSE.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Combines all known LGD drivers in a single multivariate framework — no single-factor model captures them all simultaneously. The macro factor is the key value-add over simple historical tables: LGD in 2009 was far higher than the long-run average, and the model captures this through the credit-cycle variable. The large sample (1,800+ instruments) provides enough data to estimate all parameter layers without overfitting.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Methodology published; coefficients are proprietary — cannot reproduce without licensing.</li>
+    <li>Even with methodology, requires realized recovery data to fit your own version.</li>
+    <li>Calibrated to US corporate bond/loan market; international applicability limited.</li>
+    <li>V2 is 20 years old; updated versions are not publicly described in detail.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Cannot replicate without recovery data. Use the LossCalc methodology paper (Gupton &amp; Stein 2002, freely available) as a design reference for the variable selection and model architecture if you eventually license Moody's DRD. Until then, the static-prior + Frye-adjustment stack is your LGD model.</p>
+</div>
+</div>
+</div>
+</details>
+</div><!-- /lgd -->
+
+
+<!-- ==================== MACRO ==================== -->
+<div id="panel-macro" class="tab-panel">
+<div class="intro"><strong>Macro and hybrid models</strong> condition credit risk on the state of the economy. Individual firm models (§1–§2) explain <em>cross-sectional</em> variation (why Ford is riskier than Apple at a given time) but can't explain <em>time-series</em> variation (why ALL firms are riskier in 2009 than 2006). Macro models fill this gap. They range from simple FRED-variable covariates in your logit/GBM to full VAR portfolio stress models for scenario analysis.</div>
+
+<!-- FRED COVARIATES -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">FRED Macro Covariates (Point-in-Time)</span>
+    <span class="mc-meta">Federal Reserve Economic Data · free API</span>
+    <span class="mc-tagline">Add credit-cycle and real-economy variables to firm-level models — the most actionable macro layer for your immediate pipeline.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW — free API</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>FRED hosts 800,000+ time series from the Fed, BLS, BEA, and other agencies, accessible via a free API (<code>pip install fredapi</code>). For credit modeling, the key series fall into three groups: (1) <strong>credit-cycle indicators</strong> — HY OAS, Baa-Aaa spread, NFCI; (2) <strong>real economy</strong> — unemployment, industrial production, GDP growth; (3) <strong>rates</strong> — term spread, risk-free rate, mortgage rate. Added as features in a logit or GBM, they explain the systematic time-series component of default rates that firm-level variables alone miss.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Default rates are strongly procyclical: the US speculative-grade annual default rate averaged ~1.5% in 2005-07, peaked at ~12% in 2009, and returned to ~2% in 2011-19. No firm-level model predicts this — AAPL's Z-score barely moved. The HY OAS (high-yield option-adjusted spread, FRED code <code>BAMLH0A0HYM2</code>) is the single best real-time signal: it widened 400+ bps before the peak default wave in 2009 and 2020. Including it gives the model "where are we in the credit cycle?"</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Macro variables are endogenous to the default cycle — HY spreads widen <em>because</em> defaults are rising. Use <strong>lagged</strong> values (1-quarter lag minimum) to break the simultaneity.</li>
+    <li>Use <strong>ALFRED</strong> (Archival FRED — vintage releases) for backtesting: FRED shows current revised data; ALFRED shows what was actually published at each point in time. Revisions can be substantial for GDP, employment.</li>
+    <li>Macro series exhibit multicollinearity — NFCI, HY OAS, and unemployment are all highly correlated. Use a principal component or select the one with the strongest in-sample signal rather than all simultaneously.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>Priority pull list: <code>BAMLH0A0HYM2</code> (HY OAS), <code>NFCI</code> (financial conditions), <code>T10Y2Y</code> (term spread), <code>DGS1</code> (1yr risk-free for Merton), <code>UNRATE</code>, <code>USREC</code> (NBER recession dummy). Use <code>fredapi</code> Python package. Merge to your panel on date. One FRED key, 10 minutes to wire in.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- SECTOR DRIVERS -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Sector-Specific FRED Drivers</span>
+    <span class="mc-meta">Your "homebuilder" idea — generalized</span>
+    <span class="mc-tagline">Industry demand shocks as leading indicators — housing starts for homebuilders, WTI for E&amp;P, retail sales for consumer cyclicals.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">RUN NOW — free</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Beyond economy-wide macro, each sector has idiosyncratic demand drivers that lead its default cycle by months to years. The intuition: housing starts fall 18 months before homebuilder financial distress fully manifests in earnings statements. By adding the sector-specific driver as a feature (only active for firms in that sector), you give the model forward-looking information about industry revenue before it shows up in accounting ratios.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Sector default clusters are driven by shared revenue shocks: oil &amp; gas defaults in 2015-16 (WTI collapse), retail defaults in 2017-19 (Amazon displacement of physical retail), homebuilder defaults in 2007-09 (housing collapse). These shocks are visible in real-time macro data well before they appear in quarterly SEC filings. A model that sees WTI at $30 in January 2016 knows E&amp;P names are under stress before their March Q1 filing.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>Lead times vary by sector and shock type — sometimes drivers lead by 18 months, sometimes they're contemporaneous. Requires lag tuning per sector.</li>
+    <li>Spurious correlation risk if drivers are selected in-sample for each sector — use out-of-time validation to confirm predictive value.</li>
+    <li>Some sectors (Healthcare, Utilities) are largely insulated from observable macro series — the concept applies unevenly.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <div style="overflow-x:auto"><table style="font-size:12.5px">
+    <thead><tr><th>Sector (sharadar)</th><th>FRED Series</th><th>Code</th></tr></thead>
+    <tbody>
+    <tr><td>Real Estate / Homebuilders</td><td>Housing starts, Mortgage rate, Case-Shiller</td><td><code>HOUST, MORTGAGE30US, CSUSHPINSA</code></td></tr>
+    <tr><td>Energy</td><td>WTI crude oil, Natural gas</td><td><code>DCOILWTICO, DHHNGSP</code></td></tr>
+    <tr><td>Consumer Cyclical</td><td>Retail sales, Auto sales, Consumer sentiment</td><td><code>RSAFS, TOTALSA, UMCSENT</code></td></tr>
+    <tr><td>Industrials / Materials</td><td>Industrial production, Producer prices, ISM PMI</td><td><code>INDPRO, PPIACO</code></td></tr>
+    <tr><td>Financial Services</td><td>Loan delinquency rates, Yield curve slope</td><td><code>DRSFRMACBS, T10Y2Y</code></td></tr>
+    <tr><td>Technology / Comm Services</td><td>Business R&amp;D spending, tech price indices</td><td>Lagged NASDAQ returns as proxy</td></tr>
+    <tr><td>Healthcare</td><td>CPI medical care, Medicare growth</td><td><code>CPIMEDSL</code></td></tr>
+    </tbody>
+  </table></div>
+</div>
+</div>
+</div>
+</details>
+
+<!-- VAR STRESS -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">VAR / Macro Econometric Stress Model</span>
+    <span class="mc-meta">DFAST / CCAR bank stress testing framework</span>
+    <span class="mc-tagline">Portfolio-level default rate forecasting under stressed macro scenarios. Answers "what does the whole portfolio lose if GDP drops 3%?" — a Phase 3 add-on.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">PHASE 3 — NEEDS LABEL + FRED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Vector autoregression (VAR) models the joint dynamics of K macro variables as a system: each variable is regressed on lags of itself and all others. Apply a macro shock (e.g., GDP −3%, unemployment +4pp, HY OAS +400bps) and simulate forward — the VAR generates internally consistent paths for all variables simultaneously. Feed these macro paths into your firm-level PD model as time-varying covariates to get a stressed portfolio default rate distribution at each future period.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>Individual firm-level stress tests (shocking each firm's ratios independently) ignore the systemic feedback: rising defaults → tighter credit conditions → higher defaults (the financial accelerator). VAR captures these feedback loops by modeling all macro variables jointly. The scenario consistency is also critical: you can't stress HY OAS without also worsening GDP and unemployment — a VAR ensures the stressed path is internally coherent. This is the methodology underlying the Fed's DFAST bank stress tests.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>VAR has K² × lag parameters — with 6 variables and 4 lags, that's 144 parameters to estimate. Prone to overfitting on short macro time series.</li>
+    <li>Linear dynamics miss threshold effects — financial crises involve nonlinear feedback (sudden liquidity dry-up, contagion) that VAR systematically underestimates.</li>
+    <li>Historical data contains very few severe stress episodes (2-3 recessions with different characters) — tail calibration is unreliable.</li>
+    <li>Not a firm-level model: it estimates aggregate/portfolio default rates, not individual PDs. Must combine with firm-level models via a two-stage approach.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>FRED provides all macro inputs. Aggregate default rate from your "…Q" label pool over time. Build after firm-level models are validated and producing reliable portfolio-level PD aggregates. Implementation: <code>statsmodels.tsa.api.VAR</code> in Python. Phase 3 — useful for institutional presentations, stress testing reports, and regulatory-style portfolio risk analysis.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- HIERARCHICAL SECTOR -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Hierarchical Sector Fine-Tuning</span>
+    <span class="mc-meta">Recommended architecture for your build</span>
+    <span class="mc-tagline">One pooled base model + sector-level coefficient shrinkage — sector specificity where data is plentiful, pooled stability where it's thin.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-label">NEEDS LABEL</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it does</div>
+  <p>Rather than fitting separate models for each of 11 sectors (which fragments sample sizes), estimate one pooled model with sector-level random effects or partial-pooling (Bayesian hierarchical or mixed-effects logit). Sector-level coefficients can deviate from the pooled estimate but are shrunk toward it proportional to the sector's sample size: Technology (7,038 tickers) gets large sector adjustment; Utilities (733) gets pulled close to the pooled estimate. Apply a second layer of per-sector PD calibration to match historical sector default base rates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it works</div>
+  <p>A pure pooled model imposes the same coefficients on all sectors — wrong, because leverage is less informative for Utilities (regulated, predictable cash flows) than for Consumer Cyclical (volatile revenues). Separate sector models solve this but introduce instability for thin sectors. Hierarchical shrinkage is the principled middle ground: borrow strength from the global model while letting well-sampled sectors deviate. It's the standard approach in sports analytics, education research, and increasingly credit modeling.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Shortcomings</div>
+  <ul>
+    <li>More complex to implement than either pure-pooled or pure-separate models — requires mixed-effects or Bayesian estimation.</li>
+    <li>Shrinkage amount is determined by the data; for a sector with only 50 defaults, the pooled prior dominates — sector-specific insight is limited regardless of the model choice.</li>
+    <li>Requires separate calibration step per sector to align PD levels with observed base rates.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Your data</div>
+  <p>11 sectors from <code>sharadar_tickers.sector</code>. Segregate Financial Services (717 active) and Real Estate into separate tracks first — structurally different balance sheets. For the remaining ~3,600 firms, build the hierarchical model using <code>statsmodels.MixedLM</code> or <code>bambi</code> (Bayesian) in Python. Per-sector macro covariates (from the table above) are the natural sector-conditioning variables in the fixed-effect layer.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- MACRO SENSITIVITY MATRIX -->
+<h3 style="margin-top:32px">Macro factor × sector sensitivity matrix</h3>
+<p style="color:#4b5563;font-size:14px;margin-bottom:14px">Which sectors and company types are most exposed to each macro driver — and in which direction. Use this to select FRED covariates per sector and to build stress scenarios. Direction refers to credit quality: ↑ = better (lower PD), ↓ = worse (higher PD).</p>
+
+<div class="scroll">
+<table>
+<thead><tr>
+  <th>Macro Factor</th><th>FRED Code</th><th>Most Sensitive Sectors</th><th>Mechanism</th><th>Direction on Credit Quality</th><th>Lead / Lag</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>Short-term interest rates (Fed Funds)</strong></td>
+  <td><code>FEDFUNDS, DFF</code></td>
+  <td>Banks &amp; regionals, consumer lenders, money-market funds</td>
+  <td>Net interest margin (NIM) expands as deposit repricing lags loan repricing. Higher short rates improve bank earnings — but hurt floating-rate borrowers (leveraged buyouts, adjustable mortgages).</td>
+  <td>Banks: ↑ credit quality · Leveraged borrowers: ↓</td>
+  <td>Contemporaneous for NIM; 6–18 mo lag for borrower distress</td>
+</tr>
+<tr>
+  <td><strong>Long-term rates / Term spread</strong></td>
+  <td><code>DGS10, T10Y2Y</code></td>
+  <td>Utilities, REITs, Infrastructure, Telecom, Homebuilders</td>
+  <td>Long-duration assets are discounted at higher rates → asset values fall. Utilities and REITs are valued as bond proxies; spreads widen when Treasuries rise. Yield-curve inversion (negative T10Y2Y) has preceded every recession since 1955 — the single best leading indicator of systemic default uptick.</td>
+  <td>Rate-sensitive sectors: ↓ · Banks (steeper curve): ↑</td>
+  <td>Inversion → recession: 12–18 mo average lead</td>
+</tr>
+<tr>
+  <td><strong>Unemployment rate</strong></td>
+  <td><code>UNRATE</code></td>
+  <td>Consumer Cyclical, Consumer Finance (credit cards, auto), Retail, Restaurants, Airlines, Hotels, Residential REITs</td>
+  <td>Unemployment drives consumer spending and loan delinquency. 1pp rise in unemployment → ~20–30bp rise in consumer credit charge-offs (Fed research). Housing sector: mortgage delinquencies spike with job loss.</td>
+  <td>Consumer / consumer-credit sectors: ↓</td>
+  <td>Lagging indicator — confirms recession already underway; 3–6 mo lag to credit losses</td>
+</tr>
+<tr>
+  <td><strong>ISM Manufacturing PMI</strong></td>
+  <td>ISM.org (no FRED direct); use <code>MANEMP</code> as proxy</td>
+  <td>Industrials, Basic Materials (steel, chemicals, paper), Capital Equipment (CAT, DE), Trucking &amp; Logistics, Semiconductors</td>
+  <td>PMI below 50 = contraction in new orders. Equipment orders dry up → revenue falls for manufacturers. PMI is a leading indicator by 3–6 months for industrial earnings and default rates in the sector.</td>
+  <td>Industrials / Materials: ↓ when PMI &lt; 50</td>
+  <td>3–6 mo lead on industrial revenues / defaults</td>
+</tr>
+<tr>
+  <td><strong>VIX (equity volatility index)</strong></td>
+  <td><code>VIXCLS</code></td>
+  <td>Financial Services (GS, MS trading revenues), highly leveraged firms, M&amp;A-heavy, IPO-reliant, speculative-grade issuers</td>
+  <td>VIX spikes = risk-off; credit spreads widen simultaneously (VIX and HY OAS are highly correlated, ρ ≈ 0.7). High-vol environments close the primary bond market (new issuance freezes), increasing refinancing risk. Banks' trading revenues spike but loan quality deteriorates. Speculative-grade issuers can't roll debt.</td>
+  <td>Levered / speculative issuers: ↓ · Bank trading desks: ↑</td>
+  <td>Near-simultaneous with spread widening; leads defaults by 3–9 mo</td>
+</tr>
+<tr>
+  <td><strong>Equity markets (S&amp;P 500 level / return)</strong></td>
+  <td><code>SP500</code> or use <code>mom_12m1m</code> from your DB</td>
+  <td>Consumer Discretionary (wealth effect), Asset Managers (AUM fees), Private Equity–backed companies, Luxury Goods</td>
+  <td>Rising markets improve consumer net worth → spending. Asset managers earn fee income proportional to AUM. Equity decline → Merton-implied PD rises for all public firms simultaneously. A 40% market drawdown raises the typical firm's naïve-DD PD by 5–10× depending on leverage.</td>
+  <td>Broad market: ↓ PD when markets rise · Naïve-DD is a direct channel</td>
+  <td>Contemporaneous for structural models; 6–12 mo lead on accounting-based default signals</td>
+</tr>
+<tr>
+  <td><strong>Financial Conditions (NFCI)</strong></td>
+  <td><code>NFCI</code></td>
+  <td>All high-yield and leveraged issuers, private-equity backed firms, commercial real estate, banks with concentrated lending</td>
+  <td>NFCI aggregates 105 indicators: risk, credit, and leverage sub-indices. Tightening = higher borrowing costs, tighter covenants, reduced credit availability. The NFCI risk sub-index leads the IG OAS by ~1 quarter. Firms with floating-rate debt or near-term maturities are most exposed. The 2022 tightening cycle is a textbook example.</td>
+  <td>Broad ↓ when NFCI tightens; most severe for HY &amp; levered names</td>
+  <td>NFCI leads credit spreads by 1–2 quarters</td>
+</tr>
+<tr>
+  <td><strong>HY / IG Credit Spreads</strong></td>
+  <td><code>BAMLH0A0HYM2</code> (HY OAS) <code>BAMLC0A0CM</code> (IG OAS)</td>
+  <td>All leveraged issuers, particularly those with upcoming maturities. CRE, leveraged loans, CLO equity.</td>
+  <td>Spreads reflect both current default risk and refinancing risk. Widening spreads → higher cost of new issuance → "maturity wall" risk for firms rolling debt in a wide-spread environment. The HY OAS is the single best real-time credit-cycle barometer.</td>
+  <td>Self-reinforcing: wide spreads increase future default risk</td>
+  <td>Contemporaneous with distress; leads defaults by 6–12 mo at cycle peaks</td>
+</tr>
+<tr>
+  <td><strong>Oil &amp; Commodity Prices</strong></td>
+  <td><code>DCOILWTICO</code> (WTI), <code>DHHNGSP</code> (nat gas), <code>PPIACO</code> (PPI)</td>
+  <td>Energy E&amp;P (OXY, DVN, SM), Oil Services (HAL, SLB), Chemicals (LYB, DOW), Airlines (AAL, DAL — cost), Trucking (cost)</td>
+  <td>Oil price is a revenue driver for E&amp;P and a cost driver for transportation. The 2015–16 HY default wave was predominantly energy (WTI fell from $100 to $26). Airlines have 20–30% of COGS in jet fuel — oil spikes compress margins directly. Chemicals: feedstock cost is 40–60% of revenues.</td>
+  <td>E&amp;P: ↑ with oil · Airlines/Trucking: ↓ with oil · Chemicals: mixed</td>
+  <td>Contemporaneous to 3 mo lag on earnings</td>
+</tr>
+<tr>
+  <td><strong>Housing starts / Mortgage rates</strong></td>
+  <td><code>HOUST</code>, <code>PERMIT</code>, <code>MORTGAGE30US</code>, <code>CSUSHPINSA</code></td>
+  <td>Homebuilders (DHI, LEN, PHM), Building Materials (MAS, SHW), Mortgage REITs (AGNC, NLY), Home Improvement (HD, LOW)</td>
+  <td>Housing starts are the revenue pipeline for homebuilders — a 30% drop in starts (as in 2022) preceded financial stress across the whole supply chain within 12–18 months. Mortgage rates directly set affordability; 3% vs 7% mortgages change qualifying income by ~50%. Home prices (Case-Shiller) are collateral values for mortgage portfolios.</td>
+  <td>Homebuilder / mortgage sector: ↓ when starts fall or rates rise</td>
+  <td>Starts lead builder revenues by 6–12 mo</td>
+</tr>
+<tr>
+  <td><strong>Consumer Confidence / Retail Sales</strong></td>
+  <td><code>UMCSENT</code>, <code>RSAFS</code>, <code>TOTALSA</code> (auto)</td>
+  <td>Retail (M, KSS, JCP), Restaurants (CMG, DRI), Auto (F, GM, dealer groups), Travel &amp; Leisure</td>
+  <td>Discretionary spending is the first item cut in a downturn. Retailers with high fixed costs (rent, labor) and thin margins convert quickly from profit to loss when comparable-store sales drop 5–10%. Auto sales volume directly drives F/GM revenue; a 20% volume drop pushes both toward break-even.</td>
+  <td>Consumer discretionary: ↓ when confidence falls</td>
+  <td>Sentiment leads spending by 1–2 mo; spending leads credit losses by 3–6 mo</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout" style="margin-top:18px">
+<strong>Using this matrix in your model:</strong> Add sector-specific FRED covariates as interaction terms — e.g., <code>WTI × I[sector=Energy]</code>, <code>HOUST × I[sector=RealEstate]</code>. This means the macro covariate only activates for the relevant sector, preventing noise from cross-sector contamination. In a gradient-boosted model, simply include the sector-specific series as a feature alongside the sector indicator — the tree will learn the interaction automatically.
+</div>
+
+</div><!-- /macro -->
+
+
+<!-- ==================== DISCONNECTS ==================== -->
+<div id="panel-disconnects" class="tab-panel">
+<div class="intro"><strong>Equity–bond pricing disconnects</strong> occur when equity markets and bond/CDS markets assign materially different implied credit quality to the same firm. Understanding <em>why</em> they happen, which direction they resolve, and how to exploit or account for them is essential for any hybrid credit model. This tab covers the theory, documented empirical patterns, the CDS-bond basis, data sources for fixed-income, and design implications for your pipeline.</div>
+
+<h3>1 · Why theory says they shouldn't diverge</h3>
+<div class="panel" style="margin-bottom:16px">
+<p>Under the Merton (1974) framework, equity and credit risk are <strong>two faces of the same underlying asset process</strong>. Equity = call option on firm assets; debt = risk-free bond − put option on firm assets. Both are driven solely by:</p>
+<ul style="margin:10px 0 0 20px;color:#374151;font-size:14px">
+  <li><strong>Asset value V</strong> — as V falls, equity falls <em>and</em> credit spreads rise simultaneously</li>
+  <li><strong>Asset volatility σ_V</strong> — higher vol raises both equity implied vol (via BSM) and PD (via the DD formula)</li>
+  <li><strong>Leverage F/V</strong> — more debt raises both the option's moneyness for equity and the probability of breaching the default barrier</li>
+</ul>
+<p style="margin-top:10px">The model predicts a <em>deterministic, monotone relationship</em> between equity volatility and credit spreads for any given level of leverage. Equity option markets and CDS markets should agree on PD by construction.</p>
+</div>
+
+<h3>2 · Why they diverge in practice</h3>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Different Investor Bases &amp; Market Microstructure</span>
+    <span class="mc-tagline">Bond buyers and equity traders have different mandates, time horizons, and information sets — prices don't have to agree.</span>
+  </div>
+  <div class="mc-right"><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">The structural gap</div>
+  <p>Investment-grade bond buyers are predominantly insurance companies, pension funds, and bond mutual funds — they are <em>buy-and-hold, yield-focused, and supply-constrained</em>. They respond slowly to new information because selling a bond requires finding a counterparty in an OTC market. Equity traders are short-term, momentum-driven, and transact in centralized, high-liquidity markets. The two markets genuinely receive and incorporate information at different speeds.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Who leads whom</div>
+  <p><strong>In deterioration:</strong> equity markets typically price distress first — equity is more liquid, shorter settlement, and equity options let traders take quick levered positions on vol. Blanco, Brennan &amp; Marsh (2005) showed CDS spreads lead bond spreads in price discovery, but equity leads CDS by hours to days for fast-moving events. <strong>In improvement:</strong> distressed debt investors (who know the restructuring plan) often lead equity — the "debt-to-equity" trade works when bond buyers know more about recovery value than public equity markets.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Documented empirical gap</div>
+  <p>Collin-Dufresne, Goldstein &amp; Martin (2001) showed that changes in equity returns, leverage, and volatility explain only <strong>25% of the variation in credit spread changes</strong> — far less than Merton predicts. The remainder is explained by a single common factor that looks like a supply/demand or liquidity factor in the bond market, not firm-specific fundamentals. This is a serious challenge to pure structural models.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Implication for your model</div>
+  <p>Your naïve-DD and CHS scores are equity-derived. They will miss disconnects where bond markets have already priced stress that equity hasn't (the bond market "knows first" in restructuring situations). Monitoring the Damodaran synthetic-rating spread vs the equity-implied PD gives a rough cross-check without needing live bond data.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">The Zombie Firm Phenomenon</span>
+    <span class="mc-tagline">Equity has option value even when bonds trade near default — shareholders rationally hold a deeply out-of-the-money call.</span>
+  </div>
+  <div class="mc-right"><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What happens</div>
+  <p>When a firm is deeply distressed (bonds at 40 cents on the dollar), equity should theoretically trade near zero. But equity often maintains a non-trivial market cap — sometimes 10–30% of pre-distress levels. Example: Hertz equity continued trading at $1–2 even after the company filed Chapter 11 in May 2020, and retail investors actually drove it higher. The bond market correctly priced near-total loss while the equity market embedded option value and lottery-ticket demand.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why equity retains value</div>
+  <p>Under Black-Scholes, a deeply out-of-the-money call is worth more than zero as long as there is nonzero probability the firm's assets recover above the debt face value before maturity. In practice: (1) Chapter 11 allows the firm to continue operating — there's a real chance of reorganization with equity recovery; (2) retail speculators treat deeply distressed equity as lottery tickets; (3) short-selling constraints prevent arbitrageurs from driving equity to zero. The bond market correctly values the debt claim; equity is pricing optionality and vol.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Modeling implication</div>
+  <p>Structural models (Merton, naïve-DD) that read equity price as the primary input will systematically <strong>understate PD</strong> for zombie firms — equity vol rises (good signal) but the market-cap-to-debt ratio doesn't collapse as much as it should (bad signal distortion). The naïve-DD denominator (σ_V) correctly captures the rising vol signal; the numerator (ln((E+F)/F)) is contaminated by inflated E. This is one reason the KMV empirical mapping outperforms N(−DD): it's calibrated on actual observed defaults, not the theoretical normal distribution.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Detection in your data</div>
+  <p>Flag potential zombies: firms with <code>vol_90d &gt; 0.80</code> (annualized) AND <code>naïve-DD &lt; 0.5</code> AND <code>net_debt_to_mcap &gt; 5</code> — these are high-vol, near-default names where equity still has material market cap. Cross-check with <code>interest_coverage &lt; 1</code> (can't cover interest from operating income). This cohort warrants manual review.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Capital Structure Arbitrage</span>
+    <span class="mc-tagline">Trading equity vs CDS to exploit the gap between equity-implied PD and market-implied PD — the practitioner application of the Merton model.</span>
+  </div>
+  <div class="mc-right"><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">The trade</div>
+  <p>If the equity-implied PD (from Merton/naïve-DD) is much lower than the CDS-implied PD (from the spread), the bond market is pricing more credit risk than the equity market. A capital structure arbitrageur buys CDS protection (shorting credit) while going long equity — betting that either (a) equity reprices down to reflect the bond market's view, or (b) CDS spreads tighten to reflect the equity market's optimism. The reverse trade applies when equity implies more stress than bonds. Yu (2006) documented that convergence happened ~60% of the time, but losses during non-convergence were severe.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why it persists</div>
+  <p>The arb should eliminate itself quickly in efficient markets. It persists because: (1) neither equity vol nor CDS spreads are perfectly observed or synchronized; (2) the Merton mapping requires assumptions (debt maturity T, default barrier) that introduce noise; (3) the trade requires holding both a bond/CDS position and an equity position — different balance sheets, counterparties, and margin requirements create practical frictions; (4) the disconnect can widen before converging (basis risk), triggering margin calls that force liquidation before convergence.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Risks &amp; failures</div>
+  <p>The CDS-equity arb blew up spectacularly for several hedge funds in 2005 (GM and Ford downgrade to junk) and again in 2008. The core failure: both equity and CDS moved adversely simultaneously (GM equity crashed AND CDS widened further) because a systematic credit event overwhelmed the theoretical relationship. The trade assumes mean-reversion of the spread between equity-implied and CDS-implied PD; in a regime shift, both re-anchor to new levels without converging to each other.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">For your pipeline</div>
+  <p>Without CDS data, you can't run the full arb. But computing the <em>gap</em> between your equity-derived PD (naïve-DD) and your accounting-derived PD (CHS, O-score) flags names where the two signals diverge — a weaker but data-available version of the same signal. Large positive gap (equity says safe, accounting says distress) is a yellow flag worth investigating. This is implementable today with your DB.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">The CDS–Bond Basis</span>
+    <span class="mc-tagline">CDS spread and bond spread should be equal by no-arbitrage. When they diverge, it reveals market stress, funding constraints, and technical dislocations.</span>
+  </div>
+  <div class="mc-right"><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">The theoretical relationship</div>
+  <p>By no-arbitrage, buying a corporate bond and buying CDS protection on the same name should replicate a risk-free bond. Therefore: <strong>CDS spread ≈ bond spread over LIBOR/SOFR</strong> (the "CDS-bond basis" = CDS spread − bond spread should ≈ 0). If the basis is positive (CDS > bond spread), CDS market prices more default risk. If negative (CDS < bond spread), the bond market is cheaper — driven by supply/demand technicals, illiquidity, or repo market constraints.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">What drives the basis negative (bonds cheap)</div>
+  <p>In 2008, the basis went deeply negative (–200 to –500 bps for many names). Dealers who would normally arbitrage it were capital-constrained and couldn't fund bond purchases on repo. Institutional investors were forced sellers regardless of price. This "negative basis" trade became famous — buy the cheap bond, buy CDS protection — but required funding that was unavailable precisely when the opportunity was largest. Bao, Pan &amp; Wang (2011) showed the negative basis is highly correlated with bond market illiquidity (bid-ask spreads) and dealer inventory constraints.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">What drives the basis positive (CDS expensive)</div>
+  <p>Positive basis occurs when: (1) CDS demand from hedgers exceeds supply from protection sellers — common when credit deteriorates and everyone wants to buy protection simultaneously; (2) "cheapest to deliver" optionality in CDS (protection buyers can deliver the cheapest eligible bond upon default, which is worth more than a specific bond — CDS should be slightly more expensive); (3) regulatory changes that restrict bank CDS writing. The basis turned sharply positive for many European banks in 2011–12.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">For your pipeline</div>
+  <p>Without CDS or bond data, you can't compute the basis. However, <strong>FRED's HY and IG OAS series</strong> (<code>BAMLH0A0HYM2</code>, <code>BAMLC0A0CM</code>) are computed from actual bond prices and effectively give you the aggregate bond-spread side of the basis for the index. If you eventually add TRACE data (below), you can compute name-level bond spreads and compare against your equity-derived PD — giving you an approximate basis signal for each name with bonds outstanding.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Non-Default Components of Credit Spreads</span>
+    <span class="mc-tagline">Up to 50% of IG credit spreads may reflect liquidity risk, tax effects, and risk premiums — not default probability at all.</span>
+  </div>
+  <div class="mc-right"><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">The decomposition</div>
+  <p>Longstaff, Mithal &amp; Neis (2005) used CDS as a "pure credit" benchmark to decompose corporate bond spreads into: (1) <strong>default component</strong> — the CDS spread for the same name/maturity; (2) <strong>non-default component</strong> — the residual. They found the non-default component was large and time-varying, averaging 50–100 bps for IG names. It was driven by bond market illiquidity, individual investor tax effects (income vs capital gains), and supply/demand technicals specific to the bond market.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Why this matters for your model</div>
+  <p>If you calibrate a reduced-form hazard rate from bond spreads (Jarrow-Turnbull / Duffie-Singleton), you will overstate PD — you're capturing the full spread including the non-default component. This is one reason CDS is preferred for credit model calibration: it's a cleaner signal of default risk. It also means that a firm's bond spread can widen without its actual default probability rising — driven purely by bond-market illiquidity or forced selling. Your equity-derived models (naïve-DD, CHS) are immune to this bond-market noise, which is actually an advantage.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Implications for stress testing</div>
+  <p>In crises, bond spreads widen far more than default risk alone justifies — the liquidity component can add 200–400 bps for IG names and 500–1000 bps for HY in a panic. Using raw bond spreads as stress inputs (e.g., "spread is 800 bps → default soon") systematically overstates PD during liquidity crises. Conversely, using equity-derived PD during the same crisis may understate it (zombie-firm problem). The right answer is a blend — which is exactly what your architecture provides.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">In your pipeline</div>
+  <p>When you pull FRED HY OAS as a macro covariate, be aware it combines default risk + liquidity premium. Use it as a <em>credit-cycle barometer</em>, not as a direct PD input. The NFCI has a dedicated "credit" sub-index that partially decomposes the two — prefer that for systematic risk calibration. This is the key reason to run both equity-based and accounting-based models in parallel: their errors are uncorrelated in different parts of the crisis cycle.</p>
+</div>
+</div>
+</div>
+</details>
+
+<h3>3 · Free and low-cost fixed-income data sources</h3>
+<p style="color:#4b5563;font-size:14px;margin-bottom:14px">Ranked from free/immediate to paid/institutional. The first two tiers cover most macro and sector-level credit modeling needs without any license cost.</p>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">FRED — ICE BofA Bond Indices (Free, Daily)</span>
+    <span class="mc-tagline">Aggregate spread indices for HY, IG, and sector sub-segments. The best free credit data available — already partially in your pipeline plan.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">FREE · API READY</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What you get</div>
+  <p>The ICE BofA (formerly Merrill Lynch) indices are the industry standard for investment-grade and high-yield aggregate credit. FRED hosts the OAS (option-adjusted spread over Treasuries), yield, duration, and price return for the main benchmarks and many sub-segments — all free via the <code>fredapi</code> Python package.</p>
+  <div class="mc-formula">pip install fredapi
+from fredapi import Fred
+fred = Fred(api_key='YOUR_KEY')  # free key at fred.stlouisfed.org
+hy_oas = fred.get_series('BAMLH0A0HYM2')    # US HY OAS daily 1996–present
+ig_oas = fred.get_series('BAMLC0A0CM')      # US IG OAS daily
+bb_oas = fred.get_series('BAMLH0A2HHYOAS') # BB-rated sub-index
+b_oas  = fred.get_series('BAMLH0A3HYOAS')  # B-rated sub-index
+ccc_oas= fred.get_series('BAMLH0A1HYBBOAS')# CCC sub-index</div>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Key series for credit modeling</div>
+  <div class="scroll"><table style="font-size:12.5px">
+    <thead><tr><th>FRED Code</th><th>Series</th><th>Use</th></tr></thead>
+    <tbody>
+    <tr><td><code>BAMLH0A0HYM2</code></td><td>US HY OAS (all ratings)</td><td>Primary credit-cycle barometer</td></tr>
+    <tr><td><code>BAMLC0A0CM</code></td><td>US IG OAS</td><td>Investment-grade stress signal</td></tr>
+    <tr><td><code>BAMLH0A2HHYOAS</code></td><td>BB-rated OAS</td><td>Near-junk stress</td></tr>
+    <tr><td><code>BAMLH0A3HYOAS</code></td><td>B-rated OAS</td><td>Speculative-grade stress</td></tr>
+    <tr><td><code>BAMLH0A1HYBBOAS</code></td><td>CCC/lower OAS</td><td>Near-default distress signal</td></tr>
+    <tr><td><code>BAMLHE00EHY0EY</code></td><td>Euro HY OAS</td><td>European credit cycle</td></tr>
+    <tr><td><code>BAMLHE00EHY0EI</code></td><td>Euro IG OAS</td><td>European IG</td></tr>
+    <tr><td><code>BAMLC0A4CBBB</code></td><td>BBB OAS</td><td>"Fallen angel" risk monitor</td></tr>
+    <tr><td><code>BAMLH0A1HYEN</code></td><td>Energy sector HY OAS</td><td>Energy sector credit</td></tr>
+    <tr><td><code>BAMLH0A3HYUYF</code></td><td>Financial sector HY OAS</td><td>Financial credit</td></tr>
+    </tbody>
+  </table></div>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Limitations</div>
+  <ul>
+    <li>Index-level only — no individual company spreads. You can't get "what is Ford's specific OAS today" from FRED.</li>
+    <li>Blends many names in each index — sector sub-indices are the finest granularity available for free.</li>
+    <li>Reflects bond-market spreads (with liquidity premium) not pure CDS-based default probability.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">For your model</div>
+  <p>Add all the above series to your FRED pull. Use the rating-bucket sub-indices (BB, B, CCC) to build a "market-implied default regime" indicator — when CCC OAS exceeds 1200 bps, the market is pricing wave-default conditions, and your model's PD outputs should be stressed upward. The BBB OAS specifically tracks "fallen angel" risk, which is highly relevant for credit-focused equity investors.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">FINRA TRACE — Individual Corporate Bond Transactions (Free, Delayed)</span>
+    <span class="mc-tagline">Post-trade transparency for all US corporate bond transactions — free with 4-hour delay. The only free source of individual bond prices.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">FREE · REGISTRATION REQUIRED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What you get</div>
+  <p>FINRA's Trade Reporting and Compliance Engine (TRACE) captures every OTC corporate bond transaction (trade price, size, direction) with a 4-hour delay for public dissemination. For investment-grade bonds, you can reconstruct daily yield curves per issuer, compute OAS vs the Treasury curve, and derive name-level credit spreads — for free. Covers investment-grade, high-yield, agency, and ABS. Historical data goes back to 2002 (2005 for IG). Access via finra.org/finra-data/fixed-income or the FINRA Data API.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">The academic / research path</div>
+  <p><strong>WRDS (Wharton Research Data Services)</strong> provides cleaned, enhanced TRACE data (TRACE Enhanced) with correction for known data errors (Dick-Nielsen 2009 cleaning algorithm is standard). Academic institutions typically have WRDS access. If you can access WRDS, TRACE Enhanced + Mergent FISD (bond characteristics: coupon, maturity, seniority, covenants) gives you a full bond-level dataset comparable to Bloomberg for credit research. WRDS subscription: ~$10–30K/yr institutional.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">Limitations</div>
+  <ul>
+    <li>4-hour delay — not suitable for real-time trading signals, fine for daily credit monitoring.</li>
+    <li>Many small-cap companies have no publicly traded bonds — TRACE won't have spread data for ~60% of your Sharadar universe.</li>
+    <li>Computing clean OAS from raw TRACE trades requires duration matching to the Treasury curve and bond characteristic data (maturity, coupon) — meaningful data engineering effort.</li>
+    <li>Coverage improves dramatically for market-cap > $5B — your largest names will have good TRACE coverage.</li>
+  </ul>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">For your pipeline</div>
+  <p>Pull TRACE for your largest 200–300 names (where bond coverage is reliable). Compute a simple yield spread over the matched-maturity Treasury curve. Compare against your equity-derived naïve-DD PD for those names — this is your best available "equity vs bond disconnect" monitor without a Bloomberg subscription. CUSIP-to-ticker mapping: use <code>sharadar_tickers.cusips</code> field which you already have.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Other Free Sources — Treasury Curve, EDGAR, MSRB, OpenBB</span>
+    <span class="mc-tagline">Supplementary free data for the risk-free curve, bond terms, and muni markets.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-go">FREE</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">US Treasury yield curve</div>
+  <p>The complete daily Treasury par yield curve is free from the US Treasury (treasurydirect.gov) and also on FRED (<code>DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30</code>). This is the risk-free benchmark needed to compute OAS from any bond yield. The Fed also publishes the <strong>Gürkaynak-Sack-Wright (GSW) zero-coupon yield curve</strong> — useful for precise duration-matching when computing bond spreads from TRACE prices.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">SEC EDGAR — bond terms &amp; prospectuses</div>
+  <p>Every publicly issued bond has a prospectus filed on EDGAR (424B filings or S-11). These contain coupon, maturity, seniority, covenants, and call schedule — the bond characteristics needed to match TRACE trades to their specific instrument. Free, but requires parsing. The SEC EDGAR full-text search API (efts.sec.gov) lets you search filings programmatically. Merging EDGAR prospectus data with TRACE prices gives you a free (but labor-intensive) substitute for Mergent FISD.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">OpenBB — aggregator</div>
+  <p><strong>OpenBB</strong> (openbb.co) is an open-source terminal that aggregates multiple free and paid data sources including some bond data via FRED, FIGI, and other APIs. The Python SDK provides access to credit spreads, government bond curves, and some corporate bond data for free. Useful as a quick exploratory tool; production-grade use requires checking data freshness and coverage carefully. Not a substitute for Bloomberg but fills gaps for ad-hoc analysis.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">MSRB EMMA — Municipal bonds</div>
+  <p>If your universe includes muni-adjacent credits (hospital systems, utility districts, public universities), the MSRB Electronic Municipal Market Access (emma.msrb.org) provides free trade data, offering documents, and financial disclosures for municipal securities. Municipals don't file with SEC, so EMMA is the only public data source. Munis also have a separate credit framework (general obligation vs revenue bonds, state backstops) that differs significantly from the corporate credit models in this report.</p>
+</div>
+</div>
+</div>
+</details>
+
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">Paid Sources — When You Need Individual CDS or Bond Spreads</span>
+    <span class="mc-tagline">Bloomberg, Refinitiv, and ICE are the industry standards. Know what each covers before budgeting.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-no">PAID — $10K–$30K+/yr</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">Bloomberg Terminal</div>
+  <p>The gold standard. <code>SRCH</code> (bond search), <code>YAS</code> (yield/spread analysis), <code>CDSW</code> (CDS pricing), <code>DRSK</code> (default risk scores). Covers virtually every publicly traded bond and CDS globally. Bloomberg also provides the <strong>BVAL</strong> (Bloomberg Valuation Service) evaluated prices for bonds without recent TRACE trades. ~$25–30K/yr per seat. Python access via <code>blpapi</code> (Bloomberg API).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label why">Refinitiv / LSEG Eikon</div>
+  <p>Competitive with Bloomberg for fixed-income data. Particularly strong in European credit markets. Markit (now part of LSEG) is the authoritative source for <strong>CDS composite spreads</strong> — they collect CDS quotes from 10+ major dealers and publish a daily composite. If you need individual-name CDS spreads, the Markit/LSEG CDS dataset is the standard. ~$15–25K/yr. Python access via <code>refinitiv-dataplatform</code>.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label bad">ICE Data Services</div>
+  <p>ICE (Intercontinental Exchange) provides the underlying data behind many FRED bond indices. ICE's <strong>BondPoint</strong> and <strong>Continuous Evaluated Pricing</strong> (CEP) services provide evaluated daily bond prices for bonds without active trading — important for smaller issuers that rarely trade on TRACE. ICE also licenses its index data (IG, HY, sector sub-indices with full constituent-level detail). ~$10–50K/yr depending on scope.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label data">Recommended path</div>
+  <p><strong>Start free:</strong> FRED ICE BofA indices + TRACE for large names + Treasury curve. This covers your macro model and gives you individual spreads for the top ~300 names (where bonds trade actively). <strong>Step 2:</strong> If you need CDS for the structural models or want to compute the full equity-bond disconnect signal, consider a Refinitiv trial or WRDS academic access for the Markit CDS dataset. <strong>Step 3:</strong> Bloomberg terminal only if you're building a production institutional product — the marginal data improvement doesn't justify the cost for a research or quantitative screening tool.</p>
+</div>
+</div>
+</div>
+</details>
+
+<h3>4 · Practical disconnect monitor: what you can build today</h3>
+<div class="panel" style="margin-top:4px">
+<p style="margin-bottom:12px">Without live CDS or bond data, a useful equity-bond disconnect signal can be constructed entirely from your existing DB:</p>
+<div class="step">
+  <div class="num">1</div>
+  <div class="body"><strong>Model disagreement score:</strong> Compute both naïve-DD PD (equity-derived) and CHS/O-score PD (accounting-derived) for every name. Large positive gap = equity says safe but fundamentals say distress. Large negative gap = equity has priced in distress faster than the accounting model. The gap itself is a signal — names where both models agree have higher-confidence PD estimates.</div>
+</div>
+<div class="step">
+  <div class="num">2</div>
+  <div class="body"><strong>Synthetic spread vs equity PD:</strong> Compute Damodaran synthetic-rating spread from <code>interest_coverage</code>. Convert to an implied PD. Compare against naïve-DD PD. The coverage-implied spread is an accounting analog to a bond spread — when it diverges significantly from the equity-derived PD, flag the name for review.</div>
+</div>
+<div class="step">
+  <div class="num">3</div>
+  <div class="body"><strong>TRACE overlay for large names:</strong> Pull TRACE data for your top 200–300 by market cap. Compute the yield spread vs the matched Treasury. Plot against naïve-DD PD for those names. This is your best free equity-bond disconnect monitor and gives you real bond market data for the names where it matters most.</div>
+</div>
+<div class="step">
+  <div class="num">4</div>
+  <div class="body"><strong>FRED aggregate regime:</strong> When HY OAS exceeds 700 bps (deep stress regime) AND your equity-derived PD model shows less than proportional increase, the bond market is likely pricing illiquidity premium on top of default risk. Apply a model-specific stress scalar (e.g., multiply all PDs by 1.3×) to account for the systematic component that pure equity models miss in crises.</div>
+</div>
+</div>
+
+</div><!-- /disconnects -->
+<div id="panel-build" class="tab-panel">
+
+<h2>Data Assets &amp; Build Roadmap</h2>
+<p style="color:var(--muted);font-size:13px;margin:4px 0 20px">Verified by direct inspection of <code>C:\Users\manis\.local\bin\backtester\backtester.duckdb</code></p>
+
+<h3>What's in your database</h3>
+<div class="scroll"><table>
+<thead><tr><th>Table</th><th>Rows</th><th>Coverage</th><th>Credit-model relevance</th></tr></thead>
+<tbody>
+<tr><td><code>sharadar_fundamentals</code></td><td>3.20 M</td><td>1990–2026 · 17,759 firms · ARQ/ART/MRQ/MRT/ARY/MRY</td><td>All 111 fields for §1 models. Key: <code>workingcapital, retearn, ebit, assets, liabilities, equity, debtc, debtnc, ncfo, revenue, netinc, cashneq, deposits</code>. Use <strong>ART/ARQ dimensions joined on <code>datekey</code></strong> — MRT/MRQ back-fill restatements and will leak future data into backtests.</td></tr>
+<tr><td><code>sharadar_prices_computed</code></td><td>46.0 M</td><td>1997–2026 daily</td><td>Pre-computed §2 inputs: <code>vol_90d</code> (annualized — do not ×√252), <code>mom_12m1m</code>, <code>marketcap_ffill</code>, <code>interest_coverage</code>, <code>net_debt_to_mcap</code>, <code>vol_60d_sector_zscore</code>.</td></tr>
+<tr><td><code>sharadar_tickers</code></td><td>62,114</td><td>master</td><td>Sector/SIC/Fama-48, <code>isdelisted</code>, delisting dates. Label proxy: tickers ending in 'Q' with <code>isdelisted='Y'</code> = 2,724 names. 24,368 total delisted common stocks (mostly M&amp;A — do not label as defaults).</td></tr>
+<tr><td><code>options_chains</code></td><td>759 K</td><td>recent</td><td>Option-implied vol — cleaner forward vol input for CreditGrades than realized <code>vol_90d</code> for names with active chains.</td></tr>
+</tbody>
+</table></div>
+
+<div class="two" style="margin:18px 0">
+  <div class="panel" style="padding:16px 18px">
+    <strong style="font-size:14px">Scoreable universe today</strong>
+    <table style="margin:10px 0">
+      <tr><td>Active US common stocks with 2025+ fundamentals</td><td><strong>~4,338</strong></td></tr>
+      <tr><td>Ex-Financial Services</td><td><strong>~3,600</strong></td></tr>
+      <tr><td>Financial Services (separate model track)</td><td><strong>717</strong></td></tr>
+      <tr><td>Firms with non-zero deposits (bank sub-track)</td><td><strong>3,671</strong></td></tr>
+    </table>
+  </div>
+  <div class="panel" style="padding:16px 18px">
+    <strong style="font-size:14px">Sector granularity</strong>
+    <table style="margin:10px 0">
+      <tr><td>Morningstar sectors</td><td><strong>11</strong></td></tr>
+      <tr><td>Fama-French industries</td><td><strong>48</strong></td></tr>
+      <tr><td>GICS-style industries</td><td><strong>153</strong></td></tr>
+      <tr><td>SIC codes</td><td><strong>438</strong></td></tr>
+    </table>
+  </div>
+</div>
+
+<h3>Default label options (tiered by cost)</h3>
+<div class="panel" style="padding:16px 18px;margin:10px 0">
+<div class="step">
+  <div class="num">1</div>
+  <div class="body"><strong>In your DB already — no new data.</strong> Ticker ending in 'Q' + <code>isdelisted='Y'</code> → 2,724 names. High precision (most Q-suffix delistings are bankruptcy-related), moderate recall (misses some failures that didn't use the Q convention). Good enough for v1 training. <em>Critical gotcha:</em> 24,368 total delisted commons — the rest are mostly M&amp;A exits. Mislabeling M&amp;A as default destroys model training. Filter on Q-suffix first; then cross-validate with terminal price collapse (price &lt; $1, then delisted) + negative book equity.</div>
+</div>
+<div class="step">
+  <div class="num">2</div>
+  <div class="body"><strong>UCLA-LoPucki Bankruptcy Research Database — free.</strong> Every large public US Chapter 11 since 1980, with precise filing dates. Gold-standard for big-name bankruptcies. Covers the cases most likely to be in your training sample. Free for research at lopucki.law.ucla.edu.</div>
+</div>
+<div class="step">
+  <div class="num">3</div>
+  <div class="body"><strong>SEC EDGAR full-text — free.</strong> Chapter 11 petitions and Form 25 delisting filings give exact event dates for point-in-time label construction. Programmatic access via EDGAR full-text search API. Best source for precise timing of the credit event.</div>
+</div>
+<div class="step">
+  <div class="num">4</div>
+  <div class="body"><strong>Moody's DRD / S&amp;P CreditPro — paid, institutional.</strong> Clean default + recovery events, enabling both supervised model training and LGD fitting simultaneously. Defer until the free-label v1 proves out. ~$30–80K/yr depending on scope.</div>
+</div>
+</div>
+
+<h3>Validated live computations</h3>
+<div class="two" style="margin:14px 0">
+<div class="panel" style="padding:14px 18px">
+  <strong style="font-size:13.5px">Altman Z″ (distress &lt; 1.1 · safe &gt; 2.6)</strong>
+  <table style="margin:8px 0">
+    <tr><td>AAPL</td><td style="color:var(--go)">6.62</td><td>safe</td></tr>
+    <tr><td>WMT</td><td style="color:var(--go)">5.08</td><td>safe</td></tr>
+    <tr><td>F (Ford)</td><td style="color:var(--maybe)">3.72</td><td>safe/grey</td></tr>
+    <tr><td>HTZ (Hertz)</td><td style="color:var(--maybe)">2.85</td><td>grey zone</td></tr>
+    <tr><td>BBBYQ (bankrupt)</td><td style="color:var(--no)">−11.46</td><td>distress</td></tr>
+  </table>
+</div>
+<div class="panel" style="padding:14px 18px">
+  <strong style="font-size:13.5px">Bharath-Shumway 1-yr PD</strong>
+  <table style="margin:8px 0">
+    <tr><td>AAPL / NVDA</td><td>DD ≈ 19</td><td style="color:var(--go)">~0.0%</td></tr>
+    <tr><td>WMT</td><td>DD = 11.97</td><td style="color:var(--go)">~0.0%</td></tr>
+    <tr><td>F (Ford)</td><td>DD = 2.42</td><td style="color:var(--maybe)">0.77%</td></tr>
+    <tr><td>HTZ (Hertz)</td><td>DD = 0.27</td><td style="color:var(--maybe)">39.5%</td></tr>
+    <tr><td>BBBYQ (bankrupt)</td><td>DD = −1.54</td><td style="color:var(--no)">93.8%</td></tr>
+  </table>
+</div>
+</div>
+
+<h3>Build roadmap</h3>
+<div class="panel" style="padding:18px 20px">
+<div class="step">
+  <div class="num">A</div>
+  <div class="body"><strong>Scorecard MVP — this week, zero new data.</strong> Batch-compute Altman Z″, Ohlson O, Zmijewski, CHS (published coefficients), Bharath-Shumway naïve-DD, and Damodaran synthetic-rating PD across all 4,338 active names daily. Ship a PD table + percentile ranks by sector. Provably works — validated above.</div>
+</div>
+<div class="step">
+  <div class="num">B</div>
+  <div class="body"><strong>Label pipeline — weeks.</strong> Build the default-event table: Tier-1 Q-suffix proxy → enrich with UCLA-LoPucki + EDGAR Form 25 filings. Carefully separate M&amp;A exits. This is the unlock for everything downstream. Wire in FRED macro series simultaneously (10 min with <code>fredapi</code>).</div>
+</div>
+<div class="step">
+  <div class="num">C</div>
+  <div class="body"><strong>Re-fit + ML — months.</strong> Re-estimate CHS logit coefficients on your universe. Train XGBoost on the Barboza hybrid feature set (raw ratios + Z″ + naïve-DD as features). Build your own empirical DD→default-rate table (proprietary KMV-style EDF mapping). Validate with out-of-time splits (train 1995–2015, test 2016–2021, evaluate on 2022–2026).</div>
+</div>
+<div class="step">
+  <div class="num">D</div>
+  <div class="body"><strong>Ratings + sector layers — months.</strong> Wire FRED/ALFRED sector-specific covariates. Build synthetic internal rating grades (bucket PIT PD into 10 grades). Compute cohort default rates + transition matrices. Add hierarchical sector fine-tuning + per-sector calibration. Build the Financial Services model track separately (deposits, NIM, capital ratios).</div>
+</div>
+<div class="step">
+  <div class="num">E</div>
+  <div class="body"><strong>Equity overlay + LGD stress — ongoing.</strong> Backtest the distress anomaly on your own data (screen out / short the high-PD tail). Apply Frye stochastic LGD with NFCI as the systematic factor. Add Acharya sector-distress overlay. Build VAR stress model for portfolio-level scenario analysis. License recovery data only if EL accuracy demands it.</div>
+</div>
+</div>
+
+<h3>Validated naïve-DD code (copy-paste ready)</h3>
+<pre style="background:#f1f3f5;border:1px solid #dbe1e8;border-radius:10px;padding:16px;font-size:12.5px;color:#1a1f2e;overflow:auto;margin:14px 0"><code># Bharath-Shumway (2008) naive DD — validated against backtester.duckdb
+# vol_90d is already ANNUALIZED in sharadar_prices_computed — do NOT multiply by sqrt(252)
+import math
+
+def naive_dd(E, F, sig_E, r_1y):
+    """E=marketcap_ffill, F=debtc+0.5*debtnc, sig_E=vol_90d, r_1y=mom_12m1m"""
+    if E <= 0 or F <= 0 or sig_E <= 0:
+        return float('nan'), float('nan')
+    sig_V = (E/(E+F))*sig_E + (F/(E+F))*(0.05 + 0.25*sig_E)
+    DD    = (math.log((E+F)/F) + (r_1y - 0.5*sig_V**2)) / sig_V
+    PD    = 0.5*(1 + math.erf(-DD/math.sqrt(2)))   # N(-DD)
+    return DD, PD</code></pre>
+<p style="font-size:12.5px;color:var(--muted)">Confirmed output: Ford DD=2.42 (PD=0.77%), Hertz DD=0.27 (PD=39.5%), BBBY DD=−1.54 (PD=93.8%)</p>
+
+</div><!-- /build -->
+
+</div><!-- /wrap -->
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelector('[data-tab="' + id + '"]').classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
