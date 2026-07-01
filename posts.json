@@ -1,8 +1,8 @@
 [
   {
     "date": "2026-06-29",
-    "title": "BPGS · Return Decomposition Explorer",
-    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling β(market), β(group), annualised α, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
+    "title": "BPGS \u00b7 Return Decomposition Explorer",
+    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling \u03b2(market), \u03b2(group), annualised \u03b1, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
     "file": "research/decomp_static_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "research"
@@ -13,6 +13,14 @@
     "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources.",
     "file": "research/credit_analyst_feasibility_report_2026-06-30.html",
     "author": "Mani Sabapathi",
+    "category": "research"
+  },
+  {
+    "date": "2026-06-30",
+    "title": "Beta Persistence & Blended Half-Life Analysis",
+    "summary": "Non-overlapping beta quartile transition matrices (N-month window \u2192 next single month). Exponentially-weighted blended beta with half-lives 1/3/6/9/12m and equal weights. Decile/quartile forward-return tables with HML and DRN regime breakdowns and 90% confidence intervals.",
+    "file": "research/beta_unified_2026-06-30.html",
+    "author": "Arvind Rajan",
     "category": "research"
   },
   {
