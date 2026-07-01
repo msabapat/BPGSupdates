@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-06-29",
+    "title": "BPGS · Return Decomposition Explorer",
+    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling β(market), β(group), annualised α, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
+    "file": "research/decomp_static_2026-06-29.html",
+    "author": "Arvind Rajan",
+    "category": "research"
+  },
+  {
     "date": "2026-06-30",
     "title": "Automated Credit Analyst \u2014 Model Feasibility & Framework",
     "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources.",
