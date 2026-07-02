@@ -1,8 +1,24 @@
 [
   {
+    "date": "2026-07-02",
+    "title": "Idio Vol vs Beta Vol vs Total Vol \u2014 Quartile Predictiveness",
+    "summary": "Decomposes each stock's realized vol into idiosyncratic and systematic (beta) components using the locked 12m half-life blend, then Fama-MacBeth quartile-sorts on each of idio/beta/total vol to see which best predicts forward realized vol and forward idiosyncratic return (alpha). Top-500 domestic no-ADR, 2001-2021, BH-corrected significance.",
+    "file": "research/idio_vol_quartile_results_2026-07-02.html",
+    "author": "Arvind Rajan",
+    "category": "research"
+  },
+  {
+    "date": "2026-07-02",
+    "title": "Industry Explorer \u2014 Trailing Signal vs Next-Month Return",
+    "summary": "Pick one Morningstar industry group at a time (sortable by name or market cap). Scatter of trailing 1/3/6/12-month beta or alpha vs next-month return for that industry, plus a NAV chart of the industry vs SPY and an equal-weighted top-500 benchmark. Top-500 domestic universe, 2001-2021.",
+    "file": "research/industry_explorer_2026-07-02.html",
+    "author": "Arvind Rajan",
+    "category": "research"
+  },
+  {
     "date": "2026-06-29",
-    "title": "BPGS · Return Decomposition Explorer",
-    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling β(market), β(group), annualised α, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
+    "title": "BPGS \u00b7 Return Decomposition Explorer",
+    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling \u03b2(market), \u03b2(group), annualised \u03b1, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
     "file": "research/decomp_static_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "research"
