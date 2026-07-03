@@ -2239,5 +2239,632 @@ function showTab(id) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 </script>
+
+<!-- ==================== APPENDIX: COMMERCIAL DIRECTIONS ==================== -->
+<div class="apx" id="appendix-commercial">
+<style>
+/* scoped appendix styles — reuse the document palette */
+.apx{background:transparent}
+.apx .apx-wrap{max-width:1140px;margin:0 auto;padding:8px 28px 80px}
+.apx .apx-rule{border:none;border-top:2px solid var(--line);margin:36px 0 28px}
+.apx .mc-label.work{color:#187a36}
+.apx .mc-label.diff{color:#c0392b}
+.apx .mc-label.form{color:#5b3db8}
+.apx .mc-label.mkt{color:#1558b0}
+.apx .mc-label.comm{color:#92600a}
+.apx .b-low{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.apx .b-med{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.apx .b-high{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.apx .b-vhigh{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.apx .fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.apx .fig svg{width:100%;height:auto;display:block}
+.apx .fig-cap{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic}
+</style>
+<div class="apx-wrap">
+<hr class="apx-rule">
+<h2>Appendix: Commercial Directions — What Could Be Built From This</h2>
+<p style="color:var(--muted);font-size:13px;margin:4px 0 20px">Nine candidate products/uses for the model stack above · difficulty, form, market, and honest revenue ranges for a two-person shop · all dollar figures are rough estimates with wide error bars</p>
+
+<div class="intro">This appendix treats the report above as raw material and asks a different question: <strong>what is the most commercially useful thing that can be built from it?</strong> The inputs are fixed and known — a 3.2M-row fundamentals panel with delisted names, 46M rows of daily prices with pre-computed credit inputs, a free default-label path (Q-suffix proxy → LoPucki → EDGAR), FRED macro/credit series, and a working backtest engine. The blocking gaps are equally known: no name-level bond or CDS spreads, no recovery cash flows, and — commercially — no distribution, no brand, and no track record in credit. Each option below is scored against that reality, not against what a 50-person startup could do. Incumbents (Moody's/S&amp;P/Fitch, Moody's KMV/CreditEdge, Bloomberg DRSK, RapidRatings, CreditRiskMonitor, Credit Benchmark) are named where they matter, because in credit analytics they almost always matter.</div>
+
+<h3>How the raw material becomes products</h3>
+<div class="fig">
+<svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- column headers -->
+  <text x="115" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Raw material (on hand)</text>
+  <text x="365" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Model layer (this report)</text>
+  <text x="610" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Core assets</text>
+  <text x="865" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Products (this appendix)</text>
+  <!-- col 1: raw material -->
+  <g font-size="11" fill="#374151">
+    <rect x="15" y="40"  width="200" height="52" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="61" text-anchor="middle" font-weight="600" fill="var(--ink)">Sharadar fundamentals</text>
+    <text x="115" y="78" text-anchor="middle">3.2M rows · 17,759 firms · 1990–2026</text>
+    <rect x="15" y="102" width="200" height="52" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="123" text-anchor="middle" font-weight="600" fill="var(--ink)">Daily prices + computed</text>
+    <text x="115" y="140" text-anchor="middle">46M rows · vol, mcap, coverage</text>
+    <rect x="15" y="164" width="200" height="52" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="115" y="185" text-anchor="middle" font-weight="600" fill="#166534">Default-label path</text>
+    <text x="115" y="202" text-anchor="middle">Q-suffix (2,724) → LoPucki → EDGAR</text>
+    <rect x="15" y="226" width="200" height="52" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="247" text-anchor="middle" font-weight="600" fill="var(--ink)">FRED macro &amp; credit</text>
+    <text x="115" y="264" text-anchor="middle">HY/IG OAS, NFCI, rates, sector</text>
+    <rect x="15" y="288" width="200" height="52" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="115" y="309" text-anchor="middle" font-weight="600" fill="#92400e">TRACE (optional, free)</text>
+    <text x="115" y="326" text-anchor="middle">bond prints, top ~300 names</text>
+  </g>
+  <!-- col 2: models -->
+  <g font-size="11" fill="#374151">
+    <rect x="265" y="40"  width="200" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="365" y="59" text-anchor="middle" font-weight="600" fill="#1e40af">Scorecards</text>
+    <text x="365" y="75" text-anchor="middle">Z″ · O-score · X-score · CHS</text>
+    <rect x="265" y="96" width="200" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="365" y="115" text-anchor="middle" font-weight="600" fill="#1e40af">Structural</text>
+    <text x="365" y="131" text-anchor="middle">naïve-DD · Merton · synthetic rating</text>
+    <rect x="265" y="152" width="200" height="46" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="171" text-anchor="middle" font-weight="600" fill="#5b21b6">Empirical DD→EDF map</text>
+    <text x="365" y="187" text-anchor="middle">proprietary, needs labels</text>
+    <rect x="265" y="208" width="200" height="46" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="227" text-anchor="middle" font-weight="600" fill="#5b21b6">Ratings &amp; transitions</text>
+    <text x="365" y="243" text-anchor="middle">grades · cohorts · matrices</text>
+    <rect x="265" y="264" width="200" height="46" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="283" text-anchor="middle" font-weight="600" fill="#5b21b6">ML ensemble + macro stress</text>
+    <text x="365" y="299" text-anchor="middle">XGBoost hybrid · VAR scenarios</text>
+  </g>
+  <!-- col 3: assets -->
+  <g font-size="11" fill="#374151">
+    <rect x="510" y="70"  width="200" height="56" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="92" text-anchor="middle" font-weight="600" fill="#166534">Daily PD panel</text>
+    <text x="610" y="109" text-anchor="middle">~4,300 names · 25+ yrs history</text>
+    <rect x="510" y="146" width="200" height="56" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="168" text-anchor="middle" font-weight="600" fill="#166534">Synthetic rating grades</text>
+    <text x="610" y="185" text-anchor="middle">10 buckets · migration history</text>
+    <rect x="510" y="222" width="200" height="56" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="244" text-anchor="middle" font-weight="600" fill="#166534">Stressed / multi-horizon PD</text>
+    <text x="610" y="261" text-anchor="middle">term structures · scenarios</text>
+  </g>
+  <!-- col 4: products -->
+  <g font-size="11.5">
+    <rect x="760" y="40"  width="215" height="34" rx="8" fill="#dcfce7" stroke="#bbf7d0"/>
+    <text x="867" y="62" text-anchor="middle" font-weight="600" fill="#166534">4 · Equity overlay (internal)</text>
+    <rect x="760" y="82" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="104" text-anchor="middle" fill="#374151">1 · PD score &amp; ratings feed</text>
+    <rect x="760" y="124" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="146" text-anchor="middle" fill="#374151">5 · Research subscription</text>
+    <rect x="760" y="166" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="188" text-anchor="middle" fill="#374151">7 · Counterparty monitor</text>
+    <rect x="760" y="208" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="230" text-anchor="middle" fill="#374151">3 · Portfolio / CECL toolkit</text>
+    <rect x="760" y="250" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="272" text-anchor="middle" fill="#374151">9 · Index licensing</text>
+    <rect x="760" y="292" width="215" height="34" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="867" y="314" text-anchor="middle" fill="#374151">8 · Credit copilot</text>
+    <rect x="760" y="334" width="215" height="34" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="867" y="356" text-anchor="middle" fill="#991b1b">2 · Cap-structure arb (blocked)</text>
+    <rect x="760" y="376" width="215" height="34" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="867" y="398" text-anchor="middle" fill="#92400e">6 · Private-credit analytics</text>
+  </g>
+  <!-- arrows -->
+  <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity="0.55">
+    <path d="M215 190 C 240 190 240 170 263 170"/>
+    <path d="M215 120 C 240 120 240 118 263 118"/>
+    <path d="M215 66  C 240 66  240 62  263 62"/>
+    <path d="M215 252 C 240 252 240 286 263 286"/>
+    <path d="M215 312 C 240 312 240 290 263 290" stroke-dasharray="4 3"/>
+    <path d="M465 63  C 490 63  485 96  508 96"/>
+    <path d="M465 119 C 490 119 485 98  508 98"/>
+    <path d="M465 175 C 490 175 485 172 508 172"/>
+    <path d="M465 231 C 490 231 485 176 508 176"/>
+    <path d="M465 287 C 490 287 485 250 508 250"/>
+    <path d="M710 98  C 735 98  735 57  758 57"/>
+    <path d="M710 100 C 735 100 735 99  758 99"/>
+    <path d="M710 174 C 735 174 735 141 758 141"/>
+    <path d="M710 176 C 735 176 735 183 758 183"/>
+    <path d="M710 250 C 735 250 735 225 758 225"/>
+    <path d="M710 252 C 735 252 735 267 758 267"/>
+    <path d="M710 254 C 735 254 735 309 758 309"/>
+    <path d="M710 256 C 735 256 735 351 758 351" stroke-dasharray="4 3"/>
+    <path d="M710 258 C 735 258 735 393 758 393" stroke-dasharray="4 3"/>
+  </g>
+  <text x="500" y="448" text-anchor="middle" font-size="11" fill="var(--muted)">Dashed arrows = path depends on data not yet on hand (name-level bond/CDS spreads, private-firm financials)</text>
+</svg>
+<div class="fig-cap">Every product option is a different packaging of the same three core assets. The marginal cost of a second product, once the PD panel and rating grades exist, is mostly distribution — which is the actual scarce resource for a two-person shop.</div>
+</div>
+
+<h3>The nine options</h3>
+
+<!-- OPTION 1 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">1 · Synthetic Ratings &amp; PD Score Feed</span>
+    <span class="mc-meta">Data product · builds directly on roadmap phases A–D · no bond/CDS data required</span>
+    <span class="mc-tagline">Daily PD estimates and 10-grade synthetic ratings for ~4,300 US public firms, with 25+ years of point-in-time history — sold as a flat-file/API data product.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A subscription data feed: for every active US public firm, a daily 1-year PD (blended naïve-DD + re-fit CHS + ML ensemble), a letter-grade synthetic rating, percentile ranks by sector, and drivers (which inputs moved the score). The historical panel back to ~1998 — built point-in-time on ART/ARQ dimensions so it is backtestable without leakage — is arguably worth more than the live feed: quant buyers evaluate data products on history first. Functionally a low-cost analog of Moody's EDF/CreditEdge or Bloomberg DRSK, restricted to US public firms.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Exactly roadmap A–D: batch scorecards (validated, days), label pipeline (weeks — the gating item), CHS re-fit + XGBoost ensemble + the proprietary DD→default-rate mapping (months), rating buckets and transition matrices (months). Then productization: calibration documentation (AUC/CAP curves, Brier scores, out-of-time validation), a delivery mechanism (daily CSV to S3 or a thin API), and an evaluation pack for prospects. Nothing on the blocked list is needed. One genuine legal work item: confirm NASDAQ Data Link's Sharadar terms permit redistribution of <em>derived</em> scores (they generally permit derived analytics but not raw-data redistribution — get this in writing).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>The modeling is the report's own roadmap; the hard part is not math but proving calibration well enough that a stranger will pay for it.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Data feed: daily flat files + REST API + the historical point-in-time panel as a one-time deliverable. Optional thin web viewer for evaluation.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Quant equity/credit funds that want a PD factor without a $50K+ CreditEdge seat; fintech lenders; academics; risk teams at small insurers. Incumbents: Moody's CreditEdge (~$50K+/yr), Bloomberg DRSK (bundled with a $30K terminal), Credit Benchmark (bank-consensus PDs, institutional pricing), RapidRatings (private-firm focus). The open wedge is real but narrow: transparent methodology, public-firm coverage, history included, priced at $5–25K/yr — below every incumbent's floor. Plausible buyer population: low hundreds of firms; realistic conversions for an unknown two-person shop: single digits to low tens.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $25–150K/yr by year 2–3 (3–10 clients at $5–25K); first dollar plausible in 6–12 months if the historical panel is the lead product. Key risks: <strong>credibility</strong> (why trust your calibration over DRSK?) — mitigated by publishing validation openly; <strong>regulatory</strong> — sell "scores"/"assessments", never "credit ratings" for regulatory use, which would trigger SEC NRSRO registration (a genuine moat protecting Moody's/S&amp;P/Fitch, and not worth attacking); <strong>data licensing</strong> as above. Distribution is the binding constraint, not the model.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 2 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">2 · Equity–Bond Capital-Structure Arbitrage Strategy</span>
+    <span class="mc-meta">Fund strategy · gated on the report's biggest blocked item: name-level bond/CDS spreads</span>
+    <span class="mc-tagline">Trade divergences between equity-implied PD (naïve-DD) and bond/CDS-market-implied PD — the practitioner application of the Disconnects tab.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-vhigh">VERY HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A systematic strategy that computes the gap between equity-implied PD and market-implied PD (from bond spreads or CDS) per name, and positions for convergence: long equity / long protection when bonds price more risk than equity, and the reverse trade otherwise. The Disconnects tab covers the theory, the documented 2005 GM/Ford and 2008 blow-ups, and Yu (2006)'s finding that convergence occurred only ~60% of the time with severe losses in the tail.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>The full arb needs three things this shop does not have: (a) name-level spread data — Markit/LSEG CDS composites (~$15–25K/yr) or a serious TRACE engineering effort (free but limited to the ~300 largest names, 4-hour delay, heavy OAS-construction work); (b) credit execution — trading single-name CDS requires ISDA documentation and an institutional prime relationship, effectively out of reach for a two-person shop; (c) a hedging/margin infrastructure for a two-legged trade. A realistic scaled-down version exists: an <strong>equity-only</strong> strategy conditioned on the bond-vs-equity PD gap for TRACE-covered large caps (trade only the equity leg). That is buildable on the existing engine, but it is then an equity signal — closer to Option 4 than to true cap-structure arb.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Very High</div>
+  <p>Blocked data + execution infrastructure the shop cannot practically obtain + a strategy class with documented catastrophic non-convergence episodes.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Internal fund strategy on partner capital; conceivably a managed account or sleeve pitched to a credit fund once a paper track record exists.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Not a product with buyers — a use of own capital. The strategy space is occupied by multi-strategy funds (Millennium, Citadel pods) and dedicated credit RV funds with dealer relationships and funding advantages that are decisive in exactly the stress episodes when the trade pays or dies. Capacity in the TRACE-large-cap version is modest but adequate for partner-scale capital.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Returns on own capital only; no licensing revenue. Time to first dollar: 24+ months (data + build + validation). Key risks: non-convergence blow-ups (the 2005 episode wiped out funds running exactly this trade), basis risk, and paying $15–25K/yr for data before knowing the edge survives costs. Honest assessment: the weakest near-term option, worth revisiting only after the PD engine is validated and only in the equity-leg-only form.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 3 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">3 · Bottom-Up Credit Portfolio Builder (incl. CECL/IFRS 9 Support)</span>
+    <span class="mc-meta">SaaS · needs ratings/transition + macro-stress layers (roadmap D–E) · issuer-level works, bond-level partially blocked</span>
+    <span class="mc-tagline">A screening and portfolio-construction tool for HY/IG issuer selection, plus multi-horizon stressed PD term structures for CECL/IFRS 9 provisioning.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A web tool with two faces. For credit investors: screen the issuer universe by PD, rating grade, migration trend, sector, and disconnect flags; build a portfolio; see aggregate expected loss and stressed loss under FRED-driven scenarios. For bank/lender finance teams: lifetime PD curves (from transition matrices) conditioned on macro scenarios — the quantitative core of a CECL/IFRS 9 expected-credit-loss calculation for the public-corporate slice of a loan book.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Everything in Option 1, plus the ratings/transition layer (cohort default rates, migration matrices — roadmap D), the macro-conditional stress layer (VAR or macro-covariate logit — roadmap E, label-gated), multi-horizon PD term structures, LGD priors from the published Altman-Kishore/Moody's tables (fitting real LGD stays blocked without recovery data — must be disclosed as a static assumption), and a real SaaS front end with authentication and audit trails. Selling into banks adds a large non-modeling cost: SR 11-7 model-risk documentation, vendor due-diligence questionnaires, and support obligations. Bond-level analytics (spread, duration, relative value per CUSIP) remain blocked without bond reference/pricing data; the tool is honest only at the <em>issuer</em> level.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High</div>
+  <p>Largest build surface of any option, and the buyer (banks) has the longest, most compliance-laden sales cycle a two-person shop can face.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>SaaS dashboard + API; CECL output as auditable scenario reports (CSV/PDF) that a bank's finance team can hand to examiners.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Small credit funds and insurance investment teams (screening face); ~4,000+ US community banks and credit unions needing CECL tooling (provisioning face) — but their books are mostly loans to <em>private</em> borrowers, which this data does not cover; the honest fit is banks/funds holding public-corporate credit. Incumbents are formidable: Moody's Analytics (ImpairmentStudio, CreditLens), SAS, Abrigo (dominant in community-bank CECL), Bloomberg PORT. Rough serviceable niche: tens of institutions, not thousands.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $50–300K/yr by year 3 if 2–6 institutional clients land at $15–50K — but with wide error bars and a real possibility of zero, because vendor-risk review alone can kill a two-person vendor. Time to first dollar: 12–24 months. Key risks: sales cycle length, SR 11-7 documentation burden, private-borrower coverage gap, and support expectations a two-person team may not want. Better treated as a later derivative of Option 1 pulled by an actual customer, not built on spec.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 4 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">4 · Credit Signals for the Existing Equity Engine</span>
+    <span class="mc-meta">Internal use · zero new data · reuses LV/MOM/MR backtest infrastructure as-is</span>
+    <span class="mc-tagline">Distress-anomaly screens and PD-momentum overlays for the shop's own live strategies — no customer, no distribution, immediate feedback.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-low">LOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Wire the PD panel into the existing equity strategies as a filter and an overlay. The report's Overview callout is the design brief: the robust signal is <em>negative</em> — high-PD names underperform (the distress anomaly), so the first application is exclusion, not selection. Concrete candidates: (a) exclude the top PD decile from the MOM universe — momentum crashes concentrate in high-PD names, and MOM's −61% drawdown is the obvious target; (b) test PD as a complement to LV's low-beta tilt (low PD and low vol overlap but are not identical); (c) screen MR's oversold pool for value traps (oversold + high PD = falling knife, not mean-reversion candidate); (d) PD <em>momentum</em> (3–6 month change in PD) as a deterioration flag ahead of quarterly fundamentals.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Roadmap phase A only: batch-compute Z″, CHS (published coefficients), and naïve-DD across the panel history — all inputs already sit in <code>sharadar_prices_computed</code> and <code>sharadar_fundamentals</code>, and the computations are validated live in the Build tab. Then standard backtests through the existing engine with the usual IS/OOS discipline. No labels required for v1 (published coefficients suffice for a screen); the label pipeline improves it later. Days-to-weeks of work, most of it evaluation rather than construction.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low</div>
+  <p>Everything required already exists and is validated; the only risk is the ordinary research risk that the overlay adds nothing after costs.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Internal strategy enhancement — a universe filter and overlay in the existing backtest/live pipeline. No external product surface at all.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>None, by design — the "customer" is the shop's own book. That is the point: zero distribution risk, zero credibility barrier, zero regulatory surface, and the strategy results double as the validation study every external option needs anyway ("our PD screen added X bps and cut MOM's max drawdown by Y points" is a better sales document than any AUC table).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>No direct revenue; value arrives as Sharpe/drawdown improvement on live capital, which compounds from day one. Time to first dollar: effectively immediate in expectation once live. Honest caveat: the distress anomaly is well-published and has weakened since the 2000s literature; the overlay may add little to LV specifically, since low-vol portfolios already avoid most high-PD names. Even a null result is cheap and informative. This is the highest certainty-per-unit-effort item in the appendix.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 5 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">5 · Comprehensive Credit Research Product</span>
+    <span class="mc-meta">Research subscription · modeling from roadmap A–C + an editorial layer · publishing infra already exists (Railway)</span>
+    <span class="mc-tagline">A subscription combining dashboards, monthly distress watchlists, fallen-angel monitors, and model-driven issuer notes — quant-generated, human-edited.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A paid research service built on the PD engine: a live dashboard (sector credit heatmaps, PD-migration movers, the equity-vs-accounting disconnect monitor from the Disconnects tab, HY OAS regime gauges), a monthly distress watchlist with model attribution, fallen-angel candidates (BBB names with deteriorating coverage), and short issuer notes generated from model drivers plus filing excerpts. The differentiator against narrative credit research is that every claim traces to a reproducible model output with published historical hit rates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Modeling: roadmap A–C (published-coefficient scores immediately; label-based re-fits improve it). Product: dashboard pages on the existing Railway publishing stack, a templated report generator (LLM-assisted drafting from model outputs, human-reviewed), payments/subscriber management (Stripe + gated pages — commodity parts). The underappreciated cost is the <strong>recurring editorial commitment</strong>: a subscription dies if the monthly cadence slips, and this is a permanent tax on two people's time. A long free-publication period (6–12 months of public watchlists with tracked outcomes) is effectively mandatory to build the credibility that converts to paid.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>Technically the easiest external option; the difficulty is sustained cadence and audience-building, which are effort and time rather than engineering.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Research subscription: gated web dashboard + monthly PDF/HTML letter + watchlist CSVs. Individual ($300–1,500/yr) and institutional ($3–10K/yr) tiers.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>HY and distressed-debt investors, family offices, RIAs, restructuring advisors, financial journalists. Comparables: paid finance newsletters/research boutiques sustain anywhere from a few hundred to a few thousand subscribers; CreditSights (institutional credit research, acquired by Fitch) anchors the high end, Substack-economics the low end. Publisher's exemption keeps impersonal research outside investment-adviser registration (worth confirming for the institutional tier), so the regulatory surface is small.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $10–100K/yr by year 2 — e.g. 30–150 individual subscribers plus 0–5 institutional. Time to first dollar: 3–6 months (fastest external option), though meaningful revenue takes the full credibility-building year. Key risks: audience-building is slow and unglamorous; churn is brutal if the watchlists don't visibly work; the cadence tax. Compounds well with Option 1 — the research service is the marketing funnel for the data feed.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 6 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">6 · Private-Credit / Middle-Market Lending Analytics</span>
+    <span class="mc-meta">API/SaaS · rides the accounting-only model track (Z′/Z″, O-score — no market data needed) · client supplies borrower financials</span>
+    <span class="mc-tagline">PD scoring for private borrowers, sold to direct lenders and their LPs — the hottest end-market, and the one where this data is weakest.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A scoring service for firms with no traded equity: the client (a direct lender, fund administrator, or LP) uploads borrower financial statements; the engine returns PD, synthetic rating, peer-relative ranks against the closest public-company sector cohort, and covenant-style deterioration flags. Only the accounting/statistical family applies (Z′/Z″, O-score, re-fit logit, accounting-feature ML) — the structural models need a stock price by construction.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>The accounting-model track from Options 1's build, plus an ingestion layer for client-supplied financials (spreading, normalization — messier than it sounds), a secure multi-tenant API, and — the hard scientific problem — <strong>calibration transfer</strong>: models trained on public-firm defaults are systematically mis-calibrated for smaller, private, sponsor-owned borrowers (different leverage norms, different default definitions, no market discipline). Without private-firm default data this can only be partially patched (size/sector adjustments, conservative overlays) and must be disclosed. This is precisely the gap Moody's RiskCalc filled with its proprietary private-firm default database — the moat is the data, not the model.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High</div>
+  <p>Model transfer to private firms without private-firm training data is a genuine scientific weakness, and the buyers are sophisticated enough to probe exactly that.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>API + light SaaS portal for portfolio-level views; white-label scoring embedded in fund-admin reporting is the more realistic wedge than direct sales to lenders.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Private credit is ~$1.7–2T AUM and still growing — direct lenders, BDCs, fund admins, and LPs all want independent look-through risk metrics. Incumbents: Moody's RiskCalc (the standard for private-firm PD), RapidRatings (FHR scores from supplier financials), S&amp;P Credit Assessments, Lincoln/Houlihan valuation shops on the mark-to-model side. The market is large; this shop's data advantage in it is small.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $50–250K/yr if 2–5 fund/admin clients land, but with the widest error bars in this appendix and a long 18–36 month path to first dollar. Key risks: RiskCalc incumbency, the calibration-transfer weakness, enterprise sales cycles, and data-security obligations (client financials are confidential). Rational only as a later opportunistic move if a specific client asks — not a build-on-spec candidate.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 7 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">7 · Counterparty &amp; Supplier Risk Monitoring for Corporates</span>
+    <span class="mc-meta">SaaS · Option 1's engine + alerting/entity-matching UI · public counterparties only</span>
+    <span class="mc-tagline">A watchlist tool for treasurers and procurement teams: track the PD of public customers, suppliers, and counterparties; get alerts on deterioration.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A corporate (non-investor) application of the same PD panel: a company uploads its list of material counterparties — key customers, critical suppliers, JV partners, lessees — and the tool maps them to tickers, tracks PD and synthetic rating over time, and fires alerts on threshold breaches or rapid PD momentum (the CHS market-based inputs move well ahead of quarterly filings, which is the pitch). Useful for receivables exposure, supply-chain continuity, and counterparty limits.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Modeling is Option 1's engine unchanged. Incremental build: entity resolution (company names → tickers; subsidiaries → public parents — fiddly but tractable), a watchlist/alerting UI with email digests, per-seat billing, and plain-English score explanations for a non-quant audience (a treasurer will not read a CAP curve). The hard 40% of the incumbent products — private-company coverage via trade-payment data (D&amp;B) or solicited financials (RapidRatings) — is out of reach, so the product must be honestly scoped to public counterparties, which is where the market-based models are strongest anyway.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>Technically the lightest external SaaS here; the difficulty is selling to corporates with no brand, against incumbents whose names are the product.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>SaaS dashboard + email alerts, priced per watchlist size or per seat ($3–15K/yr); conceivably white-labeled into credit-insurance brokers' client tooling.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Treasury, credit, and procurement functions at mid-size corporates; credit insurers and their brokers. The proof the niche pays real money: <strong>CreditRiskMonitor</strong> (FRISK scores on public companies — nearly this exact product) is a listed company with roughly $45–50M revenue; RapidRatings and D&amp;B own the private-counterparty side; Bloomberg/S&amp;P serve the top end. A two-person entrant competes on price and score quality at the small end of that proven market.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $25–150K/yr by year 2–3 (5–20 corporate accounts); time to first dollar 9–18 months. Key risks: distribution into corporate treasury is relationship-driven and slow; CreditRiskMonitor is entrenched and cheap by enterprise standards; alert fatigue churns users if calibration is off. Attractive mainly because it monetizes Option 1's engine with a different, less quant-picky buyer.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 8 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">8 · LLM-Powered "Credit Analyst Copilot"</span>
+    <span class="mc-meta">SaaS/API · PD engine + retrieval over EDGAR filings + templated memo generation</span>
+    <span class="mc-tagline">A chat/report interface grounded in the quantitative engine: "why did this issuer's PD jump?", draft credit memos with model attribution and filing citations.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">MEDIUM–HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>An assistant for credit analysts that answers issuer questions and drafts first-pass credit memos, where every quantitative claim is pulled from the PD engine (scores, drivers, peer ranks, migration history) and every qualitative claim cites an EDGAR filing passage. The defensible part is not the LLM — it is the grounding: generic LLMs confabulate credit numbers, and the engine supplies verified ones. Output: a structured memo (business, leverage, coverage, model PD vs sector, red flags) in minutes instead of a day.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 1's engine as the numeric backbone; retrieval over EDGAR full-text (free API, real engineering to chunk and rank 10-K/10-Q/8-K text); prompt/template design for memo structure; a hard evaluation harness for hallucination control (numbers must match the engine exactly — enforce by construction, injecting engine values into templates rather than letting the model generate them); usage-based infrastructure. Smaller build than the CECL toolkit, but the quality bar for "no wrong numbers" is unforgiving because a single confident error destroys trust in the whole product.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium-High</div>
+  <p>The engineering is known territory; the crowding is the problem — every incumbent and a wave of startups are building this with more distribution and more data.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>SaaS copilot (chat + memo export) and/or an API that returns structured issuer briefs; white-labeling inside Option 5's research product is the low-risk deployment.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Small credit teams (funds, insurers, banks' leveraged-finance groups) that cannot afford analyst headcount. Incumbents are already shipping: Moody's Research Assistant, S&amp;P/Kensho tooling, Bloomberg's terminal AI, plus well-funded startups (Hebbia et al.) targeting exactly this workflow. A two-person wedge exists only where the copilot is <em>grounded in a PD engine the incumbent products don't expose</em> — i.e., as a feature of Options 1/5, not a standalone company.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Standalone: speculative — rough estimate $0–100K/yr, 12+ months to first dollar, high risk that incumbents bundle equivalent features for free. As a feature multiplier on Options 1/5/7 (auto-drafted issuer notes, plain-English alert explanations): cheap, differentiating, and probably the right way to hold it. Key risks: liability for generated content (disclaimers + human review), model-cost drift, and the pace of incumbent bundling.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 9 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">9 · Licensing PD Signals to Index / ETF Providers</span>
+    <span class="mc-meta">Data licensing · Option 1's panel + point-in-time audit trail + index methodology work</span>
+    <span class="mc-tagline">The PD/synthetic-rating panel as an index input — e.g. a credit-screened quality equity index — licensed to a self-indexing shop or ETF sponsor.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM (build) · lottery (sale)</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>License the PD/rating panel as a rules-based index ingredient: a "credit-screened" large/mid-cap equity index (exclude the deteriorating-PD tail — the distress anomaly again, applied as an index rule), a fallen-angel-anticipation screen, or a credit-quality tilt overlay. The licensee (a calculation agent such as Solactive, Indxx, or MerQube, engaged by an ETF sponsor) handles calculation, governance, and distribution; the shop supplies the signal and the methodology.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 1's panel, plus what index buyers uniquely demand: a fully <strong>point-in-time, audited, reproducible</strong> history (no restatement leakage — the ART/ARQ discipline the report already insists on is exactly this), a written methodology document, capacity/turnover analysis, and backtests net of realistic costs. Then a business-development grind: pitching sponsors and calc agents, most of which goes nowhere. Marginal technical work over Option 1 is modest; marginal distribution work is nearly all of it.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium build, Very High placement</div>
+  <p>The artifact is cheap once Option 1 exists; landing a sponsor is a low-probability, high-payoff outcome outside the shop's control.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Data licensing agreement: flat annual fee and/or basis points on AUM tracking the index; the signal file delivered on rebalance dates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Custom-index calculation agents (Solactive alone runs thousands of custom indices), smaller ETF issuers hunting for differentiated methodologies, and model-portfolio platforms. Incumbent signal suppliers: MSCI/S&amp;P quality factors, Moody's analytics licensing, academic-factor shops. The pitch has genuine novelty — credit-risk screens on equity indices are rarer than quality/vol screens — but bps-based deals only pay if the fund gathers assets, which is the sponsor's problem and mostly luck.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Lumpy and lottery-like: rough estimate $0 in most years; a single landed deal plausibly $50–250K/yr (flat fee) or a few bps on AUM that could be anything from trivial to substantial. Time to first dollar: 18+ months. Key risks: sponsor dependence, the point-in-time audit bar, and reputational tail risk if a licensed index underperforms. Sensible only as a cheap standing option once Option 1 exists — keep the methodology document ready and take meetings.</p>
+</div>
+</div>
+</div>
+</details>
+
+<h3>Summary comparison</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>#</th><th>Option</th><th>Difficulty</th><th>Form</th><th>Time to first $</th><th>Realistic annual revenue, yr 2–3 (rough)</th><th>Key blocker</th></tr></thead>
+<tbody>
+<tr><td>4</td><td>Credit signals for own equity engine</td><td><span class="badge b-go">LOW</span></td><td>Internal strategy overlay</td><td>Immediate (via live book)</td><td>Indirect — Sharpe/drawdown, no revenue</td><td>None — data and engine on hand</td></tr>
+<tr><td>1</td><td>Synthetic ratings &amp; PD score feed</td><td><span class="badge b-maybe">MEDIUM</span></td><td>Data feed / API + historical panel</td><td>6–12 mo</td><td>$25–150K</td><td>Credibility; Sharadar derived-data terms</td></tr>
+<tr><td>5</td><td>Credit research subscription</td><td><span class="badge b-maybe">MEDIUM</span></td><td>Dashboard + monthly letter</td><td>3–6 mo</td><td>$10–100K</td><td>Audience-building; permanent cadence tax</td></tr>
+<tr><td>7</td><td>Counterparty risk monitor</td><td><span class="badge b-maybe">MEDIUM</span></td><td>SaaS + alerts</td><td>9–18 mo</td><td>$25–150K</td><td>Distribution vs CreditRiskMonitor / RapidRatings</td></tr>
+<tr><td>9</td><td>Index / ETF signal licensing</td><td><span class="badge b-maybe">MEDIUM</span> build · lottery placement</td><td>Data license (flat fee / bps)</td><td>18+ mo</td><td>$0 most years; $50–250K if a deal lands</td><td>Finding a sponsor; point-in-time audit bar</td></tr>
+<tr><td>8</td><td>LLM credit-analyst copilot</td><td><span class="badge b-label">MED–HIGH</span></td><td>SaaS copilot / API (or feature of 1/5/7)</td><td>12+ mo</td><td>$0–100K standalone; better as a feature</td><td>Incumbent bundling; zero tolerance for wrong numbers</td></tr>
+<tr><td>3</td><td>Portfolio builder / CECL toolkit</td><td><span class="badge b-label">HIGH</span></td><td>SaaS + auditable reports</td><td>12–24 mo</td><td>$50–300K (possibly $0)</td><td>Bank sales cycle; SR 11-7 burden; private-borrower gap</td></tr>
+<tr><td>6</td><td>Private-credit analytics</td><td><span class="badge b-label">HIGH</span></td><td>API / white-label scoring</td><td>18–36 mo</td><td>$50–250K (widest error bars)</td><td>No private-firm default data; RiskCalc incumbency</td></tr>
+<tr><td>2</td><td>Capital-structure arbitrage</td><td><span class="badge b-no">VERY HIGH</span></td><td>Fund strategy (own capital)</td><td>24+ mo</td><td>Own-capital returns only, capacity-limited</td><td>Name-level bond/CDS data + credit execution infra</td></tr>
+</tbody>
+</table>
+</div>
+<p class="footnote">Revenue figures are order-of-magnitude estimates for an unknown two-person shop with no existing credit distribution, stated after thinking about incumbent pricing and plausible client counts — treat as ±1 notch on the range, and treat any single-deal option (9, 3, 6) as bimodal around zero.</p>
+
+<h3>Difficulty vs commercial potential</h3>
+<div class="fig">
+<svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- plot frame -->
+  <rect x="80" y="40" width="640" height="400" fill="#fafbfc" stroke="var(--line)"/>
+  <!-- quadrant dividers -->
+  <line x1="400" y1="40" x2="400" y2="440" stroke="var(--line)" stroke-dasharray="5 4"/>
+  <line x1="80" y1="240" x2="720" y2="240" stroke="var(--line)" stroke-dasharray="5 4"/>
+  <!-- quadrant labels -->
+  <text x="95"  y="60"  font-size="11" fill="var(--muted)" font-style="italic">easy + attractive: do first</text>
+  <text x="592" y="60"  font-size="11" fill="var(--muted)" font-style="italic">hard + attractive: earn the right</text>
+  <text x="95"  y="430" font-size="11" fill="var(--muted)" font-style="italic">easy + modest: bundle</text>
+  <text x="586" y="430" font-size="11" fill="var(--muted)" font-style="italic">hard + modest: avoid for now</text>
+  <!-- axes labels -->
+  <text x="400" y="482" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">Build + go-to-market difficulty →</text>
+  <text x="34" y="240" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600" transform="rotate(-90 34 240)">Commercial potential (2-person shop) →</text>
+  <!-- x ticks -->
+  <g font-size="11" fill="var(--muted)" text-anchor="middle">
+    <text x="170" y="458">Low</text><text x="340" y="458">Medium</text><text x="510" y="458">High</text><text x="660" y="458">Very High</text>
+  </g>
+  <!-- uncertainty whiskers -->
+  <g stroke="#9aa4b2" stroke-width="1.5">
+    <line x1="375" y1="70"  x2="375" y2="260"/>
+    <line x1="655" y1="160" x2="655" y2="360"/>
+    <line x1="515" y1="90"  x2="515" y2="330"/>
+    <line x1="540" y1="110" x2="540" y2="350"/>
+  </g>
+  <!-- points -->
+  <g font-size="11" fill="#374151">
+    <circle cx="170" cy="190" r="13" fill="var(--go)"/><text x="170" y="194" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="190" y="180">own-book equity overlay</text>
+    <text x="190" y="195" font-size="10" fill="var(--muted)">(indirect but near-certain payoff)</text>
+    <circle cx="340" cy="170" r="13" fill="var(--accent)"/><text x="340" y="174" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="358" y="162">PD score feed</text>
+    <circle cx="305" cy="235" r="13" fill="var(--accent)"/><text x="305" y="239" text-anchor="middle" fill="#fff" font-weight="700">7</text>
+    <text x="256" y="262">counterparty monitor</text>
+    <circle cx="355" cy="270" r="13" fill="var(--accent)"/><text x="355" y="274" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="373" y="278">research subscription</text>
+    <circle cx="375" cy="120" r="13" fill="var(--accent2)"/><text x="375" y="124" text-anchor="middle" fill="#fff" font-weight="700">9</text>
+    <text x="393" y="112">index licensing (bimodal)</text>
+    <circle cx="435" cy="305" r="13" fill="var(--accent)"/><text x="435" y="309" text-anchor="middle" fill="#fff" font-weight="700">8</text>
+    <text x="453" y="313">copilot (standalone)</text>
+    <circle cx="515" cy="130" r="13" fill="var(--accent2)"/><text x="515" y="134" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="533" y="128">CECL / portfolio toolkit</text>
+    <circle cx="540" cy="175" r="13" fill="var(--accent2)"/><text x="540" y="179" text-anchor="middle" fill="#fff" font-weight="700">6</text>
+    <text x="558" y="183">private-credit analytics</text>
+    <circle cx="655" cy="265" r="13" fill="var(--no)"/><text x="655" y="269" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="600" y="292">cap-structure arb</text>
+  </g>
+  <!-- legend -->
+  <g font-size="10.5" fill="var(--muted)">
+    <line x1="95" y1="504" x2="95" y2="516" stroke="#9aa4b2" stroke-width="1.5"/>
+    <text x="102" y="514">vertical whisker = wide outcome range (single-deal / bimodal options)</text>
+    <circle cx="430" cy="510" r="6" fill="var(--go)"/><text x="440" y="514">recommended first move</text>
+    <circle cx="590" cy="510" r="6" fill="var(--accent2)"/><text x="600" y="514">high-variance payoff</text>
+  </g>
+</svg>
+<div class="fig-cap">Positions are judgment calls, not measurements. Difficulty includes go-to-market, which is why the technically trivial index-licensing option (9) sits at Medium: the artifact is cheap, the sale is not. Option 4's potential is indirect (it produces no revenue) but is plotted on expected value: near-certain, immediate, and it de-risks everything to its right.</div>
+</div>
+
+<h3>Where the wedge is: incumbent landscape</h3>
+<div class="fig">
+<svg viewBox="0 0 760 480" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <rect x="80" y="30" width="640" height="380" fill="#fafbfc" stroke="var(--line)"/>
+  <!-- axes -->
+  <text x="400" y="452" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">Target customer size →</text>
+  <g font-size="11" fill="var(--muted)" text-anchor="middle">
+    <text x="170" y="428">small funds / mid-market corporates</text>
+    <text x="430" y="428">regional institutions</text>
+    <text x="630" y="428">global banks / asset managers</text>
+  </g>
+  <text x="34" y="220" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600" transform="rotate(-90 34 220)">Annual price point (log scale) →</text>
+  <g font-size="10.5" fill="var(--muted)" text-anchor="end">
+    <text x="74" y="70">$500K+</text><text x="74" y="160">$50K</text><text x="74" y="265">$10K</text><text x="74" y="375">$1K</text>
+  </g>
+  <!-- BPGS wedge -->
+  <polygon points="90,240 340,240 340,400 90,400" fill="#dcfce7" opacity="0.55" stroke="#187a36" stroke-dasharray="6 4"/>
+  <text x="112" y="332" font-size="12.5" font-weight="700" fill="#166534">open wedge</text>
+  <text x="112" y="350" font-size="10.5" fill="#166534">transparent quant PD, US public firms,</text>
+  <text x="112" y="365" font-size="10.5" fill="#166534">priced below every incumbent's floor</text>
+  <text x="112" y="380" font-size="10.5" fill="#166534">(options 1 · 5 · 7 live here)</text>
+  <!-- incumbents -->
+  <g font-size="11" fill="#374151">
+    <circle cx="640" cy="75"  r="9" fill="var(--no)" opacity="0.85"/><text x="626" y="63" text-anchor="end">Moody's / S&amp;P / Fitch ratings (NRSRO moat)</text>
+    <circle cx="600" cy="130" r="9" fill="var(--accent2)" opacity="0.85"/><text x="586" y="126" text-anchor="end">Moody's KMV / CreditEdge</text>
+    <circle cx="560" cy="160" r="9" fill="var(--accent2)" opacity="0.85"/><text x="546" y="156" text-anchor="end">Bloomberg DRSK (terminal-bundled)</text>
+    <circle cx="645" cy="185" r="9" fill="var(--accent2)" opacity="0.85"/><text x="631" y="205" text-anchor="end">Credit Benchmark (bank consensus)</text>
+    <circle cx="430" cy="215" r="9" fill="var(--maybe)" opacity="0.9"/><text x="446" y="211">RapidRatings (private-firm FHR)</text>
+    <circle cx="470" cy="245" r="9" fill="var(--maybe)" opacity="0.9"/><text x="486" y="249">Moody's RiskCalc (private-firm PD)</text>
+    <circle cx="350" cy="290" r="9" fill="var(--maybe)" opacity="0.9"/><text x="366" y="286">CreditRiskMonitor (FRISK, ~$45–50M rev)</text>
+    <circle cx="280" cy="330" r="9" fill="var(--maybe)" opacity="0.9"/><text x="296" y="334">D&amp;B (SMB trade credit)</text>
+    <circle cx="590" cy="255" r="9" fill="var(--accent2)" opacity="0.85"/><text x="576" y="277" text-anchor="end">CreditSights / Fitch (research)</text>
+  </g>
+  <!-- legend -->
+  <g font-size="10.5" fill="var(--muted)">
+    <circle cx="95" cy="466" r="6" fill="var(--no)" opacity="0.85"/><text x="105" y="470">regulatory-moat ratings</text>
+    <circle cx="255" cy="466" r="6" fill="var(--accent2)" opacity="0.85"/><text x="265" y="470">institutional PD / analytics</text>
+    <circle cx="435" cy="466" r="6" fill="var(--maybe)" opacity="0.9"/><text x="445" y="470">mid-market / counterparty specialists</text>
+  </g>
+</svg>
+<div class="fig-cap">Placement is approximate. The pattern is what matters: incumbents cluster in the upper-right (institutional buyers, five-to-six-figure pricing) and the two big private-firm specialists own the middle. The lower-left — small funds and mid-market corporates who want quantitative PD on US public firms for four figures — is served mainly by CreditRiskMonitor, whose ~$45–50M revenue proves the niche pays without proving it is closed.</div>
+</div>
+
+<h3>Recommended sequencing</h3>
+<div class="panel">
+<p><strong>Build Option 4 first, and start Option 1's label pipeline the same week.</strong> The equity overlay is the only option with zero distribution risk, zero incremental data cost, and an existing consumer (the shop's own LV/MOM/MR books); it converts the report's phase-A scorecards into live economic value within weeks, and — more importantly — it is the validation study every other option needs. A PD engine that demonstrably cut MOM's drawdown or added Sharpe to the blend is credible in a way no backtested AUC table is. The label pipeline (roadmap phase B) runs in parallel because it is the single highest-leverage unlock in the entire report: it gates the re-fits, the ML family, the proprietary DD→EDF mapping, and the rating/transition layer that all external options stand on.</p>
+<p style="margin-top:10px">From there the options compound rather than compete. Option 1 (the PD feed) is the core asset — build it for internal use and package it for sale opportunistically. Option 5 (research subscription) is Option 1's marketing funnel: publish free watchlists with tracked outcomes for 6–12 months on the existing Railway stack, converting credibility into the first external dollars at very low incremental cost. Option 7 (counterparty monitor) reuses the identical engine for a different buyer and is the natural second SaaS surface; Option 9 (index licensing) is a cheap standing option once Option 1's point-in-time discipline is in place — keep the methodology document ready and take meetings, expect nothing. Option 8 (copilot) should be held as a feature of 1/5/7, not a standalone bet. Options 3 and 6 (CECL toolkit, private-credit analytics) are pull-only: build them when a specific paying customer asks, never on spec. Option 2 (cap-structure arb) stays parked until name-level bond data is on hand and the PD engine has a live track record — and even then, in the equity-leg-only form. The through-line: <em>use the models on your own money first; sell the exhaust.</em></p>
+</div>
+
+<p class="footnote" style="margin-top:18px">All market sizes, revenue ranges, and incumbent pricing in this appendix are rough estimates assembled for planning, not diligence; error bars of ±50–100% should be assumed throughout, and single-deal options are bimodal around zero.</p>
+
+</div><!-- /apx-wrap -->
+</div><!-- /appendix-commercial -->
+
 </body>
 </html>

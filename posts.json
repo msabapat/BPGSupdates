@@ -16,9 +16,9 @@
     "category": "research"
   },
   {
-    "date": "2026-06-30",
-    "title": "Automated Credit Analyst \u2014 Model Feasibility & Framework",
-    "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources.",
+    "date": "2026-07-03",
+    "title": "Automated Credit Analyst \u2014 Model Feasibility & Framework (v2: + Commercial Directions Appendix)",
+    "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From This\u201d: 9 scored options (ratings/PD feed, equity-bond arb, bottom-up credit portfolio builder, credit signals for the equity engine, research subscription, private-credit analytics, counterparty monitoring, LLM copilot, PD licensing) with difficulty, market sizing, and a recommended build sequence.",
     "file": "research/credit_analyst_feasibility_report_2026-06-30.html",
     "author": "Mani Sabapathi",
     "category": "research"
