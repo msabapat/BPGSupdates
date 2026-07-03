@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-07-03",
+    "title": "Sector Attribution Dashboard",
+    "summary": "Per-sector performance contribution breakdown for LV, MOM, and MR \u2014 full-period ranking, IS/OOS comparison, and year-by-year heatmap. Key finding: Real Estate is a consistent drag across all three strategies. MOM shows growing Technology concentration in OOS (AI/mega-cap momentum trade); MR's Financial Services allocation shows classic mean-reversion crisis alpha in 2008-2009.",
+    "file": "strategies/sector_dashboard_2026-07-03.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
     "date": "2026-07-02",
     "title": "Beta, Alpha & Industry Research \u2014 Strategy Generation & Improvement",
     "summary": "Three-chapter report: (1) narrative summary tying together the day's beta/alpha/industry research \u2014 idio vol vs beta vol vs total vol as predictors (mechanical artifact, not real alpha), LV/MOM/MR classified by market-beta quartile, industry group signals, an industry-vol filter that improves MOM Sharpe both IS and OOS, MR's idiosyncratic-vs-industry vol split and a direct Stage-2 test of it (not adopted), and a beta-bucket LV substitute that looked strong IS but collapsed OOS; (2) the full idio/beta/total-vol quartile report; (3) the interactive Industry Explorer.",
