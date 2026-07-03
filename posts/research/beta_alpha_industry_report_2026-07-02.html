@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beta, Alpha &amp; Industry Research — Strategy Generation &amp; Improvement</title>
+<style>
+  :root{--bg:#f8fafc;--card:#fff;--bd:#e2e8f0;--ink:#0f172a;--mut:#64748b;
+        --blue:#2563eb;--green:#16a34a;--red:#dc2626;--amber:#b45309;--amberbg:#fffbeb;--amberbd:#fcd34d;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.55;padding:28px 20px 70px}
+  .wrap{max-width:980px;margin:0 auto}
+  h1{font-size:26px;font-weight:700;margin:0 0 6px}
+  .sub{color:var(--mut);font-size:14px;margin:0 0 26px}
+  .toc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;margin-bottom:28px;font-size:13.5px}
+  .toc h2{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:0 0 10px}
+  .toc ol{margin:0;padding-left:20px}
+  .toc a{color:var(--blue);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .sec{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+       color:var(--mut);margin:34px 2px 12px;border-bottom:2px solid var(--bd);padding-bottom:6px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+  .card.warn{border-color:var(--amberbd);background:linear-gradient(0deg,var(--amberbg) 0%,#fff 55%)}
+  .card h2{font-size:16px;font-weight:700;margin:0 0 6px}
+  .card .why{color:var(--mut);font-size:13px;margin:0 0 14px}
+  .card p{font-size:14px;margin:0 0 12px}
+  .card p:last-child{margin-bottom:0}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+  th,td{padding:6px 10px;text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--mut);font-weight:600;border-bottom:1px solid var(--bd)}
+  tbody tr:not(:last-child) td{border-bottom:1px solid #f1f5f9}
+  .pp{color:var(--green);font-weight:600}.pr{color:var(--red);font-weight:600}
+  .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+       border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle}
+  .tag.win{background:#dcfce7;color:#15803d}
+  .tag.dead{background:#fee2e2;color:#b91c1c}
+  .tag.open{background:#e0e7ff;color:#4338ca}
+  .note{color:var(--mut);font-size:12.5px;margin-top:8px}
+  .links{font-size:13px;margin-top:10px}
+  .links a{color:var(--blue);text-decoration:none;margin-right:16px}
+  .links a:hover{text-decoration:underline}
+  .takeaway{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 18px;font-size:13.5px;margin-top:10px}
+  .takeaway b{color:var(--blue)}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12.5px}
+  footer{color:var(--mut);font-size:12px;margin-top:40px;border-top:1px solid var(--bd);padding-top:14px}
+</style>
+<style>
+  .tabbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--bd);
+    display:flex;gap:4px;padding:10px 20px;margin:-28px -20px 24px;overflow-x:auto}
+  .tabbtn{border:1px solid var(--bd);background:#fff;color:var(--mut);font-size:13px;font-weight:600;
+    padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;font-family:inherit}
+  .tabbtn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .chapter{display:none}
+  .chapter.active{display:block}
+  iframe.chapterframe{width:100%;height:calc(100vh - 130px);border:1px solid var(--bd);border-radius:12px;background:#fff}
+  .chapwrap{max-width:1180px;margin:0 auto}
+</style>
+</head><body>
+<div class="tabbar">
+  <button class="tabbtn active" data-tab="ch1">1 &middot; Overview &amp; Findings</button>
+  <button class="tabbtn" data-tab="ch2">2 &middot; Idio vs Beta vs Total Vol (full report)</button>
+  <button class="tabbtn" data-tab="ch3">3 &middot; Industry Explorer (interactive)</button>
+</div>
+
+<div class="chapter active" id="ch1">
+<div class="wrap">
+
+<h1>Beta, Alpha &amp; Industry Research</h1>
+<p class="sub">Strategy generation and improvement work &middot; 2026-07-02 &middot; top-500/2000 domestic no-ADR universe, IS 2001&ndash;2021 unless noted</p>
+
+<div class="toc">
+<h2>Contents</h2>
+<ol>
+<li><a href="#idiovol">Idiosyncratic vol vs. beta vol vs. total vol</a> &mdash; which best predicts forward vol / forward return</li>
+<li><a href="#betaquartile">LV / MOM / MR classified by market-beta quartile</a> &mdash; where each strategy's edge actually lives</li>
+<li><a href="#industrysignal">Industry group signals</a> &mdash; momentum, beta, and volatility at the industry level</li>
+<li><a href="#industryfilter">Applying industry-vol filters to MOM/LV/MR</a> &mdash; a real improvement to the locked MOM strategy</li>
+<li><a href="#mridio">MR&#39;s idiosyncratic-vs-industry vol split</a> &mdash; confirms the mean-reversion mechanism</li>
+<li><a href="#lowvol">A beta-bucket substitute for LV</a> &mdash; looked great IS, collapsed OOS</li>
+<li><a href="#takeaways">Where this leaves us</a></li>
+</ol>
+</div>
+
+<div class="sec" id="idiovol">1 &middot; Idio Vol vs. Beta Vol vs. Total Vol</div>
+<div class="card">
+<h2>Which volatility component best predicts what?<span class="tag open">Mixed</span></h2>
+<p class="why">Every stock's realized vol can be split into a systematic (market+group beta-driven) piece and an idiosyncratic (residual) piece, using the locked 12-month half-life blend across the 1m/3m/6m/12m beta regressions. The question: does the split add predictive power over just using plain trailing volatility?</p>
+<p><b>Forward volatility:</b> all three classifiers predict next-month realized vol about equally well &mdash; total vol Q4&minus;Q1 spread +22.2pp/yr (t=27.95), idio vol +19.3pp (t=27.35), beta vol +19.0pp (t=23.89). The split doesn't sharpen vol forecasting; plain total vol is just as good.</p>
+<p><b>Forward alpha (idiosyncratic return):</b> here idio vol looked like a much stronger signal at first &mdash; a &minus;9.6%/yr Q4&minus;Q1 spread (t=&minus;5.76) vs. beta vol's &minus;4.3%/yr (t=&minus;3.15), roughly 2&times; stronger and consistent with the well-known idio-vol puzzle (Ang-Hodrick-Xing-Zhang). A follow-up 4&times;4 past-beta &times; past-alpha grid was built specifically to stress-test this, and the result reversed the conclusion: the negative-alpha spread is largely a <b>mechanical artifact</b> of stale trailing-intercept bias. No combination of past beta/past alpha (market or industry-group beta, both tested) produces a statistically significant forward total-return spread (all t&le;1.4) &mdash; the beta premium roughly cancels the residual-alpha drift once measured correctly.</p>
+<p><b>Verdict:</b> the beta/idio-vol decomposition remains genuinely useful for <i>risk classification</i> (it's the backbone of the MV-frontier and beta-bucket work below), but it is <b>not</b> an exploitable standalone return signal. This closes that specific research thread.</p>
+<div class="links"><a href="idio_vol_quartile_results.html">Full quartile results &amp; methodology &rarr;</a></div>
+</div>
+
+<div class="sec" id="betaquartile">2 &middot; LV / MOM / MR Classified by Market-Beta Quartile</div>
+<div class="card">
+<h2>Where does each locked strategy's edge actually live?</h2>
+<p class="why">Classified every holding of the three locked strategies (LV N=300, MOM N=500, MR inverted C150/X10 N2000/$20M liquidity) by market-beta quartile (Q1=low &beta; .. Q4=high &beta;), using the same locked 12m-blend beta, lagged one month to avoid look-ahead, over a common top-2000 universe.</p>
+<table>
+<thead><tr><th>Holdings distribution</th><th>Q1 (low &beta;)</th><th>Q2</th><th>Q3</th><th>Q4 (high &beta;)</th></tr></thead>
+<tbody>
+<tr><td>LV</td><td>85.8%</td><td>13.1%</td><td>1.1%</td><td>0.0%</td></tr>
+<tr><td>MOM</td><td>18.2%</td><td>16.8%</td><td>21.2%</td><td>43.8%</td></tr>
+<tr><td>MR</td><td>20.4%</td><td>20.9%</td><td>21.5%</td><td>37.2%</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Sharpe by quartile subset</th><th>FULL</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>SPY</th></tr></thead>
+<tbody>
+<tr><td>LV</td><td>0.80</td><td class="pp">0.85</td><td>0.41</td><td>0.58</td><td>2.20*</td><td>0.37</td></tr>
+<tr><td>MOM</td><td>0.57</td><td>0.30</td><td class="pp">0.40</td><td>0.35</td><td>0.31</td><td>0.37</td></tr>
+<tr><td>MR</td><td class="pp">0.84</td><td>0.39</td><td class="pr">&minus;0.00</td><td>0.31</td><td>0.27</td><td>0.37</td></tr>
+</tbody>
+</table>
+<p class="note">*LV Q4 = only 331 trading days (LV almost never holds a high-beta name) &mdash; noise, not signal. EW sub-portfolios, no TC, T-bill risk-free basis &mdash; a diagnostic decomposition, not the audited backtest (sanity check: MOM FULL Sharpe 0.57 vs. audited 0.56, near-exact; LV 0.80 vs. audited 0.76, close; MR 0.84 vs. audited 0.68 diverges more, since this diagnostic omits the transaction-cost drag that matters most for MR's daily turnover).</p>
+<p><b>LV's edge lives almost entirely in its dominant Q1 bucket</b> &mdash; the low-vol design is doing exactly what it's built to do. <b>MOM's edge is spread fairly evenly</b> across beta buckets, with the low-beta minority actually the weakest slice. <b>MR's Q2 bucket is dead flat</b> while Q1 holds up best &mdash; and MR's pooled Sharpe (0.84) is well above any individual quartile, a genuine diversification effect from spreading 10 names across beta buckets rather than something concentrated in one bucket.</p>
+</div>
+
+<div class="sec" id="industrysignal">3 &middot; Industry Group Signals</div>
+<div class="card">
+<h2>Do Morningstar industry groups show predictive momentum, beta, or vol effects?<span class="tag open">Weak / mixed</span></h2>
+<p class="why">~74&ndash;94 Morningstar industry groups within the top-500 universe, tested for whether trailing group-level return, beta, or (newly computed) realized volatility predict forward group performance.</p>
+<p><b>Momentum:</b> weak and not statistically significant &mdash; Fama-MacBeth correlations of trailing vs. next-month CAGR are only +0.02 to +0.03 (t=1.2&ndash;1.7). <b>Beta:</b> a mild betting-against-beta effect (low-beta industries outperform slightly), strengthening at longer measurement windows. Short-horizon (1&ndash;3 month) signals clearly beat 6&ndash;12 month signals: a top-1-month-total-return industry pick produced 13.3% CAGR at &minus;51% max DD, vs. 6&ndash;12m signals trailing SPY.</p>
+<p><b>Volatility (new):</b> no industry-level volatility existed in the database &mdash; it was computed properly as an equal-weighted daily industry basket &rarr; rolling 63-day realized vol, rather than averaging individual stock vols (which understates true basket vol by ignoring correlation structure). Bottom-quartile-vol industries combined with a top-1-month-return tilt gave the best risk-adjusted line of the whole thread: <b>9.8&ndash;10.1% CAGR at SPY-like volatility with only &minus;36% to &minus;39% max drawdown</b> (vs. SPY's &minus;50.8%).</p>
+<p><b>Caveat:</b> single/paired-industry concentration bets are risky on their own (&minus;68% to &minus;84% drawdowns at 6&ndash;12m horizons) &mdash; the value of this research is less as a standalone strategy and more as a <i>filter</i> layered onto the existing strategies (next section).</p>
+<div class="links"><a href="industry_explorer.html">Interactive Industry Explorer &rarr;</a></div>
+</div>
+
+<div class="sec" id="industryfilter">4 &middot; Applying Industry-Vol Filters to MOM / LV / MR</div>
+<div class="card">
+<h2>A real improvement to the locked MOM strategy<span class="tag win">Win</span></h2>
+<p class="why">Classified each locked strategy's actual holdings by the industry-vol quartile of the industry group they belong to, to see whether excluding high-industry-vol names improves risk-adjusted performance.</p>
+<p><b>LV</b> already concentrates in low-industry-vol groups (80% in Q1) by construction &mdash; a filter adds nothing new. <b>MOM's Sharpe decays monotonically with industry vol</b> (0.97 in Q1 &rarr; 0.23 in Q4) &mdash; a strong, exploitable pattern. <b>MR mirror-images MOM</b>, doing best in the highest-industry-vol quartile (0.40 Sharpe) &mdash; consistent with mean-reversion feeding on volatility rather than avoiding it.</p>
+<table>
+<thead><tr><th>MOM, excluding Q3/Q4 industry-vol names</th><th>IS Sharpe</th><th>IS Max DD</th><th>OOS Sharpe</th></tr></thead>
+<tbody>
+<tr><td>Base MOM (locked)</td><td>0.51</td><td>&minus;66.8%</td><td>1.13</td></tr>
+<tr><td>Ex-Q3/Q4 industry-vol</td><td class="pp">0.60</td><td class="pp">&minus;50.2%</td><td class="pp">1.18</td></tr>
+</tbody>
+</table>
+<p>Improves <b>both</b> in-sample and out-of-sample, with a meaningful drawdown improvement IS. The equivalent filter tested on LV/MR had negligible or negative effect (for MR specifically, excluding Q1 industries actually worsened OOS by shifting the Stage-1 candidate pool composition) &mdash; this filter is specifically a MOM improvement, not a universal one.</p>
+</div>
+
+<div class="sec" id="mridio">5 &middot; MR&#39;s Idiosyncratic-vs-Industry Vol Split</div>
+<div class="card">
+<h2>Confirms the mean-reversion mechanism<span class="tag win">Confirms hypothesis</span></h2>
+<p class="why">Decomposed MR's realized return by whether the volatility driving each holding was idiosyncratic (stock-specific) or industry-driven, to test the hypothesis that MR's edge comes from stock-specific overreaction rather than industry-wide moves.</p>
+<table>
+<thead><tr><th>MR Sharpe by vol-share quartile</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr></thead>
+<tbody>
+<tr><td>Idiosyncratic-vol-driven</td><td>0.24</td><td></td><td></td><td class="pp">0.69</td></tr>
+<tr><td>Industry-vol-driven</td><td class="pp">0.83</td><td></td><td></td><td class="pr">0.42</td></tr>
+</tbody>
+</table>
+<p>Idiosyncratic-driven volatility is <b>monotonically good</b> for MR (0.24 &rarr; 0.69 Sharpe); industry-driven volatility is <b>monotonically bad</b> (0.83 &rarr; 0.42) &mdash; exactly what the mean-reversion thesis predicts: MR wants stock-specific overreactions to fade, not industry-wide selloffs that may keep going.</p>
+<p><b>Direct test &mdash; idio-weighted Stage 2 selector.</b> Took the finding literally and rebuilt MR's Stage 2 ranking metric as <code>composite = var_pct_idio(3m) &times; signal_70d_return</code> instead of raw <code>signal_70d_return</code> &mdash; still picking the most-negative names, but a large industry-driven drop with low idio share now gets down-weighted relative to a smaller, more idiosyncratic one. Stage 1 (FCF-yield top-150 quality pool) and everything else stayed at the locked config (N2000, $20M liquidity, net_debt&le;1, equal weight, buf=2, daily signal/trade). Full 2001&ndash;2026 re-run, X=10 and X=20 holdings, base vs. idio-weighted:</p>
+<table>
+<thead><tr><th>MR Stage-2 variant</th><th>IS Sharpe</th><th>IS Max DD</th><th>OOS Sharpe</th><th>OOS Max DD</th></tr></thead>
+<tbody>
+<tr><td>Base (raw oversold), X=10 &mdash; locked</td><td class="pp">0.76</td><td>&minus;69.6%</td><td class="pp">0.53</td><td>&minus;32.5%</td></tr>
+<tr><td>Idio-weighted, X=10</td><td>0.65</td><td>&minus;69.5%</td><td>0.25</td><td>&minus;33.7%</td></tr>
+<tr><td>Base (raw oversold), X=20</td><td class="pp">0.73</td><td>&minus;72.8%</td><td>0.44</td><td>&minus;25.6%</td></tr>
+<tr><td>Idio-weighted, X=20</td><td>0.59</td><td>&minus;73.7%</td><td class="pp">0.54</td><td class="pp">&minus;22.2%</td></tr>
+</tbody>
+</table>
+<p><b>Result: the idio-weighted selector does not beat the base signal.</b> It underperforms in-sample at both X=10 and X=20 (0.65 vs. 0.76, 0.59 vs. 0.73), and out-of-sample it's clearly worse at X=10 (0.25 vs. 0.53). The one bright spot is X=20 OOS, where idio-weighting edges out the base (0.54 vs. 0.44) with a shallower drawdown (&minus;22.2% vs. &minus;25.6%) &mdash; but that's one cell out of four, working against a consistent IS pattern of underperformance, so it reads as noise rather than a confirmed improvement. <b>Conclusion: the vol-share decomposition explains MR's return well diagnostically, but turning it directly into the Stage-2 ranking metric does not improve the strategy</b> &mdash; the raw oversold signal, filtered through the FCF-quality Stage-1 gate, remains the better selector. Not adopted.</p>
+</div>
+
+<div class="sec" id="lowvol">6 &middot; A Beta-Bucket Substitute for LV</div>
+<div class="card warn">
+<h2>Looked great in-sample, collapsed out-of-sample<span class="tag dead">Rejected</span></h2>
+<p class="why">Tested whether the market-&beta; &times; industry-group-&beta; 4&times;4 bucket grid, combined with a fundamental quality screen, could produce a genuinely non-overlapping, lower-volatility substitute for the existing LV strategy.</p>
+<table>
+<thead><tr><th>&ldquo;LOWVOL&rdquo; candidate (mb1&times;gb{1,2}, ex-LV, FCF&ge;2%, EW, ~39 names)</th><th>CAGR</th><th>Vol</th><th>Max DD</th><th>Sortino</th><th>Sharpe</th></tr></thead>
+<tbody>
+<tr><td>In-sample</td><td class="pp">12.1%</td><td class="pp">10.4%</td><td class="pp">&minus;31.4%</td><td class="pp">1.83</td><td class="pp">1.11</td></tr>
+<tr><td>Out-of-sample</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td class="pr">0.08</td><td>&mdash;</td></tr>
+<tr><td>LV (locked), OOS reference</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>1.04</td><td>&mdash;</td></tr>
+</tbody>
+</table>
+<p><b>Root cause:</b> low market-beta is not the same thing as low total volatility. Beta-sorted names carried much higher idiosyncratic vol out-of-sample (23.6% avg vol_60d) than LV's directly-vol-selected book (16.7%) &mdash; the beta-bucket approach was implicitly picking up idiosyncratic risk that a pure total-vol sort screens out. Also found: market-beta is a far stronger risk-sorter than group-beta (main effect on Sortino &asymp;0.75 vs. &asymp;0.21), and FCF-yield screening does virtually all the useful quality-screening work in this framework (net-debt cap turned out to be non-binding).</p>
+<p><b>Verdict:</b> no viable non-overlapping LV substitute found this round. Flagged next step (not yet built): gate on idiosyncratic vol directly (from the decomposition's residual variance) rather than market-beta, paired with the FCF-yield ranking, and run through the real trading engine with weekly signal + hysteresis rather than a monthly snapshot.</p>
+</div>
+
+<div class="sec" id="takeaways">7 &middot; Where This Leaves Us</div>
+<div class="card">
+<div class="takeaway"><b>Confirmed useful:</b> beta/idio-vol decomposition for risk classification (MV frontier, bucket work); industry-vol as a <i>filter</i> on MOM (real IS+OOS Sharpe and drawdown improvement); the idiosyncratic-vs-industry vol split as a lens on MR's mean-reversion mechanism.</div>
+<div class="takeaway" style="margin-top:10px"><b>Ruled out:</b> beta/idio-vol decomposition as a standalone alpha signal (mechanical artifact); market-beta buckets as a standalone LV substitute (fails OOS on the beta&ne;vol distinction); idio-vol-weighted MR Stage-2 selector (underperforms the base signal at X=10 both IS and OOS, and IS at X=20 &mdash; the one OOS win at X=20 reads as noise against that pattern).</div>
+<div class="takeaway" style="margin-top:10px"><b>Open threads:</b> idiosyncratic-vol-gated LOWVOL candidate for LV, run through the real engine; reconciling a MOM IS-CAGR shift (18.1%&rarr;16.4%) from an entry-only-screens fix that surfaced mid-thread.</div>
+</div>
+
+<footer>BPGS Biz Professional &middot; generated 2026-07-02 from the day's beta/alpha/industry research sessions &middot; see <code>project_beta_quartile_strategy_perf.md</code>, <code>project_decomp_alpha_research.md</code>, <code>project_mv_frontier.md</code> for full technical detail</footer>
+
+</div>
+</div>
+
+<div class="chapter chapwrap" id="ch2">
+<iframe class="chapterframe" src="idio_vol_quartile_results_2026-07-02.html" title="Idio Vol vs Beta Vol vs Total Vol"></iframe>
+</div>
+
+<div class="chapter chapwrap" id="ch3">
+<iframe class="chapterframe" src="industry_explorer_2026-07-02.html" title="Industry Explorer"></iframe>
+</div>
+
+<script>
+document.querySelectorAll('.tabbtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.chapter').forEach(function(c){c.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo(0,0);
+  });
+});
+</script>
+</body></html>

@@ -1,17 +1,9 @@
 [
   {
     "date": "2026-07-02",
-    "title": "Idio Vol vs Beta Vol vs Total Vol \u2014 Quartile Predictiveness",
-    "summary": "Decomposes each stock's realized vol into idiosyncratic and systematic (beta) components using the locked 12m half-life blend, then Fama-MacBeth quartile-sorts on each of idio/beta/total vol to see which best predicts forward realized vol and forward idiosyncratic return (alpha). Top-500 domestic no-ADR, 2001-2021, BH-corrected significance.",
-    "file": "research/idio_vol_quartile_results_2026-07-02.html",
-    "author": "Arvind Rajan",
-    "category": "research"
-  },
-  {
-    "date": "2026-07-02",
-    "title": "Industry Explorer \u2014 Trailing Signal vs Next-Month Return",
-    "summary": "Pick one Morningstar industry group at a time (sortable by name or market cap). Scatter of trailing 1/3/6/12-month beta or alpha vs next-month return for that industry, plus a NAV chart of the industry vs SPY and an equal-weighted top-500 benchmark. Top-500 domestic universe, 2001-2021.",
-    "file": "research/industry_explorer_2026-07-02.html",
+    "title": "Beta, Alpha & Industry Research \u2014 Strategy Generation & Improvement",
+    "summary": "Three-chapter report: (1) narrative summary tying together the day's beta/alpha/industry research \u2014 idio vol vs beta vol vs total vol as predictors (mechanical artifact, not real alpha), LV/MOM/MR classified by market-beta quartile, industry group signals, an industry-vol filter that improves MOM Sharpe both IS and OOS, MR's idiosyncratic-vs-industry vol split and a direct Stage-2 test of it (not adopted), and a beta-bucket LV substitute that looked strong IS but collapsed OOS; (2) the full idio/beta/total-vol quartile report; (3) the interactive Industry Explorer.",
+    "file": "research/beta_alpha_industry_report_2026-07-02.html",
     "author": "Arvind Rajan",
     "category": "research"
   },
