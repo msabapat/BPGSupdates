@@ -1,5 +1,21 @@
 [
   {
+    "date": "2026-07-03",
+    "title": "The Plausible-Worlds Engine — Simulating World States, Not Price Paths",
+    "summary": "Essay II. An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states — including states that have never occurred — governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to Meta-Engine Design and Essay I, The Next-State Engine.",
+    "file": "top-down/plausible-worlds-engine_2026-07-03.html",
+    "author": "Arvind Rajan",
+    "category": "top-down"
+  },
+  {
+    "date": "2026-07-03",
+    "title": "The Next-State Engine — From Crisis Detection to State Anticipation",
+    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world — macro, political, structural — and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
+    "file": "top-down/next-state-engine_2026-07-03.html",
+    "author": "Arvind Rajan",
+    "category": "top-down"
+  },
+  {
     "date": "2026-07-02",
     "title": "Beta, Alpha & Industry Research \u2014 Strategy Generation & Improvement",
     "summary": "Three-chapter report: (1) narrative summary tying together the day's beta/alpha/industry research \u2014 idio vol vs beta vol vs total vol as predictors (mechanical artifact, not real alpha), LV/MOM/MR classified by market-beta quartile, industry group signals, an industry-vol filter that improves MOM Sharpe both IS and OOS, MR's idiosyncratic-vs-industry vol split and a direct Stage-2 test of it (not adopted), and a beta-bucket LV substitute that looked strong IS but collapsed OOS; (2) the full idio/beta/total-vol quartile report; (3) the interactive Industry Explorer.",

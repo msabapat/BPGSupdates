@@ -1,0 +1,486 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Plausible-Worlds Engine — Simulating World States, Not Price Paths — BPGS</title>
+<style>
+ :root{--navy:#1F3864;--blue:#2E5FA3;--gray:#6b7280;--ink:#1d1d1f;--line:#dce1e8;--soft:#f5f8fc;--bg:#eef1f5;--amberbg:#fff8ec;--amberbd:#e7c887;
+   --grn:#1a7f37;--red:#b04a4a;--pur:#6d2e9a;--teal:#1F8A86;--org:#E08A1E;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Segoe UI,Arial,Helvetica,sans-serif;line-height:1.55;}
+ header{background:var(--navy);color:#fff;padding:20px 26px 0;}
+ header h1{margin:0;font-size:22px;letter-spacing:-.2px;}
+ header h1 span{color:#9fb4d6;font-weight:400;font-size:.65em;display:block;margin-top:2px;}
+ header p{margin:4px 0 14px;font-size:13px;color:#c7d3e6;max-width:960px;}
+ nav{display:flex;gap:4px;flex-wrap:wrap;}
+ nav button{background:transparent;color:#c7d3e6;border:0;border-bottom:3px solid transparent;padding:10px 16px;font-size:14px;cursor:pointer;font-weight:500;}
+ nav button:hover{color:#fff;} nav button.active{color:#fff;border-bottom-color:#fff;}
+ main{max-width:1040px;margin:22px auto 60px;padding:0 22px;}
+ .view{display:none;} .view.active{display:block;}
+ h2.vh{color:var(--navy);font-size:20px;margin:6px 0 2px;} .vsub{color:var(--gray);font-size:13.5px;margin:0 0 18px;}
+ h2{color:var(--navy);font-size:18px;margin:28px 0 10px;}
+ h3{color:var(--blue);font-size:15px;margin:22px 0 8px;}
+ p{font-size:14.5px;margin:0 0 11px;}
+ ul,ol{margin:0 0 12px;padding-left:22px;} li{margin:0 0 6px;font-size:14.5px;}
+ .lab{font-weight:600;color:var(--navy);}
+ .plain{background:#fffaf0;border:1px solid #ecdba0;border-left:4px solid #d9b347;border-radius:8px;
+   padding:12px 15px;margin:4px 0 18px;font-size:13.5px;color:#5a4a1c;line-height:1.55;}
+ .plain b{color:#3d3210;}
+ .callout{background:var(--amberbg);border:1px solid var(--amberbd);border-radius:6px;padding:14px 18px;margin:14px 0 16px;font-size:14px;}
+ .callout .lab{color:#9a6b16;}
+ figure.chart{margin:14px 0 6px;padding:14px 12px 8px;background:#fff;border:1px solid var(--line);border-radius:8px;}
+ figure.chart svg{width:100%;height:auto;display:block;}
+ figure.chart figcaption{font-size:11.5px;color:var(--gray);margin-top:6px;padding:0 6px;font-style:italic;}
+ .fam{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0;}
+ .fam h4{margin:0 0 4px;color:var(--navy);font-size:15px;}
+ .fam .catch{font-size:12.5px;color:var(--gray);margin:0 0 8px;}
+ .fr{font-size:13px;padding:6px 0;border-top:1px solid var(--line);}
+ .fr b{color:var(--ink);} .fr span{color:var(--gray);}
+ .verdict{font-size:12.5px;margin-top:8px;padding:7px 10px;border-radius:6px;background:var(--soft);border-left:3px solid var(--blue);color:#3d4d63;}
+ .mtab{width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 24px;}
+ .mtab th{background:var(--soft);color:var(--ink);font-weight:600;padding:7px 10px;text-align:left;border:1px solid var(--line);font-size:11.5px;}
+ .mtab td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.5;}
+ .mtab tr:nth-child(even) td{background:#fafbfd;}
+ .pit{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:13px 16px;margin:12px 0;}
+ .pit h4{margin:0 0 6px;font-size:14.5px;color:#8a3232;}
+ .pit .rem{border-top:1px dashed var(--line);margin-top:9px;padding-top:9px;font-size:13.5px;}
+ .pit .rem b{color:var(--grn);}
+ .adv{border-left-color:var(--grn);} .adv h4{color:#1a5c2e;}
+ .drw{border-left-color:var(--org);} .drw h4{color:#8a5a10;}
+ .build-step{display:flex;gap:14px;margin-bottom:13px;align-items:flex-start;}
+ .bs-num{min-width:26px;height:26px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex-shrink:0;margin-top:2px;}
+ .bs-tag{display:inline-block;background:var(--amberbg);border:1px solid var(--amberbd);color:#7a4a00;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:6px;}
+ .note{color:var(--gray);font-size:12px;font-style:italic;margin-top:18px;}
+ .xref{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:8px;padding:12px 16px;margin:16px 0;font-size:13.5px;}
+ .xref b{color:var(--teal);}
+ a{color:var(--blue);}
+ .kbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:14px 0;}
+ .kb{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;}
+ .kb b{color:var(--navy);font-size:13.5px;display:block;margin-bottom:4px;}
+ .kb span{font-size:12.5px;color:var(--gray);}
+ .srcl{font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line);}
+ .srcl b{color:var(--navy);}
+ /* world builder */
+ .axrow{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+ .axname{font-size:12px;font-weight:700;color:var(--navy);width:160px;text-transform:uppercase;letter-spacing:.03em;}
+ .axbtn{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 12px;font-size:12.5px;cursor:pointer;color:var(--ink);}
+ .axbtn.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+ .wverdict{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:14px;border:1.5px solid;}
+ .wv-ok{background:#eafaef;border-color:#9ad0ab;color:#14532d;}
+ .wv-tension{background:#fff8ec;border-color:#e7c887;color:#7a4a00;}
+ .wv-veto{background:#fbecec;border-color:#e0b3b3;color:#7f1d1d;}
+ .wv-strong{background:#eaf1fb;border-color:#a8c2e6;color:#1e3a8a;}
+ .wreason{font-size:12.5px;margin:3px 0;padding-left:14px;position:relative;}
+ .wreason::before{content:'·';position:absolute;left:2px;font-weight:900;}
+ .impacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin:14px 0;}
+ .imp{background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;}
+ .imp .nm{font-size:12.5px;font-weight:700;color:var(--navy);}
+ .impbar{display:flex;align-items:center;gap:8px;margin-top:5px;}
+ .ib-track{flex:1;height:12px;background:#eef1f5;border-radius:6px;position:relative;overflow:hidden;}
+ .ib-mid{position:absolute;left:50%;top:0;width:1.5px;height:100%;background:#b9c2cf;}
+ .ib-fill{position:absolute;top:1.5px;height:9px;border-radius:5px;}
+ .ib-lab{font-size:11.5px;font-weight:700;width:64px;text-align:right;}
+ .analog{background:#fff;border:1px solid var(--line);border-left:4px solid var(--pur);border-radius:8px;padding:12px 15px;margin:12px 0;font-size:13.5px;}
+ .analog b{color:var(--pur);}
+</style></head>
+<body>
+<header>
+ <h1>The Plausible-Worlds Engine<span>Essay II — Simulating world states, not price paths: scenario generation beyond historical experience</span></h1>
+ <p>An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states — including states that have never occurred — governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to <a href="meta-engine-design_2026-06-29.html" style="color:#c7d3e6">Meta-Engine Design</a> and Essay I, <a href="next-state-engine_2026-07-03.html" style="color:#c7d3e6">The Next-State Engine</a>. BPGS · 2026-07-03</p>
+ <nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ============ TAB 1: THE IDEA ============ -->
+<section id="v-idea" class="view active">
+ <h2 class="vh">The idea — simulate worlds, and let prices be outputs</h2>
+ <p class="vsub">The random walk cannot imagine 1971. A world generator can — if it has rules for what hangs together.</p>
+
+ <div class="plain"><b>Plain English:</b> when finance simulates the future it simulates <i>prices</i> — random walks calibrated to the past, sometimes with jumps and fitted correlations bolted on. Such a simulator can only shuffle history. It cannot produce "capital controls plus sticky inflation plus a bond-equity correlation flip" as one coherent event, because it has no concept of a <i>world</i> — only of wiggles. The proposal: simulate the world itself. Generate combinations of world-state settings — monetary anchor, credit cycle, inflation, politics, market structure, external position — including combinations that have never happened, keep only those that could hang together, weight them by plausibility, and <i>then</i> ask what assets are worth in each. Price paths become outputs of worlds, not the primitive being drawn.</p>
+
+ <h2>1. The three sins of price-space Monte Carlo</h2>
+ <ul>
+  <li><b>No states.</b> A stochastic process on prices has no representation of the conditions generating those prices. It can produce a 4-sigma week; it cannot produce <i>the reason</i> for one — and so it cannot produce the correlated cross-asset shape that reasons impose. In 2022 the 60/40 portfolio's diversification died because one world-setting flipped (inflation unanchored the bond-equity correlation); no price-space simulator calibrated to 1990–2021 contained that event, though it had happened repeatedly before 1990 and across other countries.</li>
+  <li><b>Bounded support.</b> Calibration to history confines the simulation to history's convex hull, smoothed. The states that destroy portfolios — 1971's anchor break, 2008's funding cascade, 2020's enforced stop — were all outside the hull of the preceding thirty years.</li>
+  <li><b>Fitted, not caused, correlations.</b> Correlation matrices estimated from calm samples break precisely when needed. The Gaussian-copula CDO machinery failed in 2008 for exactly this reason: dependence was a fitted parameter, not a consequence of a shared world state.</li>
+ </ul>
+
+ <h2>2. The existence proof from another industry</h2>
+ <p>This architecture is not speculative — it runs billions of dollars of real risk transfer every day, one industry over. <b>Catastrophe models</b> (RMS, AIR/Verisk, and the open Oasis framework) do not bootstrap historical hurricanes. They generate <b>stochastic event sets</b> — from a few thousand synthetic events for a small country up to <i>half a million</i> synthetic earthquakes or windstorms for the US — each event physically plausible, probability-weighted, with its own track, intensity, and footprint. Most events in the catalog never happened. Insurers and reinsurers price real capital against them, because the catalog covers <i>the space of what the physics permits</i>, not the accident of what the record contains.</p>
+ <p>The transplant to finance requires one honest admission: cat models have meteorology and seismology to constrain their event sets; finance has no physics. <b>The plausibility rules must substitute for the physics.</b> That substitution — what constrains which world-state combinations are generatable — is the central technical problem of this essay, and the Pitfalls tab is mostly about it. The claim is not that the rules can be as hard as geophysics; it is that <i>explicit, auditable, adversarially-tested rules</i> beat both the fitted correlation matrix and the unaided imagination — which is all anyone is actually using now.</p>
+
+ <h2>3. What "rules for plausible combinations" means concretely</h2>
+ <div class="kbox">
+  <div class="kb"><b>1 · Cross-consistency screening</b><span>Every pair of state settings gets a judged compatibility score (the morphological-analysis method used in defense planning since Zwicky; prunes &gt;90% of the raw combinatorial field). "Credible monetary anchor + unanchored inflation" is vetoed by definition; "fiscal dominance + cohesive politics" is tension, not veto — wartime 1946 did it.</span></div>
+  <div class="kb"><b>2 · Causal-story requirement</b><span>A world must be reachable by a generating story along a causal graph: fiscal dominance requires high debt service <i>and</i> a blocked consolidation path. Combinations with no arrival story are excluded even if pairwise-consistent.</span></div>
+  <div class="kb"><b>3 · Historical frequency floor</b><span>If a combination occurred in the cross-country record (JST panel, Reinhart-Rogoff, our episode library), no rule may call it impossible. History overrides judgment — the rule-set is calibrated against everything that has actually happened somewhere, sometime.</span></div>
+ </div>
+
+ <div class="callout"><span class="lab">The one-sentence version:</span> build the cat model for macro-financial worlds — a probability-weighted catalog of coherent states the world could be in, most of which have never occurred, and price the portfolio in every one of them.</div>
+
+ <h2>4. Relation to Essay I</h2>
+ <div class="xref"><b>Same grammar, different horizon.</b> The <a href="next-state-engine_2026-07-03.html">Next-State Engine</a> forecasts one or two steps from the present — a weather forecast, disciplined by live discriminators. This engine explores the full reachable space, including multi-step paths and never-visited states — a climate model. They share the state grammar and the labeled cross-country panel; Engine I's transition kernel supplies this engine's reachability prior (worlds near the present get more mass), and this engine supplies Engine I with stress coverage for the states its kernel has never seen. Built together, they are two query modes over one state architecture.</div>
+</section>
+
+<!-- ============ TAB 2: WHAT EXISTS ============ -->
+<section id="v-exists" class="view">
+ <h2 class="vh">What exists — the survey</h2>
+ <p class="vsub">Six traditions each solved a piece of this. The blueprint (cat models), the combination rules (scenario planning), and the probability math (entropy pooling) already exist — in three different industries that don't talk to each other.</p>
+
+ <div class="fam">
+  <h4>A. Catastrophe modeling — the structural blueprint</h4>
+  <p class="catch">The one industry that prices unprecedented events systematically.</p>
+  <div class="fr"><b>Stochastic event sets</b> (RMS, AIR/Verisk, Oasis LMF). <span>Synthetic catalogs — thousands to 500,000+ events per peril-region — built from the physics of the hazard, not the history of losses. Each event: characteristics, footprint, annual rate. The pipeline is hazard → vulnerability → financial module → exceedance-probability curve.</span></div>
+  <div class="fr"><b>What transfers</b>. <span>The architecture (generate states → filter by feasibility → weight → map to losses), the output discipline (EP curves and tail metrics, never point predictions), and the governance (models are licensed, documented, adversarially reviewed by rating agencies and regulators).</span></div>
+  <div class="fr"><b>What doesn't</b>. <span>The physics. Hurricane frequency obeys thermodynamics; fiscal dominance obeys politics. The plausibility layer must be built from judgment, history, and causal structure — softer material, demanding louder honesty.</span></div>
+  <div class="verdict">Verdict: the proof that "simulate states you've never seen, price against all of them" is a real, commercial, regulated practice — not a research fantasy.</div>
+ </div>
+
+ <div class="fam">
+  <h4>B. Economic scenario generators &amp; regulatory stress tests — the incumbent practice</h4>
+  <p class="catch">Consistent, industrial, and bounded by history or by committee.</p>
+  <div class="fr"><b>Insurance ESGs</b> (Moody's Analytics ex-Barrie &amp; Hibbert, Conning GEMS, Ortec Finance's frequency-domain dynamic factor models; NAIC's new GOES standard). <span>Thousands of internally consistent paths for rates, equities, credit — but generated by stochastic <i>processes</i> calibrated to history. Consistency without imagination: they are price-space Monte Carlo with better plumbing.</span></div>
+  <div class="fr"><b>Fed CCAR / DFAST, BoE, EBA stress scenarios</b>. <span>Hand-crafted narrative states ("severely adverse") with full macro paths — genuine world-state thinking, but two or three scenarios, no probabilities, and designed by committee for comparability rather than coverage.</span></div>
+  <div class="fr"><b>NGFS climate scenarios</b> — the flagship attempt at states outside history, and the cautionary tale. <span>Critics document that its short-term scenarios put 2030 world-GDP outcomes within a &lt;2.5% band — narrower than the IMF's <i>one-year</i> forecast error; transition risks like trade wars and recessions are ignored; policies are assumed known in advance, deleting the surprise channel that drives trading-book risk.</span></div>
+  <div class="verdict">Verdict: the incumbents prove demand and infrastructure, and NGFS proves the failure mode this engine must design against — <b>committees compress the tails</b>. A generator must be adversarial about its own conservatism, with dispersion checks enforcing that generated outcomes exceed historical forecast-error bands.</div>
+ </div>
+
+ <div class="fam">
+  <h4>C. The scenario-planning tradition — the combination rules</h4>
+  <p class="catch">Fifty years of craft on "which futures hang together," almost none of it quantified.</p>
+  <div class="fr"><b>Shell scenarios</b> (Pierre Wack, early 1970s). <span>The canonical success: by asking which world-states would make the official forecast impossible, Shell's planners had rehearsed the OPEC embargo world before it arrived. Method: a handful of internally consistent narrative worlds, not probabilities — rehearsal, not prediction.</span></div>
+  <div class="fr"><b>General morphological analysis + cross-consistency assessment</b> (Zwicky; operationalized by Ritchey at the Swedish Defence Research Agency). <span>Parameters × exhaustive levels = the morphological field; pairwise consistency judgments prune the field by &gt;90%; the surviving cells are the plausible scenario space, usable as an inference model. This is the "rules for plausible combinations" technology, proven in defense planning — and it is exactly computable at our scale (6 axes × 3 levels = 15 axis-pairs, ~135 pair judgments).</span></div>
+  <div class="fr"><b>Wargaming</b> (RAND onward). <span>Adds the move-countermove dynamics that static fields miss — the ancestor of the policy-reaction round in our architecture.</span></div>
+  <div class="verdict">Verdict: the plausibility technology exists and is battle-tested, but it lives in strategy consulting and defense, produces narratives rather than priced portfolios, and has never been wired to an asset-pricing back end.</div>
+ </div>
+
+ <div class="fam">
+  <h4>D. Quant machinery — the probability mathematics</h4>
+  <p class="catch">How to attach defensible weights to generated worlds.</p>
+  <div class="fr"><b>Entropy pooling / fully flexible probabilities</b> (Meucci 2008–2013). <span>Take a prior distribution over scenarios; impose views or market anchors as moment constraints; solve for the minimum-relative-entropy posterior. The exact tool for weighting a world catalog: the prior comes from reachability, the constraints from today's market-implied information, and the posterior re-weights <i>live</i> as anchors move while the catalog itself changes slowly. Black-Litterman is the Gaussian special case.</span></div>
+  <div class="fr"><b>Copulas — the cautionary tale</b>. <span>Li's Gaussian copula priced the 2000s CDO stack; dependence fitted to calm data evaporated in the bust. The lesson is constitutional for this engine: dependence must be <i>generated by shared world states</i>, never fitted as a free parameter.</span></div>
+  <div class="fr"><b>Filtered historical simulation, block bootstrap</b>. <span>Honest, robust — and structurally incapable of leaving the sample. The baseline to beat.</span></div>
+  <div class="verdict">Verdict: nothing needs inventing. Entropy pooling is published, implemented (open R/Python ports), and designed for precisely this join.</div>
+ </div>
+
+ <div class="fam">
+  <h4>E. Agent-based models — emergence, at a price</h4>
+  <p class="catch">Worlds that generate themselves, from micro-rules.</p>
+  <div class="fr"><b>Bookstaber's <i>The End of Theory</i> (2017)</b> and the crisis-ABM literature (leverage cascades, funding runs, interbank contagion networks; Annual Review survey). <span>Five components — agents, environment, heuristics, interactions, dynamics — playing scenarios <i>forward through time</i> to find emergent stress points no committee designed. Central banks now run ABMs for stress testing.</span></div>
+  <div class="fr"><b>The cost</b>. <span>A jungle of free parameters, fragile calibration, and results sensitive to heuristic choices — over-parameterization reborn at the micro level. For a two-person shop, a full ABM is a trap.</span></div>
+  <div class="verdict">Verdict: adopt the insight (states must be played forward, including the policy response), skip the machinery. Our architecture takes a two-round "shock → response → settled world" step instead of a full agent simulation.</div>
+ </div>
+
+ <div class="fam">
+  <h4>F. Generative ML and LLM scenario generation — the new proposer</h4>
+  <p class="catch">2024–2026: machines that draft coherent worlds cheaply, with documented biases.</p>
+  <div class="fr"><b>Market generators</b> (GAN/VAE/diffusion simulators, deep-hedging literature). <span>Impressive path realism — but still price-space: they inherit sin #2, bounded support, with extra steps.</span></div>
+  <div class="fr"><b>LLM wargaming and geopolitical scenario generation</b> (2025–26: ontology-constrained wargame generation; LLM4Geopolitics with retrieval-grounded knowledge graphs; studies of LLMs as strategic actors and human-vs-LLM wargame behavior). <span>LLMs are strong <i>proposers</i> of coherent narrative states and arrival stories — the expensive part of scenario planning — with known failure modes: anchoring to training-data consensus, escalation biases in strategic play, and eloquent overconfidence. Usable exactly the way this engine uses them: propose worlds and stories; never assign probabilities; every proposal passes the consistency screens and a red-team pass.</span></div>
+  <div class="verdict">Verdict: the generation bottleneck that made morphological analysis labor-bound in 1995 is gone. The filtering and weighting bottlenecks remain ours to build.</div>
+ </div>
+
+ <div class="fam">
+  <h4>G. The gap this essay targets</h4>
+  <p class="catch">Assembled view.</p>
+  <p style="font-size:14px">Cat modeling has the architecture but only for physical perils. ESGs have the industrial plumbing but no imagination. Regulators have world-state narratives but three of them, probability-free, committee-compressed. Scenario planners have the combination rules but no pricing. Meucci has the weighting math but no world catalog to weight. ABMs have emergence but unpayable parameter bills. LLMs have cheap generation but no discipline. <b>No public system generates a probability-weighted catalog of coherent macro-financial world states — including unprecedented ones — and prices portfolios through structural channels in each.</b> Every component exists. The join does not.</p>
+ </div>
+</section>
+
+<!-- ============ TAB 3: ADVANTAGES & DRAWBACKS ============ -->
+<section id="v-adv" class="view">
+ <h2 class="vh">Advantages &amp; drawbacks</h2>
+ <p class="vsub">What world-space simulation buys over price-space simulation, and what it costs.</p>
+
+ <h3>Advantages</h3>
+ <div class="pit adv"><h4>1 · Coverage of the tails that actually kill portfolios</h4><p style="font-size:13.5px;margin:0">The catastrophic losses of the last century were correlated politico-macro events — anchor breaks, convertibility suspensions, correlation flips, enforced stops — not large draws from a fat-tailed return distribution. World-space simulation represents these natively; price-space simulation cannot represent them at all.</p></div>
+ <div class="pit adv"><h4>2 · Every scenario is an auditable story</h4><p style="font-size:13.5px;margin:0">A simulated path is a world with named settings and an arrival story. Attribution becomes possible and specific: <i>"we lose most in fiscal-dominance-plus-sticky-inflation worlds; our T-bill sleeve is not a hedge there — it is the instrument being repressed."</i> Try extracting that sentence from a copula.</p></div>
+ <div class="pit adv"><h4>3 · Robustness ranking, the honest output</h4><p style="font-size:13.5px;margin:0">The engine's natural product is ordinal: which portfolio survives the most worlds, which worlds kill us, what cheap convexity pays where. These are decisions-grade outputs that don't pretend to know tail probabilities to a decimal place.</p></div>
+ <div class="pit adv"><h4>4 · Unprecedented-but-plausible becomes testable</h4><p style="font-size:13.5px;margin:0">Reserve-currency erosion, fiscal dominance with capital controls, a Taiwan blockade supply-shock world, an AI productivity boom with labor-share collapse, a durable bond-equity correlation flip — none are in the US postwar sample; all are coherent worlds the generator can produce, price, and weight. Today these live in nobody's risk system and everybody's nightmares.</p></div>
+ <div class="pit adv"><h4>5 · Direct feed into convexity buying</h4><p style="font-size:13.5px;margin:0">The LEAPS work needs exactly this: a list of worlds, their weights, and which optionality is mispriced against them. The engine is a convexity shopping list generator — scan the catalog for worlds where some cheap option's payoff is large and the market's implied weight is smaller than the entropy-pooled weight.</p></div>
+ <div class="pit adv"><h4>6 · Complements Essay I instead of competing with it</h4><p style="font-size:13.5px;margin:0">Engine I is only as good as the states history has visited. This engine stress-covers the kernel's blind spots and, in return, borrows its reachability prior. One grammar, one labeled panel, two query modes.</p></div>
+
+ <h3>Drawbacks</h3>
+ <div class="pit drw"><h4>1 · Judgment dressed as machinery</h4><p style="font-size:13.5px;margin:0">The consistency matrix and causal graph are made of opinions. The machinery can launder those opinions into false objectivity. Mitigable (audit logs, red teams, historical floors) but never removable: this engine's outputs are structured judgment, and must be labeled as such.</p></div>
+ <div class="pit drw"><h4>2 · Pricing unseen worlds has no data — full stop</h4><p style="font-size:13.5px;margin:0">The central difficulty. Channel elasticities from cross-country analogs are the best available substitute, and they carry wide, irreducible error bars in worlds far from experience. Point estimates there are fiction; only ranges and orderings are defensible.</p></div>
+ <div class="pit drw"><h4>3 · Soft probabilities invite hard misuse</h4><p style="font-size:13.5px;margin:0">The moment a world catalog exists, someone will compute a 99.5% VaR from it and put it in a document. The weights are entropy-pooled judgments, not frequencies. Guarding the output format is a permanent governance job.</p></div>
+ <div class="pit drw"><h4>4 · Combinatorics and build weight</h4><p style="font-size:13.5px;margin:0">Even a coarse grammar generates hundreds of raw worlds; each needs screening, a story, channel pricing, and maintenance as the world moves. The catalog is a garden that can silently rot into stale narratives if untended.</p></div>
+ <div class="pit drw"><h4>5 · Validation is inherently weak</h4><p style="font-size:13.5px;margin:0">A simulator of things that haven't happened cannot be scored against things that have — except by backcasting (see P7), which is necessary but not sufficient. Anyone claiming stronger validation for such a system is overclaiming; so must we not.</p></div>
+</section>
+
+<!-- ============ TAB 4: PITFALLS & REMEDIES ============ -->
+<section id="v-pit" class="view">
+ <h2 class="vh">Pitfalls &amp; remedies — the hard engineering</h2>
+ <p class="vsub">Eight problems that would sink a naive build. The first two are existential; the rest are engineering.</p>
+
+ <div class="pit"><h4>P1 · Plausibility discipline — the physics substitute</h4>
+  <p style="font-size:13.5px">With no meteorology to constrain the event set, the rules default to the author's imagination — which is exactly the unaided-judgment baseline the engine exists to beat.</p>
+  <div class="rem"><b>Remedy — three independent screens, all of which must pass, every veto logged.</b> (i) <b>Cross-consistency matrix</b>: ~135 pairwise judgments for 6 axes × 3 levels, scored veto / tension / neutral / affinity, written once, reviewed adversarially. (ii) <b>Causal-story requirement</b>: each surviving world needs an arrival path along the causal graph — fiscal dominance requires high debt service <i>and</i> a blocked consolidation path; no story, no world. (iii) <b>Historical frequency floor</b>: any combination observed in the JST/Reinhart-Rogoff record or our episode library cannot be vetoed — history overrides judgment, always in the direction of <i>more</i> imagination, never less. The veto log is the audit trail: every excluded world, its reason, its reviewer.</div></div>
+
+ <div class="pit"><h4>P2 · Pricing worlds nobody has seen</h4>
+  <p style="font-size:13.5px">There is no return series for "US fiscal dominance with capital controls." Direct estimation is impossible by construction.</p>
+  <div class="rem"><b>Remedy — never price a world; price through channels.</b> Decompose every asset's return into four structural channels: <b>cash-flow growth</b>, <b>discount rate</b> (real rate + inflation compensation + term premium), <b>risk premium</b>, and <b>liquidity/convertibility haircut</b>. Each state axis carries signed elasticities into channels, estimated from cross-country analog episodes where data exists: capital-controls episodes give the convertibility haircut; the 1946–51 and 1970s records give the repressed-real-rate and multiple-compression curves; EM sudden stops give the liquidity spiral. An unseen world is then a <i>new combination of seen channel effects</i> plus interaction penalties — with error bars stated, ranges not points, and the humility flag raised in proportion to the world's distance from experience.</div></div>
+
+ <div class="pit"><h4>P3 · Combinatorial explosion</h4>
+  <p style="font-size:13.5px">6 axes × 3 levels = 729 raw worlds; 8 axes × 4 levels = 65,536. Each survivor needs a story and pricing — unaffordable at raw scale.</p>
+  <div class="rem"><b>Remedy — prune, cluster, importance-sample.</b> Cross-consistency screening removes &gt;90% (the defense-planning experience, and ours: most cells die on the anchor-inflation and anchor-external pairs alone). Cluster survivors into <b>50–200 named archetypes</b> carrying probability mass — the cat-model move (500k events → one EP curve). Importance-sample near the present using Engine I's reachability prior: dense coverage of adjacent worlds, sparse coverage of Weimar.</div></div>
+
+ <div class="pit"><h4>P4 · Probability coherence — weights that mean something</h4>
+  <p style="font-size:13.5px">Hand-assigned scenario probabilities are the weakest link of every committee process; they neither sum sensibly nor update with information.</p>
+  <div class="rem"><b>Remedy — entropy pooling against live anchors.</b> Prior = reachability-weighted archetype catalog. Constraints = today's market-implied moments (options skew, inflation breakevens, credit spreads, term premia) plus prediction-market probabilities for discrete political states. Posterior = minimum-relative-entropy weights consistent with all anchors — recomputed continuously, so <b>the catalog is slow but the weights are live</b>. Disagreement between the posterior and the raw prior is itself a signal: it locates the worlds the market is refusing to price.</div></div>
+
+ <div class="pit"><h4>P5 · Reflexivity — worlds answer back</h4>
+  <p style="font-size:13.5px">States trigger policy responses that change the state: a static world catalog prices the shock and misses the rescue, systematically overstating some tails (2008-without-TARP) and understating others (inflation-with-a-cornered-Fed).</p>
+  <div class="rem"><b>Remedy — reaction functions inside the grammar, then a two-round settle.</b> The policy-response rule is itself a state axis (Fed put active / constrained / abandoned — constrained is precisely the fiscal-dominance and unanchored-inflation setting). Each scenario runs two rounds: shock → naive market move → policy response drawn from the reaction rule → settled world. Bookstaber's insight at 1% of Bookstaber's parameter bill.</div></div>
+
+ <div class="pit"><h4>P6 · False precision and misuse</h4>
+  <p style="font-size:13.5px">World-catalog outputs will be mistaken for frequencies. Simulated tail VaR to four decimals is the known abuse pattern of every ESG.</p>
+  <div class="rem"><b>Remedy — ordinal outputs by construction.</b> The UI reports robustness ranks across archetypes, worst-k-world loss <i>ranges</i>, kill-list attribution ("these five worlds cause 80% of tail loss"), and the entropy of the weight distribution alongside every number. Single-figure VaR is banned from the interface — not discouraged; absent. What cannot be displayed cannot be misquoted.</div></div>
+
+ <div class="pit"><h4>P7 · Generator bias — committee or machine</h4>
+  <p style="font-size:13.5px">NGFS shows committees compress tails; LLM studies show models anchor to consensus and escalate strategically. Both proposers hallucinate consistency where there is none.</p>
+  <div class="rem"><b>Remedy — red team plus backcast pre-registration.</b> A standing adversarial pass whose only job is to propose worlds the generator missed and attack the veto list. A dispersion check enforcing that generated outcome ranges <i>exceed</i> historical forecast-error bands (the exact test NGFS fails). And the decisive validation: <b>backcasting</b> — with data truncated at 1970, 2006, 2019, 2021, would the generator have produced the 1971 anchor break, the 2008 cascade, the 2020 stop, the 2022 correlation flip as reachable, non-trivially-weighted worlds? Each miss is a named defect in the rules, to be repaired and re-run.</div></div>
+
+ <div class="pit"><h4>P8 · Build weight for a two-person shop</h4>
+  <p style="font-size:13.5px">Everything above could absorb a team for a year and rot half-finished.</p>
+  <div class="rem"><b>Remedy — a v0 in weeks, upgraded only where v0 proves it matters.</b> Six axes; hand-built consistency matrix (~135 judgments, two evenings and an argument); ~40 archetypes; channel elasticities lifted from the JST panel and episode library; entropy pooling in a page of numpy; outputs wired into the existing regime dashboard. The World Builder on the next tab is a working sketch of exactly this v0 — the full engine is that toy with real elasticities, real anchors, and a red team.</div></div>
+</section>
+
+<!-- ============ TAB 5: ARCHITECTURE ============ -->
+<section id="v-arch" class="view">
+ <h2 class="vh">Proposed architecture</h2>
+ <p class="vsub">Six stages. The grammar and labeled panel are shared with Essay I; the catalog, weights, and pricing channels are new.</p>
+
+ <figure class="chart">
+ <svg viewBox="0 0 1000 360" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Arial,sans-serif">
+  <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E5FA3"/></marker></defs>
+  <g font-size="11.5">
+   <rect x="10" y="30" width="150" height="115" rx="10" fill="#f5f8fc" stroke="#dce1e8"/>
+   <text x="85" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">STATE GRAMMAR</text>
+   <text x="85" y="73" text-anchor="middle" fill="#374151">shared w/ Essay I</text>
+   <text x="85" y="91" text-anchor="middle" fill="#374151">6–8 axes × levels</text>
+   <text x="85" y="109" text-anchor="middle" fill="#374151">+ reaction-function</text>
+   <text x="85" y="127" text-anchor="middle" fill="#374151">axis (Fed put state)</text>
+
+   <rect x="180" y="30" width="160" height="115" rx="10" fill="#eaf1fb" stroke="#a8c2e6"/>
+   <text x="260" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">WORLD GENERATOR</text>
+   <text x="260" y="73" text-anchor="middle" fill="#374151">enumerate × CCA</text>
+   <text x="260" y="91" text-anchor="middle" fill="#374151">× causal-story check</text>
+   <text x="260" y="109" text-anchor="middle" fill="#374151">LLM proposer</text>
+   <text x="260" y="127" text-anchor="middle" fill="#374151">+ red team · veto log</text>
+
+   <rect x="360" y="30" width="150" height="115" rx="10" fill="#f6edfb" stroke="#cdaee3"/>
+   <text x="435" y="52" text-anchor="middle" font-weight="700" fill="#6d2e9a">ARCHETYPE</text>
+   <text x="435" y="68" text-anchor="middle" font-weight="700" fill="#6d2e9a">CATALOG</text>
+   <text x="435" y="91" text-anchor="middle" fill="#374151">50–200 named worlds</text>
+   <text x="435" y="109" text-anchor="middle" fill="#374151">each with arrival story</text>
+   <text x="435" y="127" text-anchor="middle" fill="#374151">2-round policy settle</text>
+
+   <rect x="530" y="30" width="150" height="115" rx="10" fill="#eaf1fb" stroke="#a8c2e6"/>
+   <text x="605" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">PROBABILITY</text>
+   <text x="605" y="68" text-anchor="middle" font-weight="700" fill="#1F3864">ENGINE</text>
+   <text x="605" y="91" text-anchor="middle" fill="#374151">reachability prior (I)</text>
+   <text x="605" y="109" text-anchor="middle" fill="#374151">entropy pooling vs mkt</text>
+   <text x="605" y="127" text-anchor="middle" fill="#374151">+ prediction anchors</text>
+
+   <rect x="700" y="30" width="140" height="115" rx="10" fill="#fff4e8" stroke="#e8c9a0"/>
+   <text x="770" y="52" text-anchor="middle" font-weight="700" fill="#8a5a10">PRICING ENGINE</text>
+   <text x="770" y="73" text-anchor="middle" fill="#374151">4 channels: g, r+π,</text>
+   <text x="770" y="91" text-anchor="middle" fill="#374151">risk prem, liquidity</text>
+   <text x="770" y="109" text-anchor="middle" fill="#374151">cross-country</text>
+   <text x="770" y="127" text-anchor="middle" fill="#374151">elasticities · ranges</text>
+
+   <rect x="860" y="30" width="130" height="115" rx="10" fill="#eafaef" stroke="#9ad0ab"/>
+   <text x="925" y="52" text-anchor="middle" font-weight="700" fill="#1a5c2e">EVALUATOR</text>
+   <text x="925" y="73" text-anchor="middle" fill="#374151">robustness ranks</text>
+   <text x="925" y="91" text-anchor="middle" fill="#374151">kill-list attribution</text>
+   <text x="925" y="109" text-anchor="middle" fill="#374151">convexity shopping</text>
+   <text x="925" y="127" text-anchor="middle" fill="#374151">no point VaR</text>
+  </g>
+  <g stroke="#2E5FA3" stroke-width="2" fill="none">
+   <line x1="160" y1="88" x2="178" y2="88" marker-end="url(#arr2)"/>
+   <line x1="340" y1="88" x2="358" y2="88" marker-end="url(#arr2)"/>
+   <line x1="510" y1="88" x2="528" y2="88" marker-end="url(#arr2)"/>
+   <line x1="680" y1="88" x2="698" y2="88" marker-end="url(#arr2)"/>
+   <line x1="840" y1="88" x2="858" y2="88" marker-end="url(#arr2)"/>
+  </g>
+  <rect x="180" y="205" width="620" height="70" rx="10" fill="#fff8ec" stroke="#e7c887"/>
+  <text x="490" y="229" text-anchor="middle" font-size="12" font-weight="700" fill="#9a6b16">VALIDATION RAIL — BACKCAST PRE-REGISTRATION</text>
+  <text x="490" y="249" text-anchor="middle" font-size="11.5" fill="#5a4a1c">data truncated at 1970 / 2006 / 2019 / 2021: does the generator produce the 1971 anchor break, the 2008 cascade,</text>
+  <text x="490" y="265" text-anchor="middle" font-size="11.5" fill="#5a4a1c">the 2020 stop, the 2022 correlation flip as reachable, non-trivially-weighted worlds? every miss = a named rule defect</text>
+  <g stroke="#c9a24a" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
+   <line x1="260" y1="145" x2="260" y2="203"/>
+   <line x1="435" y1="145" x2="435" y2="203"/>
+   <line x1="605" y1="145" x2="605" y2="203"/>
+  </g>
+  <path d="M925 145 C 925 330 400 330 260 277" stroke="#1a7f37" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr2)"/>
+  <text x="660" y="330" text-anchor="middle" font-size="11" fill="#1a7f37" font-style="italic">posterior-vs-prior divergence → "worlds the market refuses to price" → convexity review &amp; rule maintenance</text>
+ </svg>
+ <figcaption>The Plausible-Worlds Engine. Cat-model architecture with judgment-and-history rules in place of physics: generate → screen → weight → price through channels → evaluate ordinally.</figcaption>
+ </figure>
+
+ <h3>What each stage reuses</h3>
+ <table class="mtab">
+  <thead><tr><th>Stage</th><th>Already built / free</th><th>New work</th></tr></thead>
+  <tbody>
+   <tr><td><b>State grammar</b></td><td>Essay I step 1 (shared spec); 19-layer manifest</td><td>Reaction-function axis</td></tr>
+   <tr><td><b>World generator</b></td><td>Morphological method (public); LLM proposers</td><td>~135-entry consistency matrix; causal graph; veto log</td></tr>
+   <tr><td><b>Archetype catalog</b></td><td>30-episode library seeds the historical archetypes</td><td>Clustering; arrival stories; 2-round policy settle</td></tr>
+   <tr><td><b>Probability engine</b></td><td>Meucci entropy pooling (open implementations); Engine I kernel as prior</td><td>Market-anchor extraction (options, breakevens, spreads); prediction-market feed</td></tr>
+   <tr><td><b>Pricing engine</b></td><td>JST/RR panels; episode library; FCF/valuation data in master_prices_computed</td><td>Channel elasticity estimation from analog episodes; interaction penalties</td></tr>
+   <tr><td><b>Evaluator</b></td><td>Blend machinery; regime dashboard; LEAPS work</td><td>Robustness ranks; kill-list attribution; convexity screen</td></tr>
+  </tbody>
+ </table>
+
+ <h3>Build sequence</h3>
+ <div class="build-plan">
+  <div class="build-step"><span class="bs-num">1</span><div><b>Consistency matrix + causal graph v0</b> — the ~135 pairwise judgments and the arrival-story rules, written, argued, and frozen with a review date. Depends on Essay I's grammar spec. <span class="bs-tag">~1 week</span></div></div>
+  <div class="build-step"><span class="bs-num">2</span><div><b>Generator + catalog v0</b> — enumerate, screen, cluster to ~40 archetypes; LLM-drafted arrival stories, human-edited; two-round policy settle per archetype. <span class="bs-tag">~2 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">3</span><div><b>Channel elasticities</b> — the four channels estimated from JST/RR analog episodes (repression, inflation, controls, busts); interaction penalties; explicit error bars. The intellectually hardest step. <span class="bs-tag">~3 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">4</span><div><b>Entropy pooling + anchors</b> — reachability prior from Engine I; market-implied and prediction-market constraints; live posterior weights. <span class="bs-tag">~1 week</span></div></div>
+  <div class="build-step"><span class="bs-num">5</span><div><b>Backcast validation</b> — the four pre-registered backcasts (1971, 2008, 2020, 2022); repair rules per miss; publish the miss log. Gate to any use. <span class="bs-tag">~2 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">6</span><div><b>Evaluator integration</b> — robustness ranks and kill-lists for the current blend; convexity shopping list into the LEAPS process; stress tab in the regime dashboard. <span class="bs-tag">~1 week</span></div></div>
+ </div>
+ <p class="note">Total ~10 weeks to a validated v0, of which the grammar and labeled panel are shared with Essay I's ~9 weeks — built together, the pair is ~14–15 weeks, not 19. The single most valuable early artifact is step 3's elasticity library: it is reusable for discretionary thinking even if the engine never runs.</p>
+</section>
+
+<!-- ============ TAB 6: WORLD BUILDER ============ -->
+<section id="v-build" class="view">
+ <h2 class="vh">World Builder — a hand-built consistency toy</h2>
+ <p class="vsub">Compose a world on six axes. The toy scores it against a pairwise consistency matrix, names the nearest historical analog, and sketches channel-based asset impacts. Illustrative logic with hand-set values — it demonstrates the engine's shape, not its numbers.</p>
+ <div id="waxes"></div>
+ <div id="wverdict"></div>
+ <div id="wanalog"></div>
+ <h3 style="margin-top:18px">Indicative asset &amp; strategy impacts (channel-based)</h3>
+ <div class="impacts" id="wimpacts"></div>
+ <p class="note">Impacts are computed from hand-set channel elasticities (cash-flow growth, real rate, inflation compensation, risk premium, liquidity haircut) summed per axis setting, with two conditional rules (deflationary-bust bond bid; hegemon-flight dollar bid). In the real engine every one of these numbers comes from cross-country analog episodes with error bars.</p>
+</section>
+
+<!-- ============ TAB 7: SOURCES ============ -->
+<section id="v-src" class="view">
+ <h2 class="vh">Sources &amp; further reading</h2>
+ <p class="vsub">The load-bearing references behind each tab.</p>
+ <div class="srcl"><b>Catastrophe modeling:</b> <a href="https://oasislmf.org/application/files/6917/1624/0852/Intro_toCatModelling.pdf">Oasis LMF, Introduction to Catastrophe Modelling</a>; <a href="https://content.naic.org/sites/default/files/committees-pending-action-cat-mod-primer.pdf">NAIC Catastrophe Modeling Primer (2025)</a>; Homer &amp; Li, <a href="https://www.casact.org/sites/default/files/2021-02/2017_most-practical-paper_homer-li.pdf">Notes on Using Property Catastrophe Model Results</a>.</div>
+ <div class="srcl"><b>ESGs &amp; regulatory scenarios:</b> <a href="https://www.conning.com/about-us/news/the-casualty-actuarial-society-and-conning-provide-a--users-guide-to-economic-scenario-generators">CAS/Conning User's Guide to Economic Scenario Generators</a>; <a href="https://www.ortecfinance.com/en/solutions/economic-scenario-generator">Ortec Finance ESG</a>; <a href="https://www.moodys.com/web/en/us/insights/insurance/moodys-axis-support-for-naic-goes.html">Moody's / NAIC GOES</a>; Fed CCAR/DFAST scenario documentation.</div>
+ <div class="srcl"><b>NGFS and its critics:</b> <a href="https://www.ngfs.net/ngfs-scenarios-portal/">NGFS Scenarios Portal</a>; <a href="https://greencentralbanking.com/2025/05/14/ngfs-short-term-climate-scenarios-simplistic/">"NGFS climate scenarios are too simplistic"</a> (GDP-range and surprise-channel critiques); <a href="https://carbontracker.org/ngfs-scenarios-and-the-damage-done/">Carbon Tracker, NGFS Scenarios and the Damage Done</a>.</div>
+ <div class="srcl"><b>Scenario planning &amp; morphological analysis:</b> Wack, <i>Scenarios: Uncharted Waters Ahead</i> (HBR 1985); Schwartz, <i>The Art of the Long View</i>; <a href="https://www.swemorph.com/pdf/futures.pdf">Ritchey, Futures Studies using General Morphological Analysis</a> (Swedish Defence Research Agency); <a href="https://www.sciencedirect.com/science/article/pii/S004016251730656X">Scenario modelling with morphological analysis</a> (cross-consistency pruning &gt;90%).</div>
+ <div class="srcl"><b>Probability machinery:</b> Meucci, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1213325">Fully Flexible Views: Theory and Practice</a>; Meucci, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2312126">Estimation and Stress-Testing via Time- and Market-Conditional Flexible Probabilities</a>; open implementations: <a href="https://cran.r-project.org/web/packages/ffp/index.html">ffp (R)</a>.</div>
+ <div class="srcl"><b>Agent-based models:</b> Bookstaber, <a href="https://press.princeton.edu/books/hardcover/9780691169019/the-end-of-theory"><i>The End of Theory</i></a> (Princeton, 2017); <a href="https://bookstaber.com/rick/Agent-based_Models_for_Financial_Crises.pdf">Bookstaber, Agent-Based Models for Financial Crises</a> (Annual Review of Financial Economics).</div>
+ <div class="srcl"><b>LLM scenario generation (2025–26):</b> <a href="https://journals.sagepub.com/doi/10.1177/00375497251415245">LLM-based wargame scenario generation with domain ontology and ECA rules</a>; <a href="https://onlinelibrary.wiley.com/doi/10.1111/exsy.70258">LLM4Geopolitics</a>; <a href="https://arxiv.org/pdf/2603.02128">LLMs as Strategic Actors</a>; <a href="https://arxiv.org/pdf/2403.03407">Human vs. Machine behavior in wargame simulations</a>.</div>
+ <div class="srcl"><b>Anchors:</b> <a href="https://polymarket.com/geopolitics">Polymarket geopolitics markets</a>; Metaculus; Tetlock &amp; Gardner, <i>Superforecasting</i>.</div>
+ <div class="srcl"><b>Internal:</b> Essay I, <a href="next-state-engine_2026-07-03.html">The Next-State Engine</a> (shared grammar, transition kernel, labeled panel); <a href="meta-engine-design_2026-06-29.html">Meta-Engine Design</a> (manifest, crisis classifier, episode library); <a href="meta-engine-historical-tests_2026-06-29.html">Historical Tests</a>; the LEAPS strategy work (convexity consumer); blend/regime dashboard (evaluator surface).</div>
+</section>
+
+</main>
+<script>
+/* ---------- nav ---------- */
+const VIEWS=[["idea","The Idea"],["exists","What Exists"],["adv","Advantages & Drawbacks"],["pit","Pitfalls & Remedies"],["arch","Architecture"],["build","World Builder"],["src","Sources"]];
+const nav=document.getElementById('nav');
+nav.innerHTML=VIEWS.map(v=>`<button data-v="${v[0]}" ${v[0]==='idea'?'class="active"':''}>${v[1]}</button>`).join('');
+nav.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;show(b.dataset.v);});
+function show(id){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='v-'+id));
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.v===id));window.scrollTo(0,0);}
+
+/* ---------- world builder ---------- */
+const WAXES=[
+ {k:"anchor",name:"Monetary anchor",levels:["credible fiat","strained fiat","fiscal dominance"]},
+ {k:"credit",name:"Credit cycle",levels:["early cycle","late cycle","bust"]},
+ {k:"infl",name:"Inflation state",levels:["anchored","sticky-elevated","unanchored"]},
+ {k:"pol",name:"Political cohesion",levels:["cohesive","polarized","impasse"]},
+ {k:"struct",name:"Market structure",levels:["active-priced","passive-dominant","levered-fragile"]},
+ {k:"ext",name:"External position",levels:["hegemon currency","eroding privilege","constrained"]}
+];
+let W={anchor:1,credit:1,infl:1,pol:1,struct:1,ext:0}; /* 2026 baseline */
+
+/* pairwise consistency: key "ax1.lvl|ax2.lvl" (axes in WAXES order), score -2 veto, -1 tension, +1 affinity; unlisted = 0 */
+const CC={
+ "anchor.0|infl.2":[-2,"a credible anchor with unanchored inflation is a contradiction in terms — unanchored inflation IS anchor failure"],
+ "anchor.2|infl.0":[-1,"fiscal dominance with anchored inflation is rare and unstable — Japan managed it for a decade; assume tension, not impossibility"],
+ "anchor.2|infl.2":[1,"dominance and unanchored inflation feed each other (1946 without the repression, Weimar with it)"],
+ "anchor.1|infl.1":[1,"the strained-anchor / sticky-inflation pair is the classic pre-resolution state (1968-72, 2021-24)"],
+ "anchor.2|pol.0":[-1,"dominance usually arrives via impasse — cohesive dominance needs a war-mobilization story (US 1942-51)"],
+ "anchor.2|pol.2":[1,"blocked consolidation is the standard arrival path to dominance"],
+ "anchor.0|ext.2":[-1,"a constrained external position pressures the anchor — credibility with capital flight is hard to hold"],
+ "anchor.2|ext.0":[-1,"full hegemon privilege usually delays dominance; if both hold, repression is being exported (1946-51)"],
+ "credit.2|struct.2":[1,"busts detonate in levered structures — the pair is almost definitional (1929, 2008)"],
+ "credit.0|struct.2":[-1,"early cycle with levered-fragile structure is odd — deleveraging is usually what makes the cycle early"],
+ "credit.2|pol.2":[1,"credit busts manufacture political impasse within 1-3 years (1931, 2010-13)"],
+ "credit.2|infl.0":[1,"busts are deflationary when the anchor holds (2008); the exception needs anchor stress"],
+ "infl.2|ext.0":[-1,"unanchored inflation while enjoying full reserve privilege strains belief — the privilege is what's eroding"],
+ "infl.2|struct.1":[-1,"unanchored inflation with placid passive flows is tension — vol regimes and flow regimes link"],
+ "pol.0|credit.2":[-1,"cohesion through a full bust is rare (2020's was enforced and brief) — usually fractures"],
+ "ext.2|struct.2":[1,"external constraint plus internal leverage is the sudden-stop configuration (EM playbook, UK 1976)"]
+};
+/* channel elasticities per axis level: [growth g, real rate r, inflation comp pi, risk premium rp, liquidity haircut lq] */
+const CH={
+ anchor:[[0,0,0,0,0],[0,1,1,1,0],[0,-2,2,2,1]],
+ credit:[[2,0,0,-1,0],[1,1,0,0,0],[-2,-1,-1,2,1]],
+ infl:[[0,0,0,0,0],[0,1,1,1,0],[-1,1,2,2,0]],
+ pol:[[0,0,0,-1,0],[0,0,0,1,0],[-1,0,0,2,0]],
+ struct:[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,1,1]],
+ ext:[[0,-1,0,-1,-1],[0,0,1,1,0],[-1,1,1,1,2]]
+};
+/* analog library: levels per axis + name + note */
+const ANALOGS=[
+ {s:[0,2,0,1,2,0],n:"US 2008 — GFC",note:"credible anchor, levered bust, deflationary; policy rescue defines the settle"},
+ {s:[1,1,1,1,1,0],n:"US 2022–26 baseline",note:"strained anchor, sticky inflation, polarized politics, passive structure"},
+ {s:[2,1,1,0,0,0],n:"US 1946–51 — financial repression",note:"cohesive dominance: capped rates, engineered negative real returns on 'safe' assets"},
+ {s:[1,2,2,2,0,1],n:"US/UK mid-1970s",note:"anchor strain, bust, unanchored inflation, impasse — the 60/40 killing fields"},
+ {s:[2,2,2,2,0,2],n:"Weimar 1923 / Argentina",note:"full dominance, unanchored, constrained — equities as flawed inflation hedge, currency as the casualty"},
+ {s:[0,0,0,0,0,0],n:"US 1983–88 / 2009–13",note:"early-cycle recovery under a credible anchor — the MR harvest"},
+ {s:[1,2,0,2,2,1],n:"Japan 1990s",note:"levered bust, anchored-then-deflationary, political drift — the slow bleed"},
+ {s:[1,1,2,1,0,1],n:"US 1978–80 — Volcker eve",note:"the resolution state: inflation unanchored, anchor about to be violently re-imposed"}
+];
+const IMPACTS=[
+ {nm:"Equities (broad)",f:c=>c[0]*1.2-c[1]-c[2]*0.5-c[3]},
+ {nm:"Long nominal bonds",f:c=>-c[1]-c[2]*1.8+((W.credit===2&&W.infl===0)?2.5:0)},
+ {nm:"Gold / real assets",f:c=>c[2]*1.2+(W.anchor)*1.2+(W.ext===2?1:0)},
+ {nm:"US dollar",f:c=>(W.anchor===0?1:W.anchor===2?-2:0)+(W.ext===0?1:W.ext===2?-2:0)+((W.credit===2&&W.ext===0)?1.5:0)},
+ {nm:"Credit spreads (wider = ▲)",f:c=>c[3]+c[4]},
+ {nm:"T-bill sleeve (real)",f:c=>(W.anchor===2?-2.5:0)-c[2]*0.5+(W.credit===2&&W.anchor<2?1:0)},
+ {nm:"LV strategy edge",f:c=>(W.credit>=1?1:0)+c[3]*0.4-(W.credit===0?1:0)},
+ {nm:"MOM strategy edge",f:c=>(W.credit===2?-2:0.5)+(W.struct===2?-1:0)},
+ {nm:"MR strategy edge",f:c=>(W.credit===0?2:0)+(W.struct===2?-1.5:0)+(W.credit===2?-0.5:0)}
+];
+function pairKey(i,li,j,lj){return WAXES[i].k+"."+li+"|"+WAXES[j].k+"."+lj;}
+function renderW(){
+ document.getElementById('waxes').innerHTML=WAXES.map(a=>`
+  <div class="axrow"><span class="axname">${a.name}</span>
+   ${a.levels.map((l,i)=>`<button class="axbtn ${W[a.k]===i?'on':''}" onclick="setW('${a.k}',${i})">${l}</button>`).join('')}
+  </div>`).join('');
+ /* consistency */
+ let score=0,vetos=[],tensions=[],affins=[];
+ for(let i=0;i<WAXES.length;i++)for(let j=i+1;j<WAXES.length;j++){
+  const e=CC[pairKey(i,W[WAXES[i].k],j,W[WAXES[j].k])];
+  if(!e)continue;score+=e[0];
+  if(e[0]<=-2)vetos.push(e[1]);else if(e[0]===-1)tensions.push(e[1]);else affins.push(e[1]);
+ }
+ let cls,head;
+ if(vetos.length){cls="wv-veto";head="✕ Vetoed — implausible without an extraordinary story";}
+ else if(score<=-2){cls="wv-tension";head="△ Coherent only under strain — needs a strong arrival story";}
+ else if(tensions.length){cls="wv-tension";head="△ Coherent, with tensions — plausible but transitional";}
+ else if(affins.length>=2){cls="wv-strong";head="◎ Strongly coherent — a historically recurrent configuration";}
+ else{cls="wv-ok";head="○ Coherent — no rules violated";}
+ document.getElementById('wverdict').innerHTML=`<div class="wverdict ${cls}"><b>${head}</b> &nbsp;<span style="font-weight:400;font-size:12.5px">(net consistency score ${score>0?"+":""}${score})</span>
+  ${vetos.map(v=>`<div class="wreason"><b>Veto:</b> ${v}</div>`).join('')}
+  ${tensions.map(t=>`<div class="wreason"><b>Tension:</b> ${t}</div>`).join('')}
+  ${affins.map(a=>`<div class="wreason"><b>Affinity:</b> ${a}</div>`).join('')}</div>`;
+ /* analog */
+ let best=null,bestm=-1;
+ ANALOGS.forEach(a=>{let m=0;WAXES.forEach((ax,i)=>{if(a.s[i]===W[ax.k])m++;});if(m>bestm){bestm=m;best=a;}});
+ document.getElementById('wanalog').innerHTML=`<div class="analog"><b>Nearest historical analog:</b> ${best.n} <span style="color:var(--gray)">(${bestm}/6 axes match)</span><br>${best.note}${bestm<=3?"<br><i style='color:var(--red)'>Weak match — this world is far from recorded experience; channel pricing here carries maximum error bars.</i>":""}</div>`;
+ /* impacts */
+ const c=[0,0,0,0,0];
+ WAXES.forEach(ax=>{const e=CH[ax.k][W[ax.k]];for(let i=0;i<5;i++)c[i]+=e[i];});
+ document.getElementById('wimpacts').innerHTML=IMPACTS.map(im=>{
+  const v=Math.max(-4,Math.min(4,im.f(c)));
+  const pct=Math.abs(v)/4*50;
+  const col=v>1?"#1a7f37":v<-1?"#b04a4a":"#b07000";
+  const lab=v>=2?"▲▲":v>0.5?"▲":v<=-2?"▼▼":v<-0.5?"▼":"◦";
+  return `<div class="imp"><span class="nm">${im.nm}</span>
+   <div class="impbar"><div class="ib-track"><div class="ib-mid"></div>
+    <div class="ib-fill" style="background:${col};${v>=0?`left:50%;width:${pct}%`:`right:50%;width:${pct}%`}"></div></div>
+   <span class="ib-lab" style="color:${col}">${lab}</span></div></div>`;
+ }).join('');
+}
+function setW(k,i){W[k]=i;renderW();}
+renderW();
+</script>
+</body></html>

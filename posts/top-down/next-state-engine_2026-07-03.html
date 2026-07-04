@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Next-State Engine — From Crisis Detection to State Anticipation — BPGS</title>
+<style>
+ :root{--navy:#1F3864;--blue:#2E5FA3;--gray:#6b7280;--ink:#1d1d1f;--line:#dce1e8;--soft:#f5f8fc;--bg:#eef1f5;--amberbg:#fff8ec;--amberbd:#e7c887;
+   --grn:#1a7f37;--red:#b04a4a;--pur:#6d2e9a;--teal:#1F8A86;--org:#E08A1E;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Segoe UI,Arial,Helvetica,sans-serif;line-height:1.55;}
+ header{background:var(--navy);color:#fff;padding:20px 26px 0;}
+ header h1{margin:0;font-size:22px;letter-spacing:-.2px;}
+ header h1 span{color:#9fb4d6;font-weight:400;font-size:.65em;display:block;margin-top:2px;}
+ header p{margin:4px 0 14px;font-size:13px;color:#c7d3e6;max-width:960px;}
+ nav{display:flex;gap:4px;flex-wrap:wrap;}
+ nav button{background:transparent;color:#c7d3e6;border:0;border-bottom:3px solid transparent;padding:10px 16px;font-size:14px;cursor:pointer;font-weight:500;}
+ nav button:hover{color:#fff;} nav button.active{color:#fff;border-bottom-color:#fff;}
+ main{max-width:1040px;margin:22px auto 60px;padding:0 22px;}
+ .view{display:none;} .view.active{display:block;}
+ h2.vh{color:var(--navy);font-size:20px;margin:6px 0 2px;} .vsub{color:var(--gray);font-size:13.5px;margin:0 0 18px;}
+ h2{color:var(--navy);font-size:18px;margin:28px 0 10px;}
+ h3{color:var(--blue);font-size:15px;margin:22px 0 8px;}
+ p{font-size:14.5px;margin:0 0 11px;}
+ ul,ol{margin:0 0 12px;padding-left:22px;} li{margin:0 0 6px;font-size:14.5px;}
+ .lab{font-weight:600;color:var(--navy);}
+ .plain{background:#fffaf0;border:1px solid #ecdba0;border-left:4px solid #d9b347;border-radius:8px;
+   padding:12px 15px;margin:4px 0 18px;font-size:13.5px;color:#5a4a1c;line-height:1.55;}
+ .plain b{color:#3d3210;}
+ .callout{background:var(--amberbg);border:1px solid var(--amberbd);border-radius:6px;padding:14px 18px;margin:14px 0 16px;font-size:14px;}
+ .callout .lab{color:#9a6b16;}
+ figure.chart{margin:14px 0 6px;padding:14px 12px 8px;background:#fff;border:1px solid var(--line);border-radius:8px;}
+ figure.chart svg{width:100%;height:auto;display:block;}
+ figure.chart figcaption{font-size:11.5px;color:var(--gray);margin-top:6px;padding:0 6px;font-style:italic;}
+ .fam{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0;}
+ .fam h4{margin:0 0 4px;color:var(--navy);font-size:15px;}
+ .fam .catch{font-size:12.5px;color:var(--gray);margin:0 0 8px;}
+ .fr{font-size:13px;padding:6px 0;border-top:1px solid var(--line);}
+ .fr b{color:var(--ink);} .fr span{color:var(--gray);}
+ .verdict{font-size:12.5px;margin-top:8px;padding:7px 10px;border-radius:6px;background:var(--soft);border-left:3px solid var(--blue);color:#3d4d63;}
+ .mtab{width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 24px;}
+ .mtab th{background:var(--soft);color:var(--ink);font-weight:600;padding:7px 10px;text-align:left;border:1px solid var(--line);font-size:11.5px;}
+ .mtab td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.5;}
+ .mtab tr:nth-child(even) td{background:#fafbfd;}
+ .pit{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:13px 16px;margin:12px 0;}
+ .pit h4{margin:0 0 6px;font-size:14.5px;color:#8a3232;}
+ .pit .rem{border-top:1px dashed var(--line);margin-top:9px;padding-top:9px;font-size:13.5px;}
+ .pit .rem b{color:var(--grn);}
+ .adv{border-left-color:var(--grn);} .adv h4{color:#1a5c2e;}
+ .drw{border-left-color:var(--org);} .drw h4{color:#8a5a10;}
+ .build-step{display:flex;gap:14px;margin-bottom:13px;align-items:flex-start;}
+ .bs-num{min-width:26px;height:26px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex-shrink:0;margin-top:2px;}
+ .bs-tag{display:inline-block;background:var(--amberbg);border:1px solid var(--amberbd);color:#7a4a00;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:6px;}
+ .note{color:var(--gray);font-size:12px;font-style:italic;margin-top:18px;}
+ .xref{background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:8px;padding:12px 16px;margin:16px 0;font-size:13.5px;}
+ .xref b{color:var(--teal);}
+ a{color:var(--blue);}
+ /* explorer */
+ .axrow{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+ .axname{font-size:12px;font-weight:700;color:var(--navy);width:150px;text-transform:uppercase;letter-spacing:.03em;}
+ .axbtn{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 12px;font-size:12.5px;cursor:pointer;color:var(--ink);}
+ .axbtn.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+ .nextcard{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px;margin:10px 0;border-left:4px solid var(--blue);}
+ .nextcard h4{margin:0 0 3px;font-size:14px;color:var(--navy);}
+ .nextcard .pw{font-size:11.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:10px;padding:1px 9px;margin-left:8px;}
+ .nextcard .why{font-size:12.5px;color:var(--gray);margin:3px 0 7px;}
+ .nextcard .tilt{font-size:13px;padding:6px 9px;background:var(--soft);border-radius:6px;margin-top:5px;}
+ .nextcard .tilt b{color:var(--pur);}
+ .srcl{font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line);}
+ .srcl b{color:var(--navy);}
+ .kbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:14px 0;}
+ .kb{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;}
+ .kb b{color:var(--navy);font-size:13.5px;display:block;margin-bottom:4px;}
+ .kb span{font-size:12.5px;color:var(--gray);}
+</style></head>
+<body>
+<header>
+ <h1>The Next-State Engine<span>Essay I — From crisis detection to state anticipation: predicting the world, then choosing the model</span></h1>
+ <p>An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world — macro, political, structural — and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to <a href="meta-engine-design_2026-06-29.html" style="color:#c7d3e6">Meta-Engine Design</a> and Essay II, <a href="plausible-worlds-engine_2026-07-03.html" style="color:#c7d3e6">The Plausible-Worlds Engine</a>. BPGS · 2026-07-03</p>
+ <nav id="nav"></nav>
+</header>
+<main>
+
+<!-- ============ TAB 1: THE IDEA ============ -->
+<section id="v-idea" class="view active">
+ <h2 class="vh">The idea — invert the modeling problem</h2>
+ <p class="vsub">Don't predict returns from data. Predict the world, then ask which model prices that world.</p>
+
+ <div class="plain"><b>Plain English:</b> every quant model is secretly a bet that the world it was trained in will persist. When the world changes — a new monetary anchor, a new market structure, a new political settlement — the model doesn't fail loudly; it decays quietly while the backtest still looks fine. The proposal here is to stop pretending one model can span all worlds. Instead: maintain a live estimate of <i>which world we are in</i>, a probability-weighted forecast of <i>which worlds come next</i>, and a map from each world to <i>the model that should be trusted there</i>. The object being forecast is not the return — it is the model itself.</p>
+
+ <h2>1. The standard practice, and its quiet assumption</h2>
+ <p>Standard quantitative practice fits a single mapping <i>f</i>(signals) → returns and validates it on held-out history. The stationarity assumption is rarely stated because it is embarrassing when stated: <i>the joint distribution that generated 1995 is assumed to still be generating 2026.</i> Everything we have found in our own research argues against it:</p>
+ <ul>
+  <li>Our MR strategy prints in-sample Sharpe 0.68 but 0.54 out-of-sample, and the IS-vs-OOS grid shows classic overfit topology — a fitted model bleeding as its world drifts.</li>
+  <li>Our decomposition work found that <b>market beta persists</b> (rank autocorrelation ≈ 0.60 at 12 months) while <b>stock-level alpha does not</b> (≈ 0.01) — the structural loadings are stable, the payoffs to them are not. Whatever moves the payoffs lives outside the stock panel.</li>
+  <li>The published anomalies decay after publication (McLean–Pontiff), the distress anomaly weakened after the 2000s, and value hibernated for a decade — each a state change that the fixed-model worldview can only register as "tracking error."</li>
+ </ul>
+ <p>Economics has known this for fifty years under a formal name. The <b>Lucas critique (1976)</b>: reduced-form parameters are not structural — they are equilibrium outcomes of a policy regime, and they change when the regime changes. Goodhart's law is the same point as folklore, and Andrew Lo's <b>Adaptive Markets Hypothesis</b> is the same point as biology: alpha is an ecological niche, and niches close. Fitting harder to the pooled sample does not escape any of this; it averages across worlds and prices none of them.</p>
+
+ <h2>2. The proposal</h2>
+ <p>Split the problem into two objects, each easier than the monolith:</p>
+ <div class="kbox">
+  <div class="kb"><b>Object 1 — the state and its transitions</b><span>A factored state vector S<sub>t</sub> (monetary anchor, credit-cycle position, inflation state, political cohesion, market structure, external position…), estimated live from causal discriminators, plus a sparse transition kernel P(S<sub>t+1</sub> | S<sub>t</sub>, discriminators) giving probability-weighted next states.</span></div>
+  <div class="kb"><b>Object 2 — the state→model map</b><span>A map M(S) from each state to the predictive model that should govern it — which factors carry premia, at what magnitudes, with what covariances. Tomorrow's forecast is the mixture: Σ P(S′|S)·M(S′). The model <i>morphs</i> as the state distribution shifts.</span></div>
+ </div>
+ <p>The critical design constraint, developed in the Pitfalls tab, is that neither object may be left free-form — otherwise we have doubled the parameter count and made everything worse. The state space must be <b>factored and coarse</b>; transitions must be <b>local and sparse</b>; and the model map must be constrained to a <b>low-dimensional family</b> — in our case, state-dependent factor moments over stable loadings, which is exactly what our own beta-persistence evidence licenses. Over-parameterization is then attacked with the only honest weapon available: <b>other countries' histories.</b> The US alone has lived through perhaps a dozen genuine state transitions since 1945; the Jordà-Schularick-Taylor panel of 17 advanced economies since 1870 contains hundreds. States rhyme across borders even when stocks don't.</p>
+
+ <div class="callout"><span class="lab">The one-sentence version:</span> we are not trying to predict returns better within the current world; we are trying to notice, earlier and with calibrated probabilities, that the world is changing — and to already know which model the next world demands.</div>
+
+ <h2>3. Why this is the natural next step for the meta-engine, not a new project</h2>
+ <p>Everything this essay proposes generalizes something already built:</p>
+ <ul>
+  <li>The <b>19-layer indicator manifest</b> is already a state-measurement apparatus; it lacks only an explicit state grammar to report into.</li>
+  <li>The <b>crisis classifier</b> (Layer 19, 5-dimensional crisis-type probability vector) is already a transition detector for the fast, violent subset of transitions. This essay extends it to slow transitions — anchor drift, structural change, political re-settlement — which are where fitted models die quietly.</li>
+  <li>The <b>~30-episode historical library</b> is already a labeled set of state transitions with "knowable at the time" discriminators — precisely the training and validation set the transition kernel needs.</li>
+  <li>The <b>DRN / HML regime system</b> driving the blend is already a working two-axis prototype of M(S): regime in, strategy weights out. This essay widens the state vector and deepens the output from strategy weights to full model specification.</li>
+  <li>The <b>continuous-regime / factor-moment agenda</b> (regime → low-dimensional factor moments × stable stock loadings) is already the correct parameterization of M(S). This essay supplies the missing front half: where the regime variable comes from and how it moves.</li>
+ </ul>
+
+ <div class="xref"><b>Relation to Essay II:</b> this engine forecasts the next one or two steps from <i>here</i> — a weather forecast. It can only reach states adjacent to the present and represented in history. The <a href="plausible-worlds-engine_2026-07-03.html">Plausible-Worlds Engine</a> explores the full reachable space, including coherent states that have never occurred — a climate model. They share the same state grammar; they answer different questions at different horizons.</div>
+</section>
+
+<!-- ============ TAB 2: WHAT EXISTS ============ -->
+<section id="v-exists" class="view">
+ <h2 class="vh">What exists — the survey</h2>
+ <p class="vsub">Five research traditions and several practitioner systems each hold one piece. Nobody has assembled the whole.</p>
+
+ <div class="fam">
+  <h4>A. Statistical regime machinery — states inferred from the data itself</h4>
+  <p class="catch">The econometrics of "the parameters changed" — powerful diagnostics, weak anticipation.</p>
+  <div class="fr"><b>Markov-switching models</b> (Hamilton 1989; surveyed in Ang &amp; Timmermann, <i>Regime Changes and Financial Markets</i>, 2012). <span>Two or three latent states with different means, variances, correlations; states recur; probabilities update as data arrives. The workhorse. Limits: states are statistical artifacts labeled after the fact, the filter recognizes a regime change only after months of confirming data, and the state count is fixed a priori.</span></div>
+  <div class="fr"><b>Time-varying-parameter models</b> (Primiceri 2005 TVP-VAR; Dangl &amp; Halling 2012; Johannes-Korteweg-Polson 2014). <span>Parameters drift continuously rather than jump. Captures slow decay well, structural breaks poorly; no notion of <i>why</i> anything drifted.</span></div>
+  <div class="fr"><b>Structural-break forecasting</b> (Pesaran, Pettenuzzo &amp; Timmermann 2006; Song 2014's infinite hidden Markov model). <span>The closest statistical ancestor of this essay: breaks are non-recurring, new regimes can be born, and — the key insight — <i>optimal forecasts must integrate over the probability and size of future breaks</i>, not just past ones. What it lacks is any causal content: breaks arrive from a fitted hazard, not from the world.</span></div>
+  <div class="fr"><b>Pockets of predictability</b> (Farmer, Schmidt &amp; Timmermann). <span>Return predictability is local in time — concentrated in identifiable pockets, absent elsewhere. Empirical confirmation that the single-model view fails, from inside the citadel.</span></div>
+  <div class="verdict">Verdict: this literature proves the disease is real and supplies the likelihood machinery, but its states are latent, backward-looking, and causally empty. We want states you can name.</div>
+ </div>
+
+ <div class="fam">
+  <h4>B. Practitioner templates — states defined by causal narrative</h4>
+  <p class="catch">Hand-built state machines, run by committees, validated by long survival.</p>
+  <div class="fr"><b>Bridgewater's economic machine / debt-cycle template</b> (Dalio, <i>Principles for Navigating Big Debt Crises</i>). <span>The archetypal big debt cycle plus a compendium of 48 cross-country cases; the template distinguishes states by whether monetary policy still works (rates above zero, deflationary vs inflationary deleveraging). This <i>is</i> a hand-built transition model estimated by cross-country pooling — the closest existing system in spirit to this essay, and the strongest evidence the approach can drive real money (it navigated 2008 in advance). It is also proprietary, discretionary, macro-only, and closed.</span></div>
+  <div class="fr"><b>Quadrant frameworks</b> — Hedgeye's GIP model (growth × inflation, accelerating/decelerating), Fidelity's business-cycle framework, Marks's cycle essays. <span>Coarse two-axis state machines with asset playbooks per quadrant. Commercially proven as research products; analytically shallow — no political, structural, or anchor axes, and nowcast-grade transition logic.</span></div>
+  <div class="fr"><b>All-Weather / risk parity</b>. <span>The degenerate case: don't forecast transitions at all, hold the portfolio that survives every quadrant. The correct benchmark this engine must beat — if state anticipation adds nothing over state-agnostic balance, the engine has failed.</span></div>
+  <div class="verdict">Verdict: practitioners prove that named, causal states pooled across countries work. Nobody outside Bridgewater does it systematically, and nobody at all — to our knowledge — connects the state forecast to <i>model</i> selection rather than asset selection.</div>
+ </div>
+
+ <div class="fam">
+  <h4>C. The data that makes cross-country pooling possible</h4>
+  <p class="catch">The over-parameterization cure. These datasets did not exist in usable form 15 years ago.</p>
+  <div class="fr"><b>Jordà-Schularick-Taylor Macrohistory Database</b> (macrohistory.net). <span>17 advanced economies, annual since 1870, 45 real and nominal variables, plus total returns on equities, bonds, bills, and housing (<i>The Rate of Return on Everything, 1870–2015</i>, QJE). Free. Covers ~90% of advanced-economy output. This is the transition kernel's training panel.</span></div>
+  <div class="fr"><b>Reinhart-Rogoff</b> (<i>This Time Is Different</i> dataset). <span>66 countries, eight centuries of default, banking, currency, and inflation crises. Coarser but far deeper — the tail-state library.</span></div>
+  <div class="fr"><b>Quantified policy/political axes</b> — Baker-Bloom-Davis Economic Policy Uncertainty (EPU) indices; Caldara-Iacoviello Geopolitical Risk (GPR) index back to 1900; central-bank nowcasts (GDPNow, NY Fed WEI); ALFRED real-time data vintages. <span>Long-history, cross-country, machine-readable measurements of exactly the axes that resist quantification. Imperfect, but they exist.</span></div>
+  <div class="fr"><b>Prediction markets &amp; superforecasting</b> — Polymarket (500+ live geopolitics markets), Metaculus, Kalshi; Tetlock's Good Judgment results. <span>Live, incentive-weighted probabilities for discrete political states — usable as noisy inputs to the transition kernel for axes no time series measures.</span></div>
+  <div class="verdict">Verdict: the raw material for cross-country, cross-century state estimation is free and downloadable. This is the part that has changed most in our favor recently.</div>
+ </div>
+
+ <div class="fam">
+  <h4>D. The model-selection machinery</h4>
+  <p class="catch">The math of "different model for different input region" is mature — in the wrong domain.</p>
+  <div class="fr"><b>Mixture-of-experts</b> (Jacobs &amp; Jordan 1991; now the backbone of frontier LLMs). <span>A gating network routes each input to specialist experts; gate and experts train jointly. The gating network <i>is</i> M(S) with S estimated jointly. The finance literature explicitly motivates MoE with "the state of the economy changes the input→output map." Applied so far within datasets, not across world-states — the transplant is the opportunity.</span></div>
+  <div class="fr"><b>Hierarchical Bayes / partial pooling</b>. <span>The standard cure for "17 countries, each too short": country-level parameters shrunk toward a global prior, with the data deciding how much each country deviates. Leave-one-country-out validation comes free.</span></div>
+  <div class="fr"><b>Forecast combination under instability</b> (Timmermann; Rossi). <span>Robust averaging when any single model may have broken — the fallback layer when the gate is uncertain.</span></div>
+  <div class="verdict">Verdict: nothing needs inventing here. The engineering task is supplying the gate with a causal state vector instead of letting it fish in the returns data.</div>
+ </div>
+
+ <div class="fam">
+  <h4>E. The gap this essay targets</h4>
+  <p class="catch">Assembled view.</p>
+  <p style="font-size:14px">The econometricians have transition math without causal states. The practitioners have causal states without systematic machinery. The data now exists to estimate named-state transitions across 17 countries and 150 years. The ML community has the conditional-model architecture. <b>No public system forecasts a distribution over named world-states and uses it to select among predictive models.</b> Bridgewater approximates it by hand at the asset-class level. The stock-level, systematic, open version — with the model map constrained to factor moments over stable loadings — appears to be unclaimed territory.</p>
+ </div>
+</section>
+
+<!-- ============ TAB 3: ADVANTAGES & DRAWBACKS ============ -->
+<section id="v-adv" class="view">
+ <h2 class="vh">Advantages &amp; drawbacks</h2>
+ <p class="vsub">What the inversion buys, and what it costs. Both lists are load-bearing.</p>
+
+ <h3>Advantages</h3>
+ <div class="pit adv"><h4>1 · Anticipation instead of reaction</h4><p style="font-size:13.5px;margin:0">A Markov-switching filter needs months of confirming returns to update; causal discriminators (funding spreads, anchor stress, policy-reaction changes) move first. The seven original episode tests established exactly this: the right call was available <i>at the time</i> from causal reading, not from fitted probabilities. The engine systematizes that reading.</p></div>
+ <div class="pit adv"><h4>2 · Parameter honesty</h4><p style="font-size:13.5px;margin:0">A "stationary" model trained on 1995–2026 secretly averages across three monetary eras, two market structures, and several political settlements. The state-conditional structure states its conditioning openly, so when a forecast is wrong you can see <i>which belief</i> was wrong — the state estimate, the transition, or the map. Monoliths fail without explanation; this fails with an audit trail.</p></div>
+ <div class="pit adv"><h4>3 · The sample-size trade is favorable</h4><p style="font-size:13.5px;margin:0">Postwar US offers maybe a dozen genuine state transitions — hopeless. The JST panel offers hundreds of recessions, dozens of banking, currency, and inflation crises, multiple anchor changes. States (unlike stock alphas) plausibly rhyme across borders, so pooling buys real degrees of freedom precisely at the level where we spend them.</p></div>
+ <div class="pit adv"><h4>4 · Graceful degradation, and uncertainty as output</h4><p style="font-size:13.5px;margin:0">Prediction is a mixture over next states. When the state distribution is flat, the mixture automatically blends toward the robust average — and the mixture's entropy is itself a tradeable signal: it should scale the Kelly fraction. High state uncertainty → smaller bets. Today's system has no such dial.</p></div>
+ <div class="pit adv"><h4>5 · Reuses everything already built</h4><p style="font-size:13.5px;margin:0">Manifest → state measurement. Crisis classifier → fast-transition detector. Episode library → labeled transitions. DRN/HML → two-axis prototype. Factor-moment agenda → the model map's parameterization. Marginal build, not greenfield.</p></div>
+ <div class="pit adv"><h4>6 · Structural alpha is slower to arbitrage</h4><p style="font-size:13.5px;margin:0">A signal can be replicated from its own footprint; a state→model map is a structure, harder to reverse-engineer and mostly valuable at transitions, which are rare and frightening — exactly when capital is least willing to act. The edge concentrates where competition is thinnest.</p></div>
+
+ <h3>Drawbacks</h3>
+ <div class="pit drw"><h4>1 · Two estimation problems instead of one</h4><p style="font-size:13.5px;margin:0">Transitions <i>and</i> conditional models must both be estimated. Done naively this is strictly worse than the monolith — more parameters, less data per parameter. The whole design (coarse grammar, sparse transitions, low-dim model map) exists to fight this, and it must be fought consciously at every step.</p></div>
+ <div class="pit drw"><h4>2 · The map itself is not stationary</h4><p style="font-size:13.5px;margin:0">Second-order non-stationarity: the same nominal state maps to different returns across eras. "Banking crisis" under gold-standard 1893 ≠ under Fed-put 2008 — because the policy reaction function changed. Any honest version must condition the map on era-level axes too, which spends more parameters.</p></div>
+ <div class="pit drw"><h4>3 · Wrong-state risk — conviction cuts both ways</h4><p style="font-size:13.5px;margin:0">A confident wrong state call is worse than an unconditional model. The engine converts model risk into state-call risk; that is a trade, not a free lunch, and it must be priced (see the null-expert remedy in Pitfalls).</p></div>
+ <div class="pit drw"><h4>4 · Vintage and latency problems</h4><p style="font-size:13.5px;margin:0">States are measured with lags and revisions. Backtests that label states with revised data smuggle in hindsight; the real-time state estimate is noisier and later than the historical one. This has destroyed many published regime results.</p></div>
+ <div class="pit drw"><h4>5 · Transferability is an assumption, not a fact</h4><p style="font-size:13.5px;margin:0">Reserve-currency status, market depth, and the Fed put are US-specific. Pooling 1920s France into a 2026 US transition prior may inform or may mislead; the degree of pooling must be estimated, not assumed (and tested leave-one-country-out).</p></div>
+ <div class="pit drw"><h4>6 · The narrative-machine failure mode</h4><p style="font-size:13.5px;margin:0">A rich state vocabulary can rationalize any position after the fact. Without pre-registered state definitions and graded live calls, the engine degenerates into an articulate excuse generator. This is a governance problem as much as a statistical one.</p></div>
+</section>
+
+<!-- ============ TAB 4: PITFALLS & REMEDIES ============ -->
+<section id="v-pit" class="view">
+ <h2 class="vh">Pitfalls &amp; remedies — the hard engineering</h2>
+ <p class="vsub">Eight problems that would sink a naive build, each with its best available counter. This is where the essay earns its keep.</p>
+
+ <div class="pit"><h4>P1 · State-space design — the curse of dimensionality moves up a level</h4>
+  <p style="font-size:13.5px">A free-form state space re-creates the over-fitting problem one floor up. Ten binary state variables = 1,024 states and a million-entry transition matrix; history provides a few hundred country-years.</p>
+  <div class="rem"><b>Remedy — a factored, coarse grammar with local transitions.</b> Six to eight named axes, each with 2–4 discrete levels (a continuous intensity g within level where useful): <i>Monetary anchor</i> (credible / strained / dominated), <i>Credit-cycle position</i> (early / late / bust), <i>Inflation state</i> (anchored / sticky-elevated / unanchored), <i>Political cohesion</i> (cohesive / polarized / impasse), <i>Market structure</i> (active-priced / passive-dominant / levered-fragile), <i>External position</i> (hegemon-currency / balanced / constrained). Transitions are <b>local</b> — one, rarely two, axes move per step — so the kernel is sparse by construction: instead of |S|² entries, roughly Σ per-axis transition tables plus a short list of cross-terms (political impasse raises P(anchor strained→dominated); credit bust raises P(politics→impasse)). The 19-layer manifest maps onto these axes almost one-to-one; the grammar is a re-indexing of what the Observer already watches, not new collection.</div></div>
+
+ <div class="pit"><h4>P2 · The double parameter budget — M(S) must not be free-form</h4>
+  <p style="font-size:13.5px">If each state gets its own free predictive model, the per-state sample collapses and every state-model is worse than the pooled one. This kills most naive regime-conditioning attempts.</p>
+  <div class="rem"><b>Remedy — state-dependent factor moments over stable loadings.</b> Constrain M(S) = B × Φ(S): a stock-loading matrix <b>B</b> estimated once from all data (licensed by our own finding: beta rank-autocorrelation ≈ 0.60 at 12m while idio alpha ≈ 0.01 — loadings persist, payoffs don't), and state-conditional factor moments <b>Φ(S)</b> — means, vols, correlations of ~6 factors — a few dozen numbers per state instead of thousands. Factor moments are also the level at which cross-country pooling is legitimate: "value spread widens in credit busts" plausibly transfers from Japan 1990 to US 2008; stock-level alphas never transfer. This is precisely the continuous-regime factor-moment architecture already on our agenda; and the MV-frontier lesson applies verbatim — fit surfaces to <i>bucket means weighted by count</i>, never to stock-months, or the curvature over-fits 3–5×.</div></div>
+
+ <div class="pit"><h4>P3 · Hindsight labeling and data vintages</h4>
+  <p style="font-size:13.5px">Historical states labeled with revised data and outcome knowledge produce backtests that cannot be traded. "Everyone knew it was a bubble" is mostly survivorship of the tellers.</p>
+  <div class="rem"><b>Remedy — point-in-time discipline throughout.</b> Label historical states using only pre-date sources — the "knowable at the time" standard the seven episode tests already enforced. ALFRED vintages for US macro; contemporary newspaper text (which is what EPU/GPR are built from) for sentiment and policy axes. Pre-register state definitions in writing before any backtest touches returns. Where a state genuinely was not knowable in real time, the label is "ambiguous" — and the engine must be tested with that ambiguity intact.</div></div>
+
+ <div class="pit"><h4>P4 · Transferability across countries</h4>
+  <p style="font-size:13.5px">Institutions differ. Pooling naively assumes a French banking bust and a US one are draws from the same urn; they are not, and reserve-currency status is the biggest single difference.</p>
+  <div class="rem"><b>Remedy — pool partially, and make the differences axes.</b> Hierarchical Bayes: country-level transition and moment parameters shrunk toward a global prior, shrinkage strength estimated from data. Institutional differences that matter (reserve-currency status, capital-account openness, monetary sovereignty) become <i>state axes</i>, not excuses — so "US 2026" and "France 1926" differ in measured coordinates, and the model borrows only what their shared coordinates justify. Validate leave-one-country-out: train on 16, test on the 17th, every country in turn. If transfer fails, the failure is measurable and the pooling weight shrinks.</div></div>
+
+ <div class="pit"><h4>P5 · The map drifts — second-order non-stationarity</h4>
+  <p style="font-size:13.5px">The state→moments map itself changed when the Fed's reaction function changed (1979, 1987, 2008, 2020), when derivatives deepened, when passive crossed 50%. A map fitted to 1870–2026 averages across eras exactly the way the monolith averages across states.</p>
+  <div class="rem"><b>Remedy — make drift state-dependent, then watch the residuals.</b> Era-level covariates (anchor type, policy-reaction rule, market structure) are already axes in the grammar, so most "drift" becomes conditioning. For what remains: time-decay episode weighting, and a live health metric — the gate's realized surprise. When the mixture is persistently surprised (realized returns improbable under the forecast mixture), the map is stale; trigger a structural review rather than a silent refit.</div></div>
+
+ <div class="pit"><h4>P6 · Political and geopolitical axes resist quantification</h4>
+  <p style="font-size:13.5px">"Political cohesion" is not a time series. Expert judgment is biased; indices are proxies; prediction markets are thin, occasionally manipulated, and US-centric.</p>
+  <div class="rem"><b>Remedy — composite measurement, quarantined influence.</b> Measure the axis as a composite: EPU/GPR indices (long history, cross-country) + prediction-market probabilities (live, incentive-weighted) + structured elicitation with Tetlock-style scoring. Then <b>quarantine</b>: political axes enter the transition kernel (they change <i>where the world goes</i>) but not the pricing map directly (they don't get their own return premia). A wrong political probability then mis-weights models — a bounded error — rather than corrupting the models themselves.</div></div>
+
+ <div class="pit"><h4>P7 · Validation scarcity — transitions are rare by construction</h4>
+  <p style="font-size:13.5px">A engine whose value concentrates in rare transitions cannot be validated to statistical significance within a career. This is the deepest objection and it has no full answer.</p>
+  <div class="rem"><b>Remedy — three tiers, and an honest standard.</b> (i) Leave-one-episode-out on the 30-episode library: hide 2008, train the kernel and map on everything else, ask what the engine would have said in June 2007. (ii) Leave-one-country-out on the JST panel. (iii) Live shadow mode: pre-registered state estimates and transition forecasts, logged and graded quarterly like a superforecaster's Brier score, before capital moves. The standard is the one the original seven tests set: not statistical significance, but <i>"would the system have said something specific, useful, and true at the time"</i> — plus calibration of its stated probabilities.</div></div>
+
+ <div class="pit"><h4>P8 · Overconfidence and the narrative machine</h4>
+  <p style="font-size:13.5px">Rich vocabularies rationalize. An engine that can name six axes can explain any drawdown after the fact and any position before it.</p>
+  <div class="rem"><b>Remedy — a null expert with teeth.</b> The mixture permanently includes an unconditional expert — the plain pooled model (or just the market) — competing on equal terms. Its mixture weight is a governance metric: if the gate never selects the null expert, the system is over-claiming state knowledge and gets its Kelly fraction cut. Mixture entropy scales position size mechanically, not discretionarily. And every state call is written down <i>before</i> the month it applies to. The discipline is the product; the math is just its enforcement.</div></div>
+</section>
+
+<!-- ============ TAB 5: ARCHITECTURE ============ -->
+<section id="v-arch" class="view">
+ <h2 class="vh">Proposed architecture</h2>
+ <p class="vsub">Five stages, every one anchored to something that already exists in the stack.</p>
+
+ <figure class="chart">
+ <svg viewBox="0 0 1000 330" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Arial,sans-serif">
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E5FA3"/></marker></defs>
+  <!-- stage boxes -->
+  <g font-size="12">
+   <rect x="10" y="30" width="175" height="120" rx="10" fill="#f5f8fc" stroke="#dce1e8"/>
+   <text x="97" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">DISCRIMINATORS</text>
+   <text x="97" y="74" text-anchor="middle" fill="#374151">19-layer manifest</text>
+   <text x="97" y="92" text-anchor="middle" fill="#374151">nowcasts · vintages</text>
+   <text x="97" y="110" text-anchor="middle" fill="#374151">EPU / GPR indices</text>
+   <text x="97" y="128" text-anchor="middle" fill="#374151">prediction markets</text>
+
+   <rect x="215" y="30" width="175" height="120" rx="10" fill="#eaf1fb" stroke="#a8c2e6"/>
+   <text x="302" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">STATE ESTIMATOR</text>
+   <text x="302" y="74" text-anchor="middle" fill="#374151">posterior over S&#8324;</text>
+   <text x="302" y="92" text-anchor="middle" fill="#374151">6–8 factored axes</text>
+   <text x="302" y="110" text-anchor="middle" fill="#374151">coarse levels + g</text>
+   <text x="302" y="128" text-anchor="middle" fill="#374151">point-in-time only</text>
+
+   <rect x="420" y="30" width="175" height="120" rx="10" fill="#eaf1fb" stroke="#a8c2e6"/>
+   <text x="507" y="52" text-anchor="middle" font-weight="700" fill="#1F3864">TRANSITION KERNEL</text>
+   <text x="507" y="74" text-anchor="middle" fill="#374151">sparse · local moves</text>
+   <text x="507" y="92" text-anchor="middle" fill="#374151">JST 17-country pooled</text>
+   <text x="507" y="110" text-anchor="middle" fill="#374151">hierarchical shrinkage</text>
+   <text x="507" y="128" text-anchor="middle" fill="#374151">P(S&#8242;|S, discrims)</text>
+
+   <rect x="625" y="30" width="175" height="120" rx="10" fill="#f6edfb" stroke="#cdaee3"/>
+   <text x="712" y="52" text-anchor="middle" font-weight="700" fill="#6d2e9a">MODEL MAP M(S)</text>
+   <text x="712" y="74" text-anchor="middle" fill="#374151">Φ(S): factor moments</text>
+   <text x="712" y="92" text-anchor="middle" fill="#374151">× stable loadings B</text>
+   <text x="712" y="110" text-anchor="middle" fill="#374151">fit to bucket means</text>
+   <text x="712" y="128" text-anchor="middle" fill="#374151">+ null expert</text>
+
+   <rect x="830" y="30" width="160" height="120" rx="10" fill="#eafaef" stroke="#9ad0ab"/>
+   <text x="910" y="52" text-anchor="middle" font-weight="700" fill="#1a5c2e">ALLOCATOR</text>
+   <text x="910" y="74" text-anchor="middle" fill="#374151">mixture forecast</text>
+   <text x="910" y="92" text-anchor="middle" fill="#374151">existing Kelly /</text>
+   <text x="910" y="110" text-anchor="middle" fill="#374151">vol-target engine</text>
+   <text x="910" y="128" text-anchor="middle" fill="#374151">entropy → f</text>
+  </g>
+  <g stroke="#2E5FA3" stroke-width="2" fill="none">
+   <line x1="185" y1="90" x2="213" y2="90" marker-end="url(#arr)"/>
+   <line x1="390" y1="90" x2="418" y2="90" marker-end="url(#arr)"/>
+   <line x1="595" y1="90" x2="623" y2="90" marker-end="url(#arr)"/>
+   <line x1="800" y1="90" x2="828" y2="90" marker-end="url(#arr)"/>
+  </g>
+  <!-- validation rail -->
+  <rect x="215" y="200" width="585" height="70" rx="10" fill="#fff8ec" stroke="#e7c887"/>
+  <text x="507" y="224" text-anchor="middle" font-size="12" font-weight="700" fill="#9a6b16">VALIDATION RAIL</text>
+  <text x="507" y="244" text-anchor="middle" font-size="11.5" fill="#5a4a1c">leave-one-episode-out (30 episodes) · leave-one-country-out (JST) · live shadow mode, pre-registered &amp; Brier-graded</text>
+  <g stroke="#c9a24a" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
+   <line x1="302" y1="150" x2="302" y2="198"/>
+   <line x1="507" y1="150" x2="507" y2="198"/>
+   <line x1="712" y1="150" x2="712" y2="198"/>
+  </g>
+  <!-- feedback -->
+  <path d="M910 150 C 910 300 400 300 302 272" stroke="#1a7f37" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  <text x="700" y="305" text-anchor="middle" font-size="11" fill="#1a7f37" font-style="italic">realized surprise → map-staleness monitor → structural review</text>
+ </svg>
+ <figcaption>The Next-State Engine. Prediction = Σ P(S′|S)·M(S′) — a mixture over next states of state-conditional models. The crisis classifier is the fast-moving subset of the transition kernel; DRN/HML is the two-axis special case of the whole pipeline.</figcaption>
+ </figure>
+
+ <h3>What each stage reuses</h3>
+ <table class="mtab">
+  <thead><tr><th>Stage</th><th>Already built</th><th>New work</th></tr></thead>
+  <tbody>
+   <tr><td><b>Discriminators</b></td><td>19-layer manifest, FRED pipeline, vix_daily</td><td>EPU/GPR ingestion; prediction-market API; ALFRED vintages</td></tr>
+   <tr><td><b>State estimator</b></td><td>Crisis classifier design (Layer 19); DRN/HML computation</td><td>State grammar spec; mapping manifest layers → axes; ambiguity handling</td></tr>
+   <tr><td><b>Transition kernel</b></td><td>30-episode library as labeled transitions</td><td>JST/RR download &amp; state labeling; hierarchical count model; cross-terms</td></tr>
+   <tr><td><b>Model map</b></td><td>Factor-moment architecture (continuous-regime agenda); MV-frontier surface discipline; beta-persistence result</td><td>Φ(S) estimation per state bucket; null expert; era conditioning</td></tr>
+   <tr><td><b>Allocator</b></td><td>Kelly/vol-target engine, blend machinery</td><td>Entropy → Kelly-fraction coupling; mixture plumbing</td></tr>
+  </tbody>
+ </table>
+
+ <h3>Build sequence</h3>
+ <div class="build-plan">
+  <div class="build-step"><span class="bs-num">1</span><div><b>State grammar spec</b> — write the 6–8 axes, their levels, and the manifest-layer → axis mapping. Pre-register definitions. Pure design document; gates everything. <span class="bs-tag">~1 week</span></div></div>
+  <div class="build-step"><span class="bs-num">2</span><div><b>Historical state labeling</b> — label the 30 episodes and the JST country-years in the grammar, point-in-time sources only, "ambiguous" allowed. The labeled panel is the engine's dataset. <span class="bs-tag">~3 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">3</span><div><b>Transition kernel v0</b> — per-axis transition counts with hierarchical shrinkage across countries; the short cross-term list; crisis classifier wired in as the fast component. <span class="bs-tag">~2 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">4</span><div><b>Factor-moment map Φ(S)</b> — factor means/vols/correlations by state bucket, fit to bucket means (MV-frontier discipline), era-conditioned. First integration test: does Φ(S) sharpen the existing blend's regime weights? <span class="bs-tag">~2 weeks</span></div></div>
+  <div class="build-step"><span class="bs-num">5</span><div><b>Mixture predictor + null expert</b> — assemble Σ P(S′|S)·M(S′); entropy → Kelly coupling; null-expert governance metric. <span class="bs-tag">~1 week</span></div></div>
+  <div class="build-step"><span class="bs-num">6</span><div><b>Shadow mode</b> — monthly pre-registered state estimate, transition forecast, and model tilt, logged and graded. No capital until two quarters of calibrated calls. <span class="bs-tag">ongoing</span></div></div>
+ </div>
+ <p class="note">Total ~9 weeks to shadow mode. The highest-leverage item is step 2 — the labeled cross-country state panel — which is also reusable raw material for Essay II's plausibility rules and for any future regime work.</p>
+</section>
+
+<!-- ============ TAB 6: EXPLORER ============ -->
+<section id="v-explore" class="view">
+ <h2 class="vh">Explorer — a hand-built transition toy</h2>
+ <p class="vsub">Set the current state on five axes; the toy shows plausible next states with hand-assigned weights and the model tilt each implies. Illustrative logic, not fitted output — it demonstrates the engine's shape, not its numbers.</p>
+ <div id="axes"></div>
+ <h3 style="margin-top:20px">Probability-weighted next states</h3>
+ <div id="nexts"></div>
+ <p class="note">Weights are illustrative priors, normalized over the moves shown (plus "state persists"). In the real engine these come from the cross-country kernel conditioned on live discriminators, and tilts come from Φ(S′) − Φ(S).</p>
+</section>
+
+<!-- ============ TAB 7: SOURCES ============ -->
+<section id="v-src" class="view">
+ <h2 class="vh">Sources &amp; further reading</h2>
+ <p class="vsub">The load-bearing references behind each tab.</p>
+ <div class="srcl"><b>Structural breaks &amp; regime econometrics:</b> Pesaran &amp; Timmermann, <a href="https://rady.ucsd.edu/_files/faculty-research/timmermann/asset%20allocation_march02_2010.pdf">Predictability of Stock Returns and Asset Allocation under Structural Breaks</a>; Ang &amp; Timmermann, <a href="https://www.nber.org/system/files/working_papers/w17182/w17182.pdf">Regime Changes and Financial Markets</a> (NBER WP 17182); Song, <a href="https://onlinelibrary.wiley.com/doi/10.1002/jae.2337">Modelling Regime Switching and Structural Breaks with an Infinite Hidden Markov Model</a>; Farmer, Schmidt &amp; Timmermann, <a href="https://rady.ucsd.edu/_files/faculty-research/timmermann/pockets_November_23_2021.pdf">Pockets of Predictability</a>.</div>
+ <div class="srcl"><b>Cross-country panels:</b> <a href="https://www.macrohistory.net/database/">Jordà-Schularick-Taylor Macrohistory Database</a> (17 countries, 1870–, 45 variables; <a href="https://www.nber.org/research/data/jorda-schularick-taylor-macrohistory">NBER mirror</a>); <a href="https://arxiv.org/pdf/2209.00121">150 Years of Return Predictability Around the World</a>; Reinhart &amp; Rogoff, <i>This Time Is Different</i> (dataset).</div>
+ <div class="srcl"><b>Practitioner templates:</b> Dalio, <a href="https://www.principles.com/big-debt-crises/">Principles for Navigating Big Debt Crises</a> (archetypal cycle + 48 cases); Bridgewater, <i>How the Economic Machine Works</i>.</div>
+ <div class="srcl"><b>Conditional-model machinery:</b> <a href="https://arxiv.org/html/2503.07137v1">A Comprehensive Survey of Mixture-of-Experts</a>; <a href="https://www.ibm.com/think/topics/mixture-of-experts">IBM MoE overview</a>; Jacobs, Jordan, Nowlan &amp; Hinton (1991), Adaptive Mixtures of Local Experts.</div>
+ <div class="srcl"><b>State measurement:</b> Baker, Bloom &amp; Davis EPU indices (policyuncertainty.com); Caldara &amp; Iacoviello GPR index; ALFRED vintage data (St. Louis Fed); <a href="https://polymarket.com/geopolitics">Polymarket geopolitics markets</a>; Tetlock &amp; Gardner, <i>Superforecasting</i>.</div>
+ <div class="srcl"><b>Theory:</b> Lucas (1976), Econometric Policy Evaluation: A Critique; Lo, The Adaptive Markets Hypothesis; McLean &amp; Pontiff (2016), Does Academic Research Destroy Stock Return Predictability?</div>
+ <div class="srcl"><b>Internal:</b> <a href="meta-engine-design_2026-06-29.html">Meta-Engine Design</a> (manifest, classifier, episode library, shelves); <a href="meta-engine-historical-tests_2026-06-29.html">Meta-Engine Historical Tests</a> (the seven episodes); decomp-alpha research (beta persistence vs alpha non-persistence); MV-frontier surface-fitting discipline; Essay II, <a href="plausible-worlds-engine_2026-07-03.html">The Plausible-Worlds Engine</a>.</div>
+</section>
+
+</main>
+<script>
+/* ---------- nav ---------- */
+const VIEWS=[["idea","The Idea"],["exists","What Exists"],["adv","Advantages & Drawbacks"],["pit","Pitfalls & Remedies"],["arch","Architecture"],["explore","Explorer"],["src","Sources"]];
+const nav=document.getElementById('nav');
+nav.innerHTML=VIEWS.map(v=>`<button data-v="${v[0]}" ${v[0]==='idea'?'class="active"':''}>${v[1]}</button>`).join('');
+nav.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;show(b.dataset.v);});
+function show(id){document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id==='v-'+id));
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.v===id));window.scrollTo(0,0);}
+
+/* ---------- explorer ---------- */
+const AXES=[
+ {k:"anchor",name:"Monetary anchor",levels:["credible fiat","strained fiat","fiscal dominance"]},
+ {k:"credit",name:"Credit cycle",levels:["early cycle","late cycle","bust"]},
+ {k:"infl",name:"Inflation state",levels:["anchored","sticky-elevated","unanchored"]},
+ {k:"pol",name:"Political cohesion",levels:["cohesive","polarized","impasse"]},
+ {k:"struct",name:"Market structure",levels:["active-priced","passive-dominant","levered-fragile"]}
+];
+/* 2026 baseline default */
+let cur={anchor:1,credit:1,infl:1,pol:1,struct:1};
+
+/* base per-axis move weights [toLower, stay, toHigher] given current level idx; -1 = impossible */
+const MOVES={
+ anchor:[[0,.85,.15],[.20,.65,.15],[.10,.90,0]],
+ credit:[[0,.75,.25],[.15,.60,.25],[.55,.45,0]],
+ infl:[[0,.80,.20],[.35,.50,.15],[.25,.75,0]],
+ pol:[[0,.75,.25],[.20,.60,.20],[.35,.65,0]],
+ struct:[[0,.80,.20],[.15,.70,.15],[.40,.60,0]]
+};
+/* cross-terms: condition(current state) -> multiplier on a specific axis move */
+const CROSS=[
+ {when:s=>s.pol===2,axis:"anchor",dir:+1,mult:2.5,why:"political impasse blocks fiscal consolidation → dominance risk up"},
+ {when:s=>s.credit===2,axis:"pol",dir:+1,mult:1.8,why:"credit busts radicalize politics"},
+ {when:s=>s.infl===2,axis:"anchor",dir:+1,mult:2.0,why:"unanchored inflation strains the monetary anchor"},
+ {when:s=>s.credit===1&&s.struct===2,axis:"credit",dir:+1,mult:1.7,why:"levered structure turns late-cycle into bust faster"},
+ {when:s=>s.anchor===2,axis:"infl",dir:+1,mult:2.2,why:"fiscal dominance feeds inflation"},
+ {when:s=>s.pol===0,axis:"anchor",dir:-1,mult:1.5,why:"cohesive politics can repair the anchor"}
+];
+/* model tilts per axis move (direction: +1 worsen, -1 improve) */
+const TILTS={
+ "anchor+1":"Duration ↓ hard · gold / real assets ↑ · equity multiple compression · <b>LV over MOM</b> · T-bill floor questionable — the 'risk-free' leg itself is in play",
+ "anchor-1":"Duration ↑ · multiple re-expansion · risk premia compress broadly · momentum in long-duration growth resumes",
+ "credit+1":(l)=>l===2?"Bust deepens: quality/LV only · MOM crash risk maximal · MR knife-catching in size, not yet":"Late→bust: <b>MOM crash risk ↑ sharply</b> · LV edge widens (Q1 beta names) · credit spreads lead equities · raise cash/T-bill sleeve",
+ "credit-1":"Recovery leg: <b>MR strongest</b> (oversold snap-back) · small/high-beta lead · LV lags — its edge is protection, not participation",
+ "infl+1":"Value over growth · bond-equity correlation flips positive — <b>60/40 diversification dies</b> · commodities/TIPS sleeve · nominal-earnings screens beat real ones",
+ "infl-1":"Disinflation: duration rallies · growth multiples re-rate · carry strategies revive",
+ "pol+1":"Policy-uncertainty premium ↑ · EPU-sensitive sectors (defense, domestic staples) over global cyclicals · event-risk sizing: <b>Kelly fraction down</b> even before anything breaks",
+ "pol-1":"Uncertainty premium unwinds · beta up, hedges cheapened — sell them slowly",
+ "struct+1":"Fragility regime: vol-of-vol ↑ · crowded-factor unwind risk (Aug-2007 quant quake template) · <b>MR pool becomes toxic</b> when deleveraging drives the tape",
+ "struct-1":"Toward active pricing: dispersion ↑ · stock-selection alpha revives · MR mean-reversion half-life shortens"
+};
+function tiltFor(k,dir,lvl){const t=TILTS[k+(dir>0?"+1":"-1")];return typeof t==="function"?t(lvl):t;}
+
+function renderAxes(){
+ document.getElementById('axes').innerHTML=AXES.map(a=>`
+  <div class="axrow"><span class="axname">${a.name}</span>
+   ${a.levels.map((l,i)=>`<button class="axbtn ${cur[a.k]===i?'on':''}" onclick="setAx('${a.k}',${i})">${l}</button>`).join('')}
+  </div>`).join('');
+}
+function setAx(k,i){cur[k]=i;renderAxes();renderNexts();}
+function renderNexts(){
+ let cands=[];let stay=1;
+ AXES.forEach(a=>{
+  const w=MOVES[a.k][cur[a.k]];
+  [-1,1].forEach(dir=>{
+   let p=w[dir===-1?0:2]; if(p<=0)return;
+   let whys=[];
+   CROSS.forEach(c=>{if(c.axis===a.k&&c.dir===dir&&c.when(cur)){p*=c.mult;whys.push(c.why);}});
+   const nl=cur[a.k]+dir;
+   cands.push({axis:a,dir,p,newLevel:nl,whys});
+  });
+  stay*=w[1];
+ });
+ const tot=cands.reduce((s,c)=>s+c.p,0)+stay;
+ cands.sort((x,y)=>y.p-x.p);
+ const top=cands.slice(0,5);
+ let html=`<div class="nextcard" style="border-left-color:#8895a7"><h4>State persists<span class="pw" style="background:#8895a7">${Math.round(100*stay/tot)}%</span></h4>
+   <div class="why">All axes hold. The null expert governs: run the current-state model, no tilt.</div></div>`;
+ html+=top.map(c=>{
+  const pct=Math.round(100*c.p/tot);
+  return `<div class="nextcard"><h4>${c.axis.name}: ${c.axis.levels[cur[c.axis.k]]} → <u>${c.axis.levels[c.newLevel]}</u><span class="pw">${pct}%</span></h4>
+   ${c.whys.length?`<div class="why">Cross-term active: ${c.whys.join(" · ")}</div>`:`<div class="why">Base-rate move for this axis at this level.</div>`}
+   <div class="tilt"><b>Model tilt:</b> ${tiltFor(c.axis.k,c.dir,cur[c.axis.k])}</div></div>`;
+ }).join('');
+ document.getElementById('nexts').innerHTML=html;
+}
+renderAxes();renderNexts();
+</script>
+</body></html>
