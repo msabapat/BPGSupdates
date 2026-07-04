@@ -74,6 +74,12 @@
 <header>
  <h1>The Next-State Engine<span>Essay I — From crisis detection to state anticipation: predicting the world, then choosing the model</span></h1>
  <p>An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world — macro, political, structural — and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to <a href="meta-engine-design_2026-06-29.html" style="color:#c7d3e6">Meta-Engine Design</a> and Essay II, <a href="plausible-worlds-engine_2026-07-03.html" style="color:#c7d3e6">The Plausible-Worlds Engine</a>. BPGS · 2026-07-03</p>
+ <div style="font-size:12px;color:#c7d3e6;margin:2px 0 12px;padding-top:8px;border-top:1px solid rgba(255,255,255,.18)">
+  <span style="color:#9fb4d6;text-transform:uppercase;letter-spacing:.05em;font-size:10.5px;margin-right:8px">Meta-Engine Suite</span>
+  <a href="meta-engine-design_2026-06-29.html" style="color:#c7d3e6">Foundation</a> ·
+  <b style="color:#fff">Essay I · Next-State</b> ·
+  <a href="plausible-worlds-engine_2026-07-03.html" style="color:#c7d3e6">Essay II · Plausible-Worlds</a>
+ </div>
  <nav id="nav"></nav>
 </header>
 <main>
@@ -83,7 +89,7 @@
  <h2 class="vh">The idea — invert the modeling problem</h2>
  <p class="vsub">Don't predict returns from data. Predict the world, then ask which model prices that world.</p>
 
- <div class="plain"><b>Plain English:</b> every quant model is secretly a bet that the world it was trained in will persist. When the world changes — a new monetary anchor, a new market structure, a new political settlement — the model doesn't fail loudly; it decays quietly while the backtest still looks fine. The proposal here is to stop pretending one model can span all worlds. Instead: maintain a live estimate of <i>which world we are in</i>, a probability-weighted forecast of <i>which worlds come next</i>, and a map from each world to <i>the model that should be trusted there</i>. The object being forecast is not the return — it is the model itself.</p>
+ <div class="plain"><b>Plain English:</b> every quant model is secretly a bet that the world it was trained in will persist. When the world changes — a new monetary anchor, a new market structure, a new political settlement — the model doesn't fail loudly; it decays quietly while the backtest still looks fine. The proposal here is to stop pretending one model can span all worlds. Instead: maintain a live estimate of <i>which world we are in</i>, a probability-weighted forecast of <i>which worlds come next</i>, and a map from each world to <i>the model that should be trusted there</i>. The object being forecast is not the return — it is the model itself.</div>
 
  <h2>1. The standard practice, and its quiet assumption</h2>
  <p>Standard quantitative practice fits a single mapping <i>f</i>(signals) → returns and validates it on held-out history. The stationarity assumption is rarely stated because it is embarrassing when stated: <i>the joint distribution that generated 1995 is assumed to still be generating 2026.</i> Everything we have found in our own research argues against it:</p>
@@ -352,6 +358,8 @@ function show(id){document.querySelectorAll('.view').forEach(s=>s.classList.togg
  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.v===id));window.scrollTo(0,0);}
 
 /* ---------- explorer ---------- */
+/* Canonical spec: meta-engine-design_2026-06-29.html, Manifest tab, "Canonical state grammar" table.
+   Update there first, then mirror any change here and in plausible-worlds-engine's WAXES. */
 const AXES=[
  {k:"anchor",name:"Monetary anchor",levels:["credible fiat","strained fiat","fiscal dominance"]},
  {k:"credit",name:"Credit cycle",levels:["early cycle","late cycle","bust"]},

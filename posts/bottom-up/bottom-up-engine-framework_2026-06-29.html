@@ -93,7 +93,8 @@ const TABS = [
  ["scorecard","8 · Scorecard"],
  ["examples","9 · Scored Examples"],
  ["using","10–11 · Using It"],
- ["forward","12–13 · Forward"]
+ ["forward","12–13 · Forward"],
+ ["commercial","Commercial Directions"]
 ];
 
 const V = {};
@@ -382,24 +383,7 @@ ${[
 <li><b>Populate the forward map with real names</b> and score them live.</li>
 </ul>`;
 
-const nav=document.getElementById("nav"), mainEl=document.getElementById("main");
-TABS.forEach(([id,label])=>{
- const b=document.createElement("button"); b.innerHTML=label; b.dataset.t=id;
- b.onclick=()=>show(id); nav.appendChild(b);
- const d=document.createElement("section"); d.className="view"; d.id="v-"+id; d.innerHTML=V[id]; mainEl.appendChild(d);
-});
-function show(id){
- document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+id));
- document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.t===id));
- window.scrollTo({top:0,behavior:"smooth"});
-}
-show("overview");
-const tip=document.getElementById("tip");
-document.addEventListener("mouseover",e=>{const g=e.target.closest(".gloss"); if(g&&G[g.dataset.g]){tip.innerHTML=G[g.dataset.g];tip.style.display="block";}});
-document.addEventListener("mousemove",e=>{if(tip.style.display==="block"){let x=e.clientX+14,y=e.clientY+16; if(x+310>innerWidth)x=e.clientX-310; tip.style.left=x+"px";tip.style.top=y+"px";}});
-document.addEventListener("mouseout",e=>{if(e.target.closest(".gloss"))tip.style.display="none";});
-</script>
-
+V.commercial = `
 <div class="apx" id="appendix-commercial">
 <style>
 /* scoped appendix styles — house palette (matches bottom-up-engine-framework doc) */
@@ -1278,5 +1262,24 @@ This appendix treats the framework above as raw material and asks: <strong>what 
 
 </div><!-- /apx-wrap -->
 </div><!-- /appendix-commercial -->
+`;
+
+const nav=document.getElementById("nav"), mainEl=document.getElementById("main");
+TABS.forEach(([id,label])=>{
+ const b=document.createElement("button"); b.innerHTML=label; b.dataset.t=id;
+ b.onclick=()=>show(id); nav.appendChild(b);
+ const d=document.createElement("section"); d.className="view"; d.id="v-"+id; d.innerHTML=V[id]; mainEl.appendChild(d);
+});
+function show(id){
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+id));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.t===id));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+show("overview");
+const tip=document.getElementById("tip");
+document.addEventListener("mouseover",e=>{const g=e.target.closest(".gloss"); if(g&&G[g.dataset.g]){tip.innerHTML=G[g.dataset.g];tip.style.display="block";}});
+document.addEventListener("mousemove",e=>{if(tip.style.display==="block"){let x=e.clientX+14,y=e.clientY+16; if(x+310>innerWidth)x=e.clientX-310; tip.style.left=x+"px";tip.style.top=y+"px";}});
+document.addEventListener("mouseout",e=>{if(e.target.closest(".gloss"))tip.style.display="none";});
+</script>
 
 </body></html>

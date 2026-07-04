@@ -178,6 +178,12 @@
 <header>
  <h1>Top-Down Market Structure Explorer<span style="color:var(--gray);font-weight:400;font-size:0.65em;display:block;margin-top:2px">Meta Engine Design</span></h1>
  <p>An interactive map of what we've built: architecture · 19-layer manifest (v2) · conditioning model · ~30 historical episodes · external frames. Hover or tap any <u>dotted term</u> for a plain-English definition. BPGS · 2026-06-25</p>
+ <div style="font-size:12px;color:#c7d3e6;margin:2px 0 12px;padding-top:8px;border-top:1px solid rgba(255,255,255,.18)">
+  <span style="color:#9fb4d6;text-transform:uppercase;letter-spacing:.05em;font-size:10.5px;margin-right:8px">Meta-Engine Suite</span>
+  <b style="color:#fff">Foundation</b> ·
+  <a href="next-state-engine_2026-07-03.html" style="color:#c7d3e6">Essay I · Next-State</a> ·
+  <a href="plausible-worlds-engine_2026-07-03.html" style="color:#c7d3e6">Essay II · Plausible-Worlds</a>
+ </div>
  <nav id="nav"></nav>
 </header>
 <main>
@@ -350,6 +356,7 @@
  <section id="v-history" class="view"></section>
  <section id="v-frames" class="view"></section>
  <section id="v-glossary" class="view"></section>
+<section id="v-apx" class="view"></section>
 </main>
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer"></div>
@@ -1261,7 +1268,7 @@ function tagGlossary(root){if(!GRX)buildGloss();
    node.parentNode.replaceChild(frag,node);});}
 
 /* ===================== RENDER ===================== */
-const VIEWS=[["intro","Introduction"],["arch","Architecture"],["strlib","Strategy library"],["manifest","Manifest (19 layers)"],["data","Data sources"],["cond","Conditioning model"],["history","History (~30 episodes)"],["frames","External frames"],["glossary","Glossary"]];
+const VIEWS=[["intro","Introduction"],["arch","Architecture"],["strlib","Strategy library"],["manifest","Manifest (19 layers)"],["data","Data sources"],["cond","Conditioning model"],["history","History (~30 episodes)"],["frames","External frames"],["glossary","Glossary"],["apx","Commercial Directions"]];
 const nav=document.getElementById('nav');
 VIEWS.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v[1];b.onclick=()=>show(v[0]);if(i===0)b.classList.add('active');b.dataset.v=v[0];nav.appendChild(b);});
 function show(id){document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
@@ -1360,6 +1367,18 @@ function renderManifest(){
  let html=`<h2 class="vh">Indicator manifest — v2</h2>
   <div class="plain"><b>Plain English:</b> this is the master checklist of roughly 120 things the engine watches every month &mdash; interest rates, inflation, how freely credit is flowing, how expensive stocks are, what stories the crowd is telling, how politically stressed the world is. They are grouped into 19 &lsquo;layers&rsquo; sorted into four tiers, from fast-moving (top) to slow-moving (bottom). Click any card to open the individual gauges inside it.</div>
   <p class="vsub">19 layers · 4 tiers · ~120 indicators. Filter, then click any layer to see its indicators and conditioning.</p>
+  <div class="callout" style="margin-bottom:18px"><span class="lab">Canonical state grammar</span> &mdash; the axis vocabulary used to name a &ldquo;world&rdquo; in both companion essays, <a href="next-state-engine_2026-07-03.html">Essay I &middot; The Next-State Engine</a> and <a href="plausible-worlds-engine_2026-07-03.html">Essay II &middot; The Plausible-Worlds Engine</a>. Each essay's interactive widget hard-codes its own copy of this table for standalone readability &mdash; this is the source of truth: if an axis or level changes, update it here first, then propagate to both essays' <code>AXES</code> / <code>WAXES</code> arrays.</div>
+  <table class="mtab" style="margin-bottom:22px">
+   <thead><tr><th style="min-width:150px">Axis</th><th>Levels (low &rarr; high)</th><th style="min-width:110px">Used by</th></tr></thead>
+   <tbody>
+    <tr><td><b>Monetary anchor</b></td><td>credible fiat &middot; strained fiat &middot; fiscal dominance</td><td>Essay I &amp; II</td></tr>
+    <tr><td><b>Credit cycle</b></td><td>early cycle &middot; late cycle &middot; bust</td><td>Essay I &amp; II</td></tr>
+    <tr><td><b>Inflation state</b></td><td>anchored &middot; sticky-elevated &middot; unanchored</td><td>Essay I &amp; II</td></tr>
+    <tr><td><b>Political cohesion</b></td><td>cohesive &middot; polarized &middot; impasse</td><td>Essay I &amp; II</td></tr>
+    <tr><td><b>Market structure</b></td><td>active-priced &middot; passive-dominant &middot; levered-fragile</td><td>Essay I &amp; II</td></tr>
+    <tr><td><b>External position</b></td><td>hegemon currency &middot; eroding privilege &middot; constrained</td><td>Essay II only &mdash; Essay I's transition kernel doesn't yet condition on it</td></tr>
+   </tbody>
+  </table>
   <div class="filters">${tierBtns}${sigBtns}${crBtns}</div>
   <div class="legend"><span class="badge new">new in v2</span><span class="badge up">upgraded</span>
    &nbsp;|&nbsp; ${Object.keys(CRISIS).map(pill).join(' ')}</div>`;
@@ -1701,32 +1720,7 @@ function drawer(t,p){openDrawer(`<h3>${t.replace(/<\/?b>/g,'')}</h3><p style="fo
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
 
 renderManifest();renderHistory();renderData();
-
-/* --- glossary tooltip engine --- */
-buildGloss();
-['v-arch','v-cond','v-frames','v-strlib'].forEach(id=>tagGlossary(document.getElementById(id)));
-(function(){
- const tip=document.createElement('div');tip.id='tip';document.body.appendChild(tip);
- let pinned=null;
- function showTip(el){tip.innerHTML='<b>'+el.textContent+'</b> &mdash; '+(el.dataset.tip||'');tip.style.display='block';
-   const r=el.getBoundingClientRect();let left=r.left,top=r.bottom+8;
-   const tw=tip.offsetWidth,th=tip.offsetHeight;
-   if(left+tw>window.innerWidth-12)left=window.innerWidth-12-tw;
-   if(top+th>window.innerHeight-8)top=r.top-th-8;
-   tip.style.left=Math.max(8,left)+'px';tip.style.top=Math.max(8,top)+'px';}
- function hideTip(){tip.style.display='none';}
- window._hideTip=function(){if(pinned){pinned.classList.remove('pin');pinned=null;}hideTip();};
- document.addEventListener('mouseover',e=>{const g=e.target.closest&&e.target.closest('.gloss');if(g&&!pinned)showTip(g);});
- document.addEventListener('mouseout',e=>{const g=e.target.closest&&e.target.closest('.gloss');if(g&&!pinned)hideTip();});
- document.addEventListener('click',e=>{const g=e.target.closest&&e.target.closest('.gloss');
-   if(g){e.stopPropagation();e.preventDefault();
-     if(pinned===g){pinned=null;g.classList.remove('pin');hideTip();}
-     else{if(pinned)pinned.classList.remove('pin');pinned=g;g.classList.add('pin');showTip(g);}return;}
-   if(pinned){pinned.classList.remove('pin');pinned=null;hideTip();}},true);
- window.addEventListener('scroll',()=>{if(!pinned)hideTip();else showTip(pinned);},true);
-})();
-</script>
-
+document.getElementById('v-apx').innerHTML=`
 <div class="apx" id="appendix-commercial">
 <style>
 /* scoped appendix styles — self-sufficient: defines its own palette variables on .apx
@@ -2564,5 +2558,31 @@ buildGloss();
 
 </div><!-- /apx-wrap -->
 </div><!-- /appendix-commercial -->
+`;
+
+/* --- glossary tooltip engine --- */
+buildGloss();
+['v-arch','v-cond','v-frames','v-strlib'].forEach(id=>tagGlossary(document.getElementById(id)));
+(function(){
+ const tip=document.createElement('div');tip.id='tip';document.body.appendChild(tip);
+ let pinned=null;
+ function showTip(el){tip.innerHTML='<b>'+el.textContent+'</b> &mdash; '+(el.dataset.tip||'');tip.style.display='block';
+   const r=el.getBoundingClientRect();let left=r.left,top=r.bottom+8;
+   const tw=tip.offsetWidth,th=tip.offsetHeight;
+   if(left+tw>window.innerWidth-12)left=window.innerWidth-12-tw;
+   if(top+th>window.innerHeight-8)top=r.top-th-8;
+   tip.style.left=Math.max(8,left)+'px';tip.style.top=Math.max(8,top)+'px';}
+ function hideTip(){tip.style.display='none';}
+ window._hideTip=function(){if(pinned){pinned.classList.remove('pin');pinned=null;}hideTip();};
+ document.addEventListener('mouseover',e=>{const g=e.target.closest&&e.target.closest('.gloss');if(g&&!pinned)showTip(g);});
+ document.addEventListener('mouseout',e=>{const g=e.target.closest&&e.target.closest('.gloss');if(g&&!pinned)hideTip();});
+ document.addEventListener('click',e=>{const g=e.target.closest&&e.target.closest('.gloss');
+   if(g){e.stopPropagation();e.preventDefault();
+     if(pinned===g){pinned=null;g.classList.remove('pin');hideTip();}
+     else{if(pinned)pinned.classList.remove('pin');pinned=g;g.classList.add('pin');showTip(g);}return;}
+   if(pinned){pinned.classList.remove('pin');pinned=null;hideTip();}},true);
+ window.addEventListener('scroll',()=>{if(!pinned)hideTip();else showTip(pinned);},true);
+})();
+</script>
 
 </body></html>
