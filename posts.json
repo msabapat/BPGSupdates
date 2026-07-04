@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-03",
+    "title": "Decline / Recovery / Normal Regime Dashboard",
+    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (Decline % from peak, Recovery % bounce from trough, Normal % to reclaim peak). Editable blend-weight table (MR/LV/MOM/SPY/T-Bill x 3 regimes), live 6x3 stats grid (Ann Ret/Vol/Sharpe/MaxDD), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart. Key finding: MR shows strong crisis alpha in Decline/Recovery; SPY craters hardest in Decline; T-Bill stays flat throughout.",
+    "file": "strategies/dd_regime_dashboard_2026-07-03.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-03",
     "title": "Sector Attribution Dashboard",
     "summary": "Per-sector performance contribution breakdown for LV, MOM, and MR \u2014 full-period ranking, IS/OOS comparison, and year-by-year heatmap. Key finding: Real Estate is a consistent drag across all three strategies. MOM shows growing Technology concentration in OOS (AI/mega-cap momentum trade); MR's Financial Services allocation shows classic mean-reversion crisis alpha in 2008-2009.",
     "file": "strategies/sector_dashboard_2026-07-03.html",
