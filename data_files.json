@@ -27,13 +27,13 @@
     "size_kb": 4191
   },
   {
-    "date": "2026-07-02",
+    "date": "2026-07-04",
     "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
-    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=$20M. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.1%, IR 0.711, MaxDD -76.9%. OOS 2022-2026: CAGR +13.0%, IR 0.374, MaxDD -37.6%. Point-in-time corrected: fundamentals now visible only strictly after the filing date (no same-day look-ahead — this mattered most here since MR rebalances daily and picks by FCF yield/oversold signal), and the revenue screen uses a cumulative as-of-date check instead of a whole-period future-peeking check.",
-    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-02.csv",
-    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-02.csv",
+    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.5%, IR 0.724, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Point-in-time corrected: net_debt_to_mcap/interest_coverage were previously gated by an unrelated revenue-growth outlier filter, causing the ASOF join to sometimes select a filing 1-2 quarters (100-300 days) stale even when a valid newer filing existed. Fixed by splitting these fields into an independent, unfiltered point-in-time join.",
+    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-04.csv",
+    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-04.csv",
     "owner": "Mani Sabapathi",
-    "size_kb": 15488
+    "size_kb": 15512
   },
   {
     "date": "2026-07-02",
