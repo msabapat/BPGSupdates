@@ -2,7 +2,7 @@
   {
     "date": "2026-07-03",
     "title": "Decline / Recovery / Normal Regime Dashboard",
-    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (Decline % from peak, Recovery % bounce from trough, Normal % to reclaim peak). Editable blend-weight table (MR/LV/MOM/SPY/T-Bill x 3 regimes), IS-only 6x5 stats grid (Normal/Decline/Recovery + All-IS/All-OOS reference columns), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart. Recovery-to-Decline re-entry now requires a genuine new lower low (not just erosion of the bounce), cutting whipsaw episodes roughly in half during choppy bear markets like 2001-03 and 2008-09.",
+    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (Decline % from peak, Recovery % bounce from trough, Normal % to reclaim peak). Editable blend-weight table (MR/LV/MOM/SPY/T-Bill x 3 regimes), IS-only 6x5 stats grid (Normal/Decline/Recovery + All-IS/All-OOS reference columns, true compounded CAGR), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart. Recovery-to-Decline re-entry requires a genuine new lower low, cutting whipsaw episodes roughly in half in choppy bear markets like 2001-03 and 2008-09.",
     "file": "strategies/dd_regime_dashboard_2026-07-03.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
