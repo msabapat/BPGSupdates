@@ -399,4 +399,884 @@ document.addEventListener("mouseover",e=>{const g=e.target.closest(".gloss"); if
 document.addEventListener("mousemove",e=>{if(tip.style.display==="block"){let x=e.clientX+14,y=e.clientY+16; if(x+310>innerWidth)x=e.clientX-310; tip.style.left=x+"px";tip.style.top=y+"px";}});
 document.addEventListener("mouseout",e=>{if(e.target.closest(".gloss"))tip.style.display="none";});
 </script>
+
+<div class="apx" id="appendix-commercial">
+<style>
+/* scoped appendix styles — house palette (matches bottom-up-engine-framework doc) */
+.apx{background:transparent;
+  --navy:#1F3864;--blue:#2E5FA3;--gray:#6b7280;--muted:#6b7280;--ink:#1d1d1f;
+  --line:#dce1e8;--soft:#f5f8fc;
+  --go:#187a36;--maybe:#92600a;--no:#b3261e;--accent:#2E5FA3;--accent2:#5b3db8;
+  color:var(--ink);font-family:-apple-system,Segoe UI,Arial,Helvetica,sans-serif;line-height:1.55;}
+.apx .apx-wrap{max-width:1140px;margin:0 auto;padding:8px 28px 80px}
+.apx .apx-rule{border:none;border-top:2px solid var(--line);margin:36px 0 28px}
+.apx h2{color:var(--navy);font-size:21px;margin:2px 0 2px;letter-spacing:-.2px;}
+.apx h3{color:var(--blue);font-size:16px;margin:28px 0 10px;}
+.apx p{font-size:14px;margin:0 0 11px;}
+.apx a{color:var(--blue);text-decoration:none;}
+.apx a:hover{text-decoration:underline;}
+.apx ul,.apx ol{font-size:14px;margin:0 0 12px;padding-left:22px;}
+.apx li{margin:0 0 6px;}
+.apx .intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0 22px;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:14px;}
+.apx .intro strong{color:var(--ink);}
+.apx .panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.apx .footnote{font-size:12.5px;color:var(--muted);margin-top:6px;}
+.apx .fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.apx .fig svg{width:100%;height:auto;display:block;}
+.apx .fig-cap{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic;}
+.apx .scroll{overflow-x:auto;}
+.apx table{border-collapse:collapse;width:100%;margin:12px 0 14px;font-size:12.5px;background:#fff;border-radius:8px;overflow:hidden;}
+.apx th{background:var(--blue);color:#fff;text-align:left;padding:7px 9px;font-weight:600;vertical-align:top;font-size:12px;}
+.apx td{border:1px solid var(--line);padding:6px 9px;vertical-align:top;}
+.apx tr:nth-child(even) td{background:var(--soft);}
+/* option cards */
+.apx details.mc{background:#fff;border:1px solid var(--line);border-radius:12px;margin:0 0 12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.apx details.mc[open]{border-color:#b9c6da;}
+.apx details.mc summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;user-select:none;}
+.apx details.mc summary::-webkit-details-marker{display:none;}
+.apx details.mc summary:hover{background:#f7f9fb;}
+.apx .mc-left{flex:1;min-width:0;}
+.apx .mc-name{font-size:16px;font-weight:700;letter-spacing:-.2px;display:block;line-height:1.3;color:var(--navy);}
+.apx .mc-meta{font-size:12.5px;color:var(--muted);margin-top:3px;display:block;}
+.apx .mc-tagline{font-size:13.5px;color:#4b5563;margin-top:5px;line-height:1.5;display:block;}
+.apx .mc-right{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-top:2px;}
+.apx .chevron{color:var(--muted);font-size:18px;transition:transform .2s;line-height:1;}
+.apx details.mc[open] .chevron{transform:rotate(180deg);}
+.apx .mc-body{padding:0 20px 20px;border-top:1px solid var(--line);}
+.apx .mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+@media(max-width:760px){.apx .mc-grid{grid-template-columns:1fr;}}
+.apx .mc-section{background:#f8f9fa;border:1px solid #e2e6ea;border-radius:8px;padding:13px 15px;}
+.apx .mc-section.wide{grid-column:1/-1;}
+.apx .mc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.apx .mc-label.what{color:#1558b0}
+.apx .mc-label.work{color:#187a36}
+.apx .mc-label.diff{color:#c0392b}
+.apx .mc-label.form{color:#5b3db8}
+.apx .mc-label.mkt{color:#1558b0}
+.apx .mc-label.comm{color:#92600a}
+.apx .mc-label.comp{color:#0e7490}
+.apx .mc-label.v0{color:#4d7c0f}
+.apx .mc-label.gtm{color:#9d174d}
+.apx .mc-section p,.apx .mc-section ul{font-size:13.5px;color:#374151;line-height:1.65;}
+.apx .mc-section ul{padding-left:16px;}
+.apx .mc-section ul li{margin:4px 0;}
+.apx .mc-section table{font-size:12px;margin:8px 0 4px;}
+.apx .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.2px;}
+.apx .b-low{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.apx .b-med{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.apx .b-high{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.apx .b-vhigh{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+</style>
+<div class="apx-wrap">
+<hr class="apx-rule">
+<h2>Appendix: Commercial Directions — What Could Be Built From the Bottom-Up Engine</h2>
+<p style="color:var(--muted);font-size:13px;margin:4px 0 20px">Ten candidate products/uses for the multibagger-identification framework above · difficulty, form, market, incumbents, and honest revenue ranges for a two-person shop · with competitive positioning, v0 specs, and go-to-market notes per option · all dollar figures are rough estimates with wide error bars · 2026-07-04</p>
+
+<div class="intro">
+This appendix treats the framework above as raw material and asks: <strong>what is the most commercially useful thing that can be built from it?</strong> The honest starting position is weaker than it was for the credit engine. The bottom-up engine is a <strong>designed framework, not a validated one</strong>: the base-rate test (tab 13, item 1) has not been run, there are no backtested moat scores, no live picks, and no track record of any kind. Its core production step — partner judgment applied one company at a time through the Firm Lens — <strong>does not scale</strong> the way the quant engine's SQL does; every deep-dive consumes hours from the scarcest input the shop has. What <em>is</em> on hand and genuinely rare: a survivorship-bias-free fundamentals panel (17,759 firms including delisted names back to 1990 via Sharadar), which happens to be exactly the substrate the matched-loser discipline (Guard A) requires and which most retail-facing incumbents do not have; a working backtest engine and regime machinery to quantify the framework's filterable half; and an existing publishing pipeline. The competitive landscape is crowded and famous — Morningstar's moat ratings feed an $11B ETF, Motley Fool has run the multibagger-subscription slot for 30 years, and the 2024–26 AI-research wave (AlphaSense, Fiscal.ai, Fintool — now Microsoft's) is compressing the price of generic company analysis toward zero. Each option below is scored against that reality, not against what a funded startup could do. The one asset nobody in the landscape sells is the matched-loser base-rate library — <em>"here are the companies that looked identical to the winner and died"</em> — and most of the appendix's value concentrates around building exactly that.
+</div>
+
+<h3>How the raw material becomes products</h3>
+<div class="fig">
+<svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- column headers -->
+  <text x="115" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1F3864">Raw material (on hand)</text>
+  <text x="368" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1F3864">Build layer</text>
+  <text x="615" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1F3864">Core assets</text>
+  <text x="868" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1F3864">Products (this appendix)</text>
+  <!-- col 1: raw material -->
+  <g font-size="11" fill="#374151">
+    <rect x="15" y="40" width="200" height="56" rx="8" fill="#f5f8fc" stroke="#dce1e8"/>
+    <text x="115" y="61" text-anchor="middle" font-weight="600" fill="#1F3864">BU framework (this doc)</text>
+    <text x="115" y="76" text-anchor="middle">moat taxonomy · Firm Lens ·</text>
+    <text x="115" y="89" text-anchor="middle">Scorecard · Guards A/B</text>
+    <rect x="15" y="106" width="200" height="56" rx="8" fill="#eafaef" stroke="#9bd6ab"/>
+    <text x="115" y="127" text-anchor="middle" font-weight="600" fill="#166534">Sharadar panel</text>
+    <text x="115" y="142" text-anchor="middle">17,759 firms · incl. delisted</text>
+    <text x="115" y="155" text-anchor="middle">1990–2026 · survivorship-free</text>
+    <rect x="15" y="172" width="200" height="56" rx="8" fill="#f5f8fc" stroke="#dce1e8"/>
+    <text x="115" y="193" text-anchor="middle" font-weight="600" fill="#1F3864">Quant stack</text>
+    <text x="115" y="208" text-anchor="middle">backtest engine · regime meta-</text>
+    <text x="115" y="221" text-anchor="middle">engine (DRN/HML) · Kelly sizing</text>
+    <rect x="15" y="238" width="200" height="56" rx="8" fill="#f5f8fc" stroke="#dce1e8"/>
+    <text x="115" y="259" text-anchor="middle" font-weight="600" fill="#1F3864">Publishing + LLM tooling</text>
+    <text x="115" y="274" text-anchor="middle">Railway stack · EDGAR full-text</text>
+    <text x="115" y="287" text-anchor="middle">(free) · LLM filing analysis</text>
+  </g>
+  <!-- col 2: build layer -->
+  <g font-size="11" fill="#374151">
+    <rect x="268" y="52" width="200" height="52" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="368" y="72" text-anchor="middle" font-weight="600" fill="#1e40af">Quantified Firm-Lens screen</text>
+    <text x="368" y="88" text-anchor="middle">ROIC dir · reinvest · dilution · runway proxy</text>
+    <rect x="268" y="114" width="200" height="52" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="368" y="134" text-anchor="middle" font-weight="600" fill="#1e40af">Guard-A base-rate test</text>
+    <text x="368" y="150" text-anchor="middle">winners × matched losers · feature lift</text>
+    <rect x="268" y="176" width="200" height="52" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="368" y="196" text-anchor="middle" font-weight="600" fill="#5b21b6">LLM moat scoring of filings</text>
+    <text x="368" y="212" text-anchor="middle">M1–M8 + direction, at scale (unproven)</text>
+    <rect x="268" y="238" width="200" height="52" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="368" y="258" text-anchor="middle" font-weight="600" fill="#1e40af">Manual deep-dives</text>
+    <text x="368" y="274" text-anchor="middle">Scorecard + Guard B · 15–25 names · hours each</text>
+  </g>
+  <!-- col 3: core assets -->
+  <g font-size="11" fill="#374151">
+    <rect x="515" y="64" width="200" height="60" rx="8" fill="#eafaef" stroke="#9bd6ab"/>
+    <text x="615" y="85" text-anchor="middle" font-weight="600" fill="#166534">Matched-loser base-rate library</text>
+    <text x="615" y="100" text-anchor="middle">point-in-time · survivorship-corrected</text>
+    <text x="615" y="113" text-anchor="middle">(the asset nobody sells)</text>
+    <rect x="515" y="144" width="200" height="60" rx="8" fill="#eafaef" stroke="#9bd6ab"/>
+    <text x="615" y="165" text-anchor="middle" font-weight="600" fill="#166534">Moat-score panel</text>
+    <text x="615" y="180" text-anchor="middle">universe-wide · historical · validated</text>
+    <text x="615" y="193" text-anchor="middle">against outcomes (or it is worthless)</text>
+    <rect x="515" y="224" width="200" height="60" rx="8" fill="#eafaef" stroke="#9bd6ab"/>
+    <text x="615" y="245" text-anchor="middle" font-weight="600" fill="#166534">Live concentrated sleeve</text>
+    <text x="615" y="260" text-anchor="middle">15–25 names · regime-sized ·</text>
+    <text x="615" y="273" text-anchor="middle">the track record everything needs</text>
+  </g>
+  <!-- col 4: products -->
+  <g font-size="11.5">
+    <rect x="760" y="40" width="220" height="32" rx="8" fill="#dcfce7" stroke="#bbf7d0"/>
+    <text x="870" y="61" text-anchor="middle" font-weight="600" fill="#166534">1 · Internal Shelf-4 sleeve</text>
+    <rect x="760" y="80" width="220" height="32" rx="8" fill="#dcfce7" stroke="#bbf7d0"/>
+    <text x="870" y="101" text-anchor="middle" font-weight="600" fill="#166534">2 · "Compounders &amp; Impostors" study</text>
+    <rect x="760" y="120" width="220" height="32" rx="8" fill="#f8f9fa" stroke="#dce1e8"/>
+    <text x="870" y="141" text-anchor="middle" fill="#374151">4 · Multibagger research subscription</text>
+    <rect x="760" y="160" width="220" height="32" rx="8" fill="#f8f9fa" stroke="#dce1e8"/>
+    <text x="870" y="181" text-anchor="middle" fill="#374151">3 · Base-rate / matched-loser database</text>
+    <rect x="760" y="200" width="220" height="32" rx="8" fill="#f8f9fa" stroke="#dce1e8"/>
+    <text x="870" y="221" text-anchor="middle" fill="#374151">9 · Book + course ("the method")</text>
+    <rect x="760" y="240" width="220" height="32" rx="8" fill="#f8f9fa" stroke="#dce1e8"/>
+    <text x="870" y="261" text-anchor="middle" fill="#374151">6 · AI moat-analyst copilot</text>
+    <rect x="760" y="280" width="220" height="32" rx="8" fill="#fff8ec" stroke="#e7c887"/>
+    <text x="870" y="301" text-anchor="middle" fill="#92600a">5 · Moat-score dataset / API</text>
+    <rect x="760" y="320" width="220" height="32" rx="8" fill="#fff8ec" stroke="#e7c887"/>
+    <text x="870" y="341" text-anchor="middle" fill="#92600a">8 · Index / ETF licensing</text>
+    <rect x="760" y="360" width="220" height="32" rx="8" fill="#fff8ec" stroke="#e7c887"/>
+    <text x="870" y="381" text-anchor="middle" fill="#92600a">7 · Compounder SMA / model portfolio</text>
+    <rect x="760" y="400" width="220" height="32" rx="8" fill="#f8f9fa" stroke="#dce1e8"/>
+    <text x="870" y="421" text-anchor="middle" fill="#374151">10 · Private-market / FO moat DD</text>
+  </g>
+  <!-- arrows: raw -> build -->
+  <g stroke="#2E5FA3" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M215 68  C 242 68  240 78  266 78"/>
+    <path d="M215 134 C 242 134 240 140 266 140"/>
+    <path d="M215 200 C 242 200 240 90  266 86"/>
+    <path d="M215 266 C 242 266 240 202 266 202"/>
+    <path d="M215 140 C 242 140 240 264 266 264"/>
+  </g>
+  <!-- arrows: build -> assets -->
+  <g stroke="#2E5FA3" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M468 140 C 494 140 490 94  513 94"/>
+    <path d="M468 202 C 494 202 490 174 513 174" stroke-dasharray="4 3"/>
+    <path d="M468 78  C 494 78  490 250 513 250"/>
+    <path d="M468 264 C 494 264 490 254 513 254"/>
+  </g>
+  <!-- arrows: assets -> products -->
+  <g stroke="#2E5FA3" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M715 92  C 742 92  738 96  758 96"/>
+    <path d="M715 94  C 742 94  738 136 758 136"/>
+    <path d="M715 96  C 742 96  738 176 758 176"/>
+    <path d="M715 98  C 742 98  738 216 758 216"/>
+    <path d="M715 172 C 742 172 738 256 758 256" stroke-dasharray="4 3"/>
+    <path d="M715 174 C 742 174 738 296 758 296" stroke-dasharray="4 3"/>
+    <path d="M715 176 C 742 176 738 336 758 336" stroke-dasharray="4 3"/>
+    <path d="M715 252 C 742 252 738 56  758 56"/>
+    <path d="M715 254 C 742 254 738 376 758 376" stroke-dasharray="4 3"/>
+    <path d="M715 256 C 742 256 738 416 758 416" stroke-dasharray="4 3"/>
+  </g>
+  <text x="500" y="458" text-anchor="middle" font-size="11" fill="#6b7280">Dashed arrows = path depends on validation that does not exist yet (LLM moat scores proven predictive; a live multi-year track record)</text>
+</svg>
+<div class="fig-cap">Three core assets, none of which exists today, sit between the framework and every sellable product. The first two (base-rate library, moat-score panel) are one research program viewed from two angles; the third (a live sleeve with a track record) is the only thing that converts qualitative claims into credibility. As with the credit engine, the marginal cost of a second product once the assets exist is mostly distribution — the actual scarce resource.</div>
+</div>
+
+<h3>The ten options</h3>
+
+<!-- OPTION 1 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">1 · Internal First: the BU Engine as Shelf-4 Sleeve of the Meta-Engine</span>
+    <span class="mc-meta">Internal use · hybrid quant-screen → moat deep-dive (meta-engine Shelf-4 Avenues 4/5) · zero new data</span>
+    <span class="mc-tagline">Run the framework on the shop's own capital: a quantified Firm-Lens pre-screen feeding 15–25 manual deep-dives, held as a concentrated sleeve inside the blend, sized by the regime meta-engine.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-low">LOW–MED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The tab-10/11 hand-off made real. Layer 1: a quant pre-screen over the Sharadar universe implementing the computable half of the Firm Lens — ROIC level <em>and direction</em>, reinvestment rate, revenue growth vs. dilution, gross-margin trajectory, insider ownership, share-count discipline — the filters, cheaply. Layer 2: manual Scorecard + Guard-B deep-dives on the ~50 survivors, converging to a 15–25 name concentrated sleeve. Layer 3: position sizing wired to the existing DRN/HML regime machinery and fractional-Kelly framework (exponentials capped in frenzies, compounders leaned into in golden ages — tab 11 as a formula). This is precisely the "hybrid quant-screen → discretionary deep-dive" avenue sketched for Shelf 4 of the meta-engine.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Weeks, not months, for layer 1: every input is already in <code>master_prices_computed</code> / Sharadar fundamentals, and the backtest engine runs the screen historically out of the box. The honest gaps: runway/TAM has no clean Sharadar field (proxy via revenue vs. sector aggregates, market-share-of-industry-revenue — imperfect, disclose it); NRR/CAC (the M2/M4 signatures) are not in structured data at all and stay manual. Layer 2 is the permanent cost: 15–25 deep-dives plus quarterly maintenance is real recurring partner time — budget 1–2 days per new name, half a day per quarterly review. Layer 3 reuses the blend/Kelly code as-is.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low–Medium</div>
+  <p>All infrastructure exists; the difficulty is discipline (the deep-dive cadence) and the ordinary research risk that the quantified filters add nothing over the existing LV/quality tilts.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>A live concentrated sleeve in the blended portfolio + the backtestable "Firm-Lens screen" as a new strategy in the library. No external surface.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>None by design — the customer is the shop's own book. The strategic value: this is the <strong>only option that manufactures a track record</strong>, and a track record is the gating asset for options 4, 7, 8, and 10. It is also the only honest way to discover whether the framework's discriminators (moat direction, runway, Builder, survival) actually discriminate when applied prospectively rather than to a hand-picked pantheon.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>No direct revenue; value arrives as return on live capital plus validation. Time to first dollar: immediate in expectation once live. Key risks: concentrated books can underperform for years even when right (the framework itself demands holding through 2–3 gut-wrenching drawdowns); a bad first two years poisons every downstream option that leans on the record. Mitigation: run the quant-screen layer as a paper/backtest strategy first and publish the methodology before the results.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Internally this competes only with the shop's own quant sleeves for capital. Externally it is the two-person version of what Akre (three-legged stool: compounding businesses, skilled managers as partners, reinvestment at above-average returns), Giverny, Woodlock House (Chris Mayer, ~10 names) and Fundsmith (~£20B-scale, "buy good companies, don't overpay, do nothing") run at scale — all of which prove the strategy class works and none of which is a competitor to an internal book. The differentiator vs. all of them is the regime-conditioned sizing layer: none of the quality-compounder shops sizes by macro regime; the framework's tab-11 hand-off is genuinely unusual.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>(a) SQL screen: domestic/no-ADR/no-SPAC prefilter → ROIC &gt; 15% and rising 3y, reinvestment rate &gt; 30%, revenue CAGR &gt; 10%, net dilution &lt; 2%/yr, FCF-positive or funded-for-3y; (b) backtest 2001–2021 IS with the standard IS/OOS discipline, benchmark vs. RSP/VW per the EW-inflation rule; (c) score the top 20 current survivors on the eight Scorecard columns; (d) paper sleeve, monthly marks, DRN/HML-conditioned weights. Ships in 2–4 weeks of part-time work.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Not applicable — but everything produced here (screen methodology, scored names, sleeve performance) is reusable marketing raw material for options 2 and 4. Write it up as if it will be published, from day one.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 2 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">2 · Annual "Compounders &amp; Impostors" Study — the Published Base-Rate Test</span>
+    <span class="mc-meta">Brand-builder · runs the roadmap's Guard-A base-rate test on Sharadar and publishes it free, annually</span>
+    <span class="mc-tagline">The Alta Fox / Mauboussin / Verdad play: a rigorous, free, annually-updated study of multibagger winners vs. matched losers with survivorship-corrected base rates — the marketing engine for everything else.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-low">LOW–MED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Tab 13's first roadmap item, packaged for the world: take every US-listed company since 1990, define multibaggers (e.g. ≥10× total return over rolling 10-year windows), and — the differentiator — for each winner construct the <em>matched cohort</em>: every company that shared the winner's visible profile at the decision date (size, growth, margins, sector, era) and measure how many won, how many died, and which features had lift. Published free as an annual HTML/PDF study: base-rate tables ("of the 214 companies that looked like NVDA-2013, 9 became 10-baggers and 61 delisted"), the Type-I gallery updated with fresh corpses, and a scored forward watchlist. The Sharadar delisted coverage makes this honest in a way most retail studies are not.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>A real research program but entirely inside existing competence: define multibagger events, build the matching engine (nearest-neighbor on point-in-time fundamentals — the same discipline as the strategy backtests), compute feature lift per Scorecard column analog, stress the matching choices. First edition: 1–3 months of part-time work. Annual updates: days. Writing and figures ride the existing Railway publishing stack. No licensing issue for published <em>aggregate statistics and analytics</em> derived from Sharadar (unlike raw-data redistribution — same check as the credit appendix's Option 1, get it in writing).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low–Medium</div>
+  <p>Methodologically it is a matched-cohort study, which the shop already knows how to do; the risk is a null or embarrassing result — e.g. the framework's favorite features show no lift. That risk is also the point.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Free annual study (HTML on the existing stack + PDF), heavy on figures and tables; a condensed thread/summary for distribution; the underlying pair database retained as Option 3's asset.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Not sold — attention is the product. The precedents are strong: <strong>Alta Fox's "Makings of a Multibagger"</strong> (2020, 645 slides, built largely by interns: 104 stocks &gt;350% TSR 2015–20, avg +922% vs. SPX +55%) became one of the most-shared buyside documents of its year and put a small Fort Worth fund on the map. <strong>Mauboussin's Base Rate Book</strong> (Credit Suisse, 2016 — base rates for sales-growth persistence, the direct intellectual comp for this study's denominator discipline) is still cited a decade later. <strong>Verdad</strong> built ~$1B AUM substantially on a free weekly research letter. <strong>Bessembinder</strong> (4% of stocks account for all net wealth creation since 1926, across 26,168 firms) proves the topic has academic legs.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>$0 direct, permanently — and that is fine. It is the credibility engine: the subscription (4), the database (3), the course/book (9), and the advisory (10) all convert its audience. Time to indirect dollars: 6–12 months via option 4. Key risks: it simply doesn't get read (distribution is earned, not automatic); or the base rates contradict the framework — in which case the framework gets revised, which is Guard A doing its job in public and, handled honestly, builds more trust than a confirming result.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <table>
+    <thead><tr><th>Incumbent artifact</th><th>What it is</th><th>Price</th><th>How this differs</th></tr></thead>
+    <tbody>
+      <tr><td>Alta Fox "Makings of a Multibagger" (2020)</td><td>645-slide study of 104 winners, 2015–20</td><td>Free</td><td>Winners-only — no matched losers, no survivorship correction, one 5-yr bull window; ours is winners <em>and</em> matched failures over 35 yrs incl. delistings</td></tr>
+      <tr><td>Mauboussin, "The Base Rate Book" (CS, 2016)</td><td>Base rates of sales growth, margins, CFROI persistence</td><td>Free</td><td>Base rates of <em>fundamentals</em>; ours are base rates of <em>multibagger outcomes conditional on visible profiles</em> — one level closer to the buy decision</td></tr>
+      <tr><td>Chris Mayer, "100 Baggers" (2015)</td><td>Book; 365 hundred-baggers 1962–2014</td><td>~$20</td><td>Inspirational winners-only survey; no denominators at all</td></tr>
+      <tr><td>Bessembinder (2018–20 papers)</td><td>Wealth-creation concentration, CRSP universe</td><td>Free</td><td>Academic, unconditional; ours conditions on decision-date features and names names</td></tr>
+    </tbody>
+  </table>
+  <p>The open slot is precise: <strong>nobody publishes the loser-matched, survivorship-corrected version</strong>, because retail publishers lack delisted-inclusive data and academics don't name matched pairs. The Sharadar panel is the moat here, modest as it is.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Edition 1 scope cut hard: US-only, 2001–2026, 10× /10-yr definition, ~8 matching features drawn from the Scorecard's computable analogs (ROIC direction, reinvestment, growth, dilution, size, sector, margin trajectory, survival/cash runway). Deliverables: base-rate master table, lift table per feature, 25 named winner-loser pair vignettes (the tab-9 tables, now data-grounded), Type-I gallery with denominators. ~40 pages equivalent.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Free, no email gate for the summary, email-gated full PDF (list-building). Distribution: the handful of aggregator channels that made Alta Fox's study travel (value-investing forums, The Acquirer's Multiple-style blogs, finance Twitter/X, MicroCapClub's orbit) plus direct sends to the ~50 writers who cover quality/compounder investing. Annual cadence makes it a franchise, not a one-off.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 3 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">3 · The Matched-Loser / Base-Rate Database as a Product</span>
+    <span class="mc-meta">Data product · Option 2's pair engine, productized · the survivorship-bias-corrected pattern library</span>
+    <span class="mc-tagline">"Show me every company that looked like this one at its stage — and what happened to all of them." A queryable point-in-time cohort database nobody currently sells.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Option 2's internal engine exposed as a product: give it a ticker (or a profile — size, growth, margins, sector, stage), and it returns the historical cohort of companies that matched that profile at their own decision dates, with full outcome distributions: % 10-baggers, % delisted/acquired/zombie, median forward return, and which subsequent features separated the tails. It is the "outside view" (Kahneman via Mauboussin) as an API call — the honest denominator for any growth story. Nobody sells this: Morningstar sells present-tense moat opinions, screeners sell present-tense fundamentals, and academics publish unconditional aggregates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Beyond Option 2: harden the matching methodology (choice of features, calipers, era-conditioning — the intellectual content); build a thin query API + web front end; write validation documentation showing cohort outcomes are stable out-of-sample and matching isn't overfit; a Sharadar derived-data licensing check (outcome statistics and cohort lists are analytics, not raw redistribution — but confirm in writing). Incremental months over Option 2, most of it methodology-hardening rather than plumbing.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>The build is modest once Option 2 exists; the difficulty is that this is a genuinely new product category, so every sale requires educating the buyer on why denominators matter — a slow, missionary sell.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Two skins: (a) a professional flat-file/API for funds ($5–25K/yr); (b) a retail web lookup ("base-rate check this ticker") at $10–30/mo, plausibly embedded inside Option 4's subscription rather than sold alone.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Fundamental long-only funds and family offices that already consume Mauboussin-style work; equity-research teams wanting an outside-view exhibit in every initiation memo; business-school cases; sophisticated retail. No direct incumbent. Adjacent players who could clone it fast if it works: Morningstar (data + analysts), Verdad (loves base rates, publishes free), academic-data shops. Honest sizing: the professional buyer pool that pays for a novel single-purpose dataset from an unknown shop is small — tens of firms at best in the first years.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $10–75K/yr by year 2–3 (2–5 professional clients plus a thin retail tail), with real odds of near-zero standalone and healthier odds as Option 4's differentiating feature. Time to first dollar: 12–18 months (after Option 2 v1 ships and travels). Key risks: category-creation burden; free-rider problem (the annual study gives away the headline findings — deliberate tension: the study sells the depth); clone risk once proven.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Closest analogues, none of which is the product: <strong>Morningstar</strong> moat ratings (871 US names, present-tense, analyst opinion, no outcome denominators); <strong>Verdad's</strong> research (base-rate-flavored, free, not queryable); <strong>Mauboussin/Counterpoint Global</strong> publications (free PDFs, unconditional); backtesting platforms (Portfolio123 etc. — user must build the study themselves); <strong>AlphaSense/Fiscal.ai</strong> (retrieval and summarization, not survivorship-corrected cohorts — their LLMs are trained on a survivor-heavy corpus, which is exactly the bias this product corrects). Positioning line: <em>"Every research tool tells you about the company. This one tells you about the reference class."</em></p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>A single-page web tool on the existing stack: ticker in → cohort card out (n matched at analogous stage, outcome histogram, top-lift features, 5 named winners / 5 named losers from the cohort). Powered by a nightly-refreshed static table, no realtime compute. Free for 25 famous tickers as the demo; everything else behind Option 4's paywall or a $15/mo standalone gate.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Launch inside Option 2's study ("the database behind this study is queryable"). Professional tier sold by direct outreach to the funds that cite Mauboussin/Alta Fox publicly — a literal list of a few hundred names — with the annual study as the credential. No paid acquisition; this either travels on novelty or it isn't good enough.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 4 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">4 · Multibagger Screening + Research Subscription</span>
+    <span class="mc-meta">Research subscription · the Motley Fool / MicroCapClub slot · differentiated by matched-loser base rates and kill criteria</span>
+    <span class="mc-tagline">A paid letter: Firm-Lens screen output, two deep-dive Scorecards a month, each pick shipped with its base-rate cohort, its matched loser, and explicit sell triggers.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The established multibagger-newsletter category, entered with a structurally different pitch. Every incumbent sells conviction; this sells <strong>conviction with denominators</strong>: each idea arrives as a full Scorecard (moats + direction + runway + Builder + signatures + survival), its Guard-A cohort ("companies that looked like this: X% 10-bagged, Y% died"), a named matched loser and the specific variable separating them, and pre-committed decay/sell triggers (tab 9D). Monthly cadence: screen refresh + 2 deep-dives + quarterly scorecard-change reviews. The regime meta-engine adds a sizing note no retail letter has ("the macro engine currently reads frenzy: halve position sizes, raise the Guard-A bar").</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Modeling: options 1–2's outputs reused wholesale. Product: Stripe + gated pages on the Railway stack (commodity); templated deep-dive format (LLM-assisted drafting from screen output and filings, human-scored and human-signed — Guard B applies to ourselves). The dominant cost is the same one the credit appendix flagged for its research option: a <strong>permanent editorial cadence tax</strong> on two people, ~2–4 days/month forever, and a mandatory 6–12 month free period publishing tracked picks before anyone should or will pay.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>Zero technical risk; the entire difficulty is audience-building in a brutally crowded category, plus the reputational exposure of public picks in a strategy class where being right can take five years.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Substack-style subscription: free tier (screen summaries, study excerpts) + paid tier $200–400/yr (full Scorecards, cohort cards, watchlist, archive). Possibly a later "pro" tier with the Option 3 database bundled at $1–2K/yr.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>The proven end of this appendix. <strong>Motley Fool Stock Advisor</strong>: $199/yr list ($99 intro), 500K+ subscribers per review-site estimates — tens of millions in revenue for the flagship alone; Epic bundle $299–499/yr. <strong>MicroCapClub</strong>: $797/yr (renewals $897). <strong>Seeking Alpha</strong>: Premium $299/yr, Alpha Picks $499/yr. <strong>Compounding Quality</strong> (one Belgian ex-asset-manager on Substack): 567K subscribers, #6 in Substack finance — built in ~3 years. Substack overall: 8.4M paid subscriptions platform-wide, 50+ authors above $1M ARR. The market exists at every scale; the question is only what slice an unknown shop earns.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $20–120K/yr by year 2–3 (100–400 paid at ~$250 avg), with the top decile of outcomes far higher if Option 2's study travels (the Compounding Quality path exists but is lottery-adjacent). Time to first dollar: 3–6 months, meaningful revenue after the credibility year. Key risks: churn if early picks stumble (concentrated multibagger picks <em>will</em> stumble — the base-rate framing is partly a churn defense, set expectations with denominators); cadence tax; publisher's-exemption hygiene (impersonal research, no personalized advice — same check as the credit appendix).</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <table>
+    <thead><tr><th>Incumbent</th><th>Model</th><th>Price</th><th>How this differs</th></tr></thead>
+    <tbody>
+      <tr><td>Motley Fool Stock Advisor / Epic</td><td>2 picks/mo, huge marketing machine, growth bias</td><td>$99–199 / $299–499 yr</td><td>They sell optimism at volume; no loser analysis, no denominators, no sell discipline. We ship the matched loser with every pick.</td></tr>
+      <tr><td>MicroCapClub (Ian Cassel)</td><td>Curated community + ideas, microcap focus</td><td>$797–897/yr</td><td>Community moat we can't copy; but idea quality is member-driven, not framework-driven — no base rates, no scorecards</td></tr>
+      <tr><td>Seeking Alpha Alpha Picks</td><td>Quant-scored picks (2/mo)</td><td>$499/yr</td><td>Pure quant factor scores, no moat/Builder judgment, no multibagger mandate</td></tr>
+      <tr><td>Compounding Quality</td><td>Quality-investing education + portfolio, Substack</td><td>freemium, low-$100s/yr paid</td><td>Closest stylistic comp and proof of the solo path; long on philosophy, short on data — no delisted-inclusive base rates, no matched losers</td></tr>
+      <tr><td>TIKR / Stock Unlock / Koyfin</td><td>Tools, not opinions</td><td>$130–950/yr</td><td>Complements, not competitors — our letter cites their category's data, adds judgment + denominators</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Free phase (months 0–9): monthly "Firm-Lens screen" post with the full list, one free deep-dive Scorecard per month with cohort card and matched loser, all picks tracked in a public, timestamped table (the credibility instrument). Paid switch (month ~9): second monthly deep-dive, full watchlist with scores and sell triggers, archive, regime-sizing note. Stripe + existing Railway gating; no app.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Option 2's study is the launch asset and the annual re-acquisition event. Between editions: pair-vignette excerpts (the NVDA/Intel, Netflix/Blockbuster tables above are inherently shareable), the free tier as top-of-funnel, cross-posts with adjacent quality-investing writers (an established reciprocal-recommendation economy on Substack). Explicitly do not compete on pick volume or marketing spend — compete on the one exhibit nobody else can print.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 5 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">5 · Systematic Moat-Score Dataset / API (the "Morningstar Moat Ratings at Scale" Play)</span>
+    <span class="mc-meta">Data product · LLM-assisted scoring of filings across the full Sharadar universe, historical and point-in-time · validation-gated</span>
+    <span class="mc-tagline">Machine-scored M1–M8 moat presence, stack count, and direction for ~5,000 active + thousands of delisted US firms, with history — licensable the way Morningstar licenses moat ratings, if and only if the scores prove predictive.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Morningstar's moat rating is ~871 US stocks, analyst-produced, present-tense, and famously licensable (it powers an $11B ETF). This option builds the systematic version: an LLM pipeline reads 10-K/10-Q text (business description, competition, risk factors, MD&amp;A) plus structured fundamentals, and emits the framework's schema — which of M1–M8 are present, stack count, and the decisive <strong>direction</strong> field — for the whole Sharadar universe, including delisted names, reconstructed historically (score 2005 filings with 2005-visible information). The historical, survivorship-free panel is the differentiator: it enables the one thing Morningstar's product can't do — <em>backtesting moat claims</em> — and doubles as Options 2/3's feature set.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>The heaviest build in this appendix. EDGAR full-text ingestion (free, real engineering); prompt/rubric design per moat type with the framework's "trap" columns as negative criteria; calibration against known cases; LLM cost for ~25 years × thousands of firms × multiple filings (manageable with batching/caching but nontrivial); then the gating item — <strong>a validation study proving the scores predict</strong> forward ROIC persistence and excess returns out-of-sample. One deep methodological trap deserves its own sentence: <strong>hindsight contamination</strong> — the LLM knows Nvidia won and Blockbuster died, so naive historical scoring is leakage by construction. Mitigations (mask identifiers, restrict inputs to filing text, test on post-training-cutoff filings, compare against name-visible runs to measure the contamination) are real work and must be documented like a backtest-leakage audit, because buyers will probe exactly this.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High</div>
+  <p>Not the plumbing — the proof. An unvalidated moat score is an opinion at scale; a validated one is an alpha claim, and alpha claims from unknown shops face maximal skepticism. The hindsight-contamination problem is unsolved in public literature.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Flat-file/API subscription: current scores + the historical point-in-time panel (the lead asset for quant buyers, exactly as the credit appendix concluded for the PD panel), plus per-score evidence excerpts (the filing passages that triggered each moat call) for auditability.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Quant equity funds shopping for differentiated quality/alt-data factors (alt-data budgets are real; single-dataset price points typically $10–100K/yr); fundamental funds wanting screening leverage; index/ETF sponsors (feeds Option 8); retail platforms as licensees. Incumbents on the "moat as data" shelf: <strong>Morningstar</strong> (analyst moat ratings — narrow coverage, no history-as-data, licensed at institutional prices and to its own index arm: Morningstar Indexes runs ~$90M/yr revenue); <strong>MSCI/S&amp;P quality indices</strong> (accounting-ratio quality, no moat semantics; QUAL $44.6B AUM at 0.15%, SPHQ 0.15% — proof the adjacent factor is a commodity); hobbyist-scale web scorers (Find My Moat) — no institutional product between "four analysts' opinions" and "ROE ratios," which is the wedge.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $0 until validated; $50–250K/yr by year 3 if validation is strong (a handful of quant buyers at $15–50K plus retail-platform licensing); tail outcome much larger via Option 8. Time to first dollar: 12–24 months. Key risks: validation fails or is ambiguous (scores describe rather than predict — the framework itself warns "has a moat" had near-zero lift; the product must score <em>direction</em>, the hard part); hindsight contamination undermines the historical panel's credibility; LLM-vendor cost/behavior drift; incumbents (Morningstar, MSCI, AlphaSense) can build the same pipeline with more data and brand the moment it looks valuable.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <table>
+    <thead><tr><th>Incumbent</th><th>Coverage</th><th>Method</th><th>Price</th><th>How this differs</th></tr></thead>
+    <tbody>
+      <tr><td>Morningstar Economic Moat</td><td>~871 US stocks (213 wide / 364 narrow / 292 none)</td><td>~100+ analysts, qualitative</td><td>retail $249/yr (Investor); institutional/index licensing custom</td><td>Full universe incl. microcaps + delisted; historical panel; systematic + reproducible; no analyst payroll</td></tr>
+      <tr><td>MSCI Quality / S&amp;P Quality (QUAL, SPHQ)</td><td>Large/mid universe</td><td>Accounting ratios (ROE, leverage, earnings variability)</td><td>index licensing, bps</td><td>Moat <em>semantics</em> (mechanism + direction), not ratio proxies</td></tr>
+      <tr><td>AlphaSense / Fiscal.ai / Quartr</td><td>Broad</td><td>Retrieval + summarization on demand</td><td>$10–20K/seat · $39/mo · custom</td><td>They answer questions; this is a standing, versioned, backtestable score panel</td></tr>
+      <tr><td>Find My Moat (web)</td><td>Curated names</td><td>Crowd/editorial moat claims</td><td>free/low</td><td>Hobbyist scale; no point-in-time discipline, no validation</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Score 500 names (top-500 liquid universe) for the 2016 and 2021 filing years plus current, masked-input protocol, and publish the validation note: moat-direction score vs. subsequent 5-yr ROIC persistence and excess return, with the contamination audit. That note — not the API — is v0; it decides whether the product exists. Ship as an appendix to Option 2's study.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Publish the validation openly (the credit appendix's lesson: open validation is the only credibility a two-person data vendor has). Then: direct to the quant-fund alt-data buyer lists, a Sharadar-adjacent channel (NASDAQ Data Link marketplace listing is a plausible distribution shortcut worth exploring — it already bills the shop's own data), and Option 8 conversations as the high-payoff exit for the asset.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 6 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">6 · AI Moat-Analyst Copilot ("Ticker in → Firm Lens out")</span>
+    <span class="mc-meta">SaaS · LLM + the framework as a rubric + Options 3/5 as grounding · crowded category, wedge is the opinionated output</span>
+    <span class="mc-tagline">Upload a ticker; get the full Firm-Lens analysis — Scorecard, Guard A/B checks, base-rate cohort, matched losers, sell triggers — in minutes, grounded in filings and the shop's databases.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">MED–HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>A structured-output copilot, not a chat box: the user names a company; the system runs the framework end-to-end — filters (runway proxy, industry, price gate), the eight Scorecard columns with filing citations, Guard B's promoter-vs-allocator facts (insider ownership, allocation record), the Option 3 cohort card, and a named matched loser with the separating variable. The defensible part is not the LLM; it is the <strong>rubric + the two proprietary databases</strong> it is grounded in. Generic copilots (ChatGPT, Fiscal.ai's chat) will happily discuss moats; none ships a disciplined verdict with survivorship-corrected denominators and pre-committed sell triggers.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>EDGAR retrieval + prompt/template engineering (shared with Option 5's pipeline — build once); hard hallucination control: every number injected from the database by construction, never generated (the credit-copilot lesson verbatim); the Guard-B fact sheet requires structured insider-ownership and capital-allocation data (Sharadar covers some; SEC Form 4 ingestion is the gap); front end + billing. Months of part-time work if Option 5's pipeline exists; not worth starting before it.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium–High</div>
+  <p>Known engineering; the problem is the category. 2024–26 produced a wave of AI equity-research products with more funding and distribution, and the incumbents are absorbing the feature set (Fintool acquired by Microsoft in 2026; Fiscal.ai shipping inside ChatGPT as an official app).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Web app: ticker → rendered Firm-Lens report (HTML/PDF), $20–50/mo prosumer; or an API returning the structured Scorecard JSON. Most realistically: <strong>the interactive skin of Option 4's subscription</strong> rather than a standalone company.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Prosumer/retail investors (the Fiscal.ai / TIKR audience: $130–600/yr price tolerance) and small fundamental funds priced out of AlphaSense ($10–20K/seat, enterprise deals $50–100K+). Incumbents and their pricing: <strong>AlphaSense</strong> ($10–20K/seat), <strong>Fiscal.ai</strong> (ex-FinChat; Pro $39/mo, $10M Series A, now an official ChatGPT app), <strong>Fintool</strong> (institutional AI analyst — acquired by Microsoft, v5 builds DCFs and memos autonomously), <strong>Daloopa</strong> (enterprise data extraction, custom pricing), <strong>Quartr</strong> (IR/transcript AI, Pro via sales). All of them summarize; none scores against an investment framework with base rates — that is the whole wedge, and it is a feature-sized wedge, not a company-sized one.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Standalone: $0–80K/yr, 12+ months to first dollar, high probability the generic layer is commoditized to zero by incumbents' bundles. As Option 4's paid-tier feature ("run the framework on any ticker yourself") it plausibly doubles that product's willingness-to-pay for a marginal build cost near zero. Key risks: LLM output quality on the judgment-heavy columns (Builder, counter-positioning) embarrasses the brand — mitigate by labeling machine sections vs. partner-reviewed sections; per-query cost vs. $30/mo pricing; incumbent bundling speed.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Positioning line: <em>"Fiscal.ai tells you what the company said. This tells you whether it's a compounder — and how often companies that looked like it weren't."</em> The honest corollary from the credit appendix's identical analysis (its Option 8) applies unchanged: a two-person copilot survives only where it is grounded in engines the incumbents don't have — here, the Guard-A cohort database and the validated moat-direction scores. Without Options 3/5 underneath it, this is a prompt wrapper and should not be built.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Not a product — a demo: 10 pre-rendered Firm-Lens reports (5 pantheon names, 5 current watchlist names) published as HTML, machine-generated and partner-annotated, with a "request a ticker" email form to measure demand before writing a line of app code.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Inside Option 4's funnel exclusively. If standalone demand shows up in the request logs, revisit; do not market it independently against nine-figure-funded incumbents.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 7 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">7 · Concentrated Compounder Model Portfolio / SMA for RIAs</span>
+    <span class="mc-meta">Asset management · Option 1's sleeve, externalized · gated on registration, track record, and platform gatekeepers</span>
+    <span class="mc-tagline">The 15–25 name compounder strategy distributed as a strategist model on RIA platforms (Envestnet, Schwab Model Market Center, Vestmark) or as an SMA — the largest honest market in this appendix, and the slowest to enter.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-vhigh">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Package Option 1's live sleeve as a third-party model: the shop publishes holdings/weights on rebalance dates to a model marketplace, advisors allocate client assets, the shop collects a strategist fee (typically 15–40bps on tracked assets). The pitch to advisors is a differentiated quality-growth sleeve: concentrated compounders with an explicit moat framework, base-rate discipline, published sell triggers, and regime-conditioned sizing — a story advisors can retell to clients, which is half of what model selection actually optimizes.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>The strategy work is Option 1. Everything else is institutional overhead a two-person shop currently lacks: investment-adviser registration (state RIA initially; SEC at $110M AUM), compliance/marketing-rule review of every performance claim (the SEC marketing rule is unforgiving on hypothetical/backtested performance shown to retail-facing advisors), a 3+ year auditable live track record (GIPS-aligned in practice for platform diligence), platform due-diligence questionnaires, and ongoing model-delivery operations. None of it is intellectually hard; all of it is slow, procedural, and permanent.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High (mostly time and gatekeepers, not build)</div>
+  <p>The artifact is nearly free once Option 1 runs; the sale is gated on years of track record plus platform gatekeepers who screen for AUM, tenure, and brand — the three things the shop doesn't have.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Model-delivery agreement with marketplaces (Envestnet RIA Marketplace, Schwab Model Market Center, Vestmark/Adhesion, SMArtX) at a strategist fee; or direct SMA management for early family-office/HNW clients at 50–100bps.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>The big one: third-party model portfolios passed <strong>$645B</strong> (Mar 2025, +62% since mid-2023); Vestmark alone exposes 1,400+ strategies to 65,000+ advisors. Demand for concentrated-quality sleeves is proven at scale: <strong>GMO QLTY</strong> gathered $3B in its first two years (brand-assisted), Fundsmith holds ~£20B-scale on exactly this strategy, Polen/Akre-style quality-growth SMAs are marketplace staples. The catch: those examples are the incumbents, and marketplaces have no shortage of quality-growth models — differentiation must survive a consultant's side-by-side.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>The widest range in this appendix. Realistic year-3-5: $0 (never placed) is the modal outcome; a single marketplace placement that gathers $20–100M pays $30–250K/yr at 15–25bps; direct SMA/family-office assets of $5–20M pay $25–150K/yr at 50–75bps and can start earlier. Time to first dollar: 36+ months via platforms; 12–24 months if one family-office relationship (Option 10's channel) seeds an SMA. Key risks: track-record dependence on a strategy class with long payoff cycles; key-person concentration (an SMA business makes the two-person constraint contractual); compliance cost precedes revenue by years.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Versus incumbent quality-growth strategists (Polen, Akre-lineage shops, GMO, Fundsmith-style offshore vehicles): no brand, no tenure — the only differentiators that survive diligence are (a) the published base-rate research program (Option 2 as institutional credibility, the Verdad playbook: free research → $1B AUM), (b) the regime-conditioned sizing overlay, which genuinely is unusual in this category, and (c) fee aggression. Versus DIY advisor stock-picking: the framework's documented process is the product. Honest read: this option is where the compounding value of everything else eventually cashes out, not an entry point.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Nothing external. v0 = Option 1 run live with clean daily marks from day one, a written investment-process document (the framework doc above is 80% of it), and a compliance-clean performance composite — the three artifacts every future diligence questionnaire requests. Decision point at month 24–30: if the record is presentable, file the RIA and start marketplace conversations.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Sequence: family-office SMA first (relationship-sourced via Option 10 / the study's professional readership), platforms second. Marketplace listing is a numbers game of diligence questionnaires — budget a year of pitching for one placement, and treat any bps-on-AUM projection as speculative until an allocation lands.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 8 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">8 · Index / ETF Licensing — the VanEck MOAT Path</span>
+    <span class="mc-meta">Data licensing · Option 5's validated scores + index methodology · cheap standing option, lottery placement</span>
+    <span class="mc-tagline">Build a rules-based "Durable Compounder Index" from the moat-score panel, engage a calculation agent, license to an ETF sponsor — the exact route by which Morningstar's moat ratings became an $11B fund.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MED build · lottery sale</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The flagship comp, studied: <strong>Morningstar Wide Moat Focus Index → VanEck MOAT ETF</strong>. Mechanics: Morningstar's analysts assign moat ratings; the index selects the ~40–50 wide-moat names trading at the largest discounts to Morningstar fair value; VanEck licenses the index and runs the ETF at a 0.47% expense ratio (0.45% management fee) on <strong>~$11.3B AUM</strong> — Morningstar's index arm books ~$90M/yr across its index business, with licensing fees industry-wide averaging roughly a third of ETF expense ratios. The BPGS version: a transparent, rules-based index — e.g. top-N by validated moat-direction score × reinvestment × runway proxy, valuation-gated (the Cisco gate as an index rule) — calculated by an agent (Solactive-class: flat fees from ~$10K/yr plus 2–3bps for complex indices), licensed to a sponsor hunting differentiated methodology.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Marginal over Option 5: a written index methodology (selection, weighting, buffers, capacity/turnover analysis), the point-in-time audit trail (the ART/ARQ discipline already standard in the shop's backtests — index buyers demand exactly this), cost-realistic backtests, and then the same business-development grind the credit appendix priced for its index option: pitching sponsors and calc agents, most of which goes nowhere. The one BPGS-specific extra: the hindsight-contamination audit from Option 5 becomes a diligence exhibit — an index resting on LLM-scored history will be probed on precisely that.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium build, Very High placement</div>
+  <p>The artifact is cheap once Option 5 validates; landing a sponsor is a low-probability, high-payoff event outside the shop's control, in a market where "quality" shelf space is already crowded (QUAL $44.6B at 0.15%, SPHQ at 0.15%, MOAT at 0.47%).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Index licensing agreement: flat annual fee and/or bps on tracking AUM; signal file delivered on rebalance dates. Alternatively license the raw moat scores to an existing index provider (a smaller, likelier deal).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Smaller ETF issuers seeking differentiated methodology (the long tail below iShares/Vanguard lives on story indices); custom-index calc agents (Solactive runs thousands); model-portfolio platforms as index-licensees. Proof of demand at the top: MOAT's 0.47% ER on $11.3B implies ~$53M/yr of fee revenue on the fund — a meaningful slice flowing to the index licensor. Proof of difficulty: the graveyard of sub-$50M story ETFs that closed. A new moat-flavored entrant competes against Morningstar's 20-year brand on the exact same word.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Bimodal around zero: $0 in most years; a landed deal plausibly $25–100K/yr flat-fee-equivalent at launch scale, with bps upside only if the fund gathers assets (the sponsor's problem, mostly luck and their distribution). Time to first dollar: 18–36 months. Key risks: sponsor dependence; the Morningstar brand collision ("moat" is practically their trademark in ETF-land — name the index around <em>compounders/durability</em>, not moats); reputational tail if a licensed index underperforms; Option 5 validation as a hard prerequisite.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <table>
+    <thead><tr><th>Comparable</th><th>Underlying signal</th><th>Fund / fee</th><th>Lesson for BPGS</th></tr></thead>
+    <tbody>
+      <tr><td>VanEck MOAT / Morningstar Wide Moat Focus</td><td>Analyst moat rating + fair-value discount</td><td>$11.3B · 0.47%</td><td>The template; also the incumbent that owns the narrative. Their weakness: 871-name coverage, no systematic history</td></tr>
+      <tr><td>iShares QUAL (MSCI Quality)</td><td>ROE / leverage / earnings stability ratios</td><td>$44.6B · 0.15%</td><td>Commodity quality is a fee race we cannot win; differentiation must be semantic (mechanism + direction), not ratio-based</td></tr>
+      <tr><td>GMO QLTY (active ETF)</td><td>Discretionary quality process</td><td>~$3B in 2 yrs</td><td>Brand can launch active quality fast; we have no brand — hence the licensing (not issuing) route</td></tr>
+      <tr><td>Solactive-calculated custom indices</td><td>any</td><td>flat ~$10K+ / 2–3bps</td><td>Calculation and governance are rentable; only the signal and the sponsor relationship are scarce</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>A 15-page index methodology document + 20-year cost-realistic backtest of the rules-based compounder index (built entirely from Option 5's validated panel), capacity analysis, and a two-page sponsor teaser. Keep it on the shelf, current, and take every meeting that Options 2/5 generate. Direct cost of maintaining the standing option: near zero.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Inbound-first: the annual study and validated score panel are the lures; sponsors and index-shop corp-dev teams read exactly that literature. Outbound: the second-tier issuer list and calc-agent BD teams (who actively broker methodologies to sponsors). Expect dozens of conversations per deal, and price the flat fee to cover real costs — bps upside is lottery tickets.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 9 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">9 · Book + Course: "The Multibagger Method" as Education Product</span>
+    <span class="mc-meta">Education · the framework doc is already 70% of a book outline · rides options 2/4's audience</span>
+    <span class="mc-tagline">The framework as teachable IP: a book in the 100 Baggers lineage (with denominators), plus a self-paced course — modest direct revenue, strong brand compounding, near-zero technical risk.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-low">LOW–MED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The framework above is inherently pedagogical — pantheon, taxonomy, scorecard, worked examples, traps. Two packagings: (a) a trade book — the honest sequel to <em>100 Baggers</em>: same aspiration, but every chapter carries the matched loser and the base rate (working title says it all: <em>Compounders &amp; Impostors</em>); (b) a self-paced course ($100–500) or small cohort seminar ($1–3K) teaching the Firm Lens end-to-end with the Option 3 tool as the lab. Education is also the least fragile packaging of qualitative judgment: nobody can churn from a book because a pick drew down.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Book: months of writing (the framework doc + Option 2's study are most of the source material), self-publish or small imprint — finance trade publishing advances for unknown authors are negligible, so the book is marketing that pays royalties. Course: recorded modules + worked case studies + the scorecard templates; commodity platform tooling (Teachable-class); one-time production weeks plus light refresh. Both are cadence-free (unlike Option 4) — produced once, sold indefinitely.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low–Medium</div>
+  <p>No technical risk; the only real risk is opportunity cost of partner writing hours and selling into the noisiest corner of finance media without an audience — which is why it sequences after Option 2's audience exists.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Trade book (paper/Kindle, $20–30); self-paced video course ($150–400); optional annual cohort ($1–3K, capped seats — the only variant that consumes recurring partner time, priced accordingly).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>The investing-education market runs from $10/mo MasterClass ambience through Investopedia Academy ($199/course) to Wharton/Wall Street Prep's Applied Value Investing certificate (<strong>$5,000</strong>, three cohorts a year — proof of the premium ceiling for credentialed programs). The compounder niche specifically supports books that sell for decades (<em>100 Baggers</em>' long tail made Mayer's fund launch trivially fundable) and courses attached to trusted newsletters. Sizing for an unknown shop: hundreds of course sales/yr in success, not thousands.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $10–60K/yr combined by year 2–3 (book royalties are rounding error; 100–300 course sales at ~$200; one 15-seat cohort at $2K adds $30K if run). Time to first dollar: 6–12 months. Key risks: none severe — this is the lowest-variance external option, it simply also has the lowest ceiling. Its real value is compounding the brand that raises every other option's conversion rate, and creating the citable artifact ("the book") that institutional conversations (7, 10) quietly reward.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Versus <em>100 Baggers</em> / Phelps reprints / the quality-investing bookshelf: those sell inspiration from winners; this sells calibration from winners <em>and</em> their dead twins — a genuinely unoccupied shelf position ("the first multibagger book with denominators"). Versus Wharton/WSP-style certificates: no brand, so price at the $150–400 self-paced tier and let the cohort version earn its premium through the newsletter's demonstrated results. Versus Compounding Quality-style education posts: depth and data, not volume.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>Not the book — a 6-email free mini-course ("the Firm Lens in six lessons") built from existing framework text, as Option 4's lead magnet. Conversion data from it decides whether the paid course gets produced; the book waits for Option 2's second edition so it can cite two years of published base rates.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Entirely downstream of Options 2/4's audience; zero paid acquisition. The book doubles as the cold-outreach artifact for Options 7/10 (a book in an allocator's hand outperforms a deck).</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 10 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">10 · Private-Market / Family-Office Moat Due-Diligence Advisory</span>
+    <span class="mc-meta">Services · the framework applied to private companies and concentrated family holdings · pull-only, relationship-gated</span>
+    <span class="mc-tagline">Bespoke Firm-Lens engagements: moat/Builder/runway diligence on private businesses, direct investments, or a family's concentrated public position — high dollars per unit of work, zero scalability.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">MED–HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The framework's core moves — moat identification against a named attacker, direction assessment, Builder scoring with Guard B's promoter-vs-allocator test, runway analysis, and the public-market matched-loser cohort as an outside view — applied as paid diligence for buyers who cannot get it elsewhere: family offices weighing a direct private investment or agonizing over a concentrated legacy position; search funds and small PE evaluating durability; founders/boards wanting an honest moat audit. The Option 3 database gives it a unique exhibit no strategy consultant has: <em>"here is the public-market reference class for this business profile, with outcomes."</em></p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Per engagement: 1–3 weeks of partner time (interviews, filings/dataroom work, cohort pulls, written report). Fixed infrastructure: a report template (the Firm-Lens structure again), an engagement letter reviewed once by counsel (advice on private transactions generally sits outside investment-adviser registration, but confirm scope), and references. No build beyond what Options 1–3 create. The binding constraint is stark: every engagement consumes the scarcest input directly, with zero leverage.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium–High (all in the selling)</div>
+  <p>The work is squarely within competence; winning it is relationship-driven, referral-gated, and slow for a shop with no advisory brand — classic first-client chicken-and-egg.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Fixed-fee written engagements: $10–50K per moat-diligence report depending on depth; optional retainer for ongoing watch (decay-signal monitoring on a family's concentrated position — a natural recurring wrapper around tab 9D).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Family offices (thousands in the US; direct investing has grown structurally), search funds (hundreds/yr), independent sponsors, and boards. Incumbents by segment: commercial due diligence from strategy consultancies (Bain/L.E.K.-class CDD runs low-to-mid six figures — pricing umbrella, not a competitor at this size); boutique market-research DD shops ($30–80K); Hamilton Helmer's own Strategy Capital advising on 7-Powers lines proves the "moat specialist" service category exists. Nobody serves the $10–50K tier with a codified moat framework <em>plus</em> a survivorship-corrected public-market reference-class database.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $20–100K/yr at 1–3 engagements — meaningful dollars for the hours, but structurally capped: it is selling the hours themselves. Time to first dollar: 6–18 months, lumpy and referral-dependent. Key risks: scope creep (diligence clients expand scope relentlessly — fixed-fee discipline); liability language around investment outcomes; and the strategic risk that consulting cannibalizes the research program's time without compounding anything. Best held as opportunistic: take pulled work at good rates; never build pipeline on spec.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning</div>
+  <p>Versus strategy-consultancy CDD: 5–10× cheaper, framework-explicit, and willing to conclude "no moat, don't buy" (consultancies structurally soften this). Versus generalist fractional-CFO/banker diligence: those check numbers; this scores durability. The database exhibit is the closer: a family office deciding whether to hold a $40M concentrated position in a founder-led niche software company can be shown the 80-company historical cohort of founder-led niche software at that stage — no other advisor at any price shows them that table.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label v0">v0 spec — what ships first</div>
+  <p>One sample engagement done free or at cost for a known contact (Mani's network is the obvious first channel), producing an anonymized sample report — the sales artifact. A one-page service sheet on the site. Nothing else until pulled.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label gtm">Go-to-market</div>
+  <p>Referral-only: the study's professional readership, MicroCapClub-adjacent networks, and family-office conference circuits if ever worth the time. Explicit rule from the credit appendix, unchanged: <strong>pull-only — build when a specific paying customer asks, never on spec.</strong></p>
+</div>
+</div>
+</div>
+</details>
+
+<h3>Summary comparison</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>#</th><th>Option</th><th>Difficulty</th><th>Form</th><th>Time to first $</th><th>Realistic annual revenue, yr 2–3 (rough)</th><th>Key blocker</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Internal Shelf-4 compounder sleeve</td><td><span class="badge b-low">LOW–MED</span></td><td>Live sleeve + strategy in library</td><td>Immediate (own book)</td><td>Indirect — returns + the track record all else needs</td><td>Recurring deep-dive hours; long payoff cycles</td></tr>
+<tr><td>2</td><td>Annual "Compounders &amp; Impostors" study</td><td><span class="badge b-low">LOW–MED</span></td><td>Free annual study (HTML/PDF)</td><td>None direct (funnel)</td><td>$0 direct — audience is the yield</td><td>Distribution is earned; null-result risk (also the point)</td></tr>
+<tr><td>4</td><td>Multibagger research subscription</td><td><span class="badge b-med">MEDIUM</span></td><td>Freemium letter, $200–400/yr</td><td>3–6 mo (credibility yr for scale)</td><td>$20–120K</td><td>Crowded category; permanent cadence tax; churn on drawdowns</td></tr>
+<tr><td>3</td><td>Matched-loser / base-rate database</td><td><span class="badge b-med">MEDIUM</span></td><td>API/flat-file + web lookup</td><td>12–18 mo</td><td>$10–75K (better as 4's feature)</td><td>Category creation; missionary sell; clone risk once proven</td></tr>
+<tr><td>9</td><td>Book + course</td><td><span class="badge b-low">LOW–MED</span></td><td>Book $20–30 · course $150–400 · cohort $1–3K</td><td>6–12 mo</td><td>$10–60K</td><td>Needs 2/4's audience first; partner writing hours</td></tr>
+<tr><td>6</td><td>AI moat-analyst copilot</td><td><span class="badge b-high">MED–HIGH</span></td><td>Web app / feature of 4</td><td>12+ mo</td><td>$0–80K standalone; better as a feature</td><td>Incumbent bundling (Microsoft-Fintool, Fiscal.ai-in-ChatGPT); needs 3/5 underneath</td></tr>
+<tr><td>5</td><td>Moat-score dataset / API</td><td><span class="badge b-high">HIGH</span></td><td>Point-in-time score panel + API</td><td>12–24 mo</td><td>$0 until validated; $50–250K if strong</td><td>Validation; hindsight contamination of LLM scoring</td></tr>
+<tr><td>8</td><td>Index / ETF licensing</td><td><span class="badge b-med">MED build · lottery sale</span></td><td>Index license (flat + bps)</td><td>18–36 mo</td><td>$0 most years; $25–100K+ if placed</td><td>Sponsor placement; Morningstar owns the "moat" brand; needs 5</td></tr>
+<tr><td>10</td><td>Private-market / FO moat DD advisory</td><td><span class="badge b-high">MED–HIGH</span></td><td>Fixed-fee reports $10–50K</td><td>6–18 mo (lumpy)</td><td>$20–100K, capped (sells hours)</td><td>Referral-gated; consumes the scarce input directly</td></tr>
+<tr><td>7</td><td>Compounder SMA / model portfolio</td><td><span class="badge b-vhigh">HIGH</span></td><td>Strategist model (15–40bps) / SMA (50–100bps)</td><td>36+ mo (12–24 if FO-seeded)</td><td>$0 modal; $30–250K per placement</td><td>3-yr track record; RIA registration; platform gatekeepers</td></tr>
+</tbody>
+</table>
+</div>
+<p class="footnote">Revenue figures are order-of-magnitude planning estimates for an unknown two-person shop with no distribution, brand, or track record in this category, benchmarked against the incumbent pricing found above — treat every range as ±1 notch, and single-deal options (7, 8, 10) as bimodal around zero.</p>
+
+<h3>Positioning: difficulty vs. commercial potential (bubble = addressable market)</h3>
+<div class="fig">
+<svg viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- plot frame -->
+  <rect x="80" y="40" width="640" height="400" fill="#fafbfc" stroke="#dce1e8"/>
+  <!-- quadrant dividers -->
+  <line x1="400" y1="40" x2="400" y2="440" stroke="#dce1e8" stroke-dasharray="5 4"/>
+  <line x1="80" y1="240" x2="720" y2="240" stroke="#dce1e8" stroke-dasharray="5 4"/>
+  <!-- quadrant labels -->
+  <text x="95" y="60" font-size="11" fill="#6b7280" font-style="italic">easy + attractive: do first</text>
+  <text x="580" y="60" font-size="11" fill="#6b7280" font-style="italic">hard + attractive: earn the right</text>
+  <text x="95" y="430" font-size="11" fill="#6b7280" font-style="italic">easy + modest: bundle / opportunistic</text>
+  <text x="586" y="430" font-size="11" fill="#6b7280" font-style="italic">hard + modest: avoid for now</text>
+  <!-- axes labels -->
+  <text x="400" y="482" text-anchor="middle" font-size="13" fill="#1d1d1f" font-weight="600">Build + go-to-market difficulty →</text>
+  <text x="34" y="240" text-anchor="middle" font-size="13" fill="#1d1d1f" font-weight="600" transform="rotate(-90 34 240)">Commercial potential (2-person shop) →</text>
+  <!-- x ticks -->
+  <g font-size="11" fill="#6b7280" text-anchor="middle">
+    <text x="170" y="458">Low</text><text x="340" y="458">Medium</text><text x="510" y="458">High</text><text x="660" y="458">Very High</text>
+  </g>
+  <!-- uncertainty whiskers for bimodal options -->
+  <g stroke="#9aa4b2" stroke-width="1.5">
+    <line x1="420" y1="80" x2="420" y2="330"/>   <!-- 8 index licensing -->
+    <line x1="610" y1="70" x2="610" y2="340"/>   <!-- 7 SMA -->
+    <line x1="500" y1="130" x2="500" y2="345"/>  <!-- 5 dataset -->
+  </g>
+  <!-- bubbles: r encodes addressable market -->
+  <g font-size="11" fill="#374151">
+    <!-- 1 internal -->
+    <circle cx="185" cy="215" r="12" fill="#187a36"/><text x="185" y="219" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="203" y="205">internal Shelf-4 sleeve</text>
+    <text x="203" y="220" font-size="10" fill="#6b7280">(indirect but near-certain; makes the track record)</text>
+    <!-- 2 study -->
+    <circle cx="215" cy="280" r="15" fill="#187a36"/><text x="215" y="284" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="236" y="285">annual study (funnel, $0 direct)</text>
+    <!-- 9 course -->
+    <circle cx="250" cy="345" r="14" fill="#2E5FA3"/><text x="250" y="349" text-anchor="middle" fill="#fff" font-weight="700">9</text>
+    <text x="270" y="350">book + course</text>
+    <!-- 3 base-rate db -->
+    <circle cx="345" cy="300" r="14" fill="#2E5FA3"/><text x="345" y="304" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="364" y="306">base-rate database</text>
+    <!-- 4 subscription -->
+    <circle cx="360" cy="175" r="21" fill="#2E5FA3"/><text x="360" y="180" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="386" y="170">research subscription</text>
+    <!-- 6 copilot -->
+    <circle cx="455" cy="310" r="19" fill="#2E5FA3"/><text x="455" y="315" text-anchor="middle" fill="#fff" font-weight="700">6</text>
+    <text x="479" y="316">copilot (standalone)</text>
+    <!-- 5 dataset -->
+    <circle cx="500" cy="185" r="16" fill="#5b3db8"/><text x="500" y="190" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="521" y="182">moat-score dataset (validation-gated)</text>
+    <!-- 8 index licensing -->
+    <circle cx="420" cy="120" r="23" fill="#5b3db8"/><text x="420" y="125" text-anchor="middle" fill="#fff" font-weight="700">8</text>
+    <text x="448" y="112">index / ETF licensing (bimodal)</text>
+    <!-- 10 advisory -->
+    <circle cx="530" cy="335" r="13" fill="#2E5FA3"/><text x="530" y="339" text-anchor="middle" fill="#fff" font-weight="700">10</text>
+    <text x="548" y="341">FO / private-market DD</text>
+    <!-- 7 SMA -->
+    <circle cx="610" cy="105" r="26" fill="#5b3db8"/><text x="610" y="110" text-anchor="middle" fill="#fff" font-weight="700">7</text>
+    <text x="562" y="66">compounder SMA / model portfolio</text>
+    <text x="562" y="80" font-size="10" fill="#6b7280">($645B model-portfolio market; 3-yr gate)</text>
+  </g>
+  <!-- legend -->
+  <g font-size="10.5" fill="#6b7280">
+    <line x1="95" y1="508" x2="95" y2="522" stroke="#9aa4b2" stroke-width="1.5"/>
+    <text x="102" y="519">whisker = bimodal outcome range (single-deal / validation-gated)</text>
+    <circle cx="420" cy="514" r="6" fill="#187a36"/><text x="430" y="518">recommended first moves</text>
+    <circle cx="590" cy="514" r="6" fill="#5b3db8"/><text x="600" y="518">high-variance payoff</text>
+    <circle cx="95" cy="540" r="4" fill="#c8d2e0"/><circle cx="109" cy="540" r="8" fill="#c8d2e0"/><text x="124" y="544">bubble size ∝ addressable market (judgment-scaled, not measured)</text>
+  </g>
+</svg>
+<div class="fig-cap">Positions are judgment calls, not measurements. Difficulty includes go-to-market — the SMA (7) and index (8) options are technically cheap once options 1/5 exist, but their sales are gated on track record and sponsor luck respectively, which is what pushes them right and puts whiskers on their potential. The two green options produce no direct revenue; they are plotted on expected value because they manufacture the two assets (track record, audience) that every bubble to their right is gated on.</div>
+</div>
+
+<h3>Recommended build sequence</h3>
+<div class="panel">
+<p><strong>Build Options 1 and 2 together, starting now; they are one research program with two outputs.</strong> The quantified Firm-Lens screen, the paper/live sleeve, and the Guard-A matched-loser study share the same code, the same Sharadar substrate, and the same point-in-time discipline the shop already practices daily. Option 1 manufactures the track record; Option 2 manufactures the audience — and Option 2 is also the framework's own scientific due diligence: if moat-direction, runway, survival, and Builder proxies show no lift over matched losers, better to learn that in month three than after a subscription launches. Everything else in this appendix is gated on one or both of those assets.</p>
+<p style="margin-top:10px"><strong>Then let the options compound instead of compete.</strong> Option 4 (the subscription) launches on the study's audience with a free-first year and the matched-loser exhibit as its differentiator; Option 3 (the database) ships as its premium feature before it ships as a standalone API; Option 9 (course/book) harvests the same audience with cadence-free products. Option 5 (the moat-score panel) is the one genuinely new bet worth real hours — run its v0 validation as an appendix to the second annual study, and let the result decide whether the dataset, the copilot (6), and the index play (8) exist at all. Options 7 and 10 are standing options: keep the sleeve's marks clean and the process document current (7), take pulled advisory work at good rates (10), build neither on spec. The through-line is the same one the credit appendix landed on: <em>use the framework on your own money first; sell the exhaust.</em></p>
+<p style="margin-top:10px"><strong>Cross-references to the top-down engines' commercial appendix.</strong> The BU engine's options are worth more jointly than alone: (a) validated moat/quality scores (Option 5) drop into the existing quant screens as a universe filter — the natural first test is whether a moat-direction tilt improves LV (whose edge concentrates in low-beta Q1 names) or protects MOM's tail the way the credit PD screen was slated to; (b) the compounder sleeve (Option 1) is the designed occupant of Shelf 4's hybrid avenue in the meta-engine, sized by the same DRN/HML/Kelly machinery as the blend — one more sleeve in an architecture built for exactly this; (c) the publishing/subscription infrastructure, Sharadar-derived-data licensing check, publisher's-exemption hygiene, and "open validation as credibility" playbook are shared line items — whichever engine's research product launches first amortizes them for the other; and (d) the two annual studies (credit watchlists, compounder base rates) are one editorial franchise to a largely overlapping audience. A two-person shop cannot run ten products; it can run one research program whose exhaust feeds four or five surfaces.</p>
+</div>
+
+<h3>Sources</h3>
+<p class="footnote" style="margin-bottom:8px">Products, pricing, and figures referenced above, as found July 2026. Pricing changes frequently; verify before relying on any figure.</p>
+<ul style="font-size:12.5px;color:#374151;line-height:1.7">
+<li>VanEck Morningstar Wide Moat ETF (MOAT) — ~$11.3B AUM, 0.47% expense ratio: <a href="https://www.vaneck.com/us/en/investments/morningstar-wide-moat-etf-moat/">vaneck.com</a>, <a href="https://etfdb.com/etf/MOAT/">etfdb.com</a></li>
+<li>Morningstar Economic Moat methodology and coverage (871 US stocks; 213 wide / 364 narrow / 292 none): <a href="https://www.morningstar.com/stocks/morningstar-economic-moat-rating-3">morningstar.com</a>, <a href="https://www.morningstar.com/business/insights/research/economic-moat-review">Economic Moat Review</a>, <a href="https://valuemarkers.com/blog/morningstar">valuemarkers.com</a></li>
+<li>Morningstar Indexes revenue (~$21.8–23.0M/quarter, 2025): <a href="https://newsroom.morningstar.com/news/news-details/2025/Morningstar-Inc--Reports-First-Quarter-2025-Financial-Results/default.aspx">Morningstar Q1 2025 results</a>; Morningstar Investor $249/yr: <a href="https://stockanalysis.com/article/morningstar-investor-review/">stockanalysis.com</a></li>
+<li>iShares QUAL — ~$44.6B AUM, 0.15% ER: <a href="https://www.ishares.com/us/literature/fact-sheet/qual-ishares-msci-usa-quality-factor-etf-fund-fact-sheet-en-us.pdf">iShares fact sheet</a>; Invesco SPHQ — 0.15% ER: <a href="https://money.usnews.com/funds/etfs/large-blend/invesco-s-p-500-quality-etf/sphq">usnews.com</a></li>
+<li>GMO U.S. Quality ETF (QLTY) — $1B in yr 1, ~$3B since: <a href="https://www.gmo.com/americas/press-releases/gmo-u.s.-quality-etf-qlty-surpasses-$1-billion-in-assets-under-management/">GMO press release</a>, <a href="https://www.etf.com/sections/etf-basics/qlty-it-time-invest-jeremy-grantham">etf.com</a></li>
+<li>Motley Fool Stock Advisor $199/yr ($99 intro), Epic $299–499/yr, 500K+ subscriber estimates: <a href="https://www.wallstreetzen.com/blog/motley-fool-review/">wallstreetzen.com</a>, <a href="https://www.creditdonkey.com/motley-fool-stock-advisor-review.html">creditdonkey.com</a></li>
+<li>MicroCapClub — $797/yr ($897 renewal): <a href="https://traderhq.com/microcapclub-review-platform-for-microcap-investors/">traderhq.com</a>, <a href="https://microcapclub.com/join-now/">microcapclub.com</a></li>
+<li>Seeking Alpha Premium $299/yr, Alpha Picks $499/yr: <a href="https://seekingalpha.com/subscriptions">seekingalpha.com</a></li>
+<li>Alta Fox Capital, "The Makings of a Multibagger" (2020; 104 stocks &gt;350% TSR 2015–20, avg +922% vs SPX +55%): <a href="https://www.altafoxcapital.com/research">altafoxcapital.com/research</a>, <a href="https://acquirersmultiple.com/2020/11/alta-fox-makings-of-a-multibagger/">acquirersmultiple.com</a></li>
+<li>Mauboussin, "The Base Rate Book" (Credit Suisse, 2016): <a href="https://plus.credit-suisse.com/rpc4/ravDocView?docid=thUWn3">credit-suisse.com</a>, <a href="https://www.morganstanley.com/im/publication/insights/articles/article_theimpactofintangiblesonbaserates.pdf">Counterpoint Global follow-up</a></li>
+<li>Bessembinder, "Do Stocks Outperform Treasury Bills?" (4% of firms = all net wealth creation, 26,168 firms since 1926): <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2900447">SSRN 2900447</a>, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3537838">SSRN 3537838</a></li>
+<li>Chris Mayer, "100 Baggers" (365 hundred-baggers, 1962–2014) / Woodlock House: <a href="https://mebfaber.com/2019/07/17/episode-165-chris-mayer-i-do-think-the-biggest-challengeis-keeping-it-holding-on-to-it/">Meb Faber ep. 165</a></li>
+<li>Akre "three-legged stool"; Fundsmith Owner's Manual ("buy good companies, don't overpay, do nothing"; 13F US-listed ~$12.8B): <a href="https://www.fundsmith.co.uk/media/ykbfhfvu/owners-manual.pdf">fundsmith.co.uk</a>, <a href="https://acquirersmultiple.com/2020/06/terry-smiths-owners-manual-14-filters-for-purchasing-a-great-investment/">14 filters summary</a></li>
+<li>Ensemble Capital / Intrinsic Investing moat essays: <a href="https://intrinsicinvesting.com/2018/04/11/evolution-moat-analysis/">intrinsicinvesting.com</a>; Verdad free weekly research (→ ~$1B AUM): <a href="https://verdadcap.com/weekly-research">verdadcap.com</a></li>
+<li>AlphaSense — ~$10–20K/seat, enterprise $50–100K+: <a href="https://sacra.com/c/alphasense/">sacra.com</a>, <a href="https://www.spendhound.com/marketplace/alphasense-pricing">spendhound.com</a></li>
+<li>Fiscal.ai (ex-FinChat) — Pro $39/mo annual, $10M Series A, ChatGPT app: <a href="https://fiscal.ai/pricing/">fiscal.ai/pricing</a>, <a href="https://tinyseed.com/latest/fiscal-ai-10m-future-ai-finance">tinyseed.com</a></li>
+<li>Fintool — acquired by Microsoft; v5 agentic analyst (Jan 2026): <a href="https://fintool.com/">fintool.com</a>, <a href="https://fintool.com/blog/introducing-fintool-v4">fintool.com/blog</a></li>
+<li>Daloopa — enterprise pricing, 6,000+ companies: <a href="https://daloopa.com/">daloopa.com</a>; Quartr — free app + Pro/API via sales: <a href="https://quartr.com/">quartr.com</a></li>
+<li>TIKR ~$299/yr, Koyfin $39–79/mo (+advisor tiers $209–299/mo), Stock Unlock ~$130/yr: <a href="https://quantroutine.com/tools/tikr/">quantroutine.com</a>, <a href="https://financialmodelshub.com/koyfin-review-2026-pricing-pros-cons-features-alternatives-20-off-voucher/">financialmodelshub.com</a>, <a href="https://stockunlock.com/pricing">stockunlock.com</a></li>
+<li>Substack economics — 8.4M paid subscriptions (Q1 2026), 50+ authors &gt;$1M ARR: <a href="https://backlinko.com/substack-users">backlinko.com</a>, <a href="https://www.readless.app/blog/best-paid-substack-newsletters-2026">readless.app</a>; Compounding Quality — 567K subs, #6 finance: <a href="https://www.compoundingquality.net/">compoundingquality.net</a>, <a href="https://growthinreverse.com/compounding-quality/">growthinreverse.com</a></li>
+<li>Third-party model portfolios — $645B (Mar 2025, +62% since mid-2023); Vestmark 1,400+ strategies / 65,000+ advisors: <a href="https://smartasset.com/advisor-resources/model-portfolios-advisors-tradeoffs">smartasset.com</a>, <a href="https://www.vestmark.com/press-releases/vaneck-launches-custom-model-portfolios-for-financial-advisors-powered-by-vestmark">vestmark.com</a></li>
+<li>Index-licensing economics — licensing ≈ ⅓ of ETF expense ratios; SPY pays S&amp;P DJ 3bps + $600K; Solactive flat from ~$10K + 2–3bps complex: <a href="https://corpgov.law.harvard.edu/2023/08/08/index-providers-whales-behind-the-scenes-of-etfs/">Harvard Law CorpGov</a>, <a href="https://www.etfstream.com/articles/etf-insight-is-self-indexing-the-solution-to-index-providers-high-fees">etfstream.com</a></li>
+<li>Wharton / Wall Street Prep Applied Value Investing certificate — $5,000, 8 weeks: <a href="https://wallstreetprep.wharton.upenn.edu/applied-value-investing-certificate/">wallstreetprep.wharton.upenn.edu</a>; Investopedia Academy ~$199/course: <a href="https://www.classcentral.com/subject/stock-market-investing">classcentral.com</a></li>
+<li>Find My Moat (web moat-score directory): <a href="https://www.findmymoat.com/">findmymoat.com</a></li>
+</ul>
+
+<p class="footnote" style="margin-top:18px">All market sizes, revenue ranges, and incumbent pricing in this appendix are rough estimates assembled for planning, not diligence; error bars of ±50–100% should be assumed throughout, single-deal options (7, 8, 10) are bimodal around zero, and — unlike the credit appendix — every externally-sold option here additionally carries the unresolved risk that the framework's discriminators show no lift when Guard A is finally run at scale. Run Guard A first.</p>
+
+</div><!-- /apx-wrap -->
+</div><!-- /appendix-commercial -->
+
 </body></html>

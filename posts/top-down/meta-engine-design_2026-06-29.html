@@ -1726,4 +1726,843 @@ buildGloss();
  window.addEventListener('scroll',()=>{if(!pinned)hideTip();else showTip(pinned);},true);
 })();
 </script>
+
+<div class="apx" id="appendix-commercial">
+<style>
+/* scoped appendix styles — self-sufficient: defines its own palette variables on .apx
+   so the block renders identically inside meta-engine-design, next-state-engine, or
+   plausible-worlds-engine (which share --navy/--blue/--line but not the card classes) */
+.apx{background:transparent;
+  --navy:#1F3864;--blue:#2E5FA3;--ink:#1d1d1f;--muted:#6b7280;--line:#dce1e8;
+  --accent:#2E5FA3;--accent2:#5b3db8;--go:#187a36;--maybe:#92600a;--no:#c0392b;}
+.apx .apx-wrap{max-width:1140px;margin:0 auto;padding:8px 28px 80px}
+.apx .apx-rule{border:none;border-top:2px solid var(--line);margin:36px 0 28px}
+.apx h2{font-size:20px;margin:0 0 6px;letter-spacing:-.2px;color:var(--navy)}
+.apx h3{font-size:15px;color:#374151;margin:28px 0 10px;font-weight:600}
+.apx p{color:#374151;line-height:1.7}
+.apx a{color:var(--blue);text-decoration:none}
+.apx a:hover{text-decoration:underline}
+.apx .intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 22px;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:14.5px}
+.apx .intro strong{color:var(--ink)}
+.apx .panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 22px;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:14.5px}
+.apx .footnote{font-size:12.5px;color:var(--muted);font-style:italic}
+/* option cards */
+.apx details.mc{background:#fff;border:1px solid var(--line);border-radius:12px;margin:0 0 12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.apx details.mc[open]{border-color:#bfcbda}
+.apx details.mc summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;user-select:none}
+.apx details.mc summary::-webkit-details-marker{display:none}
+.apx details.mc summary:hover{background:#f7f9fb}
+.apx .mc-left{flex:1;min-width:0}
+.apx .mc-name{font-size:16px;font-weight:700;letter-spacing:-.2px;display:block;line-height:1.3;color:var(--ink)}
+.apx .mc-meta{font-size:12.5px;color:var(--muted);margin-top:3px;display:block}
+.apx .mc-tagline{font-size:13.5px;color:#4b5563;margin-top:5px;line-height:1.5;display:block}
+.apx .mc-right{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-top:2px}
+.apx .chevron{color:var(--muted);font-size:18px;transition:transform .2s;line-height:1}
+.apx details.mc[open] .chevron{transform:rotate(180deg)}
+.apx .mc-body{padding:0 20px 20px;border-top:1px solid var(--line)}
+.apx .mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:760px){.apx .mc-grid{grid-template-columns:1fr}}
+.apx .mc-section{background:#f8f9fa;border:1px solid #e2e6ea;border-radius:8px;padding:13px 15px}
+.apx .mc-section.wide{grid-column:1/-1}
+.apx .mc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.apx .mc-label.what{color:#1558b0}
+.apx .mc-label.work{color:#187a36}
+.apx .mc-label.diff{color:#c0392b}
+.apx .mc-label.form{color:#5b3db8}
+.apx .mc-label.mkt{color:#1558b0}
+.apx .mc-label.comm{color:#92600a}
+.apx .mc-label.comp{color:#1F8A86}
+.apx .mc-label.v0{color:#334155}
+.apx .mc-label.gtm{color:#be185d}
+.apx .mc-section p,.apx .mc-section ul{font-size:13.5px;color:#374151;line-height:1.65}
+.apx .mc-section ul{padding-left:16px;margin:0}
+.apx .mc-section ul li{margin:4px 0}
+/* badges */
+.apx .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.2px}
+.apx .b-low{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.apx .b-med{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.apx .b-high{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.apx .b-vhigh{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+/* tables */
+.apx .scroll{overflow-x:auto}
+.apx table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.apx th,.apx td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;color:#374151}
+.apx th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;background:#f8f9fa}
+.apx tr:hover td{background:#f0f4f8}
+.apx table.ctab{font-size:12.5px}
+.apx table.ctab th,.apx table.ctab td{padding:6px 9px}
+/* figures */
+.apx .fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.apx .fig svg{width:100%;height:auto;display:block}
+.apx .fig-cap{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic}
+/* sources */
+.apx .srcl{font-size:13px;padding:7px 0;border-bottom:1px solid var(--line);color:#374151}
+.apx .srcl b{color:var(--navy)}
+</style>
+<div class="apx-wrap">
+<hr class="apx-rule">
+<h2>Appendix: Commercial Directions — What Could Be Built From the Three-Engine Stack</h2>
+<p style="color:var(--muted);font-size:13px;margin:4px 0 20px">Ten candidate products/uses for the meta-engine + next-state engine + plausible-worlds engine combination · difficulty, incumbents, v0 specs, go-to-market, and honest revenue ranges for a two-person shop · all dollar figures are rough estimates with wide error bars · BPGS · 2026-07-04</p>
+
+<div class="intro">This appendix treats the three engine documents as raw material and asks a different question: <strong>what is the most commercially useful thing that can be built from their combination?</strong> The inputs are fixed and known — a 19-layer causal indicator manifest with a 5-type crisis classifier, a ~30-episode historical library (1944–2024) with "knowable at the time" discriminators, a factored 6–8-axis world-state grammar shared by both essays, a sparse cross-country transition kernel trained on the free Jordà-Schularick-Taylor 17-country/150-year panel, a state→model map constrained to factor moments over stable loadings, a morphological world generator with consistency and causal-story rules, entropy-pooled probabilities anchored to market-implied and prediction-market data, a 4-channel pricing engine with cross-country elasticities, and — underneath all of it — a working US-equity backtest engine, the Sharadar fundamentals/prices database, and live regime infrastructure (DRN/HML, Kelly/vol-target blend). The blocking gaps are equally known: <strong>the engines themselves are designs, not builds</strong> (~14–15 weeks to a shared, validated v0), and commercially the shop has no distribution, no brand, and no external track record. Each option below is scored against that reality, not against what a 50-person startup could do. Incumbents matter enormously here and are named throughout — BlackRock Aladdin, MSCI/Barra, Bloomberg MARS, SimCorp Axioma, Ortec Finance and Conning on the institutional side; Hedgeye, 42 Macro, Variant Perception, Ned Davis, BCA on the research side; Orion/HiddenLevers and Nitrogen on the advisor side; GeoQuant, Eurasia Group and the prediction-market complex on the geopolitical side. The 2024–26 twist, documented per option: <strong>the incumbents have already started bolting LLM scenario generation onto their platforms</strong> (Aladdin's Q1-2026 LLM-driven scenario update; SimCorp's April-2026 AI stress testing), which closes some doors and — because their generators remain price-space and committee-anchored — leaves the world-state methodology door open.</div>
+
+<h3>How the raw material becomes products</h3>
+<div class="fig">
+<svg viewBox="0 0 1000 512" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- column headers -->
+  <text x="115" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Raw material (on hand / free)</text>
+  <text x="365" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Engine layer (the three docs)</text>
+  <text x="610" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Core sellable assets</text>
+  <text x="865" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Products (this appendix)</text>
+  <!-- col 1: raw material -->
+  <g font-size="10.5" fill="#374151">
+    <rect x="15" y="36"  width="200" height="50" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="56" text-anchor="middle" font-weight="600" fill="var(--ink)">19-layer indicator manifest</text>
+    <text x="115" y="72" text-anchor="middle">FRED · vix_daily · funding · curve · vol</text>
+    <rect x="15" y="96" width="200" height="50" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="115" y="116" text-anchor="middle" font-weight="600" fill="#166534">~30-episode library 1944–2024</text>
+    <text x="115" y="132" text-anchor="middle">"knowable at the time" discriminators</text>
+    <rect x="15" y="156" width="200" height="50" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="115" y="176" text-anchor="middle" font-weight="600" fill="#166534">JST 17-country/150-yr panel</text>
+    <text x="115" y="192" text-anchor="middle">+ Reinhart-Rogoff · both free</text>
+    <rect x="15" y="216" width="200" height="50" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="236" text-anchor="middle" font-weight="600" fill="var(--ink)">Regime + blend infrastructure</text>
+    <text x="115" y="252" text-anchor="middle">DRN/HML · Kelly/vol-target engine</text>
+    <rect x="15" y="276" width="200" height="50" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="115" y="296" text-anchor="middle" font-weight="600" fill="var(--ink)">Sharadar DB + backtest engine</text>
+    <text x="115" y="312" text-anchor="middle">stock loadings B · 46M price rows</text>
+    <rect x="15" y="336" width="200" height="50" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="115" y="356" text-anchor="middle" font-weight="600" fill="#92400e">External anchors (cheap)</text>
+    <text x="115" y="372" text-anchor="middle">EPU/GPR · Polymarket/Kalshi · options</text>
+  </g>
+  <!-- col 2: engine layer -->
+  <g font-size="10.5" fill="#374151">
+    <rect x="265" y="36"  width="200" height="44" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="365" y="54" text-anchor="middle" font-weight="600" fill="#1e40af">State grammar + labeled panel</text>
+    <text x="365" y="70" text-anchor="middle">6–8 axes · point-in-time labels</text>
+    <rect x="265" y="90" width="200" height="44" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="365" y="108" text-anchor="middle" font-weight="600" fill="#1e40af">Transition kernel P(S′|S)</text>
+    <text x="365" y="124" text-anchor="middle">sparse · cross-country pooled (I)</text>
+    <rect x="265" y="144" width="200" height="44" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="365" y="162" text-anchor="middle" font-weight="600" fill="#1e40af">Model map M(S)=B×Φ(S)</text>
+    <text x="365" y="178" text-anchor="middle">factor moments · null expert (I)</text>
+    <rect x="265" y="198" width="200" height="44" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="216" text-anchor="middle" font-weight="600" fill="#5b21b6">Archetype catalog + CCA rules</text>
+    <text x="365" y="232" text-anchor="middle">40–200 worlds · veto log (II)</text>
+    <rect x="265" y="252" width="200" height="44" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="270" text-anchor="middle" font-weight="600" fill="#5b21b6">Channel elasticity library</text>
+    <text x="365" y="286" text-anchor="middle">g · r+π · risk prem · liquidity (II)</text>
+    <rect x="265" y="306" width="200" height="44" rx="8" fill="#ede9fe" stroke="#ddd6fe"/>
+    <text x="365" y="324" text-anchor="middle" font-weight="600" fill="#5b21b6">Entropy pooling vs anchors</text>
+    <text x="365" y="340" text-anchor="middle">live posterior weights (II)</text>
+  </g>
+  <!-- col 3: assets -->
+  <g font-size="10.5" fill="#374151">
+    <rect x="510" y="52"  width="200" height="52" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="73" text-anchor="middle" font-weight="600" fill="#166534">Live state nowcast</text>
+    <text x="610" y="89" text-anchor="middle">posterior over S + transition probs</text>
+    <rect x="510" y="120" width="200" height="52" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="141" text-anchor="middle" font-weight="600" fill="#166534">Probability-weighted world catalog</text>
+    <text x="610" y="157" text-anchor="middle">incl. unprecedented-but-plausible</text>
+    <rect x="510" y="188" width="200" height="52" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="209" text-anchor="middle" font-weight="600" fill="#166534">State-conditional moments Φ(S)</text>
+    <text x="610" y="225" text-anchor="middle">+ sector/asset channel elasticities</text>
+    <rect x="510" y="256" width="200" height="52" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="610" y="277" text-anchor="middle" font-weight="600" fill="#166534">Robustness evaluator</text>
+    <text x="610" y="293" text-anchor="middle">ranks · kill-lists · convexity screens</text>
+    <rect x="510" y="324" width="200" height="52" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="610" y="345" text-anchor="middle" font-weight="600" fill="#92400e">Graded call log (Brier record)</text>
+    <text x="610" y="361" text-anchor="middle">pre-registered · the credibility asset</text>
+  </g>
+  <!-- col 4: products -->
+  <g font-size="11">
+    <rect x="760" y="36"  width="225" height="32" rx="8" fill="#dcfce7" stroke="#bbf7d0"/>
+    <text x="872" y="57" text-anchor="middle" font-weight="600" fill="#166534">7 · Internal overlay (build first)</text>
+    <rect x="760" y="76" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="97" text-anchor="middle" fill="#374151">6 · Research subscription</text>
+    <rect x="760" y="116" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="137" text-anchor="middle" fill="#374151">3 · Live state dashboard</text>
+    <rect x="760" y="156" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="177" text-anchor="middle" fill="#374151">9 · Wargaming-as-a-service</text>
+    <rect x="760" y="196" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="217" text-anchor="middle" fill="#374151">10 · Convexity / mispriced-worlds monitor</text>
+    <rect x="760" y="236" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="257" text-anchor="middle" fill="#374151">5 · State-beta taxonomy dataset</text>
+    <rect x="760" y="276" width="225" height="32" rx="8" fill="#f8f9fa" stroke="var(--line)"/>
+    <text x="872" y="297" text-anchor="middle" fill="#374151">8 · Labeled state-panel licensing</text>
+    <rect x="760" y="316" width="225" height="32" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="872" y="337" text-anchor="middle" fill="#92400e">1 · Institutional signal feed (track-record gated)</text>
+    <rect x="760" y="356" width="225" height="32" rx="8" fill="#fffbeb" stroke="#fde68a"/>
+    <text x="872" y="377" text-anchor="middle" fill="#92400e">4 · Advisor antifragility scorer (GTM gated)</text>
+    <rect x="760" y="396" width="225" height="32" rx="8" fill="#fef2f2" stroke="#fecaca"/>
+    <text x="872" y="417" text-anchor="middle" fill="#991b1b">2 · World-state simulator platform (blocked as platform)</text>
+  </g>
+  <!-- arrows col1->col2 -->
+  <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M215 61  C 240 61  240 58  263 58"/>
+    <path d="M215 121 C 240 121 240 112 263 112"/>
+    <path d="M215 181 C 240 181 240 166 263 166"/>
+    <path d="M215 241 C 240 241 240 220 263 220"/>
+    <path d="M215 301 C 240 301 240 274 263 274"/>
+    <path d="M215 361 C 240 361 240 328 263 328"/>
+  </g>
+  <!-- arrows col2->col3 -->
+  <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M465 58  C 490 58  485 78  508 78"/>
+    <path d="M465 112 C 490 112 485 80  508 80"/>
+    <path d="M465 220 C 490 220 485 146 508 146"/>
+    <path d="M465 166 C 490 166 485 214 508 214"/>
+    <path d="M465 274 C 490 274 485 216 508 216"/>
+    <path d="M465 328 C 490 328 485 282 508 282"/>
+  </g>
+  <!-- arrows col3->col4 -->
+  <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity="0.5">
+    <path d="M710 78  C 735 78  735 52  758 52"/>
+    <path d="M710 80  C 735 80  735 92  758 92"/>
+    <path d="M710 82  C 735 82  735 132 758 132"/>
+    <path d="M710 146 C 735 146 735 172 758 172"/>
+    <path d="M710 148 C 735 148 735 412 758 412" stroke-dasharray="4 3"/>
+    <path d="M710 214 C 735 214 735 252 758 252"/>
+    <path d="M710 282 C 735 282 735 212 758 212"/>
+    <path d="M710 284 C 735 284 735 372 758 372" stroke-dasharray="4 3"/>
+    <path d="M710 350 C 735 350 735 332 758 332" stroke-dasharray="4 3"/>
+    <path d="M710 348 C 735 348 735 292 758 292"/>
+  </g>
+  <text x="500" y="492" text-anchor="middle" font-size="11" fill="var(--muted)">Dashed arrows = path gated on something not yet earned (an audited live track record, an anchor design partner, institutional vendor-diligence weight)</text>
+</svg>
+<div class="fig-cap">Every product option is a different packaging of the same five core assets, and the assets themselves are ~14–15 weeks of build from parts that already exist. The recurring pattern from here down: the marginal cost of a second product is small; the scarce resources are distribution and a graded live record — which is why the internal overlay (7) and its public call log come first.</div>
+</div>
+
+<h3>The ten options</h3>
+
+<!-- OPTION 7 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">7 · Internal Overlay on BPGS's Own Strategies</span>
+    <span class="mc-meta">Internal use · zero new data cost · consumes Essay I steps 1–6 and Essay II steps 1–6 directly</span>
+    <span class="mc-tagline">Wire the state nowcast, transition kernel, Φ(S) moments, and world-catalog kill-lists into the existing MR/MOM/LV/SPY/T-bill blend, Kelly sizing, and LEAPS convexity shopping — no customer, no distribution, immediate feedback, and it manufactures the track record every other option needs.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-low">LOW</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Four concrete internal consumers, all named in the essays: (a) replace the blend's hand-set DRN/HML thresholds with Φ(S)-derived regime weights — the continuous-regime agenda's front half, finally supplied; (b) couple mixture entropy to the Kelly fraction f, so state uncertainty mechanically de-risks the book (today there is no such dial); (c) run the crisis-type probability vector as a MOM crash guard and MR pool-toxicity flag (the levered-fragile structure state); (d) run the world catalog's kill-list and convexity screen against the live blend — which five worlds cause 80% of tail loss, and which LEAPS are cheap against the entropy-pooled weights. A fifth output is the point: a monthly <strong>pre-registered, Brier-graded state call</strong>, logged before the month it applies to.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Exactly the two build plans already written: Essay I's six steps (~9 weeks: grammar spec, labeled panel, kernel v0, Φ(S), mixture + null expert, shadow mode) and Essay II's six steps (~10 weeks, sharing the grammar and panel; ~14–15 weeks for the pair). All inputs are free (JST, Reinhart-Rogoff, FRED, EPU/GPR, prediction-market reads) or on hand (manifest, episode library, blend engine, loadings). The only genuinely new engineering is plumbing: EPU/GPR ingestion, ALFRED vintages, market-implied anchor extraction, and the entropy→f coupling into the existing vol-target machinery.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low (relative to everything below)</div>
+  <p>The designs are complete, the validation protocol is pre-specified (leave-one-episode-out, leave-one-country-out, backcasts at 1970/2006/2019/2021), and the customer is the shop itself — no sales, no support, no vendor diligence. The honest risk is intellectual, not commercial: the essays' own pitfalls tabs (P1–P8 in each) describe how this fails.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>A stress/regime tab in the existing dashboard; monthly state-call memo (pre-registered, graded); modified blend weights and Kelly scalar in production; a standing LEAPS shopping list. Plus the public artifact: a graded call log published on the Railway blog.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>None — own capital. But the option's expected value routes through every other option: an audited two-year log of calibrated state calls and a demonstrable drawdown reduction on the live blend is the <em>only</em> credibility instrument available to a two-person shop with no brand. Bridgewater's debt-cycle template earned its franchise by navigating 2008 in advance; a miniature, public, graded version of that is what this manufactures.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>No direct revenue; indirect payoff is near-certain and immediate (better regime weights, a real uncertainty dial, cheaper tail protection) plus the de-risking of options 6, 3, 1, 9. Failure mode: the engines add nothing over the state-agnostic blend — which the null expert measures explicitly, and which is itself decision-relevant information obtained cheaply. Time to first internal value: ~1 quarter. Key risks: narrative-machine self-deception (remedied by pre-registration with teeth) and the ~15-week opportunity cost against other research agendas.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec — what actually ships first</div>
+  <p>Week 1: grammar spec frozen and pre-registered (6 axes × 3 levels, manifest-layer mapping). Weeks 2–5: labeled state panel (30 episodes + JST country-years, point-in-time sources, "ambiguous" allowed). Weeks 6–8: kernel v0 + Φ(S) fit to bucket means; first integration test = does Φ(S) beat the locked HML/DRN weights out-of-sample on the blend? Weeks 9–12: consistency matrix (~135 judgments), ~40 archetypes, channel elasticities v0, entropy pooling in numpy. Weeks 13–15: backcast gate (1971/2008/2020/2022), then shadow mode — two quarters of graded monthly calls before any capital moves. Deliverable: one dashboard tab, one memo template, one public log.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Not applicable as sales — but treat the public call log as the GTM engine for the whole appendix: every graded call is content for option 6, every kill-list is a demo for option 9, and two clean quarters is the admission ticket to option 1 conversations. The discipline (publish before outcomes, grade in public, show the misses) is itself the differentiator, because no incumbent research shop does it.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 6 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">6 · Research Subscription — "The State of the World" Letter + Portal</span>
+    <span class="mc-meta">Content product · builds on the episode library + live state calls · fastest external dollar after wargaming</span>
+    <span class="mc-tagline">A monthly (later biweekly) publication: the live 6-axis state estimate with probabilities, the transition watchlist with cross-country base rates, the playbook tilts, one episode-library deep dive — all pre-registered and publicly Brier-graded.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The subscription-letter packaging of the internal overlay's monthly memo. Core sections: (i) where we are — posterior over the six axes, with the discriminators that moved; (ii) what comes next — probability-weighted transitions with the historical analogs behind each base rate ("anchor strained→dominated has run 12 times in 17 countries; here is what preceded it"); (iii) what it means — model tilts and asset playbooks per transition, in the crisis-type framework; (iv) one archetype or episode essay (the 30-episode library alone is two-plus years of publishable material); (v) the running scorecard — every past call, graded. The scorecard is the product: macro research that publishes its own Brier scores does not currently exist at any price.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Marginal over option 7: editorial packaging, a paywall (Substack or the existing Railway stack + Stripe), and the permanent cadence tax — the letter must ship every month forever, including months when nothing happened and months when the calls were wrong. Production cost per issue is genuinely low because the engine generates the tables and charts; the writing is the partners' hours. Add a portal page (the Explorer/World-Builder toys, wired live) for retention.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>Technically easy; commercially a grind. The macro-letter market is crowded, personality-driven, and the shop has no public persona. The graded-scorecard angle is real differentiation but needs 6–12 months of public calls before it can be pointed at.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Email letter + web portal (live state dashboard lite, archive, scorecard). Tiers: free (state summary + scorecard), paid ~$300–800/yr (full letter + transitions + playbooks), institutional ~$3–10K/yr (data downloads, calls, early access — effectively option 1's on-ramp).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Prosumer: the finance-Substack economy — the top 100 investing Substacks generate roughly $30M/yr combined, ~11 of the top 20 finance letters are macro, and single-author macro letters demonstrably reach $175–260K/yr (Barry Knapp at $999/yr, Alex Morris at $99/mo). Institutional: Hedgeye Macro Pro lists at $4,999/yr; Variant Perception runs ~$5–7K+/seat (to $10K+ with data API); Ned Davis is typically tens of thousands up to ~$500K for large firms; BCA and 42 Macro sit in the same institutional band. Those prices prove willingness to pay for regime frameworks; every one of those incumbents has distribution the shop lacks.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $10–100K/yr by end of year 2 (a few dozen to a few hundred paid at $300–800, plus 0–5 institutional seats); the realistic ceiling without a media persona or a famous call is low hundreds of K. First dollar: 3–6 months after the public log starts. Key risks: cadence tax (the letter owns one partner's week every month), the market pays for confidence while the product's honesty is calibrated uncertainty, and one loud wrong call early can cap growth — mitigated only by the pre-registration discipline being visible from day one.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning — named incumbents</div>
+  <div class="scroll"><table class="ctab">
+  <thead><tr><th>Incumbent</th><th>What they sell</th><th>Price (found)</th><th>Where the three-engine letter differs</th></tr></thead>
+  <tbody>
+  <tr><td>Hedgeye (GIP quads)</td><td>Growth×inflation rate-of-change quads for 50 economies, risk ranges, daily media machine</td><td>Macro Pro $4,999/yr; retail tiers below</td><td>Two hand axes vs six causal axes; no political/anchor/structure states; no transition base rates; no graded scorecard</td></tr>
+  <tr><td>42 Macro</td><td>Systematic regime signals (KISS, Dr. Mo, VAMS), daily notes</td><td>Tiered, low-four-figures/yr (undisclosed)</td><td>Signals are statistical regime filters; no named world-state grammar, no cross-country kernel</td></tr>
+  <tr><td>Variant Perception</td><td>Leading indicators + central-bank regime models, charts, data API</td><td>~$5–7K+/seat; $10K+ with API</td><td>Closest in spirit (regime models); VP's regimes are per-central-bank easing/hiking, not multi-axis world-states</td></tr>
+  <tr><td>Ned Davis / BCA</td><td>Full-service institutional strategy research</td><td>NDR tens of K → $500K/org</td><td>Breadth and history vs a single sharp framework; neither pre-registers or grades calls</td></tr>
+  <tr><td>Damped Spring / solo Substack macro</td><td>Flows/positioning synthesis, personality-led</td><td>DS Read/Alpha/Institutional tiers (undisclosed)</td><td>Persona-driven; the BPGS letter's differentiator must be the scorecard, since it has no persona</td></tr>
+  </tbody></table></div>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>Month 1: publish the state grammar and current estimate free, with the pre-registration pledge. Months 1–6: free monthly letter, every call logged and graded on a public page; portal = the two existing interactive toys wired to the live estimate. Month 6+: paywall the transitions/playbook sections, keep the scorecard free forever (it is the ad). Institutional tier only after two graded quarters.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Distribution channels that exist today: the Railway blog, cross-posting to a Substack for discovery, X threads on episode deep-dives (the 30-episode library is unusually thread-able), and podcast guesting on the strength of the framework's novelty (the "cat model for macro" pitch is bookable). Do not buy ads; the CAC never closes at $300–800/yr for an unknown shop.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 3 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">3 · Live State Evaluator — the "Where Are We" Dashboard</span>
+    <span class="mc-meta">SaaS-lite · the Observer + state estimator + kernel, productized · natural bundle with option 6</span>
+    <span class="mc-tagline">A continuously updated nowcast of the world-state: per-axis posteriors with the discriminators driving them, probability-weighted next states 3–12 months out, the 5-type crisis vector, and the entropy dial — the piece incumbents don't ship: named transitions with base rates.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The Next-State Engine's front half as a standing product. Screens: (i) the state board — six axes, current level, continuous intensity g, confidence, and which manifest layers moved this week; (ii) the transition board — top-5 probability-weighted next states with the cross-country base rate, the active cross-terms ("political impasse is multiplying anchor-risk 2.5×"), and the model tilt each implies; (iii) the crisis-type vector (Liq/Val/Cred/Cur/Infl + none); (iv) the uncertainty dial — mixture entropy, and what Kelly fraction it licenses; (v) history — the state estimate replayed back through the labeled panel, so a user can see what the dashboard would have read in June 2007.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 7's estimator and kernel, plus: productionizing the daily/weekly refresh (FRED, EPU/GPR, prediction-market and options-implied anchors), authentication/billing, uptime obligations, and the History replay view (cheap — the labeled panel already is that). The hard content work is honesty engineering: surfacing revisions, ambiguity flags, and the exact DRN/HML-style state definitions in-product rather than burying them.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>Build is modest on top of 7. The commercial difficulty is that adjacent free products are excellent: BlackRock's Geopolitical Risk Dashboard, Fidelity's business-cycle updates, GDPNow, endless recession-probability trackers. The paid wedge must be the transition probabilities and the audit trail, which none of the free products attempt.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Web dashboard (free tier: state board only; paid: transitions, crisis vector, entropy, history, alerts) + a small JSON API for the institutional tier. Realistically shipped as the portal layer of option 6 rather than a separate SKU.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Same buyers as option 6 plus tool-oriented prosumers and small-fund analysts. Free incumbents: BlackRock GRI (news/broker-attention + market-movement scores), Fed nowcasts. Paid adjacents: Hedgeye's quad projections, GeoQuant's 40+ political risk indicators across 127+ countries (Fitch/BMI, institutional licensing), Good Judgment's FutureFirst (Superforecaster probabilities by subscription), and ICE's Polymarket Signals &amp; Sentiment feed for institutions (launched Feb 2026). Nobody in that set publishes P(next state | current state, discriminators) for named macro-political states — that exact object is unclaimed.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>As a standalone: $25–150K/yr by year 2–3 (hundreds of prosumer subs at $20–50/mo is the optimistic case; tens is the base case) — bundled with option 6 it mostly raises retention and justifies the higher tier rather than earning separately. First dollar: 6–12 months. Key risks: free-incumbent gravity; LLM commoditization of regime commentary (any chatbot now narrates "what regime are we in" convincingly — the defensible part is the calibrated kernel, not the prose); and maintenance creep on data feeds.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>Wire the existing Explorer toy (hand-set MOVES/CROSS weights) to the live manifest so the current state auto-populates; replace hand weights with kernel v0 when it lands; add the History replay from the labeled panel. Ship as a page on the option-6 portal. Total marginal effort over option 7: ~2–3 weeks.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Free state board as the top of funnel (screenshot-able, embeddable, updated weekly — built for X circulation); paid transitions behind the option-6 paywall. The "what would it have said in 2007" replay is the demo that converts skeptics, because it is checkable.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 9 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">9 · Wargaming-as-a-Service for Family Offices &amp; Small Funds</span>
+    <span class="mc-meta">Service · Essay II's exercise run for a client's actual portfolio · fastest time to first dollar</span>
+    <span class="mc-tagline">A structured 2-day engagement: the client's portfolio priced through the archetype catalog — robustness rank, kill-list ("these five worlds cause 80% of your tail"), and a costed convexity/fix list — quantified scenario planning, not a narrative deck.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">LOW–MED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Scenario planning is a mature consulting product (Shell tradition, Eurasia Group advisory, McKinsey workshops) that produces narratives; catastrophe modeling is a mature quantitative product that produces loss exceedance; nothing between them serves portfolios. The engagement: ingest the client's holdings; map them to loadings and channels; run the archetype catalog; deliver (i) a robustness ranking vs benchmark portfolios, (ii) the kill-list with arrival stories ("your T-bill sleeve is the instrument being repressed in these three worlds"), (iii) a two-round policy-settle discussion of the top-weighted adverse worlds, and (iv) a costed menu of cheap convexity and allocation fixes with explicit error bars. Optionally run live as a half-day tabletop with the principals.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 7's catalog and pricing engine plus a repeatable engagement kit: intake template, mapping scripts (public tickers → loadings/channels is automatable off the existing DB; privates get coarse channel buckets), report template, and the tabletop script. First engagement is expensive to produce; the third should take 3–4 partner-days. LLM assistance fits Essay II's own discipline: draft arrival stories machine-side, screen and price rule-side.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low–Medium</div>
+  <p>No platform, no uptime, no vendor-diligence gauntlet; sells on the strength of the methodology document and a sample report rather than a multi-year track record. The binding constraint is warm access to family offices — a network problem, not a build problem.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Fixed-fee engagement ($10–50K depending on complexity and whether the live tabletop is included) + optional annual re-run subscription (~30–50% of initial fee) as the catalog and weights move.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Single/multi-family offices (thousands in the US; a warm network reaches tens), small funds, and RIAs serving UHNW clients who ask "what if" questions their tools can't answer. Incumbent substitutes: Eurasia Group and Verisk Maplecroft political-risk advisory (corporate-priced, not portfolio-quantified), Good Judgment custom Superforecasts (probabilities without pricing), banks' CIO offices (conflicted), and — the real competitor — doing nothing. AI wargaming is having a defense-sector moment (JHU APL's GenWar lab, the Air Force's WarMatrix SaaS solicitation), which is useful narrative air cover; nobody has brought that form to private portfolios.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: 2–6 engagements/yr at $10–50K → $20–200K/yr, starting within 3–6 months of the catalog existing — the fastest first external dollar in this appendix. Key risks: it consumes partner time linearly (services don't compound); scope creep into ongoing advice raises RIA-registration questions (deliver analysis, not individualized investment advice, or register); and a thin client pipeline makes revenue lumpy. Best run deliberately small: 4–6/yr as the cash-flow and lead-gen layer, not the business.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>One pro-bono engagement for a friendly family office or fund (candidly: Mani's network and the partners' own contacts) to produce the anonymized sample report; the methodology one-pager; a fixed intake sheet. Sell engagement #2 off the sample. Marginal build over option 7: the intake/mapping/report kit, ~2 weeks.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Warm introductions only; the option-6 letter is the standing brochure. Price anchor: a family office pays $50–150K/yr for generic political-risk retainers and multiples more for consultants — a $25K quantified portfolio wargame is cheap against that frame. Convert best engagements into option-1 feed clients later.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 10 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">10 · Convexity Monitor — "Worlds the Market Refuses to Price"</span>
+    <span class="mc-meta">Research/alert product · Essay II's posterior-vs-anchor divergence, productized · premium tier of option 6</span>
+    <span class="mc-tagline">A monthly ranked list of divergences between entropy-pooled world weights and market-implied probabilities, translated into specific cheap convexity (LEAPS, skew, breakevens, FX wings) with payoff ranges per archetype.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">MEDIUM</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Essay II names this output explicitly: disagreement between the reachability-weighted prior/posterior and market-implied moments locates the worlds the market refuses to price, and the engine is "a convexity shopping list generator." Productized: each issue ranks 5–10 divergences ("the catalog puts 7–12% weight on sticky-inflation-plus-anchor-strain worlds; 2-year payer skew and long-dated gold calls imply ~3%"), names the instruments whose payoff concentrates in those worlds, and shows the payoff <em>range</em> per archetype with the humility flag scaled to distance-from-experience. Ordinal and range-based by construction — no tail VaR, no point odds.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 7's entropy-pooling and anchor extraction, plus an options-surface ingestion problem the shop does not currently have solved: implied vols/skews for index, rates proxies (via ETF options), gold, FX ETFs. Free-ish sources exist (CBOE delayed data, broker APIs) but are the main new plumbing. Then the monthly editorial pass and instrument-level sanity checks (liquidity, roll cost, borrow).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium</div>
+  <p>The divergence math is a page of numpy once anchors exist; the options-data plumbing and the responsibility of naming specific instruments (with disclaimers that must actually hold) are the work. Tail products also face a brutal retention curve: subscribers churn during the long stretches when convexity bleeds.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Monthly report + intra-month alert on large divergence moves; premium tier of option 6 (~$1–3K/yr) rather than a standalone SKU. Internally, the same output feeds the shop's own LEAPS book first.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Sophisticated option-literate individuals, small funds, and advisors running tail sleeves. Incumbents/substitutes: Universa and peers (funds, not research — Universa's 2020 claims of 3,600%+ monthly returns and the WSJ-reported 3.3%-allocation study define the category's mindshare); Artemis Capital's Dragon research (allocation philosophy, not live instrument selection); tail ETFs (TAIL, CYA-style) that implement rather than inform; options screeners (Market Chameleon etc.) that rank by flow/vol metrics with no world-state logic. A research product that says <em>which tail, why, and what's cheap against it</em> is a real gap — partly because it is hard to do honestly.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $10–75K/yr as a premium tier (tens of subscribers at $1–3K); bimodal on one visible win — a documented cheap-convexity call that paid 10–20× during a real event would re-rate the whole franchise. First dollar: 9–15 months (needs the catalog, anchors, and at least two quarters of published divergences). Key risks: bleed-era churn; "not investment advice" boundaries when naming strikes; and the epistemic risk that entropy-pooled weights are judgments — a persistent divergence may mean the market is right.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>Divergence table across ~40 archetypes vs options-implied moments for SPY/TLT/GLD/UUP/TIP proxies only; run internally for the LEAPS book for two quarters; publish the two most defensible divergences per month in option 6 as a teaser before pricing the tier.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Sell it as the applied proof of Essay II ("the engine, spending its own conclusions"). Publish post-mortems on every named position — including the bleeders — because auditability is the moat against the tail-hype genre this product will be shelved next to.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 5 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">5 · State-Beta Taxonomy — a Licensable Sensitivity Dataset</span>
+    <span class="mc-meta">Data product · channel elasticities × stable loadings, published as a dataset · Quant Insight is the near comp</span>
+    <span class="mc-tagline">For every sector, industry, factor sleeve, and (top-N) stock: signed sensitivities to each state axis and expected-return/drawdown ranges per world archetype — "which part of the market breaks in a fiscal-dominance world" as a flat file.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">MED–HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The channel-elasticity library and Φ(S) map, published as a dataset rather than kept as engine internals. Deliverables: (i) an axis-level matrix — 11 GICS sectors × ~70 industries × factor sleeves, each with signed elasticities to the four channels and composite sensitivity per state axis; (ii) an archetype-level matrix — expected-return and drawdown <em>ranges</em> per named world for each sector/industry/factor, with the historical analog episodes cited; (iii) a stock-level extension via the stable-loadings matrix B for, say, the top 1,000 US names. The honest framing is a taxonomy with error bars, not a forecast: "utilities carry repression risk through the regulated-real-rate channel; here are the five analog episodes and the range."</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Essay II's step 3 (the elasticity library — flagged there as "the intellectually hardest step") done to publication grade: analog-episode estimation from JST/RR with documented selection, interaction penalties, and stated error bars; the loadings projection from the existing DB; methodology documentation a stranger can audit; delivery as versioned flat files/API. Sharadar terms permit derived analytics (same check as the credit appendix: get the derived-data confirmation in writing).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Medium–High</div>
+  <p>The estimation is genuinely hard to do defensibly (few analogs, wide bars, era drift), and data-product buyers will test the taxonomy against realized episodes before paying. But it requires no live track record — the validation is historical and inspectable, which suits a shop without one.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Versioned dataset (CSV/parquet + docs) with quarterly updates; a browser (sector × world heat map) for evaluation; licensing at flat annual fees. A free coarse layer (sector × axis signs only) as the marketing surface.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Multi-asset allocators, quant equity funds wanting a macro-state overlay, risk teams, and research desks. Incumbent adjacents: <strong>Quant Insight</strong> (the closest — PLSR-estimated macro-factor sensitivities per security, distributed on GS Marquee; proves institutional demand for exactly "macro sensitivity per asset"); MSCI/Barra and Axioma factor models (continuous macro factors, not named discrete states); Fidelity's business-cycle sector playbook (free, four phases, coarse); GeoQuant × State Street political-risk FX indices (the political-axis analog). The open wedge: sensitivities to <em>named, discrete, partly unprecedented world-states</em> — fiscal dominance, capital controls, correlation-flip worlds — which continuous-factor incumbents structurally cannot represent.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $25–200K/yr by year 2–3 (3–10 licenses at $10–25K — below Qi/MSCI floors); a single larger fund could double that. First dollar: 12–24 months. Key risks: validation skepticism ("show me the state-beta working out-of-sample" is only partly answerable for unseen states); fast-follow risk — Qi or MSCI could ship a "regime sensitivity" layer quickly if the category proves out; and the perennial two-person-vendor diligence discount. Mitigation: publish the methodology and the analog-episode citations in full — transparency is the only moat available, and it also happens to be the product's intellectual claim.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning — named incumbents</div>
+  <div class="scroll"><table class="ctab">
+  <thead><tr><th>Incumbent</th><th>Object sold</th><th>Price (found)</th><th>Difference</th></tr></thead>
+  <tbody>
+  <tr><td>Quant Insight (Qi)</td><td>Per-security sensitivities to ~continuous macro factors (GDP nowcasts, FCIs, vol) via PLSR; MFERM risk model; on GS Marquee</td><td>Institutional, undisclosed</td><td>Continuous factors around the current regime; no discrete states, no unprecedented worlds, no cross-country analogs</td></tr>
+  <tr><td>MSCI Barra / Axioma factor models</td><td>Equity risk factor exposures/covariances</td><td>Six figures typical, undisclosed</td><td>Statistical/fundamental factors; macro-state conditioning absent; sold as risk plumbing, not playbooks</td></tr>
+  <tr><td>Fidelity business-cycle framework</td><td>Four-phase cycle sector playbook</td><td>Free (research + model portfolios)</td><td>One axis (cycle); free incumbency sets the floor: the paid product must be much finer than four phases</td></tr>
+  <tr><td>GeoQuant (Fitch/BMI)</td><td>40+ political risk indicators, 127+ countries; State Street FX risk indices</td><td>Institutional data license, undisclosed</td><td>Political axis only, country-level; no asset-channel pricing</td></tr>
+  </tbody></table></div>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>Sector × axis matrix (11 × 6, signed, cited) and sector × archetype ranges for the 8 analog-anchored archetypes in the World Builder toy — published free as a teaser with full methodology. Industry- and stock-level layers, interaction penalties, and quarterly versioning only after two inbound requests prove demand.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Data-product discovery channels (Datarade-style listings, SSRN/arXiv methodology paper, the option-6 letter) plus direct outreach to multi-asset teams. The free coarse layer must be genuinely useful — it will be screenshot-circulated, which is the distribution.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 8 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">8 · Licensing the Labeled Cross-Country State Panel</span>
+    <span class="mc-meta">Data licensing · Essay I step 2's artifact sold as-is · cheap standing option, moat-dilution caveat</span>
+    <span class="mc-tagline">The 17-country × 150-year panel labeled in the state grammar with point-in-time discriminators, plus the 30-episode annotations, consistency matrix, and veto log — sold to quant macro teams, academics, and (a 2024–26 wrinkle) AI labs buying curated structured corpora.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-med">LOW–MED</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The single highest-leverage build artifact (Essay I calls step 2 exactly that) is also independently sellable: country-year state labels on the six axes, "knowable at the time" discriminator values, ambiguity flags, episode annotations, and the plausibility rule-set with its audit trail. The raw inputs (JST, Reinhart-Rogoff) are free; the value added is the labeling, the point-in-time discipline, and the grammar — the same relationship LoPucki's bankruptcy labels bear to free EDGAR filings.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Nearly zero marginal build if option 7 happens — the panel must exist anyway. Marginal work is packaging: documentation, versioning, license terms (JST/RR redistribution is fine for derived labels; confirm attribution requirements), and a teaser subset.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Low build · Medium sale</div>
+  <p>The buyers are few and sophisticated; the product is judged on labeling quality, which is inspectable. The real question is strategic, not operational — see risks.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>One-time or annual data license (flat fee) for the versioned panel + updates; academic tier near-free (citation is marketing); commercial tier priced per firm.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Quant macro teams building their own regime systems (the exact audience of the 2024-25 regime-allocation literature — jump models, regime-based SAA — which is visibly active); academics; other research boutiques; and AI labs/data brokers assembling curated financial-history corpora. Incumbent substitutes: macrohistory.net and Reinhart-Rogoff (free, unlabeled), Global Financial Data (paid, raw series). Tens of plausible buyers, not hundreds.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $5–50K/yr — a handful of licenses at $2–15K, plus occasional one-time deals. First dollar: 6–12 months after the panel exists. Key risk is strategic: the panel is the moat input for options 1–6; selling the current vintage arms fast-followers. Sensible policy: license aged vintages (12–18 months behind the live panel), keep the live version internal, and treat academic citations as the payment that matters.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec + GTM</div>
+  <p>Publish 5 fully-worked episodes (labels + discriminators + sources) free with the methodology; list the full aged panel at a posted price and wait. No outbound sales effort — this option should cost nothing after packaging.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 1 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">1 · Institutional Signal Feed &amp; Portfolio Overlay Framework</span>
+    <span class="mc-meta">Signals product · the full mixture output, sold to funds/OCIOs · gated on a graded live record</span>
+    <span class="mc-tagline">A subscription feed for professional allocators: state vector + transition probabilities, crisis-type vector, Φ(S′) factor-moment forecasts, regime weights for standard sleeves (equity styles, duration, gold, cash), and the entropy/Kelly scalar — the machine BPGS runs internally, as a service.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>Option 7's full output stack delivered to external portfolios: weekly/monthly files plus a methodology relationship (calls with the partners). The differentiated claims: (i) transitions, not just states — the feed says where the world is going with base rates, not just where it is; (ii) model selection, not just asset selection — Φ(S′) tells a quant buyer which of <em>their</em> factor sleeves the next state favors, the genuinely unclaimed object per Essay I's survey; (iii) the uncertainty scalar — a defensible, auditable risk dial (entropy → fraction) no research incumbent ships.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Technically modest over option 7 (delivery, documentation, versioned history for buyer backtesting). Commercially heavy: institutional buyers will demand the point-in-time history, run it through their own backtests, and interrogate the pre-registration log. Expect security/ops diligence even for a data feed. The real work is two years of graded shadow-and-live record before the first serious conversation converts.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High (all of it go-to-market)</div>
+  <p>Chicken-and-egg: the product is credibility, and credibility is the thing a new shop lacks. Options 6/9 exist substantially to break this loop.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>Monthly/weekly JSON/CSV feed + methodology docs + quarterly calls; $15–50K/yr per firm depending on scope; managed-account or model-delivery variants only much later (they carry adviser-registration consequences).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>Small multi-asset funds, OCIOs, ETF strategists, single-family offices with investment staff. Incumbent field: Variant Perception's data-API tier ($10K+), Exante Data (bespoke institutional macro + flow analytics, custom pricing), Qi (macro sensitivities on Marquee), 42 Macro institutional, and the in-house macro of every larger fund. The feed's edge is the named-state/transition object and its audit trail; its handicap is that allocators buy macro from brands with 20-year records. Hundreds of plausible buyer firms; realistic conversions for an unknown shop: low single digits initially.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $0 for the first 12–24 months by construction; then $50–300K/yr if 2–6 firms land at $15–50K; the good tail (a mid-size fund adopting the framework broadly) is $500K+ but should not be planned on. Key risks: track-record gating; key-person concentration (the buyer is partly buying the partners' judgment); a public wrong call damaging all clients simultaneously; and capacity of trust — each client relationship is high-touch for a two-person shop.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec + GTM</div>
+  <p>Package option 7's monthly memo as an "institutional preview" sent free to 5–10 friendly professional contacts with the graded log attached; ask for structured feedback quarterly. Convert to paid only when someone tries to forward it internally — the organic signal that it has budget-line value. Wargaming clients (option 9) are the warmest conversion path; conference/podcast presence on the framework is the cold one.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 4 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">4 · Advisor/Retail Antifragility Scorer</span>
+    <span class="mc-meta">SaaS (B2B2C via RIAs) · robustness ranks across plausible worlds for client portfolios · Orion/HiddenLevers is the proof-of-form and the wall</span>
+    <span class="mc-tagline">Upload a portfolio → an Antifragility Score (survival rank across the archetype catalog), a kill-list of the worlds that hurt it most, and suggested cheap fixes — the Risk Number's forward-looking, world-state successor.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-high">HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The Evaluator stage of Essay II wrapped in an advisor-friendly skin. For each client portfolio: (i) a headline robustness rank vs reference portfolios (60/40, All-Weather, cash) across the weighted catalog; (ii) the kill-list in plain English with arrival stories ("five worlds cause 80% of your tail; three of them are inflation-anchor worlds where your bond sleeve is the problem"); (iii) fix suggestions as ranges (trim X, add real-asset sleeve, small convexity budget); (iv) the compliance-friendly artifact — a client-ready PDF. Deliberately ordinal (ranks and ranges, no tail VaR) which is both the intellectual position and a regulatory convenience.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Option 7's catalog and pricing channels, plus real product engineering: account/holdings ingestion (aggregator integrations are expensive — start with CSV/ticker paste), a polished UI, the scoring and report generator, multi-tenant auth/billing, and support. Then the non-engineering mountain: RIA compliance review of every client-facing output (marketing rule, Reg BI adjacency), security questionnaires, and integration requests (Orion, Schwab, custodian feeds) that arrive with the second customer.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — High (go-to-market and support, not math)</div>
+  <p>Advisor tech is a distribution business. Orion and Nitrogen own the rails; a feature this legible ("plausible-worlds tab") can be fast-followed by an incumbent in one or two quarters if it demonstrably sells.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>SaaS per-advisor seat (~$50–150/mo, anchored by Nitrogen's $99/mo entry plan) + white-label reports; a direct-retail variant (PortfolioPilot-style, ~$20–50/mo) is possible but faces even harder acquisition economics.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>~15,000 RIA firms / ~300,000+ US advisors; the category spends real money (portfolio risk software is a multi-billion-dollar segment growing double digits). Named incumbents: <strong>Orion Risk Intelligence (ex-HiddenLevers)</strong> — the closest comp: 100+ forward-looking named scenarios ("Cold War 2.0", "Fed Shock Therapy") with custom scenario building, acquired by Orion in 2021, which proves both that advisors buy scenario narratives and that the exit for this category is acquisition; <strong>Nitrogen/Riskalyze</strong> ($99/mo+, the Risk Number brand, dominant advisor mindshare); <strong>Portfolio Visualizer</strong> ($30–55/mo prosumer analytics); <strong>PortfolioPilot</strong> ($99/mo AI advisor, reports $40B+ analyzed). The wedge vs Orion: their scenarios are hand-built narratives with point impacts; this product has a generative catalog, probabilities, coherence rules, and ordinal honesty. Whether advisors <em>value</em> that difference enough to switch tools is the unproven premise.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>Rough estimate: $0–50K/yr in year 1–2 (design-partner phase), $50–250K/yr by year 3 if a few hundred seats land at $50–100/mo — with a genuine possibility of zero if no anchor RIA converts, and a small acquisition tail (the HiddenLevers path) if one does. First dollar: 12–24 months. Key risks: support burden two people cannot staff, incumbent fast-follow, compliance friction on client-facing probabilistic content, and the known pattern that advisors buy tools that help them <em>sell</em>, not tools that complicate the conversation — the product must make the advisor look smart in a client meeting or it dies.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec</div>
+  <p>A single-page web tool: paste tickers/weights → loadings → archetype P&amp;L ranges, robustness rank, kill-list, one-page PDF. No integrations, no multi-tenant anything. Give it to exactly one friendly RIA as a design partner for two quarters and count how often they open it. Build nothing more until that number is known.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label gtm">Go-to-market note</div>
+  <p>Anchor-RIA design partner → advisor-podcast/newsletter circuit (Kitces-adjacent media reviews new tools constantly) → TAMP/model-marketplace listings. Do not attempt direct retail; CAC against robo/brokerage incumbents is unwinnable at this scale.</p>
+</div>
+</div>
+</div>
+</details>
+
+<!-- OPTION 2 -->
+<details class="mc" open>
+<summary>
+  <div class="mc-left">
+    <span class="mc-name">2 · World-State Simulator Platform — the "Cat Model for Macro" Sold Whole</span>
+    <span class="mc-meta">Institutional platform · differentiated by HOW it simulates (worlds, not price paths) · blocked as a platform sale for a two-person shop</span>
+    <span class="mc-tagline">The full Essay-II engine — archetype catalog, entropy-pooled weights, channel pricing API, robustness analytics — licensed to institutional risk teams the way RMS/Verisk license stochastic event sets to insurers.</span>
+  </div>
+  <div class="mc-right"><span class="badge b-vhigh">VERY HIGH</span><span class="chevron">⌄</span></div>
+</summary>
+<div class="mc-body">
+<div class="mc-grid">
+<div class="mc-section">
+  <div class="mc-label what">What it is</div>
+  <p>The maximal version: a scenario platform whose generator produces coherent world-states (including unprecedented ones) with probabilities, priced through structural channels — positioned against the scenario modules of Aladdin, BarraOne, MARS, and Axioma the way cat models were positioned against actuarial loss tables. The architectural differentiation is real and documented in Essay II's survey: incumbents' generators are price-space (ESGs), committee-narrative (CCAR/MDS-style), or — since 2025–26 — LLM-assisted configuration of the same factor shocks. None generates a probability-weighted catalog of coherent macro-political worlds, and NGFS demonstrates the committee failure mode (tails compressed inside forecast-error bands).</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label work">Work involved</div>
+  <p>Everything in options 7+5+10, plus platform engineering (multi-asset coverage far beyond US equities — rates, credit, FX, real assets at instrument level), enterprise integration, model-governance documentation to bank/insurer standards (SR 11-7-grade), SOC 2, and an enterprise sales motion measured in years. Each of those individually exceeds two people's capacity; jointly they define a venture-scale company, which is what Riskthinking.ai (the stochastic-scenario architecture in climate) needed Bloomberg's investment and partnership to attempt.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label diff">Difficulty — Very High</div>
+  <p>Not because the idea is weak — because the buyer class (banks, insurers, large AMs) structurally cannot buy platforms from two-person vendors, and the incumbents own the integration surface.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label form">Form of end product</div>
+  <p>If pursued at all: not a platform but (i) a scenario-catalog subscription (the "event set" alone, delivered as files an incumbent platform can ingest as custom scenarios — MARS and Aladdin both accept user-defined shocks), or (ii) a methodology license/partnership with a mid-tier risk vendor, or (iii) acquisition bait after options 5/6/10 prove the category.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label mkt">Addressable market</div>
+  <p>The big one — risk analytics is a ~$32B market (2025) growing ~10%/yr, and scenario/stress capability is a line item in every institutional platform. Which is precisely why it is defended: Aladdin (3,000+ risk factors, Market-Driven Scenarios from BlackRock's RQA team, LLM-driven scenario generation added Q1 2026); MSCI (predictive macro stress via BarraOne — 2025 scenarios: stagflation −11%, recession −5%, soft landing +4% on a diversified portfolio); Bloomberg MARS (900+ client firms, historical/predictive/custom stress); SimCorp Axioma (AI-powered natural-language stress testing incl. "scenario plausibility" assessment, April 2026); Ortec Finance and Conning GEMS (regulated ESG franchises; Conning selected for the NAIC's GOES standard); S&amp;P Kensho (LLM-ready data and dynamic risk assessment agents). The two-person wedge is the generator's content, not the platform.</p>
+</div>
+<div class="mc-section">
+  <div class="mc-label comm">Commercial potential</div>
+  <p>As a platform: effectively $0 — do not build. As a scenario-catalog feed into incumbent platforms: bimodal; $0 most years, a single lighthouse deal at $50–250K/yr possible via a consultant or mid-tier-vendor channel at 24–36 months. Key risks: enterprise diligence, incumbent LLM-scenario features absorbing the perceived novelty before the shop can demonstrate the deeper difference, and the founders' time being consumed by a sales process with single-digit close probability.</p>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label comp">Competitive positioning — named incumbents</div>
+  <div class="scroll"><table class="ctab">
+  <thead><tr><th>Incumbent</th><th>Scenario capability</th><th>Price (found)</th><th>Where world-state simulation differs</th></tr></thead>
+  <tbody>
+  <tr><td>BlackRock Aladdin</td><td>Market-Driven Scenarios (expert-built, 3,000+ factors), historical replays; LLM-driven scenario generation (Q1 2026)</td><td>Enterprise, six-to-seven figures</td><td>Scenarios are factor-shock vectors around the present; no state grammar, no probabilities, no unprecedented-state generator</td></tr>
+  <tr><td>MSCI Macro Scenarios</td><td>Predictive stress: macro model → asset pricing map, ~3 named scenarios/yr</td><td>Bundled with BarraOne/RiskMetrics, undisclosed</td><td>Committee-sized scenario count; correlation propagation from calm samples — Essay II's sin #3</td></tr>
+  <tr><td>Bloomberg MARS</td><td>Historical, custom, and correlation-based predictive stress; 900+ firms</td><td>Terminal ~$30K/seat + module</td><td>No generative catalog; custom scenarios are user homework — which is the ingestion path for a catalog feed</td></tr>
+  <tr><td>SimCorp Axioma Risk</td><td>AI stress testing: NL scenario design, historical precedent match, plausibility check (Apr 2026)</td><td>Enterprise, undisclosed</td><td>LLM assists configuration of factor shocks; plausibility is heuristic, not a rule system with veto logs and backcast gates</td></tr>
+  <tr><td>Ortec Finance / Conning GEMS</td><td>Regulated economic scenario generators (thousands of stochastic paths)</td><td>Enterprise, undisclosed (six figures typical)</td><td>Price-space Monte Carlo with better plumbing — consistency without imagination (Essay II's own verdict)</td></tr>
+  <tr><td>Riskthinking.ai</td><td>Stochastic climate scenario sets (2,000+ pathways), Bloomberg partnership</td><td>Enterprise/data products via Bloomberg</td><td>The architecture cousin — proves stochastic scenario-sets sell in finance, and that the sale needed a Bloomberg-scale partner</td></tr>
+  </tbody></table></div>
+</div>
+<div class="mc-section wide">
+  <div class="mc-label v0">v0 spec + GTM</div>
+  <p>Do not build a platform v0. The catalog built for options 7/9/10 <em>is</em> the v0; the only speculative artifact worth making is an export pack — the 40-archetype catalog formatted as MARS/Aladdin-ingestible custom scenario files with documentation — kept ready for the one conversation (via a wargaming client's risk team or a consultant) where it can be piloted. Cost: days, not months.</p>
+</div>
+</div>
+</div>
+</details>
+
+<h3>Summary comparison</h3>
+<div class="scroll">
+<table>
+<thead><tr><th>#</th><th>Option</th><th>Difficulty</th><th>Form</th><th>Time to first $</th><th>Realistic annual revenue, yr 2–3 (rough)</th><th>Key blocker</th></tr></thead>
+<tbody>
+<tr><td>7</td><td>Internal overlay on own strategies</td><td><span class="badge b-low">LOW</span></td><td>Internal engine + public graded log</td><td>Immediate (via live book)</td><td>Indirect — Sharpe/DD + the credibility asset</td><td>None — designs done, data free</td></tr>
+<tr><td>6</td><td>"State of the World" research letter</td><td><span class="badge b-med">MEDIUM</span></td><td>Letter + portal, 3 tiers</td><td>3–6 mo</td><td>$10–100K</td><td>Audience-building; permanent cadence tax</td></tr>
+<tr><td>3</td><td>Live state dashboard / nowcast</td><td><span class="badge b-med">MEDIUM</span></td><td>Web dashboard + small API</td><td>6–12 mo</td><td>$25–150K (mostly as 6's retention layer)</td><td>Excellent free adjacents (BlackRock GRI, Fed nowcasts)</td></tr>
+<tr><td>9</td><td>Wargaming-as-a-service</td><td><span class="badge b-med">LOW–MED</span></td><td>Fixed-fee engagements + re-runs</td><td>3–6 mo</td><td>$20–200K (lumpy)</td><td>Warm-network pipeline; partner time</td></tr>
+<tr><td>10</td><td>Convexity / mispriced-worlds monitor</td><td><span class="badge b-med">MEDIUM</span></td><td>Premium report tier + alerts</td><td>9–15 mo</td><td>$10–75K (bimodal on one visible win)</td><td>Options-surface plumbing; bleed-era churn</td></tr>
+<tr><td>5</td><td>State-beta taxonomy dataset</td><td><span class="badge b-high">MED–HIGH</span></td><td>Versioned dataset + browser</td><td>12–24 mo</td><td>$25–200K</td><td>Validation skepticism; Qi/MSCI fast-follow</td></tr>
+<tr><td>8</td><td>Labeled state-panel licensing</td><td><span class="badge b-med">LOW–MED</span></td><td>Data license (aged vintages)</td><td>6–12 mo</td><td>$5–50K</td><td>Tiny market; moat dilution if sold live</td></tr>
+<tr><td>1</td><td>Institutional signal feed / overlay</td><td><span class="badge b-high">HIGH</span></td><td>Feed + methodology relationship</td><td>12–24 mo</td><td>$50–300K (after record earned)</td><td>Track-record chicken-and-egg</td></tr>
+<tr><td>4</td><td>Advisor antifragility scorer</td><td><span class="badge b-high">HIGH</span></td><td>SaaS seats + white-label reports</td><td>12–24 mo</td><td>$50–250K (possibly $0)</td><td>Orion/Nitrogen distribution; support burden; fast-follow</td></tr>
+<tr><td>2</td><td>World-state simulator platform</td><td><span class="badge b-vhigh">VERY HIGH</span></td><td>Scenario-catalog feed at most</td><td>24–36 mo</td><td>$0 most years; $50–250K single lighthouse deal</td><td>Enterprise diligence; incumbent LLM-scenario features</td></tr>
+</tbody>
+</table>
+</div>
+<p class="footnote">Revenue figures are order-of-magnitude estimates for an unknown two-person shop with no macro distribution, stated after checking incumbent price points and plausible client counts — treat as ±1 notch on the range, and treat any single-deal option (2, and the institutional tail of 1 and 5) as bimodal around zero.</p>
+
+<h3>Difficulty vs commercial potential</h3>
+<div class="fig">
+<svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <!-- plot frame -->
+  <rect x="80" y="40" width="640" height="400" fill="#fafbfc" stroke="var(--line)"/>
+  <line x1="400" y1="40" x2="400" y2="440" stroke="var(--line)" stroke-dasharray="5 4"/>
+  <line x1="80" y1="240" x2="720" y2="240" stroke="var(--line)" stroke-dasharray="5 4"/>
+  <text x="95"  y="60"  font-size="11" fill="var(--muted)" font-style="italic">easy + attractive: do first</text>
+  <text x="565" y="60"  font-size="11" fill="var(--muted)" font-style="italic">hard + attractive: earn the right</text>
+  <text x="95"  y="430" font-size="11" fill="var(--muted)" font-style="italic">easy + modest: bundle / keep cheap</text>
+  <text x="586" y="430" font-size="11" fill="var(--muted)" font-style="italic">hard + modest: avoid for now</text>
+  <text x="400" y="482" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600">Build + go-to-market difficulty →</text>
+  <text x="34" y="240" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="600" transform="rotate(-90 34 240)">Commercial potential (2-person shop) →</text>
+  <g font-size="11" fill="var(--muted)" text-anchor="middle">
+    <text x="170" y="458">Low</text><text x="340" y="458">Medium</text><text x="510" y="458">High</text><text x="660" y="458">Very High</text>
+  </g>
+  <!-- uncertainty whiskers (wide-outcome options) -->
+  <g stroke="#9aa4b2" stroke-width="1.5">
+    <line x1="505" y1="90"  x2="505" y2="330"/>
+    <line x1="560" y1="120" x2="560" y2="380"/>
+    <line x1="655" y1="80"  x2="655" y2="400"/>
+    <line x1="445" y1="130" x2="445" y2="320"/>
+    <line x1="360" y1="200" x2="360" y2="390"/>
+  </g>
+  <!-- bubbles: r ~ addressable-market size -->
+  <g font-size="11" fill="#374151">
+    <circle cx="165" cy="140" r="12" fill="var(--go)"/><text x="165" y="144" text-anchor="middle" fill="#fff" font-weight="700">7</text>
+    <text x="184" y="132">internal overlay + graded log</text>
+    <text x="184" y="147" font-size="10" fill="var(--muted)">(no revenue; near-certain payoff, de-risks everything right of it)</text>
+    <circle cx="255" cy="270" r="10" fill="var(--accent)"/><text x="255" y="274" text-anchor="middle" fill="#fff" font-weight="700">9</text>
+    <text x="230" y="299">wargaming service</text>
+    <circle cx="320" cy="230" r="13" fill="var(--accent)"/><text x="320" y="234" text-anchor="middle" fill="#fff" font-weight="700">6</text>
+    <text x="338" y="224">research letter</text>
+    <circle cx="352" cy="288" r="11" fill="var(--accent)"/><text x="352" y="292" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="370" y="296">state dashboard</text>
+    <circle cx="235" cy="352" r="8" fill="var(--accent)"/><text x="235" y="356" text-anchor="middle" fill="#fff" font-weight="700">8</text>
+    <text x="252" y="360">panel licensing (aged)</text>
+    <circle cx="360" cy="330" r="10" fill="var(--accent2)"/><text x="360" y="334" text-anchor="middle" fill="#fff" font-weight="700">10</text>
+    <text x="378" y="342">convexity monitor (bimodal)</text>
+    <circle cx="445" cy="205" r="14" fill="var(--accent2)"/><text x="445" y="209" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="463" y="199">state-beta dataset</text>
+    <circle cx="505" cy="165" r="15" fill="var(--accent2)"/><text x="505" y="169" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="523" y="159">institutional feed (record-gated)</text>
+    <circle cx="560" cy="255" r="17" fill="var(--accent2)"/><text x="560" y="259" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="580" y="270">advisor scorer</text>
+    <circle cx="655" cy="150" r="20" fill="var(--no)"/><text x="655" y="154" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="597" y="122">simulator platform</text>
+  </g>
+  <!-- legend -->
+  <g font-size="10.5" fill="var(--muted)">
+    <line x1="95" y1="504" x2="95" y2="516" stroke="#9aa4b2" stroke-width="1.5"/>
+    <text x="102" y="514">whisker = wide outcome range (bimodal / single-deal)</text>
+    <circle cx="360" cy="510" r="6" fill="var(--go)"/><text x="370" y="514">recommended first move</text>
+    <circle cx="520" cy="510" r="6" fill="var(--accent2)"/><text x="530" y="514">high-variance payoff</text>
+    <circle cx="655" cy="510" r="6" fill="var(--no)"/><text x="665" y="514">blocked as stated; pursue only the derivative form</text>
+    <text x="95" y="532">bubble area ≈ addressable-market size (risk analytics ≫ advisor tech ≫ macro research ≫ data licensing)</text>
+  </g>
+</svg>
+<div class="fig-cap">Positions are judgment calls, not measurements. Difficulty includes go-to-market, which is why the advisor scorer (4) sits far right despite modest math: Orion and Nitrogen own the rails. Option 2's bubble is the biggest market and the least reachable seller position — the classic wrong quadrant; only its scenario-catalog derivative escapes it. Option 7 is plotted on expected value: no revenue, near-certain payoff, and it manufactures the graded record that moves 1, 6, and 9 up and left.</div>
+</div>
+
+<h3>Cross-cutting price reference — what the market already pays</h3>
+<div class="scroll">
+<table class="ctab">
+<thead><tr><th>Segment</th><th>Product</th><th>Price point (found in research)</th><th>Relevance</th></tr></thead>
+<tbody>
+<tr><td rowspan="4">Institutional platforms</td><td>BlackRock Aladdin (incl. MDS scenarios)</td><td>Enterprise; six-to-seven-figure installs</td><td>Ceiling of the category option 2 would enter</td></tr>
+<tr><td>Bloomberg Terminal + MARS</td><td>~$30K/seat/yr + module; MARS at 900+ firms</td><td>The desk-level default; also the ingestion path for a catalog feed</td></tr>
+<tr><td>MSCI BarraOne / SimCorp Axioma / Ortec / Conning</td><td>Enterprise, undisclosed (six figures typical)</td><td>All added AI/scenario features 2025–26</td></tr>
+<tr><td>Riskthinking.ai (climate scenario sets)</td><td>Enterprise/data via Bloomberg partnership</td><td>Proof the stochastic-catalog architecture sells — with a giant partner</td></tr>
+<tr><td rowspan="4">Macro research</td><td>Hedgeye Macro Pro</td><td>$4,999/yr (retail tiers below)</td><td>Price anchor for option 6's institutional-lite tier</td></tr>
+<tr><td>Variant Perception</td><td>~$5–7K+/seat; $10K+ with data API</td><td>Regime-model research with an API — nearest structural comp for 6/1</td></tr>
+<tr><td>Ned Davis Research</td><td>Tens of thousands typical; up to ~$500K/org</td><td>Ceiling of independent research pricing</td></tr>
+<tr><td>Solo macro Substacks (Knapp, Morris)</td><td>$99/mo · $999/yr; top-100 investing Substacks ≈ $30M/yr combined</td><td>Prosumer floor and realistic solo ceiling ($175–260K/yr)</td></tr>
+<tr><td rowspan="3">Advisor / retail tools</td><td>Nitrogen (Riskalyze)</td><td>From $99/mo per advisor</td><td>Seat-price anchor for option 4</td></tr>
+<tr><td>Orion Risk Intelligence (HiddenLevers)</td><td>Bundled in Orion suite; 100+ scenario library</td><td>Closest product comp for option 4; category exit was acquisition</td></tr>
+<tr><td>Portfolio Visualizer / PortfolioPilot</td><td>$30–55/mo · $99/mo Pro</td><td>Prosumer willingness-to-pay band</td></tr>
+<tr><td rowspan="3">Geopolitical / probability data</td><td>GeoQuant (Fitch/BMI)</td><td>Institutional license, undisclosed; 40+ risks, 127+ countries</td><td>Political-axis incumbent; State Street index partnership shows the licensing path for option 5</td></tr>
+<tr><td>Good Judgment FutureFirst / custom Superforecasts</td><td>Subscription + bespoke, undisclosed</td><td>Probability-as-product precedent for options 3/9</td></tr>
+<tr><td>Kalshi / Polymarket institutional data</td><td>Via ICE (exclusive distribution deal Oct 2025; Signals &amp; Sentiment product Feb 2026)</td><td>Prediction-market probabilities are now an institutional data category — inputs for the engines, and evidence the "probabilities of named events" market is real</td></tr>
+</tbody>
+</table>
+</div>
+<p class="footnote">Prices marked "undisclosed" were not publicly findable; bands reflect industry reporting and should be treated as indicative only.</p>
+
+<h3>Recommended sequencing</h3>
+<div class="panel">
+<p><strong>Build Option 7 first — the two engines on the shop's own book — and start the public graded call log the same month the shadow mode begins.</strong> It is the only option with zero distribution risk and zero incremental data cost; the designs and validation gates are already written; and its by-product (a pre-registered, Brier-graded record of state calls plus a demonstrable effect on the live blend) is the one asset that converts every other option from "unknown shop makes claims" to "checkable system with a log." The 30-episode library and the labeled panel — Essay I's step 2 — get built inside this option and are reused by everything below.</p>
+<p style="margin-top:10px">From there the options compound rather than compete, in three waves. <strong>Wave 1 (months ~4–9): options 6 and 9, with 3 as 6's portal.</strong> The letter starts free while the log accrues, then paywalls; wargaming engagements sell on the methodology and sample report rather than a track record, produce the first external dollars fastest, and generate exactly the institutional conversations option 1 later needs. <strong>Wave 2 (months ~9–18): options 10, 5, and 8.</strong> The convexity monitor ships as the letter's premium tier once anchors and two quarters of published divergences exist; the state-beta taxonomy is the elasticity library done to publication grade — the most defensible pure-IP artifact in the stack, and the one where Quant Insight's existence proves the demand; the panel license is packaging work on an artifact that exists anyway (sell aged vintages only). <strong>Wave 3 (months ~18+, gated): options 1 and 4.</strong> The institutional feed converts warm contacts only after two graded quarters and a year of letters; the advisor scorer gets one design-partner RIA and a usage count before any real product engineering. <strong>Option 2 is never built as a platform.</strong> Its honest forms are the MARS/Aladdin-ingestible scenario-catalog export (days of work, kept ready) and, in the good tail, an acquisition conversation that options 5/6/10 earn. The through-line is the credit appendix's, one level up: <em>use the engines on your own money first; sell the exhaust — and in this domain the exhaust is a graded record of naming the world correctly.</em></p>
+</div>
+
+<h3>Sources — products and references found in research</h3>
+<div class="srcl"><b>Institutional scenario platforms:</b> BlackRock Aladdin risk/stress testing and Market-Driven Scenarios (<a href="https://www.blackrock.com/aladdin/products/aladdin-risk">blackrock.com/aladdin/products/aladdin-risk</a>, <a href="https://www.blackrock.com/aladdin/products/aladdin-wealth/insights/making-of-a-market-driven-scenario">making-of-a-market-driven-scenario</a>); MSCI predictive stress testing and Macro Scenarios in Focus (<a href="https://www.msci.com/research-and-insights/blog-post/building-predictive-stress-tests-msci-best-practices">msci.com — Building Predictive Stress Tests</a>, <a href="https://www.msci.com/research-and-insights/quick-take/macro-scenarios-in-focus-stagflation-remains-downside-scenario">Macro Scenarios in Focus</a>); Bloomberg MARS (<a href="https://professional.bloomberg.com/products/risk/mars/">professional.bloomberg.com/products/risk/mars</a>); SimCorp Axioma AI-powered stress testing, April 2026 (<a href="https://www.simcorp.com/about-us/news/2026/ai-powered-stress-testing">simcorp.com — AI-powered stress testing</a>); Ortec Finance ESG (<a href="https://www.ortecfinance.com/en/solutions/economic-scenario-generator">ortecfinance.com</a>); Conning GEMS / NAIC GOES (<a href="https://www.conning.com/software-and-services/economic-scenario-generator">conning.com</a>); S&amp;P Kensho LLM-ready API and AI agents (<a href="https://kensho.com/">kensho.com</a>); Quant Insight macro factor analytics, incl. GS Marquee distribution (<a href="https://www.quant-insight.com/">quant-insight.com</a>, <a href="https://marquee.gs.com/welcome/campaigns/quant-insight-on-marquee">marquee.gs.com</a>).</div>
+<div class="srcl"><b>Macro research subscriptions:</b> Hedgeye Macro Pro $4,999/yr (<a href="https://accounts.hedgeye.com/products/compare">accounts.hedgeye.com/products/compare</a>); 42 Macro tiers (<a href="https://42macro.com/research">42macro.com/research</a>); Variant Perception pricing per SEC/aggregator profile (<a href="https://app.getwarmer.com/firm_profiles/variant-perception">getwarmer.com — Variant Perception</a>); Ned Davis Research fee disclosure (<a href="https://reports.adviserinfo.sec.gov/crs/crs_112260.pdf">NDR Form CRS</a>); BCA Research (<a href="https://www.bcaresearch.com/">bcaresearch.com</a>); Damped Spring (<a href="https://dampedspring.com/">dampedspring.com</a>); Exante Data (<a href="https://homepage.exantedata.com/our-solution/">exantedata.com</a>); Substack finance-newsletter economics (<a href="https://behindthebalancesheet.substack.com/p/the-substack-gold-rush-whos-winning">Behind the Balance Sheet — The Substack Gold Rush</a>).</div>
+<div class="srcl"><b>Geopolitical / probability products:</b> GeoQuant (Fitch/BMI) (<a href="https://www.geoquant.com/">geoquant.com</a>); BlackRock Geopolitical Risk Dashboard and BGRI methodology (<a href="https://www.blackrock.com/corporate/insights/blackrock-investment-institute/interactive-charts/geopolitical-risk-dashboard">blackrock.com — geopolitical risk dashboard</a>); Eurasia Group (<a href="https://www.eurasiagroup.net/">eurasiagroup.net</a>); Verisk Maplecroft country-risk data (<a href="https://www.maplecroft.com/data/country-risk-data/">maplecroft.com</a>); Good Judgment FutureFirst and custom Superforecasts (<a href="https://goodjudgment.com/services/futurefirst/">goodjudgment.com</a>); Kalshi institutional API (<a href="https://help.kalshi.com/kalshi-api">help.kalshi.com</a>); ICE–Polymarket institutional data distribution and Signals &amp; Sentiment launch (<a href="https://company.gi/blog/prediction-markets-institutional-land-grab-2026">company.gi — prediction-market land grab</a>).</div>
+<div class="srcl"><b>Advisor / retail tools:</b> Orion Risk Intelligence, ex-HiddenLevers, 100+ scenario library (<a href="https://orion.com/advisor-tech/risk-intelligence">orion.com/advisor-tech/risk-intelligence</a>, <a href="https://www.wealthmanagement.com/financial-technology/orion-acquires-risk-analytics-provider-hiddenlevers">acquisition coverage</a>); Nitrogen/Riskalyze from $99/mo (<a href="https://nitrogenwealth.com/">nitrogenwealth.com</a>); Portfolio Visualizer $30–55/mo (<a href="https://www.portfoliovisualizer.com/pricing">portfoliovisualizer.com/pricing</a>); PortfolioPilot (<a href="https://portfoliopilot.com/">portfoliopilot.com</a>).</div>
+<div class="srcl"><b>Tail-risk / antifragility:</b> Universa Investments background and 2020 return controversy (<a href="https://en.wikipedia.org/wiki/Universa_Investments">Wikipedia — Universa</a>); Artemis Capital Dragon-portfolio research (<a href="https://www.artemiscm.com/">artemiscm.com</a>); Riskthinking.ai stochastic climate scenario engine + Bloomberg partnership (<a href="https://riskthinking.ai/">riskthinking.ai</a>, <a href="https://www.bloomberg.com/company/press/bloomberg-and-riskthinking-ai-launch-physical-risk-indicators-to-reveal-exposure-to-severe-climate-events/">Bloomberg press</a>).</div>
+<div class="srcl"><b>Sector/state sensitivity + validation literature:</b> Fidelity business-cycle sector framework (<a href="https://institutional.fidelity.com/advisors/insights/topics/portfolio-construction/the-business-cycle-approach-to-equity-sector-investing">institutional.fidelity.com</a>); regime-based allocation literature 2024–25 — Bouyé &amp; Teiletche, Regime-Based Strategic Asset Allocation (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4801115">SSRN 4801115</a>); Shu et al., statistical jump models for regime signals (<a href="https://arxiv.org/html/2402.05272v2">arXiv 2402.05272</a>); LLM counterfactual stress-scenario generation (<a href="https://arxiv.org/html/2512.07867v1">arXiv 2512.07867</a>); AI wargaming momentum — JHU APL GenWar (<a href="https://www.jhuapl.edu/news/news-releases/251030-genwar-lab">jhuapl.edu</a>), USAF AI wargaming platform RFI (<a href="https://defensescoop.com/2025/08/13/air-force-wargaming-ai-saas-platform-rfi/">defensescoop.com</a>).</div>
+<div class="srcl"><b>Market sizing:</b> risk analytics ~$32B 2025 → $51B 2030 (<a href="https://www.marketsandmarkets.com/Market-Reports/risk-analytics-market-210662258.html">MarketsandMarkets</a>); portfolio risk-management software $3.1B 2023 → $12.9B 2030 (<a href="https://www.verifiedmarketresearch.com/product/portfolio-risk-management-software-market/">Verified Market Research</a>).</div>
+<div class="srcl"><b>Internal raw material:</b> <a href="meta-engine-design_2026-06-29.html">Meta-Engine Design</a> (5-layer engine, 19-layer manifest, 5-type crisis classifier, ~30 episodes, 4-shelf library); <a href="next-state-engine_2026-07-03.html">The Next-State Engine</a> (state grammar, JST-pooled transition kernel, M(S)=B×Φ(S), entropy→Kelly, ~9-week build plan); <a href="plausible-worlds-engine_2026-07-03.html">The Plausible-Worlds Engine</a> (CCA + causal-story rules, archetype catalog, entropy pooling, 4-channel pricing, backcast validation, ~10-week build plan); <a href="../research/credit_analyst_feasibility_report_2026-06-30.html#appendix-commercial">Credit-report commercial appendix</a> (the format and sequencing philosophy this appendix extends).</div>
+
+<p class="footnote" style="margin-top:18px">All market sizes, revenue ranges, and incumbent pricing in this appendix are rough estimates assembled for planning, not diligence; error bars of ±50–100% should be assumed throughout, single-deal options are bimodal around zero, and every revenue figure is conditional on the engines first clearing their own pre-registered validation gates — a condition with genuine failure probability that no commercial enthusiasm should be allowed to soften.</p>
+
+</div><!-- /apx-wrap -->
+</div><!-- /appendix-commercial -->
+
 </body></html>

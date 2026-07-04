@@ -88,9 +88,9 @@
     "category": "strategies"
   },
   {
-    "date": "2026-06-29",
-    "title": "Bottom-Up Engine \u2014 Framework & Moat Taxonomy",
-    "summary": "Framework for identifying durable compounders: moat taxonomy (network, switching cost, cost advantage, intangible), scoring schema, base-rate analysis, and matched-loser discipline. Companion to the top-down quant engine.",
+    "date": "2026-07-04",
+    "title": "Bottom-Up Engine \u2014 Framework & Moat Taxonomy (v2: + Commercial Directions Appendix)",
+    "summary": "Framework for identifying durable compounders: moat taxonomy (network, switching cost, cost advantage, intangible), scoring schema, base-rate analysis, and matched-loser discipline. Companion to the top-down quant engine. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From the Bottom-Up Engine\u201d: 10 scored options (internal Shelf-4 sleeve, an annual \u201cCompounders & Impostors\u201d base-rate study, a matched-loser database, a multibagger research subscription, a systematic moat-score dataset/API, an AI moat-analyst copilot, a compounder SMA, index/ETF licensing, a book/course, and family-office moat due-diligence advisory) with named incumbents, v0 specs, go-to-market notes, a scoring matrix, and a recommended build sequence.",
     "file": "bottom-up/bottom-up-engine-framework_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "bottom-up"
@@ -104,9 +104,9 @@
     "category": "top-down"
   },
   {
-    "date": "2026-06-29",
-    "title": "Meta-Engine Design \u2014 Framework",
-    "summary": "5-layer top-down quant engine: universe, regime, strategy selection, sizing, and execution. Strategy library with 4-shelf architecture (quant, discretionary, hybrid, research). Interactive 9-tab explorer.",
+    "date": "2026-07-04",
+    "title": "Meta-Engine Design \u2014 Framework (v2: + Commercial Directions Appendix)",
+    "summary": "5-layer top-down quant engine: universe, regime, strategy selection, sizing, and execution. Strategy library with 4-shelf architecture (quant, discretionary, hybrid, research). Interactive 9-tab explorer. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From the Three-Engine Stack\u201d (Meta-Engine + The Next-State Engine + The Plausible-Worlds Engine): 10 scored options (institutional signal feed, world-state simulator, live state dashboard, advisor antifragility scorer, state-beta taxonomy dataset, research subscription, internal overlay, labeled state-panel licensing, wargaming-as-a-service, convexity/mispriced-worlds monitor) with named incumbents, a scoring matrix, a positioning map, and a recommended build sequence.",
     "file": "top-down/meta-engine-design_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "top-down"
