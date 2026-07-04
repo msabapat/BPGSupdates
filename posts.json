@@ -2,7 +2,7 @@
   {
     "date": "2026-07-03",
     "title": "Decline / Recovery / Normal Regime Dashboard",
-    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (Decline %, Recovery %, Normal %) and a Daily/Monthly check-frequency tab (monthly = last Friday of month, Thursday-before if the 1st or a holiday, matching LV/MOM rebalance convention). New default blend weights: Decline 60% T-Bill/40% MR, Recovery 60% LV/40% MR, Normal 60% LV/40% MOM. IS-only 6x5 stats grid (Normal/Decline/Recovery + All-IS/All-OOS, true compounded CAGR), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart. Recovery-to-Decline re-entry requires a genuine new lower low.",
+    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (defaults: Decline 15%, Recovery 20%, Normal 100%) and a Daily/Monthly check-frequency tab sharing the same thresholds and blend weights (monthly = last Friday of month, Thursday-before if the 1st or a holiday). Default blend weights: Decline 60% T-Bill/40% MR, Recovery 60% LV/40% MR, Normal 60% LV/40% MOM. Blend return is now net of transaction cost (5bps/side on regime-switch turnover). IS-only 6x5 stats grid (Normal/Decline/Recovery + All-IS/All-OOS, true compounded CAGR), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart.",
     "file": "strategies/dd_regime_dashboard_2026-07-03.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
