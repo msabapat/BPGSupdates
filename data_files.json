@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-07-05",
+    "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
+    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.5%, IR 0.724, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Now includes signal_70d_return (the actual stage-2 oversold-ranking signal) as its own column, alongside fcf_yield (stage-1 ranking signal) - previously only fcf_yield was output since our CSV logic only auto-included the primary strategy signal, not the secondary-sort signal actually used to pick the 10 stocks.",
+    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-05.csv",
+    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-05.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 16198
+  },
+  {
     "date": "2026-07-04",
     "title": "MOM Strategy — Our Mani-Spec Reproduction (OOS 2022-2026)",
     "description": "Our reproduction of Mani's disclosed MOM spec (N=500, highest mom_6m1m signal, weekly Friday rebalance, positive FCF required, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after this week's full reconciliation fix set. Shown here: OOS 2022-2026 holdings and daily returns. Our OOS CAGR +45.0%, OOS MaxDD -40.8% (near-exact match) vs. Mani's published OOS CAGR +42.4%, OOS MaxDD -40.78%. Compare directly against Mani's mom_500_fcf0_final_pit_2026-07-02.csv above.",
@@ -25,15 +34,6 @@
     "filename": "MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-04.csv",
     "owner": "Arvind Rajan",
     "size_kb": 4191
-  },
-  {
-    "date": "2026-07-04",
-    "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
-    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.5%, IR 0.724, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Point-in-time corrected: net_debt_to_mcap/interest_coverage were previously gated by an unrelated revenue-growth outlier filter, causing the ASOF join to sometimes select a filing 1-2 quarters (100-300 days) stale even when a valid newer filing existed. Fixed by splitting these fields into an independent, unfiltered point-in-time join.",
-    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-04.csv",
-    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-04.csv",
-    "owner": "Mani Sabapathi",
-    "size_kb": 15512
   },
   {
     "date": "2026-07-02",
