@@ -9,31 +9,31 @@
     "size_kb": 16198
   },
   {
-    "date": "2026-07-04",
-    "title": "MOM Strategy — Our Mani-Spec Reproduction (OOS 2022-2026)",
-    "description": "Our reproduction of Mani's disclosed MOM spec (N=500, highest mom_6m1m signal, weekly Friday rebalance, positive FCF required, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after this week's full reconciliation fix set. Shown here: OOS 2022-2026 holdings and daily returns. Our OOS CAGR +45.0%, OOS MaxDD -40.8% (near-exact match) vs. Mani's published OOS CAGR +42.4%, OOS MaxDD -40.78%. Compare directly against Mani's mom_500_fcf0_final_pit_2026-07-02.csv above.",
-    "file": "arvind/MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-04.csv",
-    "filename": "MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-04.csv",
+    "date": "2026-07-05",
+    "title": "MOM Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
+    "description": "Our reproduction of Mani's disclosed MOM spec (N=500, highest mom_6m1m signal, weekly Friday rebalance, positive FCF required, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +14.8%, OOS CAGR +44.4%, OOS MaxDD -40.8% (near-exact match) vs. Mani's published IS CAGR +15.4%, OOS CAGR +42.4%, OOS MaxDD -40.78%. Compare directly against Mani's mom_500_fcf0_final_pit_2026-07-02.csv above.",
+    "file": "arvind/MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-05.csv",
+    "filename": "MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-05.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 3772
+    "size_kb": 21612
   },
   {
-    "date": "2026-07-04",
-    "title": "LV Strategy — Our Mani-Spec Reproduction (OOS 2022-2026)",
-    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, monthly last-Friday rebalance [corrected mid-reconciliation after finding his published header said weekly but his actual run rebalances monthly], FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after this week's full reconciliation fix set. Shown here: OOS 2022-2026 holdings and daily returns. Our OOS CAGR +13.7%, IS CAGR +11.6% / IS MaxDD -34.4% (computed separately) vs. Mani's published OOS CAGR +10.4%, IS CAGR +11.90% / IS MaxDD -31.52%. Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-02.csv above.",
-    "file": "arvind/LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-04.csv",
-    "filename": "LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-04.csv",
+    "date": "2026-07-05",
+    "title": "LV Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
+    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, monthly last-Friday rebalance [corrected mid-reconciliation after finding his published header said weekly but his actual run rebalances monthly], FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +11.6%, OOS CAGR +13.4% vs. Mani's published IS CAGR +12.0%, OOS CAGR +10.4%. Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-02.csv above.",
+    "file": "arvind/LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-05.csv",
+    "filename": "LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-05.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 3589
+    "size_kb": 20680
   },
   {
-    "date": "2026-07-04",
-    "title": "MR Strategy — Our Mani-Spec Reproduction (OOS 2022-2026)",
-    "description": "Our reproduction of Mani's disclosed MR spec (N=1500, Stage-1 top-200 FCF yield, Stage-2 10 most oversold on 70d return, FCF>=2%, net debt<=1x, $20M DV floor, min_price>=$2 entry / $0.50 exit, daily rebalance), run against our master_prices_computed after this week's full reconciliation fix set (ASOF join direction, revenue sticky-pass, hard-exit screens, dual-class per-date tie-break, min_exit_price). Shown here: OOS 2022-2026 holdings and daily returns. Our OOS CAGR +14.4%, IS Sharpe 0.73 (computed separately, full IS 2001-2021 not included in this file) vs. Mani's published OOS CAGR +13.0%. Compare directly against Mani's mr_fcf200_mr10_vol20_final_pit_2026-07-02.csv above.",
-    "file": "arvind/MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-04.csv",
-    "filename": "MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-04.csv",
+    "date": "2026-07-05",
+    "title": "MR Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
+    "description": "Our reproduction of Mani's disclosed MR spec (N=1500, Stage-1 top-200 FCF yield, Stage-2 10 most oversold on 70d return, FCF>=2%, net debt<=1x, $20M DV floor, min_price>=$2 entry / $0.50 exit, daily rebalance), run against our master_prices_computed after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +29.7%, OOS CAGR +14.3% vs. Mani's published IS CAGR +28.5%, OOS CAGR +12.9%. Compare directly against Mani's mr_fcf200_mr10_vol20_final_pit_2026-07-02.csv above.",
+    "file": "arvind/MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-05.csv",
+    "filename": "MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-05.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 4191
+    "size_kb": 24412
   },
   {
     "date": "2026-07-02",
