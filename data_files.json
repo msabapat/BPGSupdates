@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-07-06",
+    "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
+    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=$20M. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.8%, IR 0.732, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Fixes a false-zero bug in net_debt_to_mcap: filings with debt/cashneq both unreported (but marketcap still present) were computing (0-0)/mcap=0.0 -- reading as debt-free -- instead of NULL. Confirmed on TYC's 2002-02-14 filing: debt/cashneq NULL, letting the stock read as zero net debt for ~3 months (Feb-May 2002) right before the Kozlowski-era accounting scandal broke, when it was actually one of the most levered names in the index. Also fixed the max_net_debt_to_mcap SQL screen, which previously treated NULL as an automatic pass (now excludes, consistent with fcf_yield/ebit_yield). IS CAGR/IR improved slightly (+28.5%->+28.8%, 0.724->0.732) as TYC's holding shrank/dropped from that window; 2002 annual return improved from +16.6% to +24.1%.",
+    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv",
+    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 16201
+  },
+  {
     "date": "2026-07-05",
     "title": "MR Stage-1 (FCF-yield) Pool — Full Eligible List, 2003-12-10",
     "description": "Every ticker that clears our MR Mani-spec screens (domestic rank<=1500, DV>=$20M(+7%/yr) via combined dual-class volume, mcap>=$500M(+7%/yr), revenue>=$50M(+7%/yr), net debt<=1x, FCF yield>=2%, price>=$2) on 2026-07-05's MR reconciliation investigation date 2003-12-10, ranked by fcf_yield_ttm descending (361 names). STX ranks #195 here (comfortably inside our top-200 Stage-1 cutoff) and is the #1 most-oversold Stage-2 pick that day (signal_70d_return -27.0%) -- yet Mani's own disclosed CSV shows no STX holding at all until 2004-04-23. Shared so Mani's Claude can check its own eligible list against ours on this exact date and help pin down the divergence.",
@@ -34,15 +43,6 @@
     "filename": "lv_600_fcf5_final_pit_2026-07-05.csv",
     "owner": "Mani Sabapathi",
     "size_kb": 15737
-  },
-  {
-    "date": "2026-07-05",
-    "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
-    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.5%, IR 0.724, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Now includes signal_70d_return (the actual stage-2 oversold-ranking signal) as its own column, alongside fcf_yield (stage-1 ranking signal) - previously only fcf_yield was output since our CSV logic only auto-included the primary strategy signal, not the secondary-sort signal actually used to pick the 10 stocks.",
-    "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-05.csv",
-    "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-05.csv",
-    "owner": "Mani Sabapathi",
-    "size_kb": 16198
   },
   {
     "date": "2026-07-05",
