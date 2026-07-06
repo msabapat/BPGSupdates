@@ -1,6 +1,60 @@
 [
   {
     "date": "2026-07-06",
+    "title": "Blend D (5-bucket quintile) — OOS Summary (2022-2026)",
+    "description": "Blend D daily returns, OOS period. Same config as the IS summary above. OOS 2022-2026: CAGR +24.9%, Vol 18.8%, IR 1.328, MaxDD -22.2% (regime mix Q1=0%/Q2=0%/Q3=11%/Q4=19%/Q5=70%). Rerun 2026-07-06 with all July reconciliation-cycle fixes.",
+    "file": "mani/blend_d_oos_summary_2026-07-06.csv",
+    "filename": "blend_d_oos_summary_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 128
+  },
+  {
+    "date": "2026-07-06",
+    "title": "Blend D (5-bucket quintile) — IS Summary (2001-2021)",
+    "description": "Blend D daily returns, IS period. Regime weights by SPY 3yr rolling percentile quintile (prior month-end): Q1<=20% TBill60/MR40, Q2/Q3 (20-60%) LV60/MR40, Q4/Q5 (>60%) LV60/MOM40. IS 2001-2021: CAGR +23.5%, Vol 18.1%, IR 1.294, MaxDD -29.8% (regime mix Q1=11%/Q2=9%/Q3=6%/Q4=7%/Q5=67%). Outperforms Blend C on every IS/OOS metric in this rerun -- recorded here as a comparison point, not yet adopted as the production config. Rerun 2026-07-06 with all July reconciliation-cycle fixes.",
+    "file": "mani/blend_d_IS_summary_2026-07-06.csv",
+    "filename": "blend_d_IS_summary_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 608
+  },
+  {
+    "date": "2026-07-06",
+    "title": "Blend C — OOS Summary (2022-2026)",
+    "description": "Blend C daily returns, OOS period. Same config as the IS summary above. OOS 2022-2026: CAGR +24.0%, Vol 18.6%, IR 1.290, MaxDD -22.2% (regime mix Bot25=0%/Mid50=30%/Top25=70%). Rerun 2026-07-06 with all July reconciliation-cycle fixes.",
+    "file": "mani/blend_oos_summary_2026-07-06.csv",
+    "filename": "blend_oos_summary_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 128
+  },
+  {
+    "date": "2026-07-06",
+    "title": "Blend C — IS Summary (2001-2021)",
+    "description": "Blend C daily returns, IS period. Regime weights by SPY 3yr rolling percentile (prior month-end): Bottom25% TBill60/MR40, Middle50% LV60/MOM20/MR20, Top25% LV60/MOM40. IS 2001-2021: CAGR +21.1%, Vol 17.6%, IR 1.199, MaxDD -30.0% (regime mix Bot25=13%/Mid50=19%/Top25=68%). Rerun 2026-07-06 with all July reconciliation-cycle fixes (filing-lag, revenue screen, net_debt/interest_coverage false-gating, MR stage-2 signal, holiday-rebalance snap, net_debt_to_mcap false-zero, fcf/ebit forward-fill) baked into LV/MOM/MR inputs.",
+    "file": "mani/blend_IS_summary_2026-07-06.csv",
+    "filename": "blend_IS_summary_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 609
+  },
+  {
+    "date": "2026-07-06",
+    "title": "MOM Strategy — Top-500 Domestic, FCF>0%",
+    "description": "Momentum (6m1m) backtest results. Universe: top-500 domestic, positive FCF, weekly rebalance (drift-hold between rebals), N=10. IS 2001-2021: CAGR +14.6%, IR 0.527, MaxDD -62.0%. OOS 2022-2026: CAGR +41.7%, IR 1.071, MaxDD -40.8%. Rerun with this cycle's net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix baked in (MOM doesn't screen on net debt and uses only a 0% FCF floor, so the move is small: IS CAGR 15.11%->14.59%, OOS roughly flat).",
+    "file": "mani/mom_500_fcf0_final_pit_2026-07-06.csv",
+    "filename": "mom_500_fcf0_final_pit_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 15831
+  },
+  {
+    "date": "2026-07-06",
+    "title": "LV Strategy — Top-600 Domestic, FCF>5%",
+    "description": "Low Volatility backtest results. Universe: top-600 domestic, FCF>5%, weekly rebalance (drift-hold between rebals), N=10. IS 2001-2021: CAGR +12.1%, IR 0.963, MaxDD -32.0%. OOS 2022-2026: CAGR +10.7%, IR 0.900, MaxDD -12.5%. Rerun with this cycle's net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix baked in (LV doesn't screen on either field directly, so the move is small: IS CAGR 12.17%->12.06%, OOS unchanged).",
+    "file": "mani/lv_600_fcf5_final_pit_2026-07-06.csv",
+    "filename": "lv_600_fcf5_final_pit_2026-07-06.csv",
+    "owner": "Mani Sabapathi",
+    "size_kb": 15735
+  },
+  {
+    "date": "2026-07-06",
     "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
     "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=$20M. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +29.6%, IR 0.751, MaxDD -74.8%. OOS 2022-2026: CAGR +14.3%, IR 0.416, MaxDD -34.6%. Second fix this cycle: fcf_ttm/ebit_ttm (ART dimension) were previously reset to NULL whenever a newer filing reported one field but not the other (e.g. STX 2003-11-14: ebit reported, fcf blank), even though the real trailing FCF hadn't changed. Confirmed via Arvind's STX divergence report (STX ranks #195/#181 in their Stage-1 pool on 2003-12-10/2004-01-21 with fcf_yield_ttm ~4.9-5.4%, but was absent from our disclosed holdings until 2004-04-23 due to this false fcf_yield=NULL exclusion). Fixed with an independent forward-fill for fcf_ttm and ebit_ttm, capped at 100 days since the field was last reported (bridges one missed quarter; falls back to NULL rather than a stale multi-quarter-old number beyond that). Broader impact than the prior net_debt_to_mcap fix -- affects both IS and OOS.",
     "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv",
@@ -25,24 +79,6 @@
     "filename": "MR_stage1_pool_2004-01-21_full_2026-07-05.csv",
     "owner": "Arvind Rajan",
     "size_kb": 92
-  },
-  {
-    "date": "2026-07-05",
-    "title": "MOM Strategy — Top-500 Domestic, FCF>0%",
-    "description": "Momentum (6m1m) backtest results. Universe: top-500 domestic stocks by market cap, positive FCF. Weekly Friday rebalance (drift-hold between rebals), N=10. IS 2001-2021: CAGR +15.1%, IR 0.547, MaxDD -60.0%. OOS 2022-2026: CAGR +41.6%, IR 1.065, MaxDD -40.8%. Fixed: holiday Fridays (e.g. Good Friday) now correctly snap the rebalance back to Thursday instead of silently skipping that week's rebalance entirely.",
-    "file": "mani/mom_500_fcf0_final_pit_2026-07-05.csv",
-    "filename": "mom_500_fcf0_final_pit_2026-07-05.csv",
-    "owner": "Mani Sabapathi",
-    "size_kb": 15824
-  },
-  {
-    "date": "2026-07-05",
-    "title": "LV Strategy — Top-600 Domestic, FCF>5%",
-    "description": "Low Volatility backtest results. Universe: top-600 domestic stocks by market cap, FCF yield >5%. Weekly Friday rebalance (drift-hold between rebals), N=10, 60d vol signal. IS 2001-2021: CAGR +12.2%, IR 0.973, MaxDD -32.0%. OOS 2022-2026: CAGR +10.7%, IR 0.900, MaxDD -12.5%. Fixed: holiday Fridays (e.g. Good Friday) now correctly snap the rebalance back to Thursday instead of silently skipping that week's rebalance entirely.",
-    "file": "mani/lv_600_fcf5_final_pit_2026-07-05.csv",
-    "filename": "lv_600_fcf5_final_pit_2026-07-05.csv",
-    "owner": "Mani Sabapathi",
-    "size_kb": 15737
   },
   {
     "date": "2026-07-05",
