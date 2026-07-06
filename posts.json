@@ -2,7 +2,7 @@
   {
     "date": "2026-07-06",
     "title": "LV / MOM / MR \u2014 Arvind's Reproduction vs Our Updated Results",
-    "summary": "Table-only comparison of Arvind's 'Our Mani-spec' reproduction (from his 2026-07-04 posts) against our own canonical results re-run 2026-07-06 with the net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied.",
+    "summary": "Table-only comparison of Arvind's 'Our Mani-spec' reproduction (from his 2026-07-04 posts) against our own canonical results re-run 2026-07-06 with the net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied. Sharpe/Sortino for 'Our updated' now net out the T-bill risk-free rate.",
     "file": "strategies/arvind_vs_updated_compare_2026-07-06_2026-07-06.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
