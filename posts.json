@@ -1,8 +1,16 @@
 [
   {
+    "date": "2026-07-06",
+    "title": "LV / MOM / MR \u2014 Arvind's Reproduction vs Our Updated Results",
+    "summary": "Table-only comparison of Arvind's 'Our Mani-spec' reproduction (from his 2026-07-04 posts) against our own canonical results re-run 2026-07-06 with the net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied.",
+    "file": "strategies/arvind_vs_updated_compare_2026-07-06_2026-07-06.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
     "date": "2026-07-04",
     "title": "MR: Our Mani-Spec Reproduction vs Mani's Actual Run vs SPY",
-    "summary": "Direct comparison of Mani's actual published MR daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark) — the cleanest read on how close the two independently-built systems are after this week's reconciliation fixes (screen hard-exit conventions, ASOF join direction, revenue sticky-pass, dual-class tie-break, min_exit_price). Reconstruction validated against Mani's own summary stats before use.",
+    "summary": "Direct comparison of Mani's actual published MR daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark) \u2014 the cleanest read on how close the two independently-built systems are after this week's reconciliation fixes (screen hard-exit conventions, ASOF join direction, revenue sticky-pass, dual-class tie-break, min_exit_price). Reconstruction validated against Mani's own summary stats before use.",
     "file": "strategies/mr_mani_actual_vs_ours_2026-07-04.html",
     "author": "Arvind Rajan",
     "category": "strategies"
@@ -25,16 +33,16 @@
   },
   {
     "date": "2026-07-03",
-    "title": "The Plausible-Worlds Engine — Simulating World States, Not Price Paths",
-    "summary": "Essay II. An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states — including states that have never occurred — governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to Meta-Engine Design and Essay I, The Next-State Engine.",
+    "title": "The Plausible-Worlds Engine \u2014 Simulating World States, Not Price Paths",
+    "summary": "Essay II. An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states \u2014 including states that have never occurred \u2014 governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to Meta-Engine Design and Essay I, The Next-State Engine.",
     "file": "top-down/plausible-worlds-engine_2026-07-03.html",
     "author": "Arvind Rajan",
     "category": "top-down"
   },
   {
     "date": "2026-07-03",
-    "title": "The Next-State Engine — From Crisis Detection to State Anticipation",
-    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world — macro, political, structural — and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
+    "title": "The Next-State Engine \u2014 From Crisis Detection to State Anticipation",
+    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world \u2014 macro, political, structural \u2014 and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
     "file": "top-down/next-state-engine_2026-07-03.html",
     "author": "Arvind Rajan",
     "category": "top-down"
