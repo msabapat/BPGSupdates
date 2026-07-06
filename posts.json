@@ -10,7 +10,7 @@
   {
     "date": "2026-07-04",
     "title": "LV: Our Mani-Spec Reproduction vs Mani's Actual Run vs SPY",
-    "summary": "Direct comparison of Mani's actual published LV daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark), post-reconciliation fixes. Rebalance corrected 2026-07-05 to weekly (Friday, snapping to Thursday on a market holiday), matching his disclosed run-parameters header -- an earlier assumption that he actually rebalances monthly was wrong.",
+    "summary": "Direct comparison of Mani's actual published LV daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark), post-reconciliation fixes. Rebalance corrected 2026-07-05 to weekly (Friday, snapping to Thursday on a market holiday), matching his disclosed run-parameters header -- an earlier assumption that he actually rebalances monthly was wrong. Mani independently found and fixed the identical holiday-snap bug on his own system the same day; IS now matches to within 0.05pp on CAGR and MaxDD, OOS MaxDD exact to the basis point -- the tightest match found anywhere in this reconciliation effort.",
     "file": "strategies/lv_mani_actual_vs_ours_2026-07-04.html",
     "author": "Arvind Rajan",
     "category": "strategies"
