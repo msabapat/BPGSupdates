@@ -38,11 +38,11 @@
   {
     "date": "2026-07-05",
     "title": "LV Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
-    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, monthly last-Friday rebalance [corrected mid-reconciliation after finding his published header said weekly but his actual run rebalances monthly], FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +11.6%, OOS CAGR +13.4% vs. Mani's published IS CAGR +12.0%, OOS CAGR +10.4%. Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-02.csv above.",
-    "file": "arvind/LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-05.csv",
-    "filename": "LV_N600_X10_vol60_sigMLF_trdMLF_buf2_fcf5_px2_selections_2026-07-05.csv",
+    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, weekly Friday rebalance [corrected 2026-07-05 -- the earlier 'monthly' call was wrong; prices and constituents drift too much intra-week for monthly to be right; snaps to Thursday if Friday is a market holiday], FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +12.1%, IS MaxDD -32.0%, OOS CAGR +11.9%, OOS MaxDD -12.5% vs. Mani's published IS CAGR +11.9%, IS MaxDD -31.5%, OOS CAGR +10.4%, OOS MaxDD -12.5% (near-exact MaxDD match). Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-02.csv above.",
+    "file": "arvind/LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-05.csv",
+    "filename": "LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-05.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 20680
+    "size_kb": 21288
   },
   {
     "date": "2026-07-05",

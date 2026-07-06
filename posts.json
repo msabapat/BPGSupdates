@@ -10,7 +10,7 @@
   {
     "date": "2026-07-04",
     "title": "LV: Our Mani-Spec Reproduction vs Mani's Actual Run vs SPY",
-    "summary": "Direct comparison of Mani's actual published LV daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark), post-reconciliation fixes. Includes the monthly-rebalance correction (his published run parameters header says weekly, but his actual run rebalances monthly).",
+    "summary": "Direct comparison of Mani's actual published LV daily returns against our own reproduction using his disclosed parameters (and SPY as benchmark), post-reconciliation fixes. Rebalance corrected 2026-07-05 to weekly (Friday, snapping to Thursday on a market holiday), matching his disclosed run-parameters header -- an earlier assumption that he actually rebalances monthly was wrong.",
     "file": "strategies/lv_mani_actual_vs_ours_2026-07-04.html",
     "author": "Arvind Rajan",
     "category": "strategies"
