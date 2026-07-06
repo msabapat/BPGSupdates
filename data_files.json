@@ -81,30 +81,30 @@
     "size_kb": 92
   },
   {
-    "date": "2026-07-05",
+    "date": "2026-07-06",
     "title": "MOM Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
-    "description": "Our reproduction of Mani's disclosed MOM spec (N=500, highest mom_6m1m signal, weekly Friday rebalance, positive FCF required, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +14.8%, OOS CAGR +44.4%, OOS MaxDD -40.8% (near-exact match) vs. Mani's published IS CAGR +15.4%, OOS CAGR +42.4%, OOS MaxDD -40.78%. Compare directly against Mani's mom_500_fcf0_final_pit_2026-07-02.csv above.",
-    "file": "arvind/MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-05.csv",
-    "filename": "MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-05.csv",
+    "description": "Our reproduction of Mani's disclosed MOM spec (N=500, highest mom_6m1m signal, weekly Friday rebalance, positive FCF required, no net-debt cap, $5M DV floor, min_price>=$2 entry), rebuilt 2026-07-06 with two date-alignment fixes standardized across all strategies: weekly signal/trade now starts on the first target weekday (2001-01-05) instead of forcing the first trading day (2001-01-02), and holiday-Friday snapping now goes backward to Thursday (matches Mani's convention) instead of forward. Also compared against Mani's latest ground truth (his net_debt_to_mcap false-zero fix + fcf/ebit forward-fill fix, both 2026-07-06), truncated to his data's actual end date (2026-06-08) for an apples-to-apples window. Our IS CAGR +15.0% vs Mani +14.6% (0.4pp), IS MaxDD -60.0% vs -62.0% (a new, real gap that appeared from his latest fix -- worth investigating). OOS CAGR +41.7% vs +41.7% (near-exact), OOS MaxDD -40.8% vs -40.8% (exact). Compare directly against Mani's mom_500_fcf0_final_pit_2026-07-06.csv above.",
+    "file": "arvind/MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-06.csv",
+    "filename": "MOM_N500_X10_mom6m1m_fcf0_px2_sigW_trdW_buf2_wdF_selections_2026-07-06.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 21612
+    "size_kb": 22444
   },
   {
-    "date": "2026-07-05",
+    "date": "2026-07-06",
     "title": "LV Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
-    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, weekly Friday rebalance [corrected 2026-07-05 -- the earlier 'monthly' call was wrong; prices and constituents drift too much intra-week for monthly to be right; snaps to Thursday if Friday is a market holiday], FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), run after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +12.13%, IS MaxDD -31.98%, OOS CAGR +11.94%, OOS MaxDD -12.50% vs. Mani's corrected (2026-07-05) published IS CAGR +12.17%, IS MaxDD -32.00%, OOS CAGR +10.68%, OOS MaxDD -12.50% -- IS now matches to within 0.05pp on both CAGR and MaxDD, OOS MaxDD exact to the basis point. Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-05.csv above.",
-    "file": "arvind/LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-05.csv",
-    "filename": "LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-05.csv",
+    "description": "Our reproduction of Mani's disclosed LV spec (N=600, lowest 60d realized-vol signal, weekly Friday rebalance, FCF>=5%, no net-debt cap, $5M DV floor, min_price>=$2 entry), rebuilt 2026-07-06 with the same two date-alignment fixes as MOM (first-Friday start, backward holiday-snap -- both confirmed against Mani's actual CSV start date and his own independent holiday-snap bug fix). Compared against Mani's latest ground truth (net_debt_to_mcap false-zero + fcf/ebit forward-fill fixes, 2026-07-06), truncated to his data's actual end date (2026-06-08). Our IS CAGR +12.2% vs Mani +12.1% (0.12pp), IS MaxDD -32.0% vs -32.0% (exact). OOS CAGR +10.7% vs +10.7% (0.03pp), OOS MaxDD -12.5% vs -12.5% (exact) -- still the tightest match of the three strategies. Compare directly against Mani's lv_600_fcf5_final_pit_2026-07-06.csv above.",
+    "file": "arvind/LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-06.csv",
+    "filename": "LV_N600_X10_vol60_sigW_trdW_buf2_wdF_fcf5_px2_selections_2026-07-06.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 21288
+    "size_kb": 21996
   },
   {
-    "date": "2026-07-05",
+    "date": "2026-07-06",
     "title": "MR Strategy — Our Mani-Spec Reproduction (IS+OOS, 2001-2026)",
-    "description": "Our reproduction of Mani's disclosed MR spec (N=1500, Stage-1 top-200 FCF yield, Stage-2 10 most oversold on 70d return, FCF>=2%, net debt<=1x, $20M DV floor, min_price>=$2 entry / $0.50 exit, daily rebalance), run against our master_prices_computed after the market-cap anchor fix and IS/OOS continuity fix (one continuous backtest, not two cold-started runs). Shown here: full IS 2001-2021 + OOS 2022-2026 holdings and daily returns in one file. Our IS CAGR +29.7%, OOS CAGR +14.3% vs. Mani's published IS CAGR +28.5%, OOS CAGR +12.9%. Compare directly against Mani's mr_fcf200_mr10_vol20_final_pit_2026-07-02.csv above.",
-    "file": "arvind/MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-05.csv",
-    "filename": "MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-05.csv",
+    "description": "Our reproduction of Mani's disclosed MR spec (N=1500, Stage-1 top-200 FCF yield, Stage-2 10 most oversold on 70d return, FCF>=2%, net debt<=1x, $20M DV floor, min_price>=$2 entry / $0.50 exit, daily rebalance). Compared against Mani's latest ground truth (2026-07-06): his net_debt_to_mcap false-zero fix (TYC 2002 window, found via our shared investigation) and fcf/ebit forward-fill fix (STX 2003-2004 window, found via the stage-1 pool lists we shared with him directly) are now both baked in. Truncated to his data's actual end date (2026-06-08) for an apples-to-apples window. Our IS CAGR +29.9% vs Mani +29.6% (0.35pp) -- IS MaxDD -74.8% vs -74.8% (essentially exact, the tightest IS match found yet for MR). But OOS now shows a NEW, real gap that wasn't there before his latest fix: our OOS CAGR +12.9% vs Mani's +14.3% (1.46pp), OOS MaxDD -37.9% vs -34.6% (3.25pp) -- worth investigating further, since this diverged rather than converged after his fcf/ebit fix. Compare directly against Mani's mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv above.",
+    "file": "arvind/MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-06.csv",
+    "filename": "MR_N1500_C200_X10_fcfttm_ret70_fcf2_px2_sigD_trdD_buf2_selections_2026-07-06.csv",
     "owner": "Arvind Rajan",
-    "size_kb": 24412
+    "size_kb": 25288
   }
 ]
