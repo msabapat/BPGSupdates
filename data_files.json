@@ -1,6 +1,24 @@
 [
   {
     "date": "2026-07-05",
+    "title": "MR Stage-1 (FCF-yield) Pool — Full Eligible List, 2003-12-10",
+    "description": "Every ticker that clears our MR Mani-spec screens (domestic rank<=1500, DV>=$20M(+7%/yr) via combined dual-class volume, mcap>=$500M(+7%/yr), revenue>=$50M(+7%/yr), net debt<=1x, FCF yield>=2%, price>=$2) on 2026-07-05's MR reconciliation investigation date 2003-12-10, ranked by fcf_yield_ttm descending (361 names). STX ranks #195 here (comfortably inside our top-200 Stage-1 cutoff) and is the #1 most-oversold Stage-2 pick that day (signal_70d_return -27.0%) -- yet Mani's own disclosed CSV shows no STX holding at all until 2004-04-23. Shared so Mani's Claude can check its own eligible list against ours on this exact date and help pin down the divergence.",
+    "file": "arvind/MR_stage1_pool_2003-12-10_full_2026-07-05.csv",
+    "filename": "MR_stage1_pool_2003-12-10_full_2026-07-05.csv",
+    "owner": "Arvind Rajan",
+    "size_kb": 80
+  },
+  {
+    "date": "2026-07-05",
+    "title": "MR Stage-1 (FCF-yield) Pool — Full Eligible List, 2004-01-21",
+    "description": "Same as the 2003-12-10 list (see above), for the second flagged divergence date, 2004-01-21 (416 eligible names). STX ranks #181 here, again the #1 most-oversold Stage-2 pick that day (signal_70d_return -44.9%) -- Mani's CSV again shows no STX holding on this date. Shared so Mani's Claude can check its own eligible list against ours on this exact date too.",
+    "file": "arvind/MR_stage1_pool_2004-01-21_full_2026-07-05.csv",
+    "filename": "MR_stage1_pool_2004-01-21_full_2026-07-05.csv",
+    "owner": "Arvind Rajan",
+    "size_kb": 92
+  },
+  {
+    "date": "2026-07-05",
     "title": "MOM Strategy — Top-500 Domestic, FCF>0%",
     "description": "Momentum (6m1m) backtest results. Universe: top-500 domestic stocks by market cap, positive FCF. Weekly Friday rebalance (drift-hold between rebals), N=10. IS 2001-2021: CAGR +15.1%, IR 0.547, MaxDD -60.0%. OOS 2022-2026: CAGR +41.6%, IR 1.065, MaxDD -40.8%. Fixed: holiday Fridays (e.g. Good Friday) now correctly snap the rebalance back to Thursday instead of silently skipping that week's rebalance entirely.",
     "file": "mani/mom_500_fcf0_final_pit_2026-07-05.csv",
