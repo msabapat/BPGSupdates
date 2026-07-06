@@ -2,11 +2,11 @@
   {
     "date": "2026-07-06",
     "title": "MR Strategy — FCF Top-200, 10 Most Oversold",
-    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=$20M. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +28.8%, IR 0.732, MaxDD -75.1%. OOS 2022-2026: CAGR +12.9%, IR 0.370, MaxDD -37.6%. Fixes a false-zero bug in net_debt_to_mcap: filings with debt/cashneq both unreported (but marketcap still present) were computing (0-0)/mcap=0.0 -- reading as debt-free -- instead of NULL. Confirmed on TYC's 2002-02-14 filing: debt/cashneq NULL, letting the stock read as zero net debt for ~3 months (Feb-May 2002) right before the Kozlowski-era accounting scandal broke, when it was actually one of the most levered names in the index. Also fixed the max_net_debt_to_mcap SQL screen, which previously treated NULL as an automatic pass (now excludes, consistent with fcf_yield/ebit_yield). IS CAGR/IR improved slightly (+28.5%->+28.8%, 0.724->0.732) as TYC's holding shrank/dropped from that window; 2002 annual return improved from +16.6% to +24.1%.",
+    "description": "Mean Reversion backtest results. Universe: top-1500 domestic, FCF>2%, net debt <=1x, vol >=$20M. Stage-1: top-200 by FCF yield. Stage-2: 10 most oversold. Daily rebalance. IS 2001-2021: CAGR +29.6%, IR 0.751, MaxDD -74.8%. OOS 2022-2026: CAGR +14.3%, IR 0.416, MaxDD -34.6%. Second fix this cycle: fcf_ttm/ebit_ttm (ART dimension) were previously reset to NULL whenever a newer filing reported one field but not the other (e.g. STX 2003-11-14: ebit reported, fcf blank), even though the real trailing FCF hadn't changed. Confirmed via Arvind's STX divergence report (STX ranks #195/#181 in their Stage-1 pool on 2003-12-10/2004-01-21 with fcf_yield_ttm ~4.9-5.4%, but was absent from our disclosed holdings until 2004-04-23 due to this false fcf_yield=NULL exclusion). Fixed with an independent forward-fill for fcf_ttm and ebit_ttm, capped at 100 days since the field was last reported (bridges one missed quarter; falls back to NULL rather than a stale multi-quarter-old number beyond that). Broader impact than the prior net_debt_to_mcap fix -- affects both IS and OOS.",
     "file": "mani/mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv",
     "filename": "mr_fcf200_mr10_vol20_final_pit_2026-07-06.csv",
     "owner": "Mani Sabapathi",
-    "size_kb": 16201
+    "size_kb": 16200
   },
   {
     "date": "2026-07-05",
