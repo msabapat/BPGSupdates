@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-07-07",
+    "title": "Individual Stocks \u2014 1yr-DTE / 6-Month Hold Delta Sweep",
+    "summary": "AAPL / NVDA / KO, 5/10/15/25/50 delta, quarterly+January expiries [240,480]d, hold up to 6mo. Includes excess-return driver scatter plots per holding horizon.",
+    "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
     "date": "2026-07-06",
     "title": "LV / MOM / MR \u2014 Arvind's Reproduction vs Our Updated Results",
     "summary": "Table-only comparison of Arvind's 'Our Mani-spec' reproduction (from his 2026-07-04 posts) against our own canonical results re-run 2026-07-06 with the net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied. Sharpe/Sortino for 'Our updated' now net out the T-bill risk-free rate.",
