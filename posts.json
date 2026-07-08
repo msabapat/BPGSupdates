@@ -1,6 +1,29 @@
 [
   {
     "date": "2026-07-07",
+    "title": "Decline / Recovery / Normal Regime Dashboard",
+    "summary": "Update from 2026-07-03: refreshed with the cleaned-up LV/MOM/MR runs (net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied). Same interactive drawdown regime explorer (3 sliders, Daily/Monthly tabs, regime-shaded charts) with updated stats grid.",
+    "file": "strategies/dd_regime_dashboard_2026-07-07.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-07",
+    "title": "Regime Analysis Dashboard",
+    "summary": "Update from 2026-06-29: refreshed with the cleaned-up LV/MOM/MR runs (net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied). Same 6-dimension regime breakdown (SPY drawdown, VIX, trend, momentum, breadth, sector rotation) with 3/5/10-bucket tabs and IS/OOS toggle, updated stats.",
+    "file": "strategies/regime_dashboard_2026-07-07.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-07",
+    "title": "Quantitative Strategy Dashboard",
+    "summary": "Update from 2026-06-29: refreshed with the cleaned-up LV/MOM/MR runs (net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied, plus Blend C and Blend D recomputed on the corrected inputs). Same dashboard structure as before (Blend C and Blend D cards, regime table, IS/OOS charts) with updated numbers throughout.",
+    "file": "strategy_deck_2026-07-07.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-07",
     "title": "Individual Stocks \u2014 1yr-DTE / 6-Month Hold Delta Sweep",
     "summary": "AAPL / NVDA / KO, 5/10/15/25/50 delta, quarterly+January expiries [240,480]d, hold up to 6mo. Includes excess-return driver scatter plots per holding horizon.",
     "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
@@ -57,14 +80,6 @@
   },
   {
     "date": "2026-07-03",
-    "title": "Decline / Recovery / Normal Regime Dashboard",
-    "summary": "Interactive SPY drawdown regime explorer with 3 independent sliders (defaults: Decline 15%, Recovery 20%, Normal 100%) and a Daily/Monthly check-frequency tab sharing the same thresholds and blend weights (monthly = last Friday of month, Thursday-before if the 1st or a holiday). Default blend weights: Decline 60% T-Bill/40% MR, Recovery 60% LV/40% MR, Normal 60% LV/40% MOM. Blend return is now net of transaction cost (5bps/side on regime-switch turnover). IS-only 6x5 stats grid (Normal/Decline/Recovery + All-IS/All-OOS, true compounded CAGR), regime-shaded cumulative performance + drawdown charts, rolling return, and annualized-return-by-regime bar chart.",
-    "file": "strategies/dd_regime_dashboard_2026-07-03.html",
-    "author": "Mani Sabapathi",
-    "category": "strategies"
-  },
-  {
-    "date": "2026-07-03",
     "title": "Sector Attribution Dashboard",
     "summary": "Per-sector performance contribution breakdown for LV, MOM, and MR \u2014 full-period ranking, IS/OOS comparison, and year-by-year heatmap. Key finding: Real Estate is a consistent drag across all three strategies. MOM shows growing Technology concentration in OOS (AI/mega-cap momentum trade); MR's Financial Services allocation shows classic mean-reversion crisis alpha in 2008-2009.",
     "file": "strategies/sector_dashboard_2026-07-03.html",
@@ -112,14 +127,6 @@
     "category": "strategies"
   },
   {
-    "date": "2026-06-29",
-    "title": "Regime Analysis Dashboard",
-    "summary": "Interactive regime breakdown across 6 market dimensions (SPY drawdown, VIX, trend, momentum, breadth, sector rotation). 3-, 5-, and 10-bucket tabs. IS/OOS toggle. Stats: Ann Ret, Vol, Sharpe, Hit%, Max DD, Worst/Best Month for MR, LV, MOM, and SPY across regimes.",
-    "file": "strategies/regime_dashboard_2026-06-29.html",
-    "author": "Mani Sabapathi",
-    "category": "strategies"
-  },
-  {
     "date": "2026-06-30",
     "title": "BPGS Blended Strategy Report",
     "summary": "Two-tab interactive report: HML (SPY 3yr percentile) and D/R/N regime blends. M1 Kelly + M4 fixed-vol methods, log-scale equity curves, regime shading on all time charts, monthly regime area chart, tighter tables, full reproducibility config embedded.",
@@ -150,20 +157,6 @@
     "file": "top-down/meta-engine-design_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "top-down"
-  },
-  {
-    "date": "2026-06-29",
-    "title": "Quantitative Strategy Dashboard",
-    "summary": "Updated dashboard with Blend D (5-bucket quintile regime) added alongside Blend C \u2014 new card, regime table, and all charts.",
-    "file": "strategy_deck_2026-06-29.html",
-    "author": "Mani Sabapathi"
-  },
-  {
-    "date": "2026-06-27",
-    "title": "Quantitative Strategy Dashboard",
-    "summary": "Full performance deck: MR, LV, MOM and Blend C strategies with IS/OOS stats, regime analysis, year-by-year heatmap and correlation matrices.",
-    "file": "strategy_deck_2026-06-27.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-06-24",
