@@ -25,7 +25,7 @@
   {
     "date": "2026-07-07",
     "title": "Individual Stocks \u2014 1yr-DTE / 6-Month Hold Delta Sweep",
-    "summary": "AAPL / NVDA / KO, 5/10/15/25/50 delta, quarterly+January expiries [240,480]d, hold up to 6mo. Includes excess-return driver scatter plots per holding horizon.",
+    "summary": "AAPL / NVDA / KO, nested tabs (5/10/15/25/50 delta + Summary per ticker), quarterly+January expiries [240,480]d, hold up to 6mo. Delta tabs show full per-position data (open date, expiry, strike each month); Summary tab has the holding-period selector + excess-driver scatter grid.",
     "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
