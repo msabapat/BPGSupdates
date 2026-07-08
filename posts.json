@@ -1,6 +1,22 @@
 [
   {
     "date": "2026-07-07",
+    "title": "Options on Individual Stocks",
+    "summary": "Update from 2026-07-05: AAPL / NVDA / KO, 1yr-DTE [240,480]d, 6-month hold. Ticker tabs > 5/10/15/25/50 delta + Summary, same structure as Options on Indices. Now includes % profitability column.",
+    "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-07",
+    "title": "Options on Indices",
+    "summary": "Update from 2026-06-29: SPY / IWM / QQQ / XLF / XLV / XHB. Time-to-expiry selector at top: 2yr (Jan LEAPS), 1yr (DTE 350-420d, all 6 tickers), 6m (DTE 175-270d, SPY). Each bucket has ticker tabs > 5/10/15/25/50 delta + Summary (holding-period selector, excess-driver scatter grid, % profitability).",
+    "file": "strategies/leaps_tabbed_2026-06-29.html",
+    "author": "Mani Sabapathi",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-07",
     "title": "Decline / Recovery / Normal Regime Dashboard",
     "summary": "Update from 2026-07-03: refreshed with the cleaned-up LV/MOM/MR runs (net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied). Same interactive drawdown regime explorer (3 sliders, Daily/Monthly tabs, regime-shaded charts) with updated stats grid.",
     "file": "strategies/dd_regime_dashboard_2026-07-07.html",
@@ -21,14 +37,6 @@
     "summary": "Update from 2026-06-29: refreshed with the cleaned-up LV/MOM/MR runs (net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied, plus Blend C and Blend D recomputed on the corrected inputs). Same dashboard structure as before (Blend C and Blend D cards, regime table, IS/OOS charts) with updated numbers throughout.",
     "file": "strategy_deck_2026-07-07.html",
     "author": "Mani Sabapathi"
-  },
-  {
-    "date": "2026-07-07",
-    "title": "Options on Individual Stocks",
-    "summary": "AAPL / NVDA / KO, 1yr-DTE [240,480]d, 6-month hold. Ticker tabs > 5/10/15/25/50 delta + Summary, same structure as Options on Indices. Now includes % profitability column.",
-    "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
-    "author": "Mani Sabapathi",
-    "category": "strategies"
   },
   {
     "date": "2026-07-06",
@@ -117,14 +125,6 @@
     "file": "research/beta_unified_2026-06-30.html",
     "author": "Arvind Rajan",
     "category": "research"
-  },
-  {
-    "date": "2026-06-29",
-    "title": "Options on Indices",
-    "summary": "SPY / IWM / QQQ / XLF / XLV / XHB. Time-to-expiry selector at top: 2yr (Jan LEAPS), 1yr (DTE 350-420d, all 6 tickers), 6m (DTE 175-270d, SPY). Each bucket has ticker tabs > 5/10/15/25/50 delta + Summary (holding-period selector, excess-driver scatter grid, % profitability).",
-    "file": "strategies/leaps_tabbed_2026-06-29.html",
-    "author": "Mani Sabapathi",
-    "category": "strategies"
   },
   {
     "date": "2026-06-30",
