@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-08",
+    "title": "BPGS Blended Strategy Report",
+    "summary": "Update from 2026-06-30: adds a manual per-regime weight editor alongside the existing M1 Kelly and M4 fixed-vol methods, so you can hand-set the strategy mix (MR/MOM/LV/SPY/T-bills) for each DRN or HML regime and see the resulting equity curve directly. Same two-tab structure (HML/DRN), log-scale equity curves, regime shading, reproducibility config embedded.",
+    "file": "strategies/bpgs_blend_report_2026-06-30_2026-07-01.html",
+    "author": "Arvind Rajan",
+    "category": "strategies"
+  },
+  {
+    "date": "2026-07-08",
     "title": "RMT Factor Model \u2014 PC Structure & Portfolio Attribution",
     "summary": "5-tab interactive report: RMT/PCA 3-year rolling prototype (Marchenko-Pastur cutoff, eigenportfolio structure) plus portfolio attribution decomposing SPY, MOM, MR, and LowVol into PC exposures. Built 2026-07-07/08. Along the way, found and fixed a critical date-alignment bug (`daily_return_shifted` vs. plain `daily_return`) that had wrongly shown MOM/MR as market-neutral in an earlier attribution pass \u2014 corrected numbers now show proper market beta.",
     "file": "research/rmt_combined_4tab.html",
@@ -133,14 +141,6 @@
     "file": "research/beta_unified_2026-06-30.html",
     "author": "Arvind Rajan",
     "category": "research"
-  },
-  {
-    "date": "2026-06-30",
-    "title": "BPGS Blended Strategy Report",
-    "summary": "Two-tab interactive report: HML (SPY 3yr percentile) and D/R/N regime blends. M1 Kelly + M4 fixed-vol methods, log-scale equity curves, regime shading on all time charts, monthly regime area chart, tighter tables, full reproducibility config embedded.",
-    "file": "strategies/bpgs_blend_report_2026-06-30.html",
-    "author": "Arvind Rajan",
-    "category": "strategies"
   },
   {
     "date": "2026-07-04",
