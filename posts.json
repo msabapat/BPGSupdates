@@ -24,8 +24,8 @@
   },
   {
     "date": "2026-07-07",
-    "title": "Individual Stocks \u2014 1yr-DTE / 6-Month Hold Delta Sweep",
-    "summary": "AAPL / NVDA / KO, nested tabs (5/10/15/25/50 delta + Summary per ticker), quarterly+January expiries [240,480]d, hold up to 6mo. Delta tabs show full per-position data (open date, expiry, strike each month); Summary tab has the holding-period selector + excess-driver scatter grid.",
+    "title": "Options on Individual Stocks",
+    "summary": "AAPL / NVDA / KO, 1yr-DTE [240,480]d, 6-month hold. Ticker tabs > 5/10/15/25/50 delta + Summary, same structure as Options on Indices. Now includes % profitability column.",
     "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
@@ -120,8 +120,8 @@
   },
   {
     "date": "2026-06-29",
-    "title": "LEAPS Delta Sweep \u2014 SPY / IWM / QQQ (5\u201350\u0394)",
-    "summary": "0.08\u21920.50 delta Jan LEAPS, no-roll 6-month hold, three indices. Nested tabs: each index has 5 delta variants + a Summary dashboard (IV/RV by delta, hold-period-selectable excess, gamma/theta ratio). Option P&L + T-bill interest vs each variant's delta-equivalent shares.",
+    "title": "Options on Indices",
+    "summary": "SPY / IWM / QQQ / XLF / XLV / XHB. Time-to-expiry selector at top: 2yr (Jan LEAPS), 1yr (DTE 350-420d, all 6 tickers), 6m (DTE 175-270d, SPY). Each bucket has ticker tabs > 5/10/15/25/50 delta + Summary (holding-period selector, excess-driver scatter grid, % profitability).",
     "file": "strategies/leaps_tabbed_2026-06-29.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
