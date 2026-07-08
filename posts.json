@@ -2,7 +2,7 @@
   {
     "date": "2026-07-07",
     "title": "Options on Individual Stocks",
-    "summary": "Update from 2026-07-05: AAPL / NVDA / KO, 1yr-DTE [240,480]d, 6-month hold. Ticker tabs > 5/10/15/25/50 delta + Summary, same structure as Options on Indices. Now includes % profitability column.",
+    "summary": "Update from 2026-07-07: AAPL / NVDA / KO, 1yr-DTE [240,480]d, 6-month hold. Delta tabs + Summary + new L10/S5 and L25/S10 vertical call-spread tabs.",
     "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
@@ -10,7 +10,7 @@
   {
     "date": "2026-07-07",
     "title": "Options on Indices",
-    "summary": "Update from 2026-06-29: SPY / IWM / QQQ / XLF / XLV / XHB. Time-to-expiry selector at top: 2yr (Jan LEAPS), 1yr (DTE 350-420d, all 6 tickers), 6m (DTE 175-270d, SPY). Each bucket has ticker tabs > 5/10/15/25/50 delta + Summary (holding-period selector, excess-driver scatter grid, % profitability).",
+    "summary": "Update from 2026-07-07: SPY / IWM / QQQ / XLF / XLV / XHB. Time-to-expiry selector: 2yr (Jan LEAPS), 1yr (350-420d, adds L10/S5 and L25/S10 vertical call spreads as extra tabs), 6m (175-270d, SPY). Each ticker: delta tabs + Summary + spread tabs.",
     "file": "strategies/leaps_tabbed_2026-06-29.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
