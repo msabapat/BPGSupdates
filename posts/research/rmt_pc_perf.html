@@ -24,7 +24,7 @@ code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px}
 </head><body><div class="wrap">
 
 <h1>PC Perf — RMT Factor Performance &amp; Risk Capture</h1>
-<div class="sub">Generated 2026-07-07 18:24 &middot; 2023-08-01 to 2026-06-30
+<div class="sub">Generated 2026-07-08 14:49 &middot; 2023-08-01 to 2026-06-30
 &middot; each PC's own investable eigenportfolio (weights = v<sub>k,i</sub>/&sigma;<sub>i</sub>, gross exposure 1,
 applied to actual forward daily returns; sign-fixed via month-to-month continuity + first-month SPY anchor)</div>
 
@@ -46,6 +46,31 @@ applied to actual forward daily returns; sign-fixed via month-to-month continuit
 Sharpe close to SPY's over this window (0.76 vs 0.99) &mdash; PC2-8 all show negative-to-flat risk-adjusted
 returns, consistent with the earlier finding that raw beta/factor-return premia beyond the market mode are
 weak/noisy over this 3-year sample.</div>
+</div>
+
+<div class="card">
+<h2>Return attribution by PC, concentration, and alpha &mdash; SPY vs. LV vs. MOM vs. MR</h2>
+<table style="font-size:11.5px">
+<tr><th>&nbsp;</th><th>PC1</th><th>PC2</th><th>PC3</th><th>PC4</th><th>PC5-8</th>
+<th>Alpha (conc.)</th><th>Alpha (rest)</th><th>Alpha total</th><th>Sum of parts</th><th>CAGR</th></tr>
+<tr><td class="bold">SPY</td><td>+14.00</td><td>+0.91</td><td>-0.25</td><td>+0.25</td><td>+0.64</td><td>+3.97</td><td>-0.42</td><td class="bold">+3.55</td><td>+19.11</td><td class="bold">+19.68%</td></tr><tr><td class="bold">LV</td><td>+7.76</td><td>-1.46</td><td>-0.01</td><td>+0.31</td><td>-0.20</td><td>+0.00</td><td>+12.08</td><td class="bold">+12.08</td><td>+18.48</td><td class="bold">+19.42%</td></tr><tr><td class="bold">MOM</td><td>+27.69</td><td>+4.59</td><td>+1.88</td><td>-1.64</td><td>+1.87</td><td>+0.00</td><td>+33.78</td><td class="bold">+33.78</td><td>+68.17</td><td class="bold">+78.54%</td></tr><tr><td class="bold">MR</td><td>+21.76</td><td>+0.59</td><td>-1.47</td><td>-0.66</td><td>-2.37</td><td>+0.00</td><td>+7.10</td><td class="bold">+7.10</td><td>+24.95</td><td class="bold">+22.94%</td></tr>
+</table>
+<div class="hint">
+Linear/arithmetic annualized-return decomposition (whole-period OLS on PC1-8, same real-weighted
+production portfolios used throughout this project &mdash; SPY: real N-PORT-P quarterly holdings +
+our total-cap weights, no-lookahead; LV/MOM/MR: real production selections). Each PC column and
+Alpha are annualized simple means (additive by construction &mdash; "Sum of parts" reconciles exactly
+to this decomposition's own linear/arithmetic mean, shown for internal consistency, NOT to CAGR &mdash;
+compounding is not additive across separately-annualized components, which is why CAGR in the last
+column runs meaningfully higher for MOM in particular (78.54% vs a components-sum of 68.17%).
+<br><br>
+<b>Alpha (conc.)</b> = actual-weighted alpha minus the alpha from equal-weighting the SAME held names
+(isolates the weighting-scheme effect from pure stock-selection). Exactly 0.00 for LV/MOM/MR by
+construction &mdash; those are equal-weighted strategies, so there is no actual-vs-equal-weight gap to
+attribute. SPY is cap-weighted: 3.97 of its 3.55 total alpha comes from concentration into the
+biggest winners (NVDA/AAPL/GOOGL/MSFT/TSLA...) &mdash; equal-weighting the same real S&amp;P 500
+membership would have produced slightly <i>negative</i> alpha (&minus;0.42%) over this window.
+</div>
 </div>
 
 <div class="two-col">
