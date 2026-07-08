@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RMT Factor Model — PC Structure &amp; Portfolio Attribution</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#f8fafc;color:#0f172a;font-family:system-ui,-apple-system,sans-serif;display:flex;flex-direction:column}
+.tabbar{display:flex;gap:4px;background:#0f172a;padding:0 12px}
+.tab-btn{appearance:none;border:0;background:transparent;color:#94a3b8;font-size:13px;font-weight:600;
+  padding:14px 18px;cursor:pointer;border-bottom:3px solid transparent;font-family:inherit}
+.tab-btn:hover{color:#e2e8f0}
+.tab-btn.active{color:#fff;border-bottom-color:#2563eb}
+.tab-panel{display:none;flex:1;min-height:0}
+.tab-panel.active{display:flex}
+.tab-panel iframe{width:100%;height:100%;border:0;flex:1}
+</style>
+</head><body>
+
+<div class="tabbar">
+<button class="tab-btn active" onclick="showTab(0)">PC Structure</button>
+<button class="tab-btn" onclick="showTab(1)">PC Perf</button>
+<button class="tab-btn" onclick="showTab(2)">MOM</button>
+<button class="tab-btn" onclick="showTab(3)">MR</button>
+<button class="tab-btn" onclick="showTab(4)">LowVol</button>
+</div>
+<div class="tab-panel active" id="panel0"><iframe src="rmt_factor_prototype_3yr.html"></iframe></div>
+<div class="tab-panel" id="panel1"><iframe data-src="rmt_pc_perf.html"></iframe></div>
+<div class="tab-panel" id="panel2"><iframe data-src="rmt_attribution_spy_vs_mom.html"></iframe></div>
+<div class="tab-panel" id="panel3"><iframe data-src="rmt_attribution_spy_vs_mr.html"></iframe></div>
+<div class="tab-panel" id="panel4"><iframe data-src="rmt_attribution_spy_vs_lowvol.html"></iframe></div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab-panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
+  document.querySelectorAll('.tab-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+  const panel = document.getElementById('panel' + i);
+  const iframe = panel.querySelector('iframe');
+  if (!iframe.src && iframe.dataset.src) {
+    iframe.src = iframe.dataset.src;
+  }
+}
+</script>
+</body></html>

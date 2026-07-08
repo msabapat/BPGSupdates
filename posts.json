@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-08",
+    "title": "RMT Factor Model \u2014 PC Structure & Portfolio Attribution",
+    "summary": "5-tab interactive report: RMT/PCA 3-year rolling prototype (Marchenko-Pastur cutoff, eigenportfolio structure) plus portfolio attribution decomposing SPY, MOM, MR, and LowVol into PC exposures. Built 2026-07-07/08. Along the way, found and fixed a critical date-alignment bug (`daily_return_shifted` vs. plain `daily_return`) that had wrongly shown MOM/MR as market-neutral in an earlier attribution pass \u2014 corrected numbers now show proper market beta.",
+    "file": "research/rmt_combined_4tab.html",
+    "author": "Arvind Rajan",
+    "category": "research"
+  },
+  {
+    "date": "2026-07-08",
     "title": "Options on Individual Stocks",
     "summary": "Update from 2026-07-07: every delta/spread tab now includes a P&L-by-Holding-Period table (was previously only on the Summary tab). AAPL / NVDA / KO, 1yr-DTE [240,480]d, L10/S5 and L25/S10 call spreads.",
     "file": "strategies/individual_stocks_1yr6mo_2026-07-05_2026-07-07.html",
