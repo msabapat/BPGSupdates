@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Claude Model Cost/Benefit — Coding Tasks</title>
+<title>Claude Model Cost/Benefit by Task Type</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -14,6 +14,9 @@
     --accent-bg: #eef2ff;
     --best-bg: #ecfdf5;
     --best-border: #10b981;
+    --tab-bg: #f1f2f5;
+    --tab-active-bg: #4f46e5;
+    --tab-active-text: #ffffff;
   }
   * { box-sizing: border-box; }
   body {
@@ -24,7 +27,7 @@
     padding: 2rem 1.5rem 4rem;
     line-height: 1.5;
   }
-  .wrap { max-width: 980px; margin: 0 auto; }
+  .wrap { max-width: 1000px; margin: 0 auto; }
   h1 {
     font-size: 1.6rem;
     font-weight: 700;
@@ -33,8 +36,35 @@
   .subtitle {
     color: var(--muted);
     font-size: 0.95rem;
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.25rem;
   }
+
+  /* ── Tab selector ─────────────────────────────────────────────── */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .tab-btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--tab-bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { border-color: var(--accent); }
+  .tab-btn.active {
+    background: var(--tab-active-bg);
+    color: var(--tab-active-text);
+    border-color: var(--tab-active-bg);
+  }
+
   .badge {
     display: inline-block;
     background: var(--accent-bg);
@@ -83,10 +113,11 @@
     border-collapse: collapse;
     font-size: 0.88rem;
     margin-bottom: 0.5rem;
+    table-layout: fixed;
   }
   th, td {
-    text-align: right;
-    padding: 0.5rem 0.7rem;
+    text-align: center;
+    padding: 0.5rem 0.6rem;
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
   }
@@ -148,114 +179,215 @@
       --accent-bg: #1e1f3a;
       --best-bg: #0d2b22;
       --best-border: #10b981;
+      --tab-bg: #22242c;
+      --tab-active-bg: #818cf8;
+      --tab-active-text: #15161a;
     }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <span class="badge">High confidence — SWE-bench Pro anchored</span>
   <h1>Claude Model Cost/Benefit Analysis</h1>
-  <p class="subtitle">Task type: <strong>Coding</strong> · Cost and quality indexed against Sonnet 5 (medium effort) as baseline</p>
+  <p class="subtitle">Cost and quality indexed against Sonnet 5 (medium effort) as baseline, by task type</p>
+
+  <div class="tabs" id="taskTabs">
+    <button class="tab-btn" data-task="coding">Coding</button>
+    <button class="tab-btn" data-task="knowledge">Knowledge work</button>
+    <button class="tab-btn" data-task="agentic">Agentic / tool-use</button>
+    <button class="tab-btn" data-task="multimodal">Multimodal / vision</button>
+    <button class="tab-btn" data-task="math">Math / reasoning</button>
+  </div>
+
+  <span class="badge" id="confBadge"></span>
 
   <h2>Cost to Match Sonnet 5 (Medium) Quality Ceiling</h2>
-  <p class="note">Cheapest reasoning-effort setting per model needed to clear Sonnet 5 medium's quality bar.</p>
-  <div class="callout-grid">
-    <div class="callout">
-      <div class="model-name">Sonnet 4.6</div>
-      <div class="cost">8.6&times; cost</div>
-      <div class="detail">for +10 quality pts</div>
-    </div>
-    <div class="callout">
-      <div class="model-name">Sonnet 5</div>
-      <div class="cost">8.5&times; cost</div>
-      <div class="detail">for +11 quality pts</div>
-    </div>
-    <div class="callout">
-      <div class="model-name">Opus 4.6</div>
-      <div class="cost">8.1&times; cost</div>
-      <div class="detail">for +11 quality pts</div>
-    </div>
-    <div class="callout">
-      <div class="model-name">Opus 4.7</div>
-      <div class="cost">8.1&times; cost</div>
-      <div class="detail">for +11 quality pts</div>
-    </div>
-    <div class="callout">
-      <div class="model-name">Opus 4.8</div>
-      <div class="cost">8.5&times; cost</div>
-      <div class="detail">for +12 quality pts</div>
-    </div>
-    <div class="callout">
-      <div class="model-name">Fable 5</div>
-      <div class="cost">8.5&times; cost</div>
-      <div class="detail">for +13 quality pts</div>
-    </div>
-  </div>
+  <p class="note">Multiplier vs Sonnet 5 medium cost, and the quality-point gain each model needs its max effort to reach.</p>
+  <div class="callout-grid" id="deltaRow"></div>
 
   <h2>Cost Index <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(Sonnet 5 medium = 100)</span></h2>
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Haiku 4.5</td><td>10</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Sonnet 4.6</td><td>50</td><td>85</td><td>130</td><td>—</td><td>430</td></tr>
-        <tr class="highlight-row"><td>Sonnet 5</td><td>60</td><td>100</td><td>155</td><td>275</td><td>510</td></tr>
-        <tr><td>Opus 4.6</td><td>110</td><td>175</td><td>265</td><td>—</td><td>890</td></tr>
-        <tr><td>Opus 4.7</td><td>115</td><td>185</td><td>285</td><td>510</td><td>935</td></tr>
-        <tr><td>Opus 4.8</td><td>115</td><td>190</td><td>290</td><td>535</td><td>975</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="table-scroll"><table id="costTable"></table></div>
 
   <h2>Quality Index <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(Sonnet 5 = 100 within task)</span></h2>
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Haiku 4.5</td><td>55</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Sonnet 4.6</td><td>72</td><td>76</td><td>80</td><td>—</td><td>82</td></tr>
-        <tr class="highlight-row"><td>Sonnet 5</td><td>89</td><td>94</td><td>97</td><td>99</td><td>100</td></tr>
-        <tr><td>Opus 4.6</td><td>84</td><td>89</td><td>92</td><td>—</td><td>95</td></tr>
-        <tr><td>Opus 4.7</td><td>93</td><td>97</td><td>101</td><td>103</td><td>104</td></tr>
-        <tr><td>Opus 4.8</td><td>98</td><td>103</td><td>107</td><td>109</td><td>110</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="table-scroll"><table id="qualTable"></table></div>
 
   <h2>Value: Quality per Unit Cost <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(higher is better)</span></h2>
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
-      </thead>
-      <tbody>
-        <tr class="highlight-row"><td>Haiku 4.5</td><td>550</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-        <tr><td>Sonnet 4.6</td><td>145</td><td>90</td><td>61</td><td>—</td><td>19</td></tr>
-        <tr><td>Sonnet 5</td><td>148</td><td>94</td><td>63</td><td>36</td><td>20</td></tr>
-        <tr><td>Opus 4.6</td><td>77</td><td>51</td><td>35</td><td>—</td><td>11</td></tr>
-        <tr><td>Opus 4.7</td><td>81</td><td>53</td><td>36</td><td>20</td><td>11</td></tr>
-        <tr><td>Opus 4.8</td><td>86</td><td>54</td><td>37</td><td>20</td><td>11</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="table-scroll"><table id="valTable"></table></div>
 
-  <div class="takeaway">
-    <strong>Takeaway:</strong> Haiku 4.5 (low effort) delivers by far the best quality-per-dollar (550 index)
-    for coding tasks, at roughly 1/5th to 1/50th the cost of the other models at their respective effort tiers.
-    Sonnet 5 medium is the best value among the higher-quality tier (index ~94), noticeably ahead of
-    Opus variants which pay a steep cost premium (8.1–8.5&times;) for comparable or modestly better quality (+11 to +13 pts).
-    Pushing any model to max effort collapses value sharply — the marginal quality gain rarely justifies the
-    5–10&times; cost jump from medium to max.
-  </div>
+  <div class="takeaway" id="takeawayBox"></div>
 
   <div class="footer">
-    Cost-benefit data sourced from internal SWE-bench Pro-anchored model comparison, 2026-07-09.
+    Cost-benefit data sourced from internal model comparison, 2026-07-09.
   </div>
 </div>
+
+<script>
+const effortLevels = ['low','medium','high','xhigh','max'];
+const effortLabel = {low:'Low',medium:'Med',high:'High',xhigh:'Xhigh',max:'Max'};
+const modelOrder = ['haiku','sonnet46','sonnet5','opus46','opus47','opus48','fable5'];
+const modelLabels = {haiku:'Haiku 4.5',sonnet46:'Sonnet 4.6',sonnet5:'Sonnet 5',opus46:'Opus 4.6',opus47:'Opus 4.7',opus48:'Opus 4.8',fable5:'Fable 5'};
+
+const costData = {
+  haiku:{low:10},
+  sonnet46:{low:50,medium:85,high:130,max:430},
+  sonnet5:{low:60,medium:100,high:155,xhigh:275,max:510},
+  opus46:{low:110,medium:175,high:265,max:890},
+  opus47:{low:115,medium:185,high:285,xhigh:510,max:935},
+  opus48:{low:115,medium:190,high:290,xhigh:535,max:975},
+  fable5:{low:250,medium:415,high:635,xhigh:1150,max:2115}
+};
+
+const fractions = {
+  haiku:{low:1},
+  sonnet46:{low:0.883,medium:0.932,high:0.971,max:1},
+  sonnet5:{low:0.888,medium:0.935,high:0.972,xhigh:0.991,max:1},
+  opus46:{low:0.889,medium:0.935,high:0.972,max:1},
+  opus47:{low:0.892,medium:0.937,high:0.973,xhigh:0.991,max:1},
+  opus48:{low:0.894,medium:0.938,high:0.973,xhigh:0.991,max:1},
+  fable5:{low:0.897,medium:0.940,high:0.974,xhigh:0.991,max:1}
+};
+
+const ceilings = {
+  coding:{haiku:55,sonnet46:82,sonnet5:100,opus46:95,opus47:104,opus48:110,fable5:127},
+  knowledge:{haiku:70,sonnet46:90,sonnet5:100,opus46:97,opus47:99,opus48:100,fable5:100},
+  agentic:{haiku:60,sonnet46:88,sonnet5:100,opus46:90,opus47:92,opus48:97,fable5:102},
+  multimodal:{haiku:50,sonnet46:85,sonnet5:100,opus46:95,opus47:98,opus48:100,fable5:121},
+  math:{haiku:45,sonnet46:80,sonnet5:100,opus46:96,opus47:103,opus48:107,fable5:112}
+};
+
+const confidenceNote = {
+  coding:'High confidence — SWE-bench Pro anchored',
+  knowledge:'High confidence — GDPval-AA v2 near-tie confirmed',
+  agentic:'Medium confidence — partly unpublished for Fable',
+  multimodal:'Low confidence — sparse published data',
+  math:'Low confidence — limited published data'
+};
+
+const taskLabels = {
+  coding:'Coding', knowledge:'Knowledge work', agentic:'Agentic / tool-use',
+  multimodal:'Multimodal / vision', math:'Math / reasoning'
+};
+
+function quality(model, effort, task) {
+  const f = fractions[model][effort];
+  if (f === undefined) return null;
+  return ceilings[task][model] * f;
+}
+function cost(model, effort) {
+  const c = costData[model][effort];
+  return c === undefined ? null : c;
+}
+
+function cell(val, isBest) {
+  if (val === null || val === undefined) {
+    return '<td style="color:var(--muted);">—</td>';
+  }
+  return '<td' + (isBest ? ' style="background:var(--best-bg);"' : '') + '>' + Math.round(val) + '</td>';
+}
+
+function buildHeader() {
+  let h = '<tr><th>Model</th>';
+  effortLevels.forEach(e => { h += '<th>' + effortLabel[e] + '</th>'; });
+  return h + '</tr>';
+}
+
+function bestModelForEffort(task, effort, metric) {
+  // returns the model key with highest quality (or value) at this effort, for highlight
+  let best = null, bestVal = -Infinity;
+  modelOrder.forEach(m => {
+    let v;
+    if (metric === 'qual') v = quality(m, effort, task);
+    else if (metric === 'val') {
+      const c = cost(m, effort), q = quality(m, effort, task);
+      v = (c && q) ? (q / c * 100) : null;
+    }
+    if (v !== null && v !== undefined && v > bestVal) { bestVal = v; best = m; }
+  });
+  return best;
+}
+
+function render(task) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.task === task);
+  });
+  document.getElementById('confBadge').textContent = confidenceNote[task];
+
+  let costRows = buildHeader();
+  let qualRows = buildHeader();
+  let valRows = buildHeader();
+
+  const bestQualByEffort = {};
+  const bestValByEffort = {};
+  effortLevels.forEach(e => {
+    bestQualByEffort[e] = bestModelForEffort(task, e, 'qual');
+    bestValByEffort[e] = bestModelForEffort(task, e, 'val');
+  });
+
+  modelOrder.forEach(m => {
+    const nameCell = '<td>' + modelLabels[m] + '</td>';
+    let cRow = '<tr>' + nameCell;
+    let qRow = '<tr>' + nameCell;
+    let vRow = '<tr>' + nameCell;
+    effortLevels.forEach(e => {
+      const c = cost(m, e);
+      const q = quality(m, e, task);
+      const v = (c && q) ? (q / c * 100) : null;
+      cRow += cell(c, false);
+      qRow += cell(q, bestQualByEffort[e] === m);
+      vRow += cell(v, bestValByEffort[e] === m);
+    });
+    cRow += '</tr>'; qRow += '</tr>'; vRow += '</tr>';
+    costRows += cRow; qualRows += qRow; valRows += vRow;
+  });
+
+  document.getElementById('costTable').innerHTML = costRows;
+  document.getElementById('qualTable').innerHTML = qualRows;
+  document.getElementById('valTable').innerHTML = valRows;
+
+  const deltaWrap = document.getElementById('deltaRow');
+  deltaWrap.innerHTML = '';
+  modelOrder.forEach(m => {
+    const cLow = cost(m,'low');
+    const cMax = cost(m,'max');
+    const qLow = quality(m,'low',task);
+    const qMax = quality(m,'max',task);
+    if (cLow == null || cMax == null) return;
+    const mult = (cMax / cLow).toFixed(1);
+    const gain = Math.round(qMax - qLow);
+    const div = document.createElement('div');
+    div.className = 'callout';
+    div.innerHTML = '<div class="model-name">' + modelLabels[m] + '</div>' +
+      '<div class="cost">' + mult + '&times; cost</div>' +
+      '<div class="detail">for +' + gain + ' quality pts</div>';
+    deltaWrap.appendChild(div);
+  });
+
+  // Takeaway: find overall best value model at low/medium effort
+  const lowValues = modelOrder.map(m => {
+    const c = cost(m, 'low'), q = quality(m, 'low', task);
+    return { m, v: (c && q) ? (q / c * 100) : -Infinity };
+  }).sort((a, b) => b.v - a.v);
+  const topLow = lowValues[0];
+
+  const sonnet5MedVal = (function () {
+    const c = cost('sonnet5', 'medium'), q = quality('sonnet5', 'medium', task);
+    return (c && q) ? Math.round(q / c * 100) : null;
+  })();
+
+  document.getElementById('takeawayBox').innerHTML =
+    '<strong>Takeaway:</strong> For ' + taskLabels[task].toLowerCase() + ' tasks, ' +
+    modelLabels[topLow.m] + ' at low effort delivers the best quality-per-dollar (value index ~' +
+    Math.round(topLow.v) + '). Sonnet 5 at medium effort scores a value index of ~' + sonnet5MedVal +
+    ', typically the strongest option once you need higher absolute quality — Opus variants cost ' +
+    'meaningfully more for comparable or modestly better quality, and pushing any model to max effort ' +
+    'sharply reduces value for a relatively small quality gain.';
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => render(btn.dataset.task));
+});
+
+render('knowledge');
+</script>
 </body>
 </html>

@@ -2,7 +2,7 @@
   {
     "date": "2026-07-09",
     "title": "Claude Model Cost/Benefit Analysis",
-    "summary": "Cost-per-quality comparison across Sonnet, Opus, Haiku, and Fable model tiers for coding tasks \u2014 Haiku 4.5 wins on value, Sonnet 5 medium is the best pick among high-quality tiers.",
+    "summary": "Cost-per-quality comparison across Sonnet, Opus, Haiku, and Fable model tiers, selectable by task type (Coding, Knowledge work, Agentic/tool-use, Multimodal/vision, Math/reasoning). Defaults to Knowledge work. Haiku 4.5 low-effort generally wins on value; Sonnet 5 medium is the best pick once higher absolute quality is needed.",
     "file": "claude_model_cost_benefit_2026-07-09_2026-07-09.html",
     "author": "Mani Sabapathi"
   },
