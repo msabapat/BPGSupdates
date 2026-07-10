@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Claude Model Cost/Benefit — Coding Tasks</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --header-bg: #f8f9fb;
+    --accent: #4f46e5;
+    --accent-bg: #eef2ff;
+    --best-bg: #ecfdf5;
+    --best-border: #10b981;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 2rem 1.5rem 4rem;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0 0 1.75rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 650;
+    margin: 2.5rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .callout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .callout {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    background: var(--header-bg);
+  }
+  .callout .model-name {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .callout .cost {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .callout .detail {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-bottom: 0.5rem;
+  }
+  th, td {
+    text-align: right;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child {
+    text-align: left;
+    font-weight: 600;
+  }
+  thead th {
+    background: var(--header-bg);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  tbody tr:hover { background: var(--header-bg); }
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .table-scroll table { margin-bottom: 0; }
+  .table-scroll th:first-child, .table-scroll td:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--bg);
+  }
+  .table-scroll thead th:first-child { background: var(--header-bg); }
+  .highlight-row td { background: var(--best-bg); }
+  .highlight-row td:first-child { border-left: 3px solid var(--best-border); }
+  .note {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+  .takeaway {
+    background: var(--accent-bg);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.92rem;
+  }
+  .takeaway strong { color: var(--accent); }
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15161a;
+      --text: #e8e8ec;
+      --muted: #9498a3;
+      --border: #2a2c33;
+      --header-bg: #1d1f26;
+      --accent: #818cf8;
+      --accent-bg: #1e1f3a;
+      --best-bg: #0d2b22;
+      --best-border: #10b981;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">High confidence — SWE-bench Pro anchored</span>
+  <h1>Claude Model Cost/Benefit Analysis</h1>
+  <p class="subtitle">Task type: <strong>Coding</strong> · Cost and quality indexed against Sonnet 5 (medium effort) as baseline</p>
+
+  <h2>Cost to Match Sonnet 5 (Medium) Quality Ceiling</h2>
+  <p class="note">Cheapest reasoning-effort setting per model needed to clear Sonnet 5 medium's quality bar.</p>
+  <div class="callout-grid">
+    <div class="callout">
+      <div class="model-name">Sonnet 4.6</div>
+      <div class="cost">8.6&times; cost</div>
+      <div class="detail">for +10 quality pts</div>
+    </div>
+    <div class="callout">
+      <div class="model-name">Sonnet 5</div>
+      <div class="cost">8.5&times; cost</div>
+      <div class="detail">for +11 quality pts</div>
+    </div>
+    <div class="callout">
+      <div class="model-name">Opus 4.6</div>
+      <div class="cost">8.1&times; cost</div>
+      <div class="detail">for +11 quality pts</div>
+    </div>
+    <div class="callout">
+      <div class="model-name">Opus 4.7</div>
+      <div class="cost">8.1&times; cost</div>
+      <div class="detail">for +11 quality pts</div>
+    </div>
+    <div class="callout">
+      <div class="model-name">Opus 4.8</div>
+      <div class="cost">8.5&times; cost</div>
+      <div class="detail">for +12 quality pts</div>
+    </div>
+    <div class="callout">
+      <div class="model-name">Fable 5</div>
+      <div class="cost">8.5&times; cost</div>
+      <div class="detail">for +13 quality pts</div>
+    </div>
+  </div>
+
+  <h2>Cost Index <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(Sonnet 5 medium = 100)</span></h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Haiku 4.5</td><td>10</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Sonnet 4.6</td><td>50</td><td>85</td><td>130</td><td>—</td><td>430</td></tr>
+        <tr class="highlight-row"><td>Sonnet 5</td><td>60</td><td>100</td><td>155</td><td>275</td><td>510</td></tr>
+        <tr><td>Opus 4.6</td><td>110</td><td>175</td><td>265</td><td>—</td><td>890</td></tr>
+        <tr><td>Opus 4.7</td><td>115</td><td>185</td><td>285</td><td>510</td><td>935</td></tr>
+        <tr><td>Opus 4.8</td><td>115</td><td>190</td><td>290</td><td>535</td><td>975</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Quality Index <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(Sonnet 5 = 100 within task)</span></h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Haiku 4.5</td><td>55</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Sonnet 4.6</td><td>72</td><td>76</td><td>80</td><td>—</td><td>82</td></tr>
+        <tr class="highlight-row"><td>Sonnet 5</td><td>89</td><td>94</td><td>97</td><td>99</td><td>100</td></tr>
+        <tr><td>Opus 4.6</td><td>84</td><td>89</td><td>92</td><td>—</td><td>95</td></tr>
+        <tr><td>Opus 4.7</td><td>93</td><td>97</td><td>101</td><td>103</td><td>104</td></tr>
+        <tr><td>Opus 4.8</td><td>98</td><td>103</td><td>107</td><td>109</td><td>110</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Value: Quality per Unit Cost <span style="font-weight:400; color:var(--muted); font-size:0.8em;">(higher is better)</span></h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Low</th><th>Med</th><th>High</th><th>Xhigh</th><th>Max</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td>Haiku 4.5</td><td>550</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>Sonnet 4.6</td><td>145</td><td>90</td><td>61</td><td>—</td><td>19</td></tr>
+        <tr><td>Sonnet 5</td><td>148</td><td>94</td><td>63</td><td>36</td><td>20</td></tr>
+        <tr><td>Opus 4.6</td><td>77</td><td>51</td><td>35</td><td>—</td><td>11</td></tr>
+        <tr><td>Opus 4.7</td><td>81</td><td>53</td><td>36</td><td>20</td><td>11</td></tr>
+        <tr><td>Opus 4.8</td><td>86</td><td>54</td><td>37</td><td>20</td><td>11</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="takeaway">
+    <strong>Takeaway:</strong> Haiku 4.5 (low effort) delivers by far the best quality-per-dollar (550 index)
+    for coding tasks, at roughly 1/5th to 1/50th the cost of the other models at their respective effort tiers.
+    Sonnet 5 medium is the best value among the higher-quality tier (index ~94), noticeably ahead of
+    Opus variants which pay a steep cost premium (8.1–8.5&times;) for comparable or modestly better quality (+11 to +13 pts).
+    Pushing any model to max effort collapses value sharply — the marginal quality gain rarely justifies the
+    5–10&times; cost jump from medium to max.
+  </div>
+
+  <div class="footer">
+    Cost-benefit data sourced from internal SWE-bench Pro-anchored model comparison, 2026-07-09.
+  </div>
+</div>
+</body>
+</html>

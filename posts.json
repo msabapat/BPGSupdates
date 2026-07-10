@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-09",
+    "title": "Claude Model Cost/Benefit Analysis",
+    "summary": "Cost-per-quality comparison across Sonnet, Opus, Haiku, and Fable model tiers for coding tasks \u2014 Haiku 4.5 wins on value, Sonnet 5 medium is the best pick among high-quality tiers.",
+    "file": "claude_model_cost_benefit_2026-07-09_2026-07-09.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-08",
     "title": "Quality-500: Cap-Weighted Replication vs SPY",
     "summary": "Mechanical cap-weighted S&P-500-style replication: top-600 domestic by market cap, filter out net-income-TTM<0 and <12mo trading history, re-rank to top-500, weight by market cap at start of month, hold one month, rebuild. 1999-2026: CAGR 9.15% vs SPY's 8.58%, Sharpe 0.619 vs 0.568, MaxDD -48.5% vs -50.8%. Includes methodology, growth-of-$1 chart, summary stats, and year-by-year returns.",
