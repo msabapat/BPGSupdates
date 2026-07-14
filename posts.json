@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-07-14",
+    "title": "500-Stock Options Screener + Optimal Call Spreads",
+    "summary": "Refreshed 2026-07-13 EOD, 496/500 tickers with data. Detail pages published for the top 100 optimal-call-spread rows (76 unique tickers, sorted by discount vs flat-vol BS fair value).",
+    "file": "options_screener_top500_2026-07-14.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-14",
     "title": "Indiv Stock Options Call Spread Strategy",
     "summary": "200k default capital simulation: 2mo (1000 per structure) and 1mo (2000 per structure) LEAPS call-spread overlays vs SPY buy-and-hold, with adjustable initial capital",
     "file": "indiv_stock_options_call_spread_2026-07-14_2026-07-14.html",
