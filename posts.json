@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-14",
+    "title": "Indiv Stock Options Call Spread Strategy",
+    "summary": "200k default capital simulation: 2mo (1000 per structure) and 1mo (2000 per structure) LEAPS call-spread overlays vs SPY buy-and-hold, with adjustable initial capital",
+    "file": "indiv_stock_options_call_spread_2026-07-14_2026-07-14.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-09",
     "title": "Claude Model Cost/Benefit Analysis",
     "summary": "Cost-per-quality comparison across Sonnet, Opus, Haiku, and Fable model tiers, selectable by task type (Coding, Knowledge work, Agentic/tool-use, Multimodal/vision, Math/reasoning). Defaults to Knowledge work. Haiku 4.5 low-effort generally wins on value; Sonnet 5 medium is the best pick once higher absolute quality is needed.",
