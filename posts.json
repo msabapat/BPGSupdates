@@ -2,6 +2,13 @@
   {
     "date": "2026-07-15",
     "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-15 (End of Day, 8:42 PM).",
+    "file": "portfolio_report_live_2026-07-15.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-15",
+    "title": "Live Portfolio Performance Report",
     "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, and full holdings detail. Will refresh daily at 12pm (trades-today) and 5pm (EOD trades executed).",
     "file": "portfolio_report_2026-07-15_2026-07-15.html",
     "author": "Mani Sabapathi"
