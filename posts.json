@@ -1,6 +1,14 @@
 [
   {
     "date": "2026-07-17",
+    "title": "Full-Period PCA Build Status (2001-2026)",
+    "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors via entry/retain hysteresis + 252-day confirmation bar), and periodic (annual, corrected-null) residual clustering showing PC1/PC2-k/clustering variance decomposition and persistent industry structure. Includes an interactive PC Explorer (top-loaded names by month) and zoomable/log-scale charts throughout.",
+    "file": "research/pca_build_status_2026-07-17.html",
+    "author": "Arvind Rajan",
+    "category": "research"
+  },
+  {
+    "date": "2026-07-17",
     "title": "DRN Regime Dial Viewer (Config C \u2014 live in production)",
     "summary": "Interactive explorer for the new causal DRN (Descent/Recovery/Normal) regime definition adopted into production 2026-07-17. Three dials (T, f_lo, lag) plus a direct toggle against the old (superseded) T=12/f=0.9 formula \u2014 SPY total-return chart with live region shading, separate drawdown/drawup/recovered-fraction panels, and a live-updating table showing SPY/LV/MR/MOM/FQE/FQW's compounded annualized return in each zone at whatever dial settings are selected. Preset buttons jump to the three candidates evaluated (A/B/C) plus the old locked formula for comparison; C is the adopted production spec, loaded by default.",
     "file": "strategies/drn_dial_viewer_2026-07-17.html",
