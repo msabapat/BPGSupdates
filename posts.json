@@ -36,9 +36,9 @@
     "category": "strategies"
   },
   {
-    "date": "2026-07-08",
-    "title": "BPGS Blended Strategy Report",
-    "summary": "Update from 2026-06-30: adds a manual per-regime weight editor alongside the existing M1 Kelly and M4 fixed-vol methods, so you can hand-set the strategy mix (MR/MOM/LV/SPY/T-bills) for each DRN or HML regime and see the resulting equity curve directly. Same two-tab structure (HML/DRN), log-scale equity curves, regime shading, reproducibility config embedded.",
+    "date": "2026-07-17",
+    "title": "BPGS Blended Strategy Report (v3: DRN regime redefinition)",
+    "summary": "Update from 2026-07-08: the DRN (Descent/Recovery/Normal) regime definition is redefined from a percent-drawdown ratio (T=12%, f=0.9) to a causal, fixed-anchor log-recovered-fraction formula (T=12%, f_lo=0.5, 2-day lag) -- the old formula divided by the current, shrinking drawdown and self-reinforced as price recovered, flipping its Descent-vs-Recovery separation sign after 2012; the new formula anchors to the trough once and holds up across both eras. Validated against real strategy-switching value (MR wins Descent+Recovery, MOM wins Normal, both in-sample and out-of-sample) rather than SPY-only separation. M4 (fixed vol-target) also has its Descent risk budget raised from 13% to 20% (matching Recovery), the best of four tested variants on out-of-sample Sharpe/Sortino. Same two-tab structure (HML/DRN), M1 Kelly and M4 fixed-vol methods, manual per-regime weight editor, log-scale equity curves, regime shading, reproducibility config embedded.",
     "file": "strategies/bpgs_blend_report_2026-06-30_2026-07-01.html",
     "author": "Arvind Rajan",
     "category": "strategies"
