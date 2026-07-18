@@ -1,8 +1,8 @@
 [
   {
-    "date": "2026-07-17",
+    "date": "2026-07-18",
     "title": "Full-Period PCA Build Status (2001-2026)",
-    "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors via entry/retain hysteresis + 252-day confirmation bar), and periodic (annual, corrected-null) residual clustering showing PC1/PC2-k/clustering variance decomposition and persistent industry structure. Includes an interactive PC Explorer (top-loaded names by month) and zoomable/log-scale charts throughout.",
+    "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors via entry/retain hysteresis + 252-day confirmation bar), and periodic (annual, corrected-null) residual clustering showing PC1/PC2-k/clustering variance decomposition and persistent industry structure. Item 6 clustering now OOS-extended through 2026-07-02, matching the identity-tracking cutoff. Includes an interactive PC Explorer (top-loaded names by month) and zoomable/log-scale charts throughout.",
     "file": "research/pca_build_status_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "research"
