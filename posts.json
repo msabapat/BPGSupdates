@@ -1,8 +1,15 @@
 [
   {
+    "date": "2026-07-20",
+    "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-20 (End of Day, 8:05 AM).",
+    "file": "portfolio_report_live_2026-07-20.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-19",
     "title": "Full-Period PCA Build Status (2001-2026)",
-    "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors via entry/retain hysteresis + 252-day confirmation bar), and periodic (annual, corrected-null) residual clustering showing PC1/PC2-k/clustering variance decomposition and persistent industry structure. Interactive PC Explorer redesigned with a bar+line dual-axis industry-exposure chart, transposed industry x PC heatmap, and live per-PC period-significance info. Includes a direct volatility-factor re-check across all confirmed PCs (PC2's old ‘low-vol’ label found stale — PC7 has taken over that role) and a formal causal-construction audit. Zoomable/log-scale charts throughout.",
+    "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors via entry/retain hysteresis + 252-day confirmation bar), and periodic (annual, corrected-null) residual clustering showing PC1/PC2-k/clustering variance decomposition and persistent industry structure. Interactive PC Explorer redesigned with a bar+line dual-axis industry-exposure chart, transposed industry x PC heatmap, and live per-PC period-significance info. Includes a direct volatility-factor re-check across all confirmed PCs (PC2's old \u2018low-vol\u2019 label found stale \u2014 PC7 has taken over that role) and a formal causal-construction audit. Zoomable/log-scale charts throughout.",
     "file": "research/pca_build_status_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "research"
@@ -14,13 +21,6 @@
     "file": "strategies/drn_dial_viewer_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "strategies"
-  },
-  {
-    "date": "2026-07-16",
-    "title": "Live Portfolio Performance Report",
-    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-16 (End of Day, 5:09 PM).",
-    "file": "portfolio_report_live_2026-07-16.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-07-16",
