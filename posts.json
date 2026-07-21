@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-21",
+    "title": "500-Stock Options Screener + Optimal Call Spreads",
+    "summary": "Refreshed 2026-07-21 EOD, 79 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
+    "file": "options_screener_top500_2026-07-21.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-20",
     "title": "Live Portfolio Performance Report",
     "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-20 (End of Day, 5:09 PM).",
@@ -13,13 +20,6 @@
     "file": "research/pca_build_status_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "research"
-  },
-  {
-    "date": "2026-07-20",
-    "title": "500-Stock Options Screener + Optimal Call Spreads",
-    "summary": "Refreshed 2026-07-20 EOD, 76 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
-    "file": "options_screener_top500_2026-07-20.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-07-17",
