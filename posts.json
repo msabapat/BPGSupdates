@@ -1,25 +1,25 @@
 [
   {
+    "date": "2026-07-21",
+    "title": "500-Stock Options Screener + Optimal Call Spreads",
+    "summary": "Refreshed 2026-07-21 EOD, 79 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
+    "file": "options_screener_top500_2026-07-21.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-20",
+    "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-20 (End of Day, 5:09 PM).",
+    "file": "portfolio_report_live_2026-07-20.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-20",
     "title": "Full-Period PCA Build Status (2001-2026)",
     "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors), and periodic (annual, corrected-null) residual clustering with PC1/PC2-k/clustering variance decomposition. PC Explorer redesigned (bar+line dual-axis industry exposure, transposed industry x PC heatmap, per-PC period-significance); PC2's old low-vol-factor label re-verified and found stale (flipped sign 2022) -- PC7 identified as the current stable vol-clustering PC. New Item 5 tab: cluster x industry correlation matrix using PC1-only-residual clusters (built for the cluster-momentum/cluster-MR strategy tests), as of the latest available anchor (2026-07-02), with its own date stamp.",
     "file": "research/pca_build_status_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "research"
-  },
-  {
-    "date": "2026-07-20",
-    "title": "500-Stock Options Screener + Optimal Call Spreads",
-    "summary": "Refreshed 2026-07-20 EOD, 76 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
-    "file": "options_screener_top500_2026-07-20.html",
-    "author": "Mani Sabapathi"
-  },
-  {
-    "date": "2026-07-20",
-    "title": "Live Portfolio Performance Report",
-    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-20 (End of Day, 8:05 AM).",
-    "file": "portfolio_report_live_2026-07-20.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-07-17",
