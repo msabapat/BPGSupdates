@@ -53,8 +53,8 @@
   },
   {
     "date": "2026-07-21",
-    "title": "BPGS Blended Strategy Report (v4: adds Old DRN vs Config C tab)",
-    "summary": "Update from 2026-07-17: new third tab, \"Old DRN vs Config C\", puts the superseded T=12/f=0.9/lag1 regime formula (locked 2026-06-30, flat 13% base-vol) side by side with the causal recovered-fraction Config C (T=12/f_lo=0.5/lag2, D/R base-vol raised to 20%) that's live in production -- full HML/DRN charts under the old formula plus a locked-method comparison table (M4 @1.25x, M1 @25% Kelly, IS/OOS, all 5 stats) against Config C. Reproducibility panel now documents both regime formulas. Underlying HML/DRN tabs unchanged in method, refreshed on current data (through 2026-07-21).",
+    "title": "BPGS Blended Strategy Report (v4: Old-DRN vs Config-C comparison tab)",
+    "summary": "Adds a third regime series alongside HML and Config C: the legacy T=12/f=0.9/lag=1 DRN definition, shown side by side with the current Config C (T=12,f_lo=0.5,lag=2) so the regime-redefinition impact on blend weights/performance is directly visible in one report rather than only in backtest numbers. Same two-tab HML/DRN structure, M1 Kelly and M4 fixed-vol methods, manual per-regime weight editor, log-scale equity curves, regime shading, reproducibility config embedded.",
     "file": "strategies/bpgs_blend_report_2026-06-30_2026-07-01.html",
     "author": "Arvind Rajan",
     "category": "strategies"
@@ -245,5 +245,13 @@
     "summary": "Performance surface across LV/MOM/MR weight combinations. Grid search of blended strategy returns showing the optimal weight region and sensitivity to allocation changes.",
     "file": "blend_grid_viz_2026-06-21.html",
     "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-23",
+    "title": "FQW vs. LV / MR / MOM / SPY \u2014 Strategy Comparison",
+    "summary": "Fundamental-quality-weighted (FQW) strategy compared against the three locked strategies (LV/MR/MOM) and SPY. Re-verifies FQW is NOT a blend component under current data (correlates 0.81 with MR, never leads a regime box); a low-vol overlay variant (FQW+low-vol, correlates 0.77 with LV) tested with the same conclusion. Adds a correlation-matrix card and pulls a point-in-time snapshot from the live constrained-Kelly optimizer (MR<=20%, MOM<=30%, LV/FQW/FQWL/SPY<=60%).",
+    "file": "strategies/fqew_vs_all_report_2026-07-23.html",
+    "author": "Arvind Rajan",
+    "category": "strategies"
   }
 ]
