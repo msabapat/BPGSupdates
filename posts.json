@@ -1,7 +1,14 @@
 [
   {
     "date": "2026-07-24",
-    "title": "Does Combining HML with DRN Improve the Blend? (No — Parameter-Count Artifact)",
+    "title": "500-Stock Options Screener + Optimal Call Spreads",
+    "summary": "Refreshed 2026-07-24 EOD, 81 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
+    "file": "options_screener_top500_2026-07-24.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-24",
+    "title": "Does Combining HML with DRN Improve the Blend? (No \u2014 Parameter-Count Artifact)",
     "summary": "Tests whether crossing the DRN (Descent/Recovery/Normal) and HML (High/Middle/Low) regime labelings into a joint 3x3 grid improves the blended strategy's fractional-Kelly allocation. It does not: the joint partition gains +0.08 in-sample Sharpe and gives back -0.04 out-of-sample, and a placebo null of 200 circularly-shifted HML series shows a randomly time-shifted HML beats the DRN baseline in-sample in 100% of draws -- the in-sample gain is pure parameter count. Real HML lands at the 26th/27th percentile of that placebo distribution. Under walk-forward annual refitting (2008-2026) DRN alone wins outright (Sharpe 0.97 vs 0.83), and a min-cell sweep shows performance improving monotonically as HML-derived cells are removed. Mechanism: DRN and HML are strongly dependent, so 3x3 yields only 6 usable cells with Normal-High alone holding 57% of history.",
     "file": "strategies/drn_hml_joint_2026-07-24.html",
     "author": "Arvind Rajan"
@@ -14,13 +21,6 @@
     "author": "Mani Sabapathi"
   },
   {
-    "date": "2026-07-23",
-    "title": "500-Stock Options Screener + Optimal Call Spreads",
-    "summary": "Refreshed 2026-07-23 EOD, 87 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
-    "file": "options_screener_top500_2026-07-23.html",
-    "author": "Mani Sabapathi"
-  },
-  {
     "date": "2026-07-20",
     "title": "Full-Period PCA Build Status (2001-2026)",
     "summary": "Interactive status report for the full-history rolling-universe PCA build: universe construction, causal-EWMA estimation, durability-gated identity tracking (59 confirmed factors), and periodic (annual, corrected-null) residual clustering with PC1/PC2-k/clustering variance decomposition. PC Explorer redesigned (bar+line dual-axis industry exposure, transposed industry x PC heatmap, per-PC period-significance); PC2's old low-vol-factor label re-verified and found stale (flipped sign 2022) -- PC7 identified as the current stable vol-clustering PC. New Item 5 tab: cluster x industry correlation matrix using PC1-only-residual clusters (built for the cluster-momentum/cluster-MR strategy tests), as of the latest available anchor (2026-07-02), with its own date stamp.",
@@ -30,8 +30,8 @@
   },
   {
     "date": "2026-07-17",
-    "title": "DRN Regime Dial Viewer (Config C — live in production)",
-    "summary": "Interactive explorer for the new causal DRN (Descent/Recovery/Normal) regime definition adopted into production 2026-07-17. Three dials (T, f_lo, lag) plus a direct toggle against the old (superseded) T=12/f=0.9 formula — SPY total-return chart with live region shading, separate drawdown/drawup/recovered-fraction panels, and a live-updating table showing SPY/LV/MR/MOM/FQE/FQW's compounded annualized return in each zone at whatever dial settings are selected. Preset buttons jump to the three candidates evaluated (A/B/C) plus the old locked formula for comparison; C is the adopted production spec, loaded by default.",
+    "title": "DRN Regime Dial Viewer (Config C \u2014 live in production)",
+    "summary": "Interactive explorer for the new causal DRN (Descent/Recovery/Normal) regime definition adopted into production 2026-07-17. Three dials (T, f_lo, lag) plus a direct toggle against the old (superseded) T=12/f=0.9 formula \u2014 SPY total-return chart with live region shading, separate drawdown/drawup/recovered-fraction panels, and a live-updating table showing SPY/LV/MR/MOM/FQE/FQW's compounded annualized return in each zone at whatever dial settings are selected. Preset buttons jump to the three candidates evaluated (A/B/C) plus the old locked formula for comparison; C is the adopted production spec, loaded by default.",
     "file": "strategies/drn_dial_viewer_2026-07-17.html",
     "author": "Arvind Rajan",
     "category": "strategies"
@@ -68,8 +68,8 @@
   },
   {
     "date": "2026-07-08",
-    "title": "RMT Factor Model — PC Structure & Portfolio Attribution",
-    "summary": "5-tab interactive report: RMT/PCA 3-year rolling prototype (Marchenko-Pastur cutoff, eigenportfolio structure) plus portfolio attribution decomposing SPY, MOM, MR, and LowVol into PC exposures. Built 2026-07-07/08. Along the way, found and fixed a critical date-alignment bug (`daily_return_shifted` vs. plain `daily_return`) that had wrongly shown MOM/MR as market-neutral in an earlier attribution pass — corrected numbers now show proper market beta.",
+    "title": "RMT Factor Model \u2014 PC Structure & Portfolio Attribution",
+    "summary": "5-tab interactive report: RMT/PCA 3-year rolling prototype (Marchenko-Pastur cutoff, eigenportfolio structure) plus portfolio attribution decomposing SPY, MOM, MR, and LowVol into PC exposures. Built 2026-07-07/08. Along the way, found and fixed a critical date-alignment bug (`daily_return_shifted` vs. plain `daily_return`) that had wrongly shown MOM/MR as market-neutral in an earlier attribution pass \u2014 corrected numbers now show proper market beta.",
     "file": "research/rmt_combined_4tab.html",
     "author": "Arvind Rajan",
     "category": "research"
@@ -115,7 +115,7 @@
   },
   {
     "date": "2026-07-06",
-    "title": "LV / MOM / MR — Arvind's Reproduction vs Our Updated Results",
+    "title": "LV / MOM / MR \u2014 Arvind's Reproduction vs Our Updated Results",
     "summary": "Table-only comparison of Arvind's 'Our Mani-spec' reproduction (from his 2026-07-04 posts) against our own canonical results re-run 2026-07-06 with the net_debt_to_mcap false-zero fix and fcf/ebit forward-fill fix applied. Sharpe/Sortino for 'Our updated' now net out the T-bill risk-free rate.",
     "file": "strategies/arvind_vs_updated_compare_2026-07-06_2026-07-06.html",
     "author": "Mani Sabapathi",
@@ -147,16 +147,16 @@
   },
   {
     "date": "2026-07-03",
-    "title": "The Plausible-Worlds Engine — Simulating World States, Not Price Paths",
-    "summary": "Essay II. An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states — including states that have never occurred — governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to Meta-Engine Design and Essay I, The Next-State Engine.",
+    "title": "The Plausible-Worlds Engine \u2014 Simulating World States, Not Price Paths",
+    "summary": "Essay II. An ideation report: replace Monte Carlo over asset prices with a generator of coherent world states \u2014 including states that have never occurred \u2014 governed by explicit plausibility rules, then infer asset prices within each world through structural channels. Survey of what exists, honest pitfalls, and a proposed architecture. Companion to Meta-Engine Design and Essay I, The Next-State Engine.",
     "file": "top-down/plausible-worlds-engine_2026-07-03.html",
     "author": "Arvind Rajan",
     "category": "top-down"
   },
   {
     "date": "2026-07-03",
-    "title": "The Next-State Engine — From Crisis Detection to State Anticipation",
-    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world — macro, political, structural — and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
+    "title": "The Next-State Engine \u2014 From Crisis Detection to State Anticipation",
+    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world \u2014 macro, political, structural \u2014 and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
     "file": "top-down/next-state-engine_2026-07-03.html",
     "author": "Arvind Rajan",
     "category": "top-down"
@@ -164,31 +164,31 @@
   {
     "date": "2026-07-03",
     "title": "Sector Attribution Dashboard",
-    "summary": "Per-sector performance contribution breakdown for LV, MOM, and MR — full-period ranking, IS/OOS comparison, and year-by-year heatmap. Key finding: Real Estate is a consistent drag across all three strategies. MOM shows growing Technology concentration in OOS (AI/mega-cap momentum trade); MR's Financial Services allocation shows classic mean-reversion crisis alpha in 2008-2009.",
+    "summary": "Per-sector performance contribution breakdown for LV, MOM, and MR \u2014 full-period ranking, IS/OOS comparison, and year-by-year heatmap. Key finding: Real Estate is a consistent drag across all three strategies. MOM shows growing Technology concentration in OOS (AI/mega-cap momentum trade); MR's Financial Services allocation shows classic mean-reversion crisis alpha in 2008-2009.",
     "file": "strategies/sector_dashboard_2026-07-03.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
   },
   {
     "date": "2026-07-02",
-    "title": "Beta, Alpha & Industry Research — Strategy Generation & Improvement",
-    "summary": "Three-chapter report: (1) narrative summary tying together the day's beta/alpha/industry research — idio vol vs beta vol vs total vol as predictors (mechanical artifact, not real alpha), LV/MOM/MR classified by market-beta quartile, industry group signals, an industry-vol filter that improves MOM Sharpe both IS and OOS, MR's idiosyncratic-vs-industry vol split and a direct Stage-2 test of it (not adopted), and a beta-bucket LV substitute that looked strong IS but collapsed OOS; (2) the full idio/beta/total-vol quartile report; (3) the interactive Industry Explorer.",
+    "title": "Beta, Alpha & Industry Research \u2014 Strategy Generation & Improvement",
+    "summary": "Three-chapter report: (1) narrative summary tying together the day's beta/alpha/industry research \u2014 idio vol vs beta vol vs total vol as predictors (mechanical artifact, not real alpha), LV/MOM/MR classified by market-beta quartile, industry group signals, an industry-vol filter that improves MOM Sharpe both IS and OOS, MR's idiosyncratic-vs-industry vol split and a direct Stage-2 test of it (not adopted), and a beta-bucket LV substitute that looked strong IS but collapsed OOS; (2) the full idio/beta/total-vol quartile report; (3) the interactive Industry Explorer.",
     "file": "research/beta_alpha_industry_report_2026-07-02.html",
     "author": "Arvind Rajan",
     "category": "research"
   },
   {
     "date": "2026-06-29",
-    "title": "BPGS · Return Decomposition Explorer",
-    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling β(market), β(group), annualised α, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
+    "title": "BPGS \u00b7 Return Decomposition Explorer",
+    "summary": "Stock-level 2-factor return decomposition (market SPY + industry group). Rolling \u03b2(market), \u03b2(group), annualised \u03b1, variance attribution, and cumulative return vs peers and SPY. Month-end samples, interactive stock/date/window picker.",
     "file": "research/decomp_static_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "research"
   },
   {
     "date": "2026-07-03",
-    "title": "Automated Credit Analyst — Model Feasibility & Framework (v2: + Commercial Directions Appendix)",
-    "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, naïve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources. v2 adds a new appendix, “Commercial Directions — What Could Be Built From This”: 9 scored options (ratings/PD feed, equity-bond arb, bottom-up credit portfolio builder, credit signals for the equity engine, research subscription, private-credit analytics, counterparty monitoring, LLM copilot, PD licensing) with difficulty, market sizing, and a recommended build sequence.",
+    "title": "Automated Credit Analyst \u2014 Model Feasibility & Framework (v2: + Commercial Directions Appendix)",
+    "summary": "Comprehensive reference covering 40+ credit risk models across 9 families: accounting/statistical (Altman Z, CHS, O-score), structural (Merton, na\u00efve-DD), intensity/reduced-form, machine learning (XGBoost, stacked ensemble), ratings-transition, LGD/severity, macro & hybrid. Equity-bond disconnect analysis, macro sensitivity matrix by sector, and free fixed-income data sources. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From This\u201d: 9 scored options (ratings/PD feed, equity-bond arb, bottom-up credit portfolio builder, credit signals for the equity engine, research subscription, private-credit analytics, counterparty monitoring, LLM copilot, PD licensing) with difficulty, market sizing, and a recommended build sequence.",
     "file": "research/credit_analyst_feasibility_report_2026-06-30.html",
     "author": "Mani Sabapathi",
     "category": "research"
@@ -196,31 +196,31 @@
   {
     "date": "2026-06-30",
     "title": "Beta Persistence & Blended Half-Life Analysis",
-    "summary": "Non-overlapping beta quartile transition matrices (N-month window → next single month). Exponentially-weighted blended beta with half-lives 1/3/6/9/12m and equal weights. Decile/quartile forward-return tables with HML and DRN regime breakdowns and 90% confidence intervals.",
+    "summary": "Non-overlapping beta quartile transition matrices (N-month window \u2192 next single month). Exponentially-weighted blended beta with half-lives 1/3/6/9/12m and equal weights. Decile/quartile forward-return tables with HML and DRN regime breakdowns and 90% confidence intervals.",
     "file": "research/beta_unified_2026-06-30.html",
     "author": "Arvind Rajan",
     "category": "research"
   },
   {
     "date": "2026-07-04",
-    "title": "Bottom-Up Engine — Framework & Moat Taxonomy (v2: + Commercial Directions Appendix)",
-    "summary": "Framework for identifying durable compounders: moat taxonomy (network, switching cost, cost advantage, intangible), scoring schema, base-rate analysis, and matched-loser discipline. Companion to the top-down quant engine. v2 adds a new appendix, “Commercial Directions — What Could Be Built From the Bottom-Up Engine”: 10 scored options (internal Shelf-4 sleeve, an annual “Compounders & Impostors” base-rate study, a matched-loser database, a multibagger research subscription, a systematic moat-score dataset/API, an AI moat-analyst copilot, a compounder SMA, index/ETF licensing, a book/course, and family-office moat due-diligence advisory) with named incumbents, v0 specs, go-to-market notes, a scoring matrix, and a recommended build sequence.",
+    "title": "Bottom-Up Engine \u2014 Framework & Moat Taxonomy (v2: + Commercial Directions Appendix)",
+    "summary": "Framework for identifying durable compounders: moat taxonomy (network, switching cost, cost advantage, intangible), scoring schema, base-rate analysis, and matched-loser discipline. Companion to the top-down quant engine. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From the Bottom-Up Engine\u201d: 10 scored options (internal Shelf-4 sleeve, an annual \u201cCompounders & Impostors\u201d base-rate study, a matched-loser database, a multibagger research subscription, a systematic moat-score dataset/API, an AI moat-analyst copilot, a compounder SMA, index/ETF licensing, a book/course, and family-office moat due-diligence advisory) with named incumbents, v0 specs, go-to-market notes, a scoring matrix, and a recommended build sequence.",
     "file": "bottom-up/bottom-up-engine-framework_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "bottom-up"
   },
   {
     "date": "2026-06-29",
-    "title": "Meta-Engine Design — Historical Tests",
-    "summary": "Historical backtests supporting the meta-engine design: regime classification sensitivity, strategy performance across regimes, and blended portfolio results across the full 2001–2026 history.",
+    "title": "Meta-Engine Design \u2014 Historical Tests",
+    "summary": "Historical backtests supporting the meta-engine design: regime classification sensitivity, strategy performance across regimes, and blended portfolio results across the full 2001\u20132026 history.",
     "file": "top-down/meta-engine-historical-tests_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "top-down"
   },
   {
     "date": "2026-07-04",
-    "title": "Meta-Engine Design — Framework (v2: + Commercial Directions Appendix)",
-    "summary": "5-layer top-down quant engine: universe, regime, strategy selection, sizing, and execution. Strategy library with 4-shelf architecture (quant, discretionary, hybrid, research). Interactive 9-tab explorer. v2 adds a new appendix, “Commercial Directions — What Could Be Built From the Three-Engine Stack” (Meta-Engine + The Next-State Engine + The Plausible-Worlds Engine): 10 scored options (institutional signal feed, world-state simulator, live state dashboard, advisor antifragility scorer, state-beta taxonomy dataset, research subscription, internal overlay, labeled state-panel licensing, wargaming-as-a-service, convexity/mispriced-worlds monitor) with named incumbents, a scoring matrix, a positioning map, and a recommended build sequence.",
+    "title": "Meta-Engine Design \u2014 Framework (v2: + Commercial Directions Appendix)",
+    "summary": "5-layer top-down quant engine: universe, regime, strategy selection, sizing, and execution. Strategy library with 4-shelf architecture (quant, discretionary, hybrid, research). Interactive 9-tab explorer. v2 adds a new appendix, \u201cCommercial Directions \u2014 What Could Be Built From the Three-Engine Stack\u201d (Meta-Engine + The Next-State Engine + The Plausible-Worlds Engine): 10 scored options (institutional signal feed, world-state simulator, live state dashboard, advisor antifragility scorer, state-beta taxonomy dataset, research subscription, internal overlay, labeled state-panel licensing, wargaming-as-a-service, convexity/mispriced-worlds monitor) with named incumbents, a scoring matrix, a positioning map, and a recommended build sequence.",
     "file": "top-down/meta-engine-design_2026-06-29.html",
     "author": "Arvind Rajan",
     "category": "top-down"
@@ -242,7 +242,7 @@
   {
     "date": "2026-06-21",
     "title": "SPY Drawdown Visualization",
-    "summary": "Interactive SPY drawdown chart with regime shading. Companion to the heatmap — shows peak-to-trough drawdown series with Bear/Mid/Bull regime overlays.",
+    "summary": "Interactive SPY drawdown chart with regime shading. Companion to the heatmap \u2014 shows peak-to-trough drawdown series with Bear/Mid/Bull regime overlays.",
     "file": "spy_dd_viz_2026-06-21.html",
     "author": "Mani Sabapathi"
   },
@@ -255,7 +255,7 @@
   },
   {
     "date": "2026-07-23",
-    "title": "FQW vs. LV / MR / MOM / SPY — Strategy Comparison",
+    "title": "FQW vs. LV / MR / MOM / SPY \u2014 Strategy Comparison",
     "summary": "Fundamental-quality-weighted (FQW) strategy compared against the three locked strategies (LV/MR/MOM) and SPY. Re-verifies FQW is NOT a blend component under current data (correlates 0.81 with MR, never leads a regime box); a low-vol overlay variant (FQW+low-vol, correlates 0.77 with LV) tested with the same conclusion. Adds a correlation-matrix card and pulls a point-in-time snapshot from the live constrained-Kelly optimizer (MR<=20%, MOM<=30%, LV/FQW/FQWL/SPY<=60%).",
     "file": "strategies/fqew_vs_all_report_2026-07-23.html",
     "author": "Arvind Rajan",
