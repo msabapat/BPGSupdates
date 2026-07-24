@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-07-24",
+    "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-24 (Noon Update, 12:04 PM).",
+    "file": "portfolio_report_live_2026-07-24.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-24",
     "title": "Execution Cost vs. Order Size: What SEC Rule 605 Shows for Our Universe",
     "summary": "Measures what we actually pay to trade, conditioned on order size, using SEC Rule 605 detailed execution reports from Citadel Securities and Hudson River Trading (the two largest destinations for our order flow) over Jun 2025 - May 2026, across the 404 names our LV/MR/MOM strategies held over the past 36 months. Effective spread (2x|P-M|/M, which equals round-trip cost) rises steeply and monotonically with order size: ~2.6 bps at 100-499 shares, 3.5 bps at 500-1,999, ~6.9 bps at 2,000-4,999, and 8.7-9.9 bps at 5,000-9,999 -- a median 4.1x increase. At that largest bucket the median name costs 8.9 bps, essentially at our TC_RATE=0.0005 (10 bps round-trip) assumption, and 181 of 404 names (45%) exceed it: 18% of LV names, 46% of MR, 52% of MOM. This refines rather than contradicts the earlier finding that TC_RATE looked conservative -- that figure was share-weighted across all order sizes and dominated by small retail orders. Key analytical point: a steep slope alone is not a danger signal (NVDA runs 0.14 to 0.93 bps, a 6.6x rise off a near-zero base); the names that matter are those already expensive at small size AND climbing. Critical limit: Rule 605 covered orders exclude anything at or above 10,000 shares, so the largest observable order is a median ~$895K of notional -- 6x to 34x smaller than our own positions at $50M-$300M AUM -- and the cost curve is still rising at that ceiling, making every figure here a lower bound.",
     "file": "research/execution_cost_report_2026-07-24.html",
@@ -12,13 +19,6 @@
     "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
     "summary": "Refreshed 2026-07-24 EOD, 26 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs. Auto-published daily.",
     "file": "options_screener_top500_2026-07-24.html",
-    "author": "Mani Sabapathi"
-  },
-  {
-    "date": "2026-07-24",
-    "title": "Live Portfolio Performance Report",
-    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-24 (Chart Window Adjustment, 11:23 AM).",
-    "file": "portfolio_report_live_2026-07-24.html",
     "author": "Mani Sabapathi"
   },
   {
