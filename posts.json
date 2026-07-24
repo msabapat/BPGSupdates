@@ -1,6 +1,13 @@
 [
   {
     "date": "2026-07-24",
+    "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-24 (Daily Refresh, 11:02 AM).",
+    "file": "portfolio_report_live_2026-07-24.html",
+    "author": "Mani Sabapathi"
+  },
+  {
+    "date": "2026-07-24",
     "title": "500-Stock Options Screener + Optimal Call Spreads",
     "summary": "Refreshed 2026-07-24 EOD, 81 tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value). Auto-published daily.",
     "file": "options_screener_top500_2026-07-24.html",
@@ -12,13 +19,6 @@
     "summary": "Tests whether crossing the DRN (Descent/Recovery/Normal) and HML (High/Middle/Low) regime labelings into a joint 3x3 grid improves the blended strategy's fractional-Kelly allocation. It does not: the joint partition gains +0.08 in-sample Sharpe and gives back -0.04 out-of-sample, and a placebo null of 200 circularly-shifted HML series shows a randomly time-shifted HML beats the DRN baseline in-sample in 100% of draws -- the in-sample gain is pure parameter count. Real HML lands at the 26th/27th percentile of that placebo distribution. Under walk-forward annual refitting (2008-2026) DRN alone wins outright (Sharpe 0.97 vs 0.83), and a min-cell sweep shows performance improving monotonically as HML-derived cells are removed. Mechanism: DRN and HML are strongly dependent, so 3x3 yields only 6 usable cells with Normal-High alone holding 57% of history.",
     "file": "strategies/drn_hml_joint_2026-07-24.html",
     "author": "Arvind Rajan"
-  },
-  {
-    "date": "2026-07-23",
-    "title": "Live Portfolio Performance Report",
-    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-23 (MOM Chart Fix, 10:29 PM).",
-    "file": "portfolio_report_live_2026-07-23.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-07-20",
