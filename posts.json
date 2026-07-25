@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-25",
+    "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
+    "summary": "Update from 2026-07-24: re-published same-day with the IV bid-ask spread liquidity filter widened to 10% of mid-IV (was 5%), now the default going forward. Data is still Thursday 2026-07-23's EOD close (Friday's close not yet available -- weekend). 58 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs.",
+    "file": "options_screener_top500_2026-07-25.html",
+    "author": "Mani Sabapathi"
+  },
+  {
     "date": "2026-07-24",
     "title": "Live Portfolio Performance Report",
     "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-07-24 (End of Day, 5:09 PM).",
@@ -13,13 +20,6 @@
     "file": "research/execution_cost_report_2026-07-24.html",
     "author": "Arvind Rajan",
     "category": "research"
-  },
-  {
-    "date": "2026-07-24",
-    "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
-    "summary": "Refreshed 2026-07-24 EOD, 26 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs. Auto-published daily.",
-    "file": "options_screener_top500_2026-07-24.html",
-    "author": "Mani Sabapathi"
   },
   {
     "date": "2026-07-24",
