@@ -2,7 +2,7 @@
   {
     "date": "2026-07-25",
     "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
-    "summary": "Update from 2026-07-24: re-published same-day with the IV bid-ask spread liquidity filter widened to 10% of mid-IV (was 5%), now the default going forward. Data is still Thursday 2026-07-23's EOD close (Friday's close not yet available -- weekend). 58 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs.",
+    "summary": "Refreshed 2026-07-25 EOD, 58 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs. Auto-published daily.",
     "file": "options_screener_top500_2026-07-25.html",
     "author": "Mani Sabapathi"
   },
