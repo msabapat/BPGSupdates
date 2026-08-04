@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Options Screener — MU, NVDA, MRVL, TSLA, SNDK, MSFT, AAPL, AVGO, AMD, INTC, GOOGL, META, AMZN, PLTR, DELL, ORCL, LITE, QCOM, NOW, IBM, AMAT, LLY, WDC, SNOW, CRM, CSCO, CRWV, LRCX, WMT, RKLB, CRWD, MSTR, NFLX, HOOD, PANW, APP, ASTS, BE, TXN, STX, HPE, CAT, UNH, COST, GEV, AAOI, V, COHR, BRK.B, JPM, GLW, KLAC, SMCI, CRDO, XOM, GS, CIEN, INTU, ADI, IONQ, BAC, VRT, ALAB, MA, DDOG, COIN, JNJ, UBER, APH, RGTI, ON, ADBE, CVX, CRCL, SOFI, BA, HD, ANET, ZS, BSX, MDB, RDW, LIN, PG, MS, MRK, C, GE, TER, NXPI, PEP, MPWR, AZO, WFC, CBRS, KO, TMO, BKNG, CEG, GILD, ONDS, AAL, NET, SNPS, MCHP, T, CDNS, ABBV, CME, F, ISRG, SCHW, MCD, MDT, QBTS, NEE, OKLO, HON, NVTS, RTX, FSLR, ABT, NKE, DE, VZ, FTNT, APLD, ETN, TMUS, RDDT, TJX, ACN, COF, FLEX, SATS, UNP, NTAP, ROST, SPGI, AXTI, AXP, FIX, AMGN, FCX, SYK, NEM, OKTA, PFE, WDAY, SBUX, CMCSA, SLB, REGN, DIS, DHR, RCL, WELL, NUVL, PL, BLK, PH, CVNA, PWR, QNT, TWLO, GM, BMY, ELV, HPQ, CMG, FN, BMNR, ADSK, MCK, PYPL, LULU, DASH, COP, WULF, ICE, PM, PGR, ORLY, STRL, CVS, MTSI, TEAM, WBD, BX, SHW, SMTC, FDX, AKAM, CIFR, UPS, VLO, CB, HCA, LOW, CBOE, NOC, JCI, LUNR, ASTC, TTWO, AXON, CSX, HWM, RIVN, PATH, CCL, TT, UAL, D, VSH, OXY, MAR, HLT, PLD, VST, VEEV, MO, VRTX, ADP, DVN, AEP, FDXF, HUBS, FANG, LMT, MARA, EQIX, MPC, FPS, RVMD, TEL, TTMI, ULTA, CZR, ZTS, AMT, WOLF, CMI, DG, DLTR, DAL, FTI, KEYS, SPCE, IBKR, PINS, ENPH, HUT, ECL, KR, KMB, XEL, MDLN, MNST, EBAY, CTSH, ABNB, MTZ, CASY, CARR, HIMS, DOCN, URI, ODFL, TTD, LNG, USAR, TMHC, SO, WM, ZM, MXL, MMM, MRSH, MDLZ, WMB, TGT, CDE, TFC, FLY, SMR, RIOT, BKR, AON, BNY, MSI, XYZ, RBLX, EOG, CL, CTAS, TE, HUM, XPO, APO, EW, BBY, DXCM, HAL, TSCO, CLSK, FIG, O, UMAC, RBRK, TDG, FITB, USB, BURL, CHTR, TEM, FIVE, EA, ENTG, EXC, INFQ, TRV, STI, SWKS, RMBS, FISV, FLNC, KVUE, WAT, MP, MCO, CI, HBAN, MOD, AMKR, DOW, PNC, MGM, JBL, MSCI, CORZ, IDXX, NSC, NUE, TPR, INSM, P, A, DLR, FICO, KKR, CAH, PCAR, CPNG, RCAT, SITM, DKNG, CCI, ALNY, GDDY, GIS, KNX, NCLH, CBRE, COR, BLD, ILMN, DUK, VRSK, SPG, KHC, VIAV, ACHR, EXPE, CPRT, GPN, AFRM, ROP, ATO, BDX, KTOS, GH, KEEL, LPLA, ALB, ZBRA, KDP, DY, ETR, AA, LYV, VMC, PSX, EMR, DKS, LHX, EL, JOBY, ARES, EXE, MKSI, RSG, CELH, NXT, FERG, IOT, HL, AFL, AVAV, YUM, AEIS, GEHC, FAST, U, HSY, ONTO, CLF, CDW, NTRA, EQT, RMD, PAYX, ROK, CF, MLM, STLD, ALL, DHI, ITW, NDAQ, IT, LYB, SRE, GTLB, APD, NVT, COO, FFIV, BWA, GWRE, AJG, RF, CRS, RKT, NRG, SN, GWW, OKE, EPAM, VSXY, GD, ROKU, TOST, KMI, LSCC, RPRX, FLUT, CNC, EME, HUBB, JKHY, ROL, AMP, PPL, ED, CFG, PLUG, ADM, CMS, BBAI, NTNX, ATI, QXO, PCG, AGX, MRNA, VTR, IQV, AIG, FIS, STZ, SNX, AWK, MET, PODD, JBHT, STT, OWL, Q, WWD, WCN, CTVA, IR, MTD, QUBT, KEY, TLN, CHRW, SNAP, VSAT</title>
+<style>
+  * { box-sizing:border-box }
+  body { background:#f8fafc; color:#1e293b; font-family:'Consolas','Courier New',monospace; margin:0; padding:16px }
+  h1 { font-size:16px; color:#0f172a; margin:0 0 4px 0 }
+  .subtitle { color:#64748b; font-size:11px; margin-bottom:14px }
+  .ctrls { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:12px; align-items:center }
+  .etabs, .ttabs { display:flex; gap:4px }
+  .etab, .ttab { background:#f1f5f9; color:#64748b; border:1px solid #cbd5e1; border-radius:5px;
+        padding:6px 14px; font-family:inherit; font-size:12px; cursor:pointer }
+  .etab.active, .ttab.active { background:#4f46e5; color:#fff; border-color:#4f46e5; font-weight:bold }
+  .scr-panel { display:none } .scr-panel.active { display:block }
+  .scr-tbl { border-collapse:collapse; font-size:11px; width:100%; overflow-x:auto }
+  .scr-tbl th { background:#f1f5f9; color:#475569; padding:5px 8px; border-bottom:2px solid #cbd5e1;
+        text-align:right; white-space:nowrap }
+  .scr-tbl td { padding:4px 8px; border-bottom:1px solid #e2e8f0; text-align:right; white-space:nowrap }
+  .scr-tbl td.tkr { text-align:left; font-weight:bold; color:#4f46e5; cursor:pointer }
+  .scr-tbl td.tkr:hover { text-decoration:underline }
+  /* Alternating row shading makes it easier to track a row across many
+     columns; a heavier rule every 5th row gives an extra visual anchor.
+     :hover is declared after both so it still wins on mouseover. */
+  .scr-tbl tbody tr:nth-child(even) { background:#f8fafc }
+  .scr-tbl tbody tr:nth-child(5n) td { border-bottom:2px solid #94a3b8 }
+  .scr-tbl tbody tr:hover { background:#eef2ff }
+  .scr-tbl th.grp-hdr { text-align:center }
+  .scr-tbl th.grp-start, .scr-tbl td.grp-start { border-left:2px solid #94a3b8 }
+  .scr-tbl td.hint { text-align:center }
+  p.hint { color:#94a3b8; font-size:11px }
+  .hint { color:#94a3b8 }
+  /* Optimal Call Spreads tab has far fewer columns than the per-bucket
+     screener table, so there's room to trade tighter column widths for a
+     bigger, easier-to-read font. */
+  .opt-trades-tbl { font-size:14px }
+  .opt-trades-tbl th, .opt-trades-tbl td { padding:7px 6px }
+  .opt-trades-tbl th:nth-child(1), .opt-trades-tbl td:nth-child(1) { width:2.5em }   /* # */
+  .opt-trades-tbl th:nth-child(2), .opt-trades-tbl td:nth-child(2) { width:4em }     /* Ticker */
+  .opt-trades-tbl th:nth-child(4), .opt-trades-tbl td:nth-child(4) { width:4em }     /* Expiry */
+  .opt-trades-tbl th:nth-child(5), .opt-trades-tbl td:nth-child(5),
+  .opt-trades-tbl th:nth-child(9), .opt-trades-tbl td:nth-child(9) { width:3.5em }   /* Buy/Sell Delta */
+  .opt-trades-tbl th:nth-child(16), .opt-trades-tbl td:nth-child(16),
+  .opt-trades-tbl th:nth-child(17), .opt-trades-tbl td:nth-child(17) { width:3em }   /* Buy/Sell OI */
+  .toptabs { display:flex; gap:6px; border-bottom:2px solid #4f46e5; margin-bottom:14px }
+  .ttop { background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; border-bottom:none;
+           border-radius:7px 7px 0 0; padding:9px 20px; font-family:inherit; font-size:14px; cursor:pointer }
+  .ttop.active { background:#4f46e5; color:#fff; border-color:#4f46e5; font-weight:bold }
+  .tpanel { display:none } .tpanel.active { display:block }
+  .filter-row { display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:12px }
+  .filter-row input { font-family:inherit; font-size:12px; padding:5px 10px; border:1px solid #cbd5e1;
+        border-radius:5px; width:220px }
+  .filter-row input:focus { outline:2px solid #4f46e5; outline-offset:-1px }
+</style></head>
+<body>
+<h1>Options Screener</h1>
+<div class="subtitle">As of 2026-08-03 &middot; click a ticker for the detailed report &middot; RV = realized vol (log returns, annualized) &middot; risk-free rate 0.60% (SHV-implied, trailing 30d)</div>
+
+<div class="filter-row">
+  <label for="tkr-filter">Filter ticker:</label>
+  <input type="text" id="tkr-filter" placeholder="e.g. AAPL, NVDA..." oninput="applyTickerFilter(this.value)">
+  <span id="tkr-filter-count" class="hint"></span>
+
+  <label for="iv-diff-filter" style="margin-left: 24px;">B/A IV Diff (pp):</label>
+  <input type="number" id="iv-diff-filter" placeholder="Max" step="0.1" min="0" style="width: 80px;" oninput="applyIVDiffFilter(this.value)">
+  <span id="iv-diff-filter-count" class="hint"></span>
+
+  <label for="anchor-delta" style="margin-left: 24px;">BS Anchor &Delta;:</label>
+  <select id="anchor-delta" onchange="recomputeAllAnchors(parseFloat(this.value))">
+    <option value="0.5" selected>50&Delta;</option><option value="0.25">25&Delta;</option><option value="0.2">20&Delta;</option><option value="0.15">15&Delta;</option><option value="0.1">10&Delta;</option><option value="0.05">5&Delta;</option><option value="0.03">3&Delta;</option>
+  </select>
+  <span id="anchor-recompute-status" class="hint"></span>
+</div>
+
+<div class="toptabs">
+  <button class="ttop active" data-t="0" onclick="showTop(0)">By Delta Bucket</button>
+  <button class="ttop" data-t="1" onclick="showTop(1)">Optimal Call Spreads</button>
+  <button class="ttop" data-t="2" onclick="showTop(2)">ETFs &mdash; By Delta Bucket</button><button class="ttop" data-t="3" onclick="showTop(3)">ETFs &mdash; Optimal Call Spreads</button>
+</div>
+
+<div class="tpanel active" id="tpanel-0">
+<div class="ctrls">
+  <div class="etabs"><button class="etab active" data-e="jan27" onclick="showScr('jan27', curType)">JAN27 (2027-01-15)</button><button class="etab" data-e="jan28" onclick="showScr('jan28', curType)">JAN28 (2028-01-21)</button><button class="etab" data-e="dec28" onclick="showScr('dec28', curType)">DEC28 (2028-12-15)</button></div>
+  <div class="ttabs"><button class="ttab active" data-t="call" onclick="showScr(curExp, 'call')">Calls</button><button class="ttab" data-t="put" onclick="showScr(curExp, 'put')">Puts</button></div>
+</div>
+<div class="scr-panel active" id="scr-jan27-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-jan27-call" data-t="0.4520547945205479" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-jan27-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-jan27-put" data-t="0.4520547945205479" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-jan28-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-jan28-call" data-t="1.4684931506849315" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-jan28-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-jan28-put" data-t="1.4684931506849315" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-dec28-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-dec28-call" data-t="2.3698630136986303" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-dec28-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-dec28-put" data-t="2.3698630136986303" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div>
+</div>
+
+<div class="tpanel" id="tpanel-1">
+<p class="hint">No spread combinations found.</p>
+</div>
+
+<div class="tpanel" id="tpanel-2">
+<div class="ctrls">
+  <div class="etabs"><button class="etab active" data-e="jan27" onclick="showScrEtf('jan27', etfCurType)">JAN27 (2027-01-15)</button><button class="etab" data-e="jan28" onclick="showScrEtf('jan28', etfCurType)">JAN28 (2028-01-21)</button><button class="etab" data-e="dec28" onclick="showScrEtf('dec28', etfCurType)">DEC28 (2028-12-15)</button></div>
+  <div class="ttabs"><button class="ttab active" data-t="call" onclick="showScrEtf(etfCurExp, 'call')">Calls</button><button class="ttab" data-t="put" onclick="showScrEtf(etfCurExp, 'put')">Puts</button></div>
+</div>
+<div class="scr-panel active" id="scr-etf-jan27-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-jan27-call" data-t="0.4520547945205479" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-etf-jan27-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-jan27-put" data-t="0.4520547945205479" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-etf-jan28-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-jan28-call" data-t="1.4684931506849315" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-etf-jan28-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-jan28-put" data-t="1.4684931506849315" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-etf-dec28-call"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-dec28-call" data-t="2.3698630136986303" data-r="0.005950842084913431" data-otype="call">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div><div class="scr-panel" id="scr-etf-dec28-put"><p class="hint">BS Prem: solve for the flat vol that reproduces each ticker's own
+50&Delta; contract's actual market price (Black-Scholes-Merton, using this page's risk-free rate
+and each ticker's own trailing dividend yield — NOT OCM's raw reported IV, which we verified is
+not self-consistent with its own mark price here), then apply that flat vol across all strikes
+at that expiry. The 50&Delta; gap is ~0% by construction; other buckets show how much the market's
+actual skew/smile premium deviates from a flat-vol assumption. Green = market cheaper than
+flat-vol BS; red = market richer. Outlined cell = largest |gap| in that row. The separate "IV"
+column is OCM's own reported field, shown for reference — it can diverge materially from the
+BS-solved vol (see the 50&Delta; column vs. the BS Prem's implied 0%-gap baseline).</p>
+<table class="scr-tbl" id="scr-tbl-etf-dec28-put" data-t="2.3698630136986303" data-r="0.005950842084913431" data-otype="put">
+<thead><tr><th rowspan="2" data-col="0" onclick="sortScrCol(this)">Ticker</th><th rowspan="2" data-col="1" onclick="sortScrCol(this)">Spot</th><th colspan="7" class="grp-hdr">% Gap (Mkt vs BS)</th><th rowspan="2" data-col="9" onclick="sortScrCol(this)">RV20d</th><th rowspan="2" data-col="10" onclick="sortScrCol(this)">RV60d</th><th colspan="7" class="grp-hdr">IV</th><th colspan="7" class="grp-hdr">Strike</th><th colspan="7" class="grp-hdr">Mkt Prem</th><th colspan="7" class="grp-hdr bsprem-hdr">BS Prem at 50&Delta; IV</th></tr><tr><th class="grp-start" data-col="2" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="3" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="4" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="5" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="6" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="7" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="8" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="11" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="12" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="13" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="14" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="15" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="16" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="17" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="18" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="19" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="20" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="21" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="22" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="23" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="24" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="25" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="26" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="27" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="28" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="29" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="30" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="31" onclick="sortScrCol(this)">3&Delta;</th><th class="grp-start" data-col="32" onclick="sortScrCol(this)">50&Delta;</th><th class="" data-col="33" onclick="sortScrCol(this)">25&Delta;</th><th class="" data-col="34" onclick="sortScrCol(this)">20&Delta;</th><th class="" data-col="35" onclick="sortScrCol(this)">15&Delta;</th><th class="" data-col="36" onclick="sortScrCol(this)">10&Delta;</th><th class="" data-col="37" onclick="sortScrCol(this)">5&Delta;</th><th class="" data-col="38" onclick="sortScrCol(this)">3&Delta;</th></tr></thead>
+<tbody></tbody>
+</table></div>
+</div>
+
+<div class="tpanel" id="tpanel-3">
+<p class="hint">No spread combinations found.</p>
+</div>
+
+<script>
+// ── Client-side Black-Scholes + implied-vol solver (mirrors bs_price() /
+// implied_vol_from_price() in build_screener.py exactly -- same bisection
+// bounds [0.001, 5.0], tol 1e-4, max_iter 100 -- so the live anchor-delta
+// recompute below reproduces what a full server-side rebuild would produce). ──
+var DELTA_BUCKETS_JS = [0.5, 0.25, 0.2, 0.15, 0.1, 0.05, 0.03];
+function _screenerNormCdf(x) {
+  var a1=0.254829592, a2=-0.284496736, a3=1.421413741, a4=-1.453152027, a5=1.061405429, p=0.3275911;
+  var sign = x < 0 ? -1 : 1;
+  x = Math.abs(x) / Math.sqrt(2.0);
+  var t = 1.0 / (1.0 + p * x);
+  var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1) * t * Math.exp(-x*x);
+  return 0.5 * (1.0 + sign * y);
+}
+function _screenerBsPrice(S, K, T, r, sigma, otype, q) {
+  if (!(S > 0) || !(K > 0) || !(sigma > 0) || !(T > 0)) return null;
+  var d1 = (Math.log(S/K) + (r - q + 0.5*sigma*sigma) * T) / (sigma * Math.sqrt(T));
+  var d2 = d1 - sigma * Math.sqrt(T);
+  if (otype === 'call') {
+    return S * Math.exp(-q*T) * _screenerNormCdf(d1) - K * Math.exp(-r*T) * _screenerNormCdf(d2);
+  }
+  return K * Math.exp(-r*T) * _screenerNormCdf(-d2) - S * Math.exp(-q*T) * _screenerNormCdf(-d1);
+}
+function _screenerImpliedVol(S, K, T, r, price, otype, q) {
+  if (!(price > 0) || !(S > 0) || !(K > 0) || !(T > 0)) return null;
+  var lo = 0.001, hi = 5.0;
+  var loPrice = _screenerBsPrice(S, K, T, r, lo, otype, q);
+  var hiPrice = _screenerBsPrice(S, K, T, r, hi, otype, q);
+  if (loPrice == null || hiPrice == null || !(loPrice <= price && price <= hiPrice)) return null;
+  for (var i = 0; i < 100; i++) {
+    var mid = (lo + hi) / 2;
+    var p = _screenerBsPrice(S, K, T, r, mid, otype, q);
+    if (p == null) return null;
+    if (Math.abs(p - price) < 1e-4) return mid;
+    if (p < price) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+function _screenerGapColor(pct, maxAbs) {
+  var capped = Math.max(-maxAbs, Math.min(maxAbs, pct));
+  var frac = maxAbs ? Math.abs(capped) / maxAbs : 0;
+  var alpha = (0.15 + 0.55 * frac).toFixed(2);
+  return pct >= 0
+    ? 'background-color:rgba(220,38,38,' + alpha + ')'
+    : 'background-color:rgba(22,163,74,' + alpha + ')';
+}
+function _screenerFmtPrem(v) { return '$' + v.toFixed(2); }
+// Recompute BS Prem / %Gap for every delta-bucket table on the page (stock +
+// ETF instances alike -- any table whose id starts with "scr-tbl-") using
+// `anchorDelta`'s own bucket market price as the new flat-vol anchor, instead
+// of the server-built default (50-delta). Purely client-side, no rebuild.
+function recomputeAllAnchors(anchorDelta) {
+  var n = DELTA_BUCKETS_JS.length;
+  var anchorIdx = DELTA_BUCKETS_JS.indexOf(anchorDelta);
+  if (anchorIdx < 0) return;
+  var GAP_OFF = 2, IV_OFF = 4 + n, STRIKE_OFF = 11 + n, MKT_OFF = 18 + n, BS_OFF = 25 + n;
+  var statusEl = document.getElementById('anchor-recompute-status');
+  if (statusEl) statusEl.textContent = 'recomputing…';
+  document.querySelectorAll('table.scr-tbl[id^="scr-tbl-"]').forEach(function(table) {
+    var T = parseFloat(table.dataset.t), r = parseFloat(table.dataset.r), otype = table.dataset.otype;
+    table.querySelectorAll('tbody tr').forEach(function(tr) {
+      var tds = tr.children;
+      if (tds.length < BS_OFF + n) return;  // "not listed" row -- nothing to recompute
+      var spot = parseFloat(tds[1].getAttribute('data-v'));
+      var q = parseFloat(tr.getAttribute('data-q'));
+      if (!(spot > 0)) return;
+      var anchorK = parseFloat(tds[STRIKE_OFF + anchorIdx].getAttribute('data-v'));
+      var anchorMktRaw = tds[MKT_OFF + anchorIdx].getAttribute('data-v');
+      var anchorMkt = anchorMktRaw === '' ? null : parseFloat(anchorMktRaw);
+      var sigma = (anchorMkt != null && anchorK > 0)
+        ? _screenerImpliedVol(spot, anchorK, T, r, anchorMkt, otype, isNaN(q) ? 0 : q) : null;
+
+      var computed = [];
+      for (var i = 0; i < n; i++) {
+        var kTd = tds[STRIKE_OFF + i], mTd = tds[MKT_OFF + i], bsTd = tds[BS_OFF + i], gapTd = tds[GAP_OFF + i];
+        var K = parseFloat(kTd.getAttribute('data-v'));
+        var mktRaw = mTd.getAttribute('data-v');
+        var mkt = mktRaw === '' ? null : parseFloat(mktRaw);
+        var bs = (sigma != null && K > 0) ? _screenerBsPrice(spot, K, T, r, sigma, otype, isNaN(q) ? 0 : q) : null;
+        var gap = (mkt != null && bs && bs > 0) ? (mkt - bs) / bs * 100 : null;
+        computed.push({gapTd: gapTd, bsTd: bsTd, bs: bs, gap: gap});
+      }
+      var maxAbsGap = 1.0, maxIdx = -1, maxVal = -1;
+      computed.forEach(function(c, idx) {
+        if (c.gap != null) {
+          maxAbsGap = Math.max(maxAbsGap, Math.abs(c.gap));
+          if (Math.abs(c.gap) > maxVal) { maxVal = Math.abs(c.gap); maxIdx = idx; }
+        }
+      });
+      computed.forEach(function(c, idx) {
+        c.bsTd.setAttribute('data-v', c.bs != null ? c.bs : '');
+        c.bsTd.textContent = c.bs != null ? _screenerFmtPrem(c.bs) : '—';
+        if (c.gap == null) {
+          c.gapTd.setAttribute('data-v', '');
+          c.gapTd.removeAttribute('data-orig');
+          c.gapTd.removeAttribute('data-iv-cell');  // no market -> nothing for the IV-diff filter to gate on
+          c.gapTd.textContent = '—';
+          c.gapTd.removeAttribute('style');
+        } else {
+          var orig = (c.gap >= 0 ? '+' : '') + c.gap.toFixed(1) + '%';
+          var style = _screenerGapColor(c.gap, maxAbsGap);
+          var outline = idx === maxIdx ? ';border:2px solid #0f172a;font-weight:bold' : '';
+          c.gapTd.setAttribute('data-v', c.gap);
+          c.gapTd.setAttribute('data-orig', orig);
+          c.gapTd.setAttribute('style', style + outline);
+          c.gapTd.textContent = orig;
+        }
+      });
+    });
+  });
+  // Gap cells' data-orig just changed -- re-apply the current IV-diff threshold
+  // (if any) so cells that should stay blanked don't flash the new value.
+  if (typeof applyIVCellBlanking === 'function') applyIVCellBlanking();
+  document.querySelectorAll('.bsprem-hdr').forEach(function(h) {
+    h.textContent = 'BS Prem at ' + Math.round(anchorDelta * 100) + 'Δ IV';
+  });
+  if (statusEl) statusEl.textContent = '';
+}
+var curExp = 'jan27';
+var curType = 'call';
+function showScr(ekey, otype) {
+  curExp = ekey; curType = otype;
+  var scope = document.getElementById('tpanel-0');
+  scope.querySelectorAll('.etab').forEach(function(b){ b.classList.toggle('active', b.dataset.e === ekey); });
+  scope.querySelectorAll('.ttab').forEach(function(b){ b.classList.toggle('active', b.dataset.t === otype); });
+  scope.querySelectorAll('.scr-panel').forEach(function(p){ p.classList.remove('active'); });
+  var target = document.getElementById('scr-' + ekey + '-' + otype);
+  if (target) target.classList.add('active');
+  if (typeof updateFilterCount === 'function') updateFilterCount();
+}
+// Same as showScr but scoped to the ETF tab group (tpanel-2, "scr-etf-..."
+// ids) -- kept as a separate small function rather than parameterizing
+// showScr, since the two need independent curExp/curType state and the
+// duplication here is cheap.
+var etfCurExp = 'jan27';
+var etfCurType = 'call';
+function showScrEtf(ekey, otype) {
+  etfCurExp = ekey; etfCurType = otype;
+  var scope = document.getElementById('tpanel-2');
+  if (!scope) return;
+  scope.querySelectorAll('.etab').forEach(function(b){ b.classList.toggle('active', b.dataset.e === ekey); });
+  scope.querySelectorAll('.ttab').forEach(function(b){ b.classList.toggle('active', b.dataset.t === otype); });
+  scope.querySelectorAll('.scr-panel').forEach(function(p){ p.classList.remove('active'); });
+  var target = document.getElementById('scr-etf-' + ekey + '-' + otype);
+  if (target) target.classList.add('active');
+  if (typeof updateFilterCount === 'function') updateFilterCount();
+}
+function showTop(t) {
+  document.querySelectorAll('.ttop').forEach(function(b){ b.classList.toggle('active', b.dataset.t == t); });
+  document.querySelectorAll('.tpanel').forEach(function(p, idx){ p.classList.toggle('active', idx == t); });
+  if (typeof updateFilterCount === 'function') updateFilterCount();
+}
+// Shared comparator: blank cells (data-v="") always sort to the bottom,
+// regardless of ascending/descending direction -- a blank isn't a value to
+// rank, it's "no data" and should never jump to the top on a desc sort.
+function cmpBlanksLast(av, bv, dir) {
+  var aBlank = (av === '' || av == null), bBlank = (bv === '' || bv == null);
+  if (aBlank && bBlank) return 0;
+  if (aBlank) return 1;
+  if (bBlank) return -1;
+  var an = parseFloat(av), bn = parseFloat(bv);
+  var cmp = (!isNaN(an) && !isNaN(bn)) ? an - bn : av.localeCompare(bv);
+  return dir === 'asc' ? cmp : -cmp;
+}
+function sortStrikeTable(th) {
+  var table = th.closest('table');
+  var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+  var tbody = table.querySelector('tbody');
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+  var dir = table.getAttribute('data-sort-col') == idx && table.getAttribute('data-sort-dir') === 'asc' ? 'desc' : 'asc';
+  table.setAttribute('data-sort-col', idx);
+  table.setAttribute('data-sort-dir', dir);
+  rows.sort(function(a, b) {
+    return cmpBlanksLast(a.children[idx].getAttribute('data-v'), b.children[idx].getAttribute('data-v'), dir);
+  });
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
+// Delta-bucket table headers use rowspan/colspan, so DOM position within a
+// header row doesn't equal the real table column index — each sortable th
+// carries an explicit data-col instead. A "not listed" row's colspan cell
+// means a.children[idx] can be undefined for idx past its few real cells;
+// treat that as an empty (always-sorts-last) value rather than erroring.
+function sortScrCol(th) {
+  var table = th.closest('table');
+  var idx = parseInt(th.getAttribute('data-col'), 10);
+  var tbody = table.querySelector('tbody');
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+  var dir = table.getAttribute('data-sort-col') == idx && table.getAttribute('data-sort-dir') === 'asc' ? 'desc' : 'asc';
+  table.setAttribute('data-sort-col', idx);
+  table.setAttribute('data-sort-dir', dir);
+  function cellVal(tr) {
+    var cell = tr.children[idx];
+    return cell ? cell.getAttribute('data-v') : '';
+  }
+  rows.sort(function(a, b) {
+    return cmpBlanksLast(cellVal(a), cellVal(b), dir);
+  });
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
+var currentTickerFilter = '';
+var currentIVDiffMax = null;
+// Ticker filter applies across every delta-bucket panel on the page (stock
+// AND ETF, if present) -- ".scr-panel .scr-tbl" covers both tpanel-0's and
+// tpanel-2's tables uniformly, no per-universe scoping needed here.
+function applyTickerFilter(val) {
+  currentTickerFilter = val;
+  var needle = val.toUpperCase();
+  document.querySelectorAll('.scr-panel .scr-tbl tbody tr').forEach(function(tr) {
+    tr.style.display = (!needle || (tr.dataset.tkr || '').toUpperCase().indexOf(needle) !== -1) ? '' : 'none';
+  });
+  if (typeof applyOptRowFilters === 'function') applyOptRowFilters();
+  updateFilterCount();
+}
+// On the per-ticker delta-bucket screener table, the B/A IV Diff input does
+// NOT hide rows -- it blanks just the individual %Gap/Mkt Prem cells whose
+// OWN bid/ask IV spread exceeds the threshold (a wide-spread bucket has no
+// reliable market price to show, but the row's other buckets may still be
+// fine). The Optimal Call Spreads tab keeps its original row-hiding
+// behavior via applyOptRowFilters -- a candidate spread with an unreliable
+// quote isn't a valid candidate at all, so hiding the whole row there is
+// correct, unlike the per-bucket table. Applies to every .scr-tbl on the
+// page (stock + ETF), not scoped to one panel.
+function applyIVCellBlanking() {
+  var maxIVDiff = currentIVDiffMax;
+  document.querySelectorAll('.scr-tbl .ivblank').forEach(function(td) {
+    var ivCell = td.getAttribute('data-iv-cell');
+    var blank = maxIVDiff != null && (!ivCell || parseFloat(ivCell) > maxIVDiff);
+    td.textContent = blank ? '—' : td.getAttribute('data-orig');
+  });
+}
+function applyIVDiffFilter(val) {
+  currentIVDiffMax = val ? parseFloat(val) : null;
+  applyIVCellBlanking();
+  if (typeof applyOptRowFilters === 'function') applyOptRowFilters();
+  updateFilterCount();
+}
+// Recomputes both filter-count hints from the CURRENTLY VISIBLE tpanel only
+// (works for any of the 4 possible panels -- delta-bucket or optimal-spreads,
+// stock or ETF -- by scanning whichever rows live under .tpanel.active,
+// rather than tracking per-panel shown-counts through every filter function).
+function updateFilterCount() {
+  var active = document.querySelector('.tpanel.active');
+  var n = 0;
+  if (active) {
+    active.querySelectorAll('.scr-panel.active tbody tr').forEach(function(tr) { if (tr.style.display !== 'none') n++; });
+    active.querySelectorAll('table.opt-trades-tbl tbody tr').forEach(function(tr) { if (tr.style.display !== 'none') n++; });
+  }
+  var label = n + ' match' + (n === 1 ? '' : 'es');
+  var tEl = document.getElementById('tkr-filter-count');
+  if (tEl) tEl.textContent = currentTickerFilter ? label : '';
+  var iEl = document.getElementById('iv-diff-filter-count');
+  if (iEl) iEl.textContent = (currentIVDiffMax != null) ? label : '';
+}
+</script>
+</body></html>
