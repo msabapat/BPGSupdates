@@ -1,16 +1,16 @@
 [
   {
-    "date": "2026-08-05",
-    "title": "Live Portfolio Performance Report",
-    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-08-05 (End of Day, 5:09 PM).",
-    "file": "portfolio_report_live_2026-08-05.html",
+    "date": "2026-08-06",
+    "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
+    "summary": "Refreshed 2026-08-06 EOD, 60 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs. Auto-published daily.",
+    "file": "options_screener_top500_2026-08-06.html",
     "author": "Mani Sabapathi"
   },
   {
     "date": "2026-08-05",
-    "title": "500-Stock + ETF Options Screener + Optimal Call Spreads",
-    "summary": "Refreshed 2026-08-05 EOD, 22 stock tickers (top 100 optimal-call-spread rows by discount vs flat-vol BS fair value) + 19 sector/style ETFs. Auto-published daily.",
-    "file": "options_screener_top500_2026-08-05.html",
+    "title": "Live Portfolio Performance Report",
+    "summary": "Daily paper-trading portfolio tracker for the 60/20/20 LV/MOM/MR live strategy: per-strategy and per-stock day/cumulative performance, equity curve, allocation, full holdings detail, and a Today's Trades tab. Update from 2026-08-05 (End of Day, 5:09 PM).",
+    "file": "portfolio_report_live_2026-08-05.html",
     "author": "Mani Sabapathi"
   },
   {
