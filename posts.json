@@ -61,7 +61,7 @@
   {
     "date": "2026-07-08",
     "title": "Quality-500: Cap-Weighted Replication vs SPY",
-    "summary": "Mechanical cap-weighted S&P-500-style replication: top-600 domestic by market cap, filter out net-income-TTM<0 and <12mo trading history, re-rank to top-500, weight by market cap at start of month, hold one month, rebuild. 1999-2026: CAGR 9.15% vs SPY's 8.58%, Sharpe 0.619 vs 0.568, MaxDD -48.5% vs -50.8%. Includes methodology, growth-of-$1 chart, summary stats, and year-by-year returns.,,
+    "summary": "Mechanical cap-weighted S&P-500-style replication: top-600 domestic by market cap, filter out net-income-TTM<0 and <12mo trading history, re-rank to top-500, weight by market cap at start of month, hold one month, rebuild. 1999-2026: CAGR 9.15% vs SPY's 8.58%, Sharpe 0.619 vs 0.568, MaxDD -48.5% vs -50.8%. Includes methodology, growth-of-$1 chart, summary stats, and year-by-year returns.",
     "file": "strategies/sp500_replication_report_2026-07-08.html",
     "author": "Mani Sabapathi",
     "category": "strategies"
@@ -164,7 +164,7 @@
   {
     "date": "2026-07-03",
     "title": "The Next-State Engine \u2014 From Crisis Detection to State Anticipation",
-    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world \u2014 macro, political, structural \u2014 and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.,,
+    "summary": "Essay I. An ideation report: instead of fitting one predictive model to history, anticipate the probability-weighted next states of the world \u2014 macro, political, structural \u2014 and map each state to the predictive model that should govern it. Survey of what exists, honest pitfalls, and a proposed architecture built from the meta-engine's existing parts. Companion to Meta-Engine Design and Essay II, The Plausible-Worlds Engine.",
     "file": "top-down/next-state-engine_2026-07-03.html",
     "author": "Arvind Rajan",
     "category": "top-down"
@@ -264,7 +264,7 @@
   {
     "date": "2026-07-23",
     "title": "FQW vs. LV / MR / MOM / SPY \u2014 Strategy Comparison",
-    "summary": "Fundamental-quality-weighted (FQW) strategy compared against the three locked strategies (LV/MR/MOM) and SPY. Re-verifies FQW is NOT a blend component under current data (correlates 0.81 with MR, never leads a regime box); a low-vol overlay variant (FQW+low-vol, correlates 0.77 with LV) tested with the same conclusion. Adds a correlation-matrix card and pulls a point-in-time snapshot from the live constrained-Kelly optimizer (MR<=20%, MOM<=30%, LV/FQW/FQWL/SPY<=60%).,,
+    "summary": "Fundamental-quality-weighted (FQW) strategy compared against the three locked strategies (LV/MR/MOM) and SPY. Re-verifies FQW is NOT a blend component under current data (correlates 0.81 with MR, never leads a regime box); a low-vol overlay variant (FQW+low-vol, correlates 0.77 with LV) tested with the same conclusion. Adds a correlation-matrix card and pulls a point-in-time snapshot from the live constrained-Kelly optimizer (MR<=20%, MOM<=30%, LV/FQW/FQWL/SPY<=60%).",
     "file": "strategies/fqew_vs_all_report_2026-07-23.html",
     "author": "Arvind Rajan",
     "category": "strategies"
